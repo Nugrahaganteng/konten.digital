@@ -1,3 +1,147 @@
 @tailwind base;
+
 @tailwind components;
+
 @tailwind utilities;
+
+
+
+@layer base {
+
+    :root {
+
+        --color-yellow: #facc15; /* yellow-400 */
+
+        --color-purple: #3b0764; /* purple-950 */
+
+        --color-red: #ef4444;    /* red-500 */
+
+    }
+
+
+
+    body {
+
+        @apply bg-yellow-400 text-black overflow-x-hidden;
+
+        /* Menggunakan font dari app.blade */
+
+        font-family: 'Space Grotesk', sans-serif;
+
+    }
+
+}
+
+
+
+@layer components {
+
+    /* Gaya Link Navbar */
+
+    .nav-link-pop {
+
+        @apply font-black uppercase text-[13px] tracking-tight hover:text-red-500 transition-colors cursor-pointer;
+
+    }
+
+
+
+    /* Tombol Neubrutalism */
+
+    .btn-pop {
+
+        @apply bg-purple-950 text-white font-black px-6 py-2 rounded-xl border-4 border-black
+
+               shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:shadow-none
+
+               transition-all inline-block text-center uppercase text-sm tracking-wider;
+
+    }
+
+
+
+    /* Card Style (untuk section Our Services nanti) */
+
+    .card-retro {
+
+        @apply bg-white border-4 border-black rounded-2xl p-6
+
+               shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none
+
+               hover:translate-x-1 hover:translate-y-1 transition-all;
+
+    }
+
+}
+
+
+
+@layer utilities {
+
+    /* Animasi Ticker Tape */
+
+    @keyframes ticker {
+
+        0% { transform: translateX(0); }
+
+        100% { transform: translateX(-50%); }
+
+    }
+
+
+
+    .animate-ticker {
+
+        display: flex;
+
+        width: max-content;
+
+        animation: ticker 30s linear infinite;
+
+    }
+
+
+
+    /* Utilitas tambahan untuk shadow solid */
+
+    .shadow-neo {
+
+        box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
+
+    }
+
+   
+
+    .shadow-neo-sm {
+
+        box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
+
+    }
+
+}
+
+
+
+/* Custom Scrollbar agar senada dengan tema */
+
+::-webkit-scrollbar {
+
+    width: 12px;
+
+}
+
+
+
+::-webkit-scrollbar-track {
+
+    @apply bg-black;
+
+}
+
+
+
+::-webkit-scrollbar-thumb {
+
+    @apply bg-yellow-400 border-2 border-black rounded-full;
+
+}
