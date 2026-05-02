@@ -1,25 +1,35 @@
+// database/seeders/DatabaseSeeder.php
 <?php
 
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Article;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
 {
-    use WithoutModelEvents;
-
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        // Admin
+        $admin = User::create([
+            'name'     => 'Admin',
+            'email'    => 'admin@blog.com',
+            'password' => Hash::make('password'),
+            'is_admin' => true,
         ]);
+
+        // User biasa
+        $user = User::create([
+            'name'     => 'John Doe',
+            'email'    => 'user@blog.com',
+            'password' => Hash::make('password'),
+            'is_admin' => false,
+        ]);
+
+        // Artikel dummy
+        Article::factory(10)->create(['user_id' => $admin->id, 'status' => 'published']);
+        Article::factory(5)->create(['user_id' => $user->id, 'status' => 'draft']);
     }
 }

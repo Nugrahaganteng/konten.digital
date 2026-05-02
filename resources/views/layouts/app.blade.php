@@ -1,227 +1,156 @@
-{{-- resources/views/layouts/app.blade.php --}}
-
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>@yield('title', 'Blog') — MyBlog</title>
 
-    <title>{{ config('app.name', 'KontenDigital.id') }} — @yield('title')</title>
-
+    {{-- Google Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syne:wght@700;800&family=Unbounded:wght@400;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- Tailwind CDN (dev) — ganti dengan Vite build di production --}}
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        display: ['"Playfair Display"', 'serif'],
+                        body: ['"DM Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        ink: '#111118',
+                        cream: '#faf8f3',
+                        accent: '#e8402a',
+                        muted: '#6b7280',
+                    }
+                }
+            }
+        }
+    </script>
 
     <style>
-        /* Ticker Tape Animation */
-        @keyframes ticker {
-            0%   { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-        .animate-ticker {
-            display: flex;
-            width: max-content;
-            animation: ticker 30s linear infinite;
-        }
+        * { font-family: 'DM Sans', sans-serif; }
+        h1, h2, h3, .font-display { font-family: 'Playfair Display', serif; }
 
-        /* ── NAVBAR ERTRI-STYLE ── */
-        #main-nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 50;
-            /* mulai transparan di atas hero kuning */
-            background: transparent;
-            transition: background 0.35s ease, box-shadow 0.35s ease;
-        }
-        /* setelah scroll: menjadi putih dengan border bawah */
-        #main-nav.scrolled {
-            background: #ffffff;
-            box-shadow: 0 4px 0 0 #000;
-        }
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #faf8f3; }
+        ::-webkit-scrollbar-thumb { background: #e8402a; border-radius: 2px; }
 
-        /* link navbar */
-        .nav-link-pop {
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 700;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.04em;
-            color: #1a1a2e;
-            transition: color 0.2s;
-        }
-        .nav-link-pop:hover { color: #ef4444; }
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
 
-        /* tombol CTA */
-        .btn-pop {
-            background: #3b0764;
-            color: #fff;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: 900;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 0.5rem 1.25rem;
-            border-radius: 0.75rem;
-            border: 3px solid #000;
-            box-shadow: 4px 4px 0 0 #000;
-            transition: transform 0.15s, box-shadow 0.15s;
-            display: inline-block;
+        /* Navbar link underline animation */
+        .nav-link::after {
+            content: '';
+            display: block;
+            height: 2px;
+            background: #e8402a;
+            transform: scaleX(0);
+            transition: transform .25s ease;
+            transform-origin: left;
         }
-        .btn-pop:hover {
-            transform: translateY(3px);
-            box-shadow: none;
-        }
+        .nav-link:hover::after,
+        .nav-link.active::after { transform: scaleX(1); }
 
-        /* search icon */
-        .search-btn {
-            width: 2.2rem;
-            height: 2.2rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 2px solid #1a1a2e;
-            background: transparent;
-            cursor: pointer;
-            transition: background 0.2s;
+        /* Fade in animation */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        .search-btn:hover { background: #1a1a2e; color: #facc15; }
-        .search-btn svg { width: 1rem; height: 1rem; stroke: currentColor; }
-
-        /* mobile menu */
-        #mobile-menu {
-            display: none;
-            flex-direction: column;
-            gap: 1.5rem;
-            background: #facc15;
-            border-top: 4px solid #000;
-            padding: 2rem 1.5rem;
-        }
-        #mobile-menu.open { display: flex; }
-        #mobile-menu a {
-            font-family: 'Unbounded', sans-serif;
-            font-weight: 900;
-            font-size: 1.25rem;
-            text-transform: uppercase;
-            color: #1a1a2e;
-        }
-
-        /* card retro (untuk konten halaman) */
-        .card-retro {
-            background: #fff;
-            border: 4px solid #000;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 8px 8px 0 0 #000;
-            transition: transform 0.15s, box-shadow 0.15s;
-        }
-        .card-retro:hover {
-            transform: translate(4px, 4px);
-            box-shadow: none;
-        }
+        .fade-up { animation: fadeUp .5s ease forwards; }
     </style>
 
     @stack('styles')
 </head>
+<body class="bg-cream text-ink min-h-screen flex flex-col">
 
-<body class="antialiased min-h-screen bg-yellow-400 font-['Space_Grotesk']">
+{{-- ═══════════════════════════════ NAVBAR ═══════════════════════════════ --}}
+<header class="sticky top-0 z-50 bg-cream/95 backdrop-blur border-b border-ink/8">
+    <nav class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
 
-    {{-- ── NAVBAR (Ertri-style: transparan → putih saat scroll) ───── --}}
-    <nav id="main-nav">
-        <div class="max-w-7xl mx-auto px-6">
-            <div class="flex items-center justify-between h-20">
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="font-display font-black text-2xl tracking-tight">
+            My<span class="text-accent">Blog</span>
+        </a>
 
-                {{-- Logo (kiri) --}}
-                <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <div class="w-11 h-11 bg-purple-900 border-3 border-black rounded-xl flex items-center justify-center
-                                transform group-hover:rotate-6 transition-transform"
-                         style="border-width:3px; border-color:#000;">
-                        <span class="text-yellow-400 font-black text-lg" style="font-family:'Unbounded',sans-serif">K</span>
-                    </div>
-                    <div class="leading-none">
-                        <p style="font-family:'Unbounded',sans-serif; font-weight:900; font-size:1rem; color:#1a1a2e; letter-spacing:-0.02em; text-transform:uppercase;">
-                            KontenDigital
-                        </p>
-                        <p style="font-size:0.6rem; font-weight:700; color:#ef4444; text-transform:uppercase; letter-spacing:0.15em;">
-                            Growth Partner
-                        </p>
-                    </div>
+        {{-- Desktop Nav --}}
+        <ul class="hidden md:flex items-center gap-8 text-sm font-medium">
+            <li><a href="{{ route('home') }}"            class="nav-link pb-1 {{ request()->routeIs('home') ? 'active' : '' }}">Beranda</a></li>
+            <li><a href="{{ route('articles.index') }}"  class="nav-link pb-1 {{ request()->routeIs('articles.*') ? 'active' : '' }}">Artikel</a></li>
+            <li><a href="{{ route('about') }}"           class="nav-link pb-1 {{ request()->routeIs('about') ? 'active' : '' }}">Tentang</a></li>
+            <li><a href="{{ route('contact') }}"         class="nav-link pb-1 {{ request()->routeIs('contact') ? 'active' : '' }}">Kontak</a></li>
+        </ul>
+
+        {{-- Auth / CTA --}}
+        <div class="flex items-center gap-3">
+            @auth
+                <a href="{{ route('articles.create') }}"
+                   class="hidden md:inline-flex items-center gap-1.5 text-sm font-medium bg-ink text-cream px-4 py-2 rounded-full hover:bg-accent transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+                    Tulis
                 </a>
+                @if(auth()->user()->is_admin)
+                    <a href="{{ route('admin.dashboard') }}"
+                       class="text-sm font-medium text-accent hover:underline">Admin</a>
+                @endif
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button class="text-sm text-muted hover:text-ink transition-colors">Keluar</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}"
+                   class="text-sm font-medium text-muted hover:text-ink transition-colors">Masuk</a>
+                <a href="{{ route('register') }}"
+                   class="text-sm font-medium bg-accent text-white px-4 py-2 rounded-full hover:bg-accent/80 transition-colors">Daftar</a>
+            @endauth
 
-                {{-- Menu Tengah (desktop) --}}
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="{{ route('home') }}"      class="nav-link-pop">Home</a>
-                    <a href="#about"                   class="nav-link-pop">About Us</a>
-                    <a href="{{ route('services') }}"  class="nav-link-pop">Services</a>
-                    <a href="#portfolio"               class="nav-link-pop">Portfolio</a>
-                    <a href="#career"                  class="nav-link-pop">Career</a>
-                    <a href="#contact"                 class="nav-link-pop">Contact Us</a>
-                </div>
-
-                {{-- Search + CTA (kanan) --}}
-                <div class="flex items-center gap-3">
-                    {{-- Ikon Search --}}
-                    <button class="search-btn hidden md:flex" id="search-toggle" aria-label="Search">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-                        </svg>
-                    </button>
-
-                    {{-- CTA Button --}}
-                    <a href="https://wa.me/6281234567890" class="btn-pop hidden sm:inline-block">
-                        Contact Us
-                    </a>
-
-                    {{-- Hamburger (mobile) --}}
-                    <button id="burger" class="md:hidden text-black" aria-label="Toggle menu">
-                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path id="burger-open"  stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M4 8h16M4 16h16"/>
-                            <path id="burger-close" stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12" class="hidden"/>
-                        </svg>
-                    </button>
-                </div>
-
-            </div>
-        </div>
-
-        {{-- Mobile Menu --}}
-        <div id="mobile-menu">
-            <a href="{{ route('home') }}">Home</a>
-            <a href="#about">About Us</a>
-            <a href="{{ route('services') }}">Services</a>
-            <a href="#portfolio">Portfolio</a>
-            <a href="#career">Career</a>
-            <a href="#contact">Contact Us</a>
-            <a href="https://wa.me/6281234567890" class="btn-pop text-center">Contact Us</a>
-        </div>
-
-        {{-- Search Bar (dropdown) --}}
-        <div id="search-bar"
-             class="hidden absolute left-0 w-full bg-white border-b-4 border-black px-6 py-4">
-            <form action="#" method="GET" class="max-w-2xl mx-auto flex gap-2">
-                <input type="text" name="q" placeholder="Cari layanan, artikel..."
-                       class="flex-1 border-3 border-black rounded-xl px-4 py-2 font-bold text-sm focus:outline-none"
-                       style="border-width:3px;">
-                <button type="submit" class="btn-pop">Cari</button>
-            </form>
+            {{-- Mobile hamburger --}}
+            <button id="menu-toggle" class="md:hidden p-2 rounded-lg hover:bg-ink/5 transition">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                </svg>
+            </button>
         </div>
     </nav>
 
-    {{-- Spacer agar konten tidak tertutup navbar fixed --}}
-    {{-- Hero section biasanya full-screen jadi tidak perlu spacer --}}
+    {{-- Mobile menu --}}
+    <div id="mobile-menu" class="hidden md:hidden border-t border-ink/8 bg-cream px-6 py-4 space-y-3 text-sm font-medium">
+        <a href="{{ route('home') }}" class="block">Beranda</a>
+        <a href="{{ route('articles.index') }}" class="block">Artikel</a>
+        <a href="{{ route('about') }}" class="block">Tentang</a>
+        <a href="{{ route('contact') }}" class="block">Kontak</a>
+        @auth
+            <a href="{{ route('articles.create') }}" class="block text-accent">+ Tulis Artikel</a>
+        @else
+            <a href="{{ route('login') }}" class="block">Masuk</a>
+            <a href="{{ route('register') }}" class="block text-accent">Daftar</a>
+        @endauth
+    </div>
+</header>
 
-    {{-- ── MAIN CONTENT ──────────────────────────────────────────── --}}
-    <main>
-        @yield('content')
-    </main>
+{{-- ═══════════════════════════════ FLASH ════════════════════════════════ --}}
+@if(session('success'))
+    <div class="max-w-6xl mx-auto px-6 mt-4 fade-up">
+        <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-xl flex items-center justify-between">
+            <span class="flex items-center gap-2">
+                <svg class="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                {{ session('success') }}
+            </span>
+            <button onclick="this.parentElement.parentElement.remove()" class="text-green-600 hover:text-green-800">✕</button>
+        </div>
+    </div>
+@endif
 
-    {{-- ── FOOTER ─────────────────────────────────────────────────── --}}
+{{-- ═══════════════════════════════ CONTENT ═══════════════════════════════ --}}
+<main class="flex-1">
+    @yield('content')
+</main>
+
+{{-- ── FOOTER ─────────────────────────────────────────────────── --}}
     <footer class="bg-purple-950 pt-24 pb-12 border-t-8 border-black text-white">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
@@ -286,48 +215,14 @@
         </div>
     </footer>
 
-    <script>
-        // ── Navbar: transparan → putih saat scroll ──
-        const nav = document.getElementById('main-nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 60) {
-                nav.classList.add('scrolled');
-            } else {
-                nav.classList.remove('scrolled');
-            }
-        });
 
-        // ── Burger Mobile ──
-        const burger      = document.getElementById('burger');
-        const mobileMenu  = document.getElementById('mobile-menu');
-        const iconOpen    = document.getElementById('burger-open');
-        const iconClose   = document.getElementById('burger-close');
+<script>
+    // Mobile menu toggle
+    document.getElementById('menu-toggle').addEventListener('click', () => {
+        document.getElementById('mobile-menu').classList.toggle('hidden');
+    });
+</script>
 
-        burger.addEventListener('click', () => {
-            const isOpen = mobileMenu.classList.toggle('open');
-            iconOpen.classList.toggle('hidden', isOpen);
-            iconClose.classList.toggle('hidden', !isOpen);
-        });
-
-        // ── Search Toggle ──
-        const searchToggle = document.getElementById('search-toggle');
-        const searchBar    = document.getElementById('search-bar');
-
-        searchToggle.addEventListener('click', () => {
-            searchBar.classList.toggle('hidden');
-            if (!searchBar.classList.contains('hidden')) {
-                searchBar.querySelector('input').focus();
-            }
-        });
-
-        // ── IntersectionObserver untuk animasi reveal ──
-        const observer = new IntersectionObserver(
-            entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('animate-in'); }),
-            { threshold: 0.1 }
-        );
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    </script>
-
-    @stack('scripts')
+@stack('scripts')
 </body>
 </html>

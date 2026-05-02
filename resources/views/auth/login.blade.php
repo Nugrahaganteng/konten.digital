@@ -1,138 +1,150 @@
 {{-- resources/views/auth/login.blade.php --}}
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="id">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login Admin — KontenDigital.id</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Bebas+Neue&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css','resources/css/retro.css'])
+    <title>Login — KontenDigital.id</title>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+        :root { --ink:#0e0b14; --yellow:#f5c518; --purple:#2d1b4e; --punch:#e8402a; --cream:#f7f2e8; }
+        body { background: var(--yellow); min-height: 100vh; font-family: 'DM Sans', sans-serif; }
+        .card {
+            background: var(--cream);
+            border: 4px solid var(--ink);
+            box-shadow: 10px 10px 0 var(--ink);
+            border-radius: 0;
+        }
+        .logo-box {
+            background: var(--purple);
+            border: 3px solid var(--ink);
+            width: 52px; height: 52px;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .field {
+            width: 100%;
+            border: 3px solid var(--ink);
+            background: white;
+            padding: 0.7rem 1rem;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            outline: none;
+            transition: box-shadow 0.15s;
+        }
+        .field:focus { box-shadow: 4px 4px 0 var(--purple); }
+        .btn-primary {
+            width: 100%;
+            background: var(--purple);
+            color: var(--yellow);
+            font-family: 'Anton', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            padding: 0.9rem;
+            border: 3px solid var(--ink);
+            box-shadow: 6px 6px 0 var(--ink);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .btn-primary:hover { transform: translate(4px,4px); box-shadow: 2px 2px 0 var(--ink); }
+        label { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink); display: block; margin-bottom: 0.4rem; }
+        .error-msg { color: var(--punch); font-size: 0.8rem; font-weight: 700; margin-top: 0.3rem; }
+        .tag { background: var(--punch); color: white; font-family: 'Anton', sans-serif; font-size: 0.7rem; letter-spacing: 0.15em; padding: 0.3rem 0.75rem; }
+        .divider { display: flex; align-items: center; gap: 1rem; margin: 1rem 0; }
+        .divider-line { flex: 1; height: 2px; background: var(--ink); opacity: 0.15; }
+        .link { color: var(--purple); font-weight: 700; text-decoration: underline; }
+        .link:hover { color: var(--punch); }
+    </style>
 </head>
-<body class="min-h-screen bg-ink flex items-center justify-center p-4 relative overflow-hidden">
+<body class="flex items-center justify-center min-h-screen p-6">
 
-    {{-- BG Grid Lines --}}
-    <div class="absolute inset-0 opacity-5 pointer-events-none">
-        @for($i=0;$i<16;$i++)
-        <div class="absolute border-t border-gold" style="top:{{$i*7}}%;width:100%;"></div>
-        @endfor
-        @for($i=0;$i<10;$i++)
-        <div class="absolute border-l border-gold h-full" style="left:{{$i*12}}%;"></div>
-        @endfor
-    </div>
+    {{-- Background decoration --}}
+    <div style="position:fixed;top:0;right:0;width:300px;height:300px;background:var(--purple);opacity:0.08;border-radius:0 0 0 100%;pointer-events:none;"></div>
+    <div style="position:fixed;bottom:0;left:0;width:200px;height:200px;background:var(--punch);opacity:0.08;border-radius:0 100% 0 0;pointer-events:none;"></div>
 
-    {{-- Floating circles --}}
-    <div class="absolute top-16 left-16 w-40 h-40 border border-gold/10 rounded-full animate-spin-slow pointer-events-none"></div>
-    <div class="absolute bottom-20 right-16 w-56 h-56 border border-gold/10 rounded-full animate-spin-slow pointer-events-none" style="animation-direction:reverse;"></div>
-    <div class="absolute top-1/2 left-6 w-20 h-20 border border-gold/15 rounded-full animate-float pointer-events-none"></div>
+    <div style="width:100%;max-width:440px;">
 
-    {{-- Login Card --}}
-    <div class="relative w-full max-w-md z-10">
+        {{-- Logo --}}
+        <a href="{{ route('home') }}" class="flex items-center gap-3 mb-8">
+            <div class="logo-box">
+                <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:var(--yellow);">K</span>
+            </div>
+            <div>
+                <p style="font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--ink);letter-spacing:0.02em;">KONTENDIGITAL</p>
+                <p style="font-size:0.6rem;font-weight:700;color:var(--punch);text-transform:uppercase;letter-spacing:0.15em;">Growth Partner</p>
+            </div>
+        </a>
 
-        {{-- Top ornament --}}
-        <div class="flex items-center gap-3 mb-6">
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gold/60"></div>
-            <span class="text-gold font-typewriter text-xs tracking-widest">✦ ADMIN PORTAL ✦</span>
-            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gold/60"></div>
-        </div>
-
-        <div class="bg-paper border-2 border-gold shadow-[8px_8px_0_rgba(201,168,76,0.4)] relative p-8">
-            {{-- Corner ornaments --}}
-            <div class="corner-ornament tl"></div>
-            <div class="corner-ornament tr"></div>
-            <div class="corner-ornament bl"></div>
-            <div class="corner-ornament br"></div>
-
+        <div class="card p-8">
             {{-- Header --}}
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 border-2 border-gold mx-auto mb-4 flex items-center justify-center relative">
-                    <span class="font-display text-gold text-2xl">KD</span>
-                    <div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-gold"></div>
-                </div>
-                <h1 class="font-display text-ink text-3xl tracking-widest mb-1">ADMIN PANEL</h1>
-                <p class="font-typewriter text-sepia text-xs tracking-widest">KONTENDIGITAL.ID — SISTEM MANAJEMEN</p>
-                <div class="divider-retro mt-4 max-w-xs mx-auto"><span>✦</span></div>
+            <div class="mb-6">
+                <span class="tag">✦ SELAMAT DATANG</span>
+                <h1 style="font-family:'Anton',sans-serif;font-size:2.5rem;color:var(--purple);margin-top:0.75rem;line-height:0.95;">
+                    MASUK<br>AKUN
+                </h1>
             </div>
 
-            {{-- Session Status --}}
+            {{-- Session Error --}}
             @if (session('status'))
-            <div class="border border-sage bg-sage/10 px-4 py-2 mb-6">
-                <p class="font-mono text-sage text-sm">{{ session('status') }}</p>
-            </div>
+                <div style="background:var(--teal);color:white;padding:0.75rem 1rem;border:2px solid var(--ink);margin-bottom:1rem;font-weight:700;font-size:0.85rem;">
+                    {{ session('status') }}
+                </div>
             @endif
 
-            {{-- Form --}}
-            <form method="POST" action="{{ route('login') }}" class="space-y-5">
+            <form method="POST" action="{{ route('login') }}">
                 @csrf
 
                 {{-- Email --}}
-                <div>
-                    <label class="label-retro" for="email">Alamat Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}"
-                        class="input-retro @error('email') border-rust @enderror"
-                        placeholder="admin@kontendigital.id" required autofocus autocomplete="username">
+                <div class="mb-4">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" class="field"
+                           value="{{ old('email') }}" required autofocus
+                           placeholder="nama@email.com">
                     @error('email')
-                    <p class="font-mono text-rust text-xs mt-1">{{ $message }}</p>
+                        <p class="error-msg">{{ $message }}</p>
                     @enderror
                 </div>
 
                 {{-- Password --}}
-                <div>
-                    <label class="label-retro" for="password">Kata Sandi</label>
-                    <div class="relative">
-                        <input id="password" type="password" name="password"
-                            class="input-retro pr-10 @error('password') border-rust @enderror"
-                            placeholder="••••••••" required autocomplete="current-password">
-                        <button type="button" onclick="togglePwd()" class="absolute right-3 top-1/2 -translate-y-1/2 text-sepia hover:text-gold transition-colors">
-                            <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
-                        </button>
-                    </div>
+                <div class="mb-4">
+                    <label for="password">Password</label>
+                    <input id="password" name="password" type="password" class="field"
+                           required placeholder="••••••••">
                     @error('password')
-                    <p class="font-mono text-rust text-xs mt-1">{{ $message }}</p>
+                        <p class="error-msg">{{ $message }}</p>
                     @enderror
                 </div>
 
-                {{-- Remember & Forgot --}}
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" name="remember" id="remember" class="w-3.5 h-3.5 border border-gold accent-gold">
-                        <span class="font-typewriter text-ink-light text-xs tracking-wide">Ingat Saya</span>
+                {{-- Remember --}}
+                <div class="flex items-center justify-between mb-6">
+                    <label style="flex-direction:row;align-items:center;gap:0.5rem;display:flex;text-transform:none;letter-spacing:0;" class="cursor-pointer">
+                        <input type="checkbox" name="remember" style="width:16px;height:16px;accent-color:var(--purple);">
+                        <span style="font-size:0.85rem;font-weight:600;">Ingat saya</span>
                     </label>
                     @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="font-typewriter text-sepia text-xs tracking-wide hover:text-gold border-b border-transparent hover:border-gold transition-all">
-                        Lupa kata sandi?
-                    </a>
+                        <a href="{{ route('password.request') }}" class="link" style="font-size:0.8rem;">Lupa password?</a>
                     @endif
                 </div>
 
-                {{-- Submit --}}
-                <button type="submit" class="btn-retro w-full text-center py-3 mt-2 text-sm">
-                    Masuk ke Sistem →
-                </button>
+                <button type="submit" class="btn-primary">MASUK →</button>
             </form>
 
-            {{-- Footer --}}
-            <p class="font-typewriter text-ink/30 text-xs text-center tracking-widest mt-8 border-t border-gold/20 pt-5">
-                © {{ date('Y') }} KONTENDIGITAL.ID — RESTRICTED ACCESS
+            <div class="divider">
+                <div class="divider-line"></div>
+                <span style="font-size:0.75rem;font-weight:700;opacity:0.4;text-transform:uppercase;">atau</span>
+                <div class="divider-line"></div>
+            </div>
+
+            <p style="text-align:center;font-size:0.9rem;font-weight:600;">
+                Belum punya akun?
+                <a href="{{ route('register') }}" class="link">Daftar sekarang</a>
             </p>
         </div>
 
-        {{-- Bottom ornament --}}
-        <div class="flex items-center gap-3 mt-6">
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gold/30"></div>
-            <span class="text-gold/40 font-typewriter text-xs tracking-widest">AUTHORIZED PERSONNEL ONLY</span>
-            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gold/30"></div>
-        </div>
+        <p style="text-align:center;margin-top:1.5rem;font-size:0.75rem;font-weight:700;opacity:0.5;text-transform:uppercase;letter-spacing:0.1em;">
+            © {{ date('Y') }} KontenDigital.id
+        </p>
     </div>
-
-    <script>
-    function togglePwd() {
-        const pwd = document.getElementById('password');
-        pwd.type = pwd.type === 'password' ? 'text' : 'password';
-    }
-    </script>
 </body>
 </html>
