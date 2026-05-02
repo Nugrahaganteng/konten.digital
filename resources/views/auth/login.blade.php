@@ -1,138 +1,142 @@
-{{-- resources/views/auth/login.blade.php --}}
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login Admin — KontenDigital.id</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,400&family=Bebas+Neue&family=Special+Elite&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-    @vite(['resources/css/app.css','resources/css/retro.css'])
-</head>
-<body class="min-h-screen bg-ink flex items-center justify-center p-4 relative overflow-hidden">
+{{-- resources/views/admin/dashboard.blade.php --}}
+@extends('layouts.admin')
+@section('title', 'Dashboard')
 
-    {{-- BG Grid Lines --}}
-    <div class="absolute inset-0 opacity-5 pointer-events-none">
-        @for($i=0;$i<16;$i++)
-        <div class="absolute border-t border-gold" style="top:{{$i*7}}%;width:100%;"></div>
-        @endfor
-        @for($i=0;$i<10;$i++)
-        <div class="absolute border-l border-gold h-full" style="left:{{$i*12}}%;"></div>
-        @endfor
-    </div>
+@section('content')
+<div class="space-y-8">
 
-    {{-- Floating circles --}}
-    <div class="absolute top-16 left-16 w-40 h-40 border border-gold/10 rounded-full animate-spin-slow pointer-events-none"></div>
-    <div class="absolute bottom-20 right-16 w-56 h-56 border border-gold/10 rounded-full animate-spin-slow pointer-events-none" style="animation-direction:reverse;"></div>
-    <div class="absolute top-1/2 left-6 w-20 h-20 border border-gold/15 rounded-full animate-float pointer-events-none"></div>
-
-    {{-- Login Card --}}
-    <div class="relative w-full max-w-md z-10">
-
-        {{-- Top ornament --}}
-        <div class="flex items-center gap-3 mb-6">
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gold/60"></div>
-            <span class="text-gold font-typewriter text-xs tracking-widest">✦ ADMIN PORTAL ✦</span>
-            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gold/60"></div>
+    {{-- Page Header --}}
+    <div class="flex items-center justify-between">
+        <div>
+            <p class="section-eyebrow mb-1">Selamat Datang Kembali</p>
+            <h1 class="font-black text-4xl text-black leading-none"
+                style="font-family:'Unbounded',sans-serif">Dashboard Admin</h1>
         </div>
-
-        <div class="bg-paper border-2 border-gold shadow-[8px_8px_0_rgba(201,168,76,0.4)] relative p-8">
-            {{-- Corner ornaments --}}
-            <div class="corner-ornament tl"></div>
-            <div class="corner-ornament tr"></div>
-            <div class="corner-ornament bl"></div>
-            <div class="corner-ornament br"></div>
-
-            {{-- Header --}}
-            <div class="text-center mb-8">
-                <div class="w-16 h-16 border-2 border-gold mx-auto mb-4 flex items-center justify-center relative">
-                    <span class="font-display text-gold text-2xl">KD</span>
-                    <div class="absolute -top-1.5 -right-1.5 w-3 h-3 bg-gold"></div>
-                </div>
-                <h1 class="font-display text-ink text-3xl tracking-widest mb-1">ADMIN PANEL</h1>
-                <p class="font-typewriter text-sepia text-xs tracking-widest">KONTENDIGITAL.ID — SISTEM MANAJEMEN</p>
-                <div class="divider-retro mt-4 max-w-xs mx-auto"><span>✦</span></div>
-            </div>
-
-            {{-- Session Status --}}
-            @if (session('status'))
-            <div class="border border-sage bg-sage/10 px-4 py-2 mb-6">
-                <p class="font-mono text-sage text-sm">{{ session('status') }}</p>
-            </div>
-            @endif
-
-            {{-- Form --}}
-            <form method="POST" action="{{ route('login') }}" class="space-y-5">
-                @csrf
-
-                {{-- Email --}}
-                <div>
-                    <label class="label-retro" for="email">Alamat Email</label>
-                    <input id="email" type="email" name="email" value="{{ old('email') }}"
-                        class="input-retro @error('email') border-rust @enderror"
-                        placeholder="admin@kontendigital.id" required autofocus autocomplete="username">
-                    @error('email')
-                    <p class="font-mono text-rust text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Password --}}
-                <div>
-                    <label class="label-retro" for="password">Kata Sandi</label>
-                    <div class="relative">
-                        <input id="password" type="password" name="password"
-                            class="input-retro pr-10 @error('password') border-rust @enderror"
-                            placeholder="••••••••" required autocomplete="current-password">
-                        <button type="button" onclick="togglePwd()" class="absolute right-3 top-1/2 -translate-y-1/2 text-sepia hover:text-gold transition-colors">
-                            <svg id="eye-icon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
-                            </svg>
-                        </button>
-                    </div>
-                    @error('password')
-                    <p class="font-mono text-rust text-xs mt-1">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                {{-- Remember & Forgot --}}
-                <div class="flex items-center justify-between">
-                    <label class="flex items-center gap-2 cursor-pointer">
-                        <input type="checkbox" name="remember" id="remember" class="w-3.5 h-3.5 border border-gold accent-gold">
-                        <span class="font-typewriter text-ink-light text-xs tracking-wide">Ingat Saya</span>
-                    </label>
-                    @if (Route::has('password.request'))
-                    <a href="{{ route('password.request') }}" class="font-typewriter text-sepia text-xs tracking-wide hover:text-gold border-b border-transparent hover:border-gold transition-all">
-                        Lupa kata sandi?
-                    </a>
-                    @endif
-                </div>
-
-                {{-- Submit --}}
-                <button type="submit" class="btn-retro w-full text-center py-3 mt-2 text-sm">
-                    Masuk ke Sistem →
-                </button>
-            </form>
-
-            {{-- Footer --}}
-            <p class="font-typewriter text-ink/30 text-xs text-center tracking-widest mt-8 border-t border-gold/20 pt-5">
-                © {{ date('Y') }} KONTENDIGITAL.ID — RESTRICTED ACCESS
+        <div class="text-right">
+            <p class="font-bold text-black/50 text-xs tracking-widest uppercase">
+                {{ now()->format('l, d F Y') }}
             </p>
-        </div>
-
-        {{-- Bottom ornament --}}
-        <div class="flex items-center gap-3 mt-6">
-            <div class="flex-1 h-px bg-gradient-to-r from-transparent to-gold/30"></div>
-            <span class="text-gold/40 font-typewriter text-xs tracking-widest">AUTHORIZED PERSONNEL ONLY</span>
-            <div class="flex-1 h-px bg-gradient-to-l from-transparent to-gold/30"></div>
+            <p class="font-bold text-black/30 text-xs">{{ now()->format('H:i') }} WIB</p>
         </div>
     </div>
 
-    <script>
-    function togglePwd() {
-        const pwd = document.getElementById('password');
-        pwd.type = pwd.type === 'password' ? 'text' : 'password';
-    }
-    </script>
-</body>
-</html>
+    <div class="divider-neo"><span>✦</span></div>
+
+    {{-- Stats Grid --}}
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
+        @foreach([
+            ['Pesanan Masuk',   '128',   '↑ 12% bulan ini', 'bg-red-500',    'text-white'],
+            ['Press Release',   '1,045', 'Total terbit',    'bg-yellow-400', 'text-black'],
+            ['Media Partner',   '200+',  'Aktif',           'bg-purple-950', 'text-white'],
+            ['Klien Aktif',     '87',    'Bulan ini',       'bg-black',      'text-yellow-400'],
+        ] as [$label, $val, $sub, $bg, $textColor])
+        <div class="border-4 border-black {{ $bg }} p-6 shadow-neo-sm relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-12 h-12 border-b-4 border-l-4 border-black/20"></div>
+            <p class="font-black text-xs tracking-widest uppercase {{ $textColor }} opacity-70 mb-2">
+                {{ $label }}
+            </p>
+            <p class="font-black text-4xl leading-none {{ $textColor }} mb-1"
+               style="font-family:'Unbounded',sans-serif">{{ $val }}</p>
+            <p class="font-bold text-xs {{ $textColor }} opacity-50">{{ $sub }}</p>
+        </div>
+        @endforeach
+    </div>
+
+    {{-- Recent Orders + Quick Actions --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+        {{-- Recent Orders --}}
+        <div class="lg:col-span-2 card-retro p-6">
+            <div class="flex items-center justify-between mb-6">
+                <h3 class="font-black text-xl text-black uppercase tracking-tight"
+                    style="font-family:'Unbounded',sans-serif">Pesanan Terbaru</h3>
+                <a href="{{ route('admin.orders') }}"
+                   class="border-4 border-black bg-white text-black font-black text-xs
+                          uppercase tracking-widest px-4 py-2 shadow-neo-sm
+                          hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
+                    Lihat Semua
+                </a>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead>
+                        <tr class="border-b-4 border-black">
+                            @foreach(['#ID','Klien','Layanan','Status','Tanggal'] as $h)
+                            <th class="font-black text-xs tracking-widest text-left pb-3 pr-4 uppercase">
+                                {{ $h }}
+                            </th>
+                            @endforeach
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y-2 divide-black/10">
+                        @foreach([
+                            ['#1042','PT Maju Jaya',  'Press Release',     'Tayang',  '2 jam lalu'],
+                            ['#1041','Startup XYZ',   'Backlink Media',    'Proses',  '5 jam lalu'],
+                            ['#1040','Brand ABC',     'Penulisan Artikel', 'Revisi',  'Kemarin'],
+                            ['#1039','CV Sejahtera',  'Press Release',     'Tayang',  'Kemarin'],
+                            ['#1038','Tokopedia',     'Press Conference',  'Selesai', '2 hari lalu'],
+                        ] as [$id, $client, $svc, $status, $date])
+                        <tr class="hover:bg-yellow-400/20 transition-colors">
+                            <td class="font-black text-yellow-600 text-sm py-3 pr-4">{{ $id }}</td>
+                            <td class="font-bold text-black text-sm py-3 pr-4">{{ $client }}</td>
+                            <td class="font-bold text-black/60 text-sm py-3 pr-4">{{ $svc }}</td>
+                            <td class="py-3 pr-4">
+                                @php
+                                $badges = [
+                                    'Tayang'  => 'bg-green-400  text-black',
+                                    'Proses'  => 'bg-yellow-400 text-black',
+                                    'Revisi'  => 'bg-red-400    text-white',
+                                    'Selesai' => 'bg-purple-950 text-white',
+                                ];
+                                $badge = $badges[$status] ?? 'bg-black text-white';
+                                @endphp
+                                <span class="font-black text-xs tracking-widest uppercase
+                                             border-2 border-black px-2 py-0.5 {{ $badge }}">
+                                    {{ $status }}
+                                </span>
+                            </td>
+                            <td class="font-bold text-black/40 text-xs py-3">{{ $date }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        {{-- Quick Actions --}}
+        <div class="space-y-4">
+            <div class="card-retro p-6">
+                <h4 class="font-black text-lg text-black uppercase tracking-tight mb-4"
+                    style="font-family:'Unbounded',sans-serif">Aksi Cepat</h4>
+                <div class="space-y-3">
+                    @foreach([
+                        [route('admin.orders.create'),   '+ Buat Pesanan Baru'],
+                        [route('admin.media.index'),     '◈ Kelola Media'],
+                        [route('admin.articles.index'),  '✦ Buat Artikel'],
+                        [route('admin.reports.index'),   '◉ Laporan Tayang'],
+                    ] as [$href, $label])
+                    <a href="{{ $href }}"
+                       class="block w-full text-center border-4 border-black bg-white text-black
+                              font-black text-xs uppercase tracking-widest px-4 py-3 shadow-neo-sm
+                              hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
+                        {{ $label }}
+                    </a>
+                    @endforeach
+                </div>
+            </div>
+
+            {{-- Tip Card --}}
+            <div class="border-4 border-black bg-purple-950 p-6">
+                <h4 class="font-black text-yellow-400 text-lg uppercase tracking-tight mb-3"
+                    style="font-family:'Unbounded',sans-serif">Tip Hari Ini</h4>
+                <div class="divider-neo opacity-30 mb-4"><span class="text-yellow-400">✦</span></div>
+                <p class="text-white/70 text-xs leading-relaxed font-bold">
+                    Press release dengan angle berita yang kuat dan newsworthy memiliki kemungkinan terbit 3x lebih tinggi di media tier-1.
+                </p>
+            </div>
+        </div>
+
+    </div>
+</div>
+@endsection

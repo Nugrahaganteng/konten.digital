@@ -1,52 +1,78 @@
+{{-- resources/views/auth/register.blade.php --}}
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+
+    {{-- Header --}}
+    <div class="text-center mb-8">
+        <h1 class="font-black text-2xl text-black uppercase tracking-tight mb-1"
+            style="font-family:'Unbounded',sans-serif">Daftar</h1>
+        <p class="font-bold text-black/50 text-xs uppercase tracking-widest">
+            Buat akun baru
+        </p>
+        <div class="divider-neo mt-4 max-w-xs mx-auto opacity-30"><span>✦</span></div>
+    </div>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-5">
         @csrf
 
-        <!-- Name -->
+        {{-- Name --}}
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <label class="label-neo" for="name">Nama Lengkap</label>
+            <input id="name" type="text" name="name" value="{{ old('name') }}"
+                   placeholder="Nama kamu"
+                   required autofocus autocomplete="name"
+                   class="input-neo @error('name') border-red-500 @enderror">
+            @error('name')
+            <p class="text-red-500 text-xs font-bold mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        {{-- Email --}}
+        <div>
+            <label class="label-neo" for="email">Alamat Email</label>
+            <input id="email" type="email" name="email" value="{{ old('email') }}"
+                   placeholder="email@domain.com"
+                   required autocomplete="username"
+                   class="input-neo @error('email') border-red-500 @enderror">
+            @error('email')
+            <p class="text-red-500 text-xs font-bold mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        {{-- Password --}}
+        <div>
+            <label class="label-neo" for="password">Kata Sandi</label>
+            <input id="password" type="password" name="password"
+                   placeholder="Min. 8 karakter"
+                   required autocomplete="new-password"
+                   class="input-neo @error('password') border-red-500 @enderror">
+            @error('password')
+            <p class="text-red-500 text-xs font-bold mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        {{-- Confirm Password --}}
+        <div>
+            <label class="label-neo" for="password_confirmation">Konfirmasi Kata Sandi</label>
+            <input id="password_confirmation" type="password" name="password_confirmation"
+                   placeholder="Ulangi kata sandi"
+                   required autocomplete="new-password"
+                   class="input-neo">
+            @error('password_confirmation')
+            <p class="text-red-500 text-xs font-bold mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+        {{-- Submit + Login link --}}
+        <div class="flex items-center justify-between gap-4 pt-2">
+            <a href="{{ route('login') }}"
+               class="font-bold text-xs text-black/50 hover:text-black underline
+                      underline-offset-2 transition-colors">
+                Sudah punya akun?
             </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+            <button type="submit" class="btn-pop px-8 py-3">
+                Daftar →
+            </button>
         </div>
     </form>
+
 </x-guest-layout>

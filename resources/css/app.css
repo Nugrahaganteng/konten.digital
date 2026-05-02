@@ -1,147 +1,192 @@
 @tailwind base;
-
 @tailwind components;
-
 @tailwind utilities;
 
+/* ── GOOGLE FONTS ─────────────────────────────────────────────────── */
+/* Sudah di-load di blade, tidak perlu @import lagi */
 
-
+/* ── CSS VARIABLES ────────────────────────────────────────────────── */
 @layer base {
-
     :root {
-
-        --color-yellow: #facc15; /* yellow-400 */
-
-        --color-purple: #3b0764; /* purple-950 */
-
-        --color-red: #ef4444;    /* red-500 */
-
+        --yellow:  #facc15;
+        --black:   #000000;
+        --white:   #ffffff;
+        --purple:  #3b0764;
+        --red:     #ef4444;
+        --navy:    #1a1a2e;
     }
 
-
-
+    /* Reset body: kuning neubrutalism */
     body {
-
-        @apply bg-yellow-400 text-black overflow-x-hidden;
-
-        /* Menggunakan font dari app.blade */
-
+        @apply bg-yellow-400 text-black overflow-x-hidden antialiased;
         font-family: 'Space Grotesk', sans-serif;
-
     }
 
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track { @apply bg-black; }
+    ::-webkit-scrollbar-thumb {
+        @apply bg-yellow-400 border-2 border-black rounded-full;
+    }
+
+    /* Selection highlight */
+    ::selection {
+        background: #facc15;
+        color: #000;
+    }
 }
 
-
-
+/* ── COMPONENTS ───────────────────────────────────────────────────── */
 @layer components {
 
-    /* Gaya Link Navbar */
+    /* ── NAVBAR ── */
+    #main-nav {
+        @apply fixed top-0 left-0 w-full z-50;
+        background: transparent;
+        transition: background 0.35s ease, box-shadow 0.35s ease;
+    }
+    #main-nav.scrolled {
+        @apply bg-white;
+        box-shadow: 0 4px 0 0 #000;
+    }
 
     .nav-link-pop {
-
-        @apply font-black uppercase text-[13px] tracking-tight hover:text-red-500 transition-colors cursor-pointer;
-
+        @apply font-bold uppercase text-[0.8rem] tracking-wide text-[#1a1a2e]
+               transition-colors duration-200 hover:text-red-500;
+        font-family: 'Space Grotesk', sans-serif;
     }
 
+    /* Mobile menu */
+    #mobile-menu {
+        @apply hidden flex-col gap-6 bg-yellow-400 border-t-4 border-black px-6 py-8;
+    }
+    #mobile-menu.open { @apply flex; }
+    #mobile-menu a {
+        @apply text-[#1a1a2e] uppercase text-xl font-black;
+        font-family: 'Unbounded', sans-serif;
+    }
 
+    /* Search bar dropdown */
+    #search-bar {
+        @apply hidden absolute left-0 w-full bg-white border-b-4 border-black px-6 py-4;
+    }
 
-    /* Tombol Neubrutalism */
+    /* Search button */
+    .search-btn {
+        @apply hidden md:flex w-9 h-9 items-center justify-center rounded-full
+               border-2 border-[#1a1a2e] bg-transparent cursor-pointer
+               transition-colors duration-200 hover:bg-[#1a1a2e] hover:text-yellow-400;
+    }
+    .search-btn svg { @apply w-4 h-4; stroke: currentColor; }
 
+    /* ── BUTTONS ── */
     .btn-pop {
-
-        @apply bg-purple-950 text-white font-black px-6 py-2 rounded-xl border-4 border-black
-
-               shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:translate-y-1 hover:shadow-none
-
-               transition-all inline-block text-center uppercase text-sm tracking-wider;
-
+        @apply bg-purple-950 text-white font-black px-5 py-2 rounded-xl
+               border-[3px] border-black shadow-[4px_4px_0px_0px_#000]
+               hover:translate-y-[3px] hover:shadow-none
+               transition-all inline-block text-center uppercase text-[0.75rem] tracking-widest;
+        font-family: 'Space Grotesk', sans-serif;
     }
 
-
-
-    /* Card Style (untuk section Our Services nanti) */
-
+    /* ── CARDS ── */
     .card-retro {
-
         @apply bg-white border-4 border-black rounded-2xl p-6
-
-               shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-none
-
-               hover:translate-x-1 hover:translate-y-1 transition-all;
-
+               shadow-[8px_8px_0px_0px_#000]
+               hover:shadow-none hover:translate-x-1 hover:translate-y-1
+               transition-all;
     }
 
+    /* ── ADMIN SIDEBAR ── */
+    #sidebar {
+        @apply w-64 bg-purple-950 border-r-4 border-black flex flex-col
+               shrink-0 min-h-screen fixed top-0 left-0 z-40
+               transition-transform duration-300 lg:translate-x-0 -translate-x-full;
+    }
+
+    .sidebar-link {
+        @apply flex items-center gap-3 px-3 py-3 font-bold text-xs tracking-widest
+               uppercase text-white/60 border border-transparent
+               hover:text-yellow-400 hover:bg-yellow-400/10 hover:border-yellow-400/30
+               transition-all;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+    .sidebar-link.active {
+        @apply text-yellow-400 bg-yellow-400/10 border-yellow-400/30;
+    }
+    .sidebar-link span { @apply text-yellow-400/60 text-base w-5 text-center; }
+    .sidebar-link:hover span { @apply text-yellow-400; }
+
+    /* ── ADMIN INPUTS ── */
+    .input-neo {
+        @apply w-full bg-white border-4 border-black rounded-xl px-4 py-2
+               font-bold text-sm focus:outline-none focus:ring-0
+               focus:shadow-[4px_4px_0px_0px_#000] transition-all;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .label-neo {
+        @apply block font-black uppercase text-[0.7rem] tracking-widest mb-1;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* ── SECTION EYEBROW ── */
+    .section-eyebrow {
+        @apply text-[0.72rem] font-black uppercase tracking-[0.35em] text-red-500;
+        font-family: 'Space Grotesk', sans-serif;
+    }
+
+    /* ── DIVIDER ── */
+    .divider-neo {
+        @apply flex items-center gap-4 text-black/30 text-xs font-bold
+               uppercase tracking-widest;
+    }
+    .divider-neo::before,
+    .divider-neo::after {
+        content: '';
+        @apply flex-1 h-[2px] bg-black;
+    }
+
+    /* ── STAMP ── */
+    .stamp {
+        @apply inline-block border-4 border-current px-3 py-1
+               text-[0.7rem] font-black uppercase tracking-widest
+               opacity-80 rotate-[-8deg];
+    }
+
+    /* ── ORNAMENTAL CORNER ── */
+    .corner-ornament {
+        @apply absolute w-5 h-5 border-black border-solid;
+    }
+    .corner-ornament.tl { @apply top-2 left-2 border-t-2 border-l-2; }
+    .corner-ornament.tr { @apply top-2 right-2 border-t-2 border-r-2; }
+    .corner-ornament.bl { @apply bottom-2 left-2 border-b-2 border-l-2; }
+    .corner-ornament.br { @apply bottom-2 right-2 border-b-2 border-r-2; }
+
+    /* ── REVEAL ANIMATION ── */
+    .reveal {
+        @apply opacity-0 translate-y-8;
+        transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .reveal.animate-in {
+        @apply opacity-100 translate-y-0;
+    }
 }
 
-
-
+/* ── UTILITIES ────────────────────────────────────────────────────── */
 @layer utilities {
 
-    /* Animasi Ticker Tape */
+    /* Shadow utilities */
+    .shadow-neo    { box-shadow: 8px 8px 0px 0px #000; }
+    .shadow-neo-sm { box-shadow: 4px 4px 0px 0px #000; }
 
+    /* Ticker Tape */
     @keyframes ticker {
-
-        0% { transform: translateX(0); }
-
+        0%   { transform: translateX(0); }
         100% { transform: translateX(-50%); }
-
     }
-
-
-
     .animate-ticker {
-
         display: flex;
-
         width: max-content;
-
         animation: ticker 30s linear infinite;
-
     }
-
-
-
-    /* Utilitas tambahan untuk shadow solid */
-
-    .shadow-neo {
-
-        box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
-
-    }
-
-   
-
-    .shadow-neo-sm {
-
-        box-shadow: 4px 4px 0px 0px rgba(0,0,0,1);
-
-    }
-
-}
-
-
-
-/* Custom Scrollbar agar senada dengan tema */
-
-::-webkit-scrollbar {
-
-    width: 12px;
-
-}
-
-
-
-::-webkit-scrollbar-track {
-
-    @apply bg-black;
-
-}
-
-
-
-::-webkit-scrollbar-thumb {
-
-    @apply bg-yellow-400 border-2 border-black rounded-full;
-
 }
