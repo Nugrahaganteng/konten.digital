@@ -44,15 +44,39 @@
                 </a>
 
                 {{-- Menu Desktop --}}
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="{{ route('home') }}"     class="nav-link-pop">Home</a>
-                    <a href="#about"                  class="nav-link-pop">About Us</a>
-                    <a href="{{ route('services') }}" class="nav-link-pop">Services</a>
-                    <a href="#blog"                   class="nav-link-pop">Blog</a>
-                    <a href="#career"                 class="nav-link-pop">Career</a>
-                    <a href="#contact"                class="nav-link-pop">Contact</a>
-                </div>
+        {{-- Menu Desktop --}}
+<div class="hidden md:flex items-center gap-8">
+    <a href="{{ route('home') }}" class="nav-link-pop">Home</a>
+    <a href="#about" class="nav-link-pop">About Us</a>
+    
+    {{-- Dropdown Services --}}
+    <div class="relative group">
+        <button class="nav-link-pop flex items-center gap-1 focus:outline-none">
+            Services
+            <svg class="w-4 h-4 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M19 9l-7 7-7-7" />
+            </svg>
+        </button>
+        
+        {{-- Dropdown Menu --}}
+        <div class="absolute left-0 mt-2 w-72 bg-white border-[3px] border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] 
+                    opacity-0 invisible group-hover:opacity-100 group-hover:visible 
+                    transition-all duration-200 z-50 overflow-hidden">
+            <div class="flex flex-col">
+                <a href="#" class="px-6 py-4 text-sm font-bold text-gray-700 hover:bg-yellow-400 border-b-[2px] border-black transition-colors">Jasa Press Release</a>
+                <a href="#" class="px-6 py-4 text-sm font-bold text-gray-700 hover:bg-yellow-400 border-b-[2px] border-black transition-colors">Jasa Backlink Media Nasional</a>
+                <a href="#" class="px-6 py-4 text-sm font-bold text-gray-700 hover:bg-yellow-400 border-b-[2px] border-black transition-colors">Jasa Press Conference / Konferensi Pers</a>
+                <a href="#" class="px-6 py-4 text-sm font-bold text-gray-700 hover:bg-yellow-400 border-b-[2px] border-black transition-colors">Jasa Penulisan Artikel</a>
+                <a href="#" class="px-6 py-4 text-sm font-bold text-gray-700 hover:bg-yellow-400 border-b-[2px] border-black transition-colors">Jasa Penulisan Script Video / Televisi</a>
+                <a href="#" class="px-6 py-4 text-sm font-bold text-gray-700 hover:bg-yellow-400 transition-colors">Jasa Pelatihan Konten Kreator</a>
+            </div>
+        </div>
+    </div>
 
+    <a href="#blog" class="nav-link-pop">Blog</a>
+    <a href="#career" class="nav-link-pop">Career</a>
+    <a href="#contact" class="nav-link-pop">Contact</a>
+</div>
                 {{-- Kanan: Search + CTA + Burger --}}
                 <div class="flex items-center gap-3">
                     <button class="search-btn" id="search-toggle" aria-label="Search">
