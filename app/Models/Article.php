@@ -26,13 +26,6 @@ class Article extends Model
         'published_at' => 'datetime',
     ];
 
-    // Auto-generate slug dari title
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($article) {
-            $article->slug = Str::slug($article->title) . '-' . Str::random(5);
     /**
      * Auto-generate slug & excerpt saat create.
      */
@@ -55,6 +48,7 @@ class Article extends Model
         });
     }
 
+    /* ── Relasi ── */
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -66,20 +60,17 @@ class Article extends Model
         return $query->where('status', 'published');
     }
 
+    /* ── Accessors ── */
     public function getThumbnailUrlAttribute(): string
     {
         if ($this->thumbnail && file_exists(public_path('storage/' . $this->thumbnail))) {
             return asset('storage/' . $this->thumbnail);
         }
+
         // Placeholder warna random per artikel
         $colors = ['3b82f6', 'e8402a', '00a896', '2d1b4e', 'f5c518'];
         $color  = $colors[$this->id % count($colors)];
-        return "https://via.placeholder.com/800x500/{$color}/ffffff?text=" . urlencode($this->title);
-    }
-}
-    /* ── Relasi ── */
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+
+        return 'https://via.placeholder.com/800x500/' . $color . '/ffffff?text=' . urlencode($this->title);
     }
 }

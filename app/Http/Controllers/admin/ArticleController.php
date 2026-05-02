@@ -9,7 +9,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ArticleController extends Controller
 {
-    // ── Semua artikel (semua status) ──
     // ── Semua artikel (semua status) ───────────────────────────
     public function index(Request $request)
     {
@@ -24,11 +23,6 @@ class ArticleController extends Controller
         }
 
         $articles = $query->paginate(15);
-        $counts   = [
-            $query->where('title', 'like', '%'.$request->search.'%');
-        }
-
-        $articles = $query->paginate(15);
 
         $counts = [
             'all'       => Article::count(),
@@ -40,14 +34,12 @@ class ArticleController extends Controller
         return view('admin.articles.index', compact('articles', 'counts'));
     }
 
-    // ── Form buat artikel (admin) ──
     // ── Form buat artikel baru ─────────────────────────────────
     public function create()
     {
         return view('admin.articles.create');
     }
 
-    // ── Simpan artikel baru oleh admin ──
     // ── Simpan artikel baru oleh admin ─────────────────────────
     public function store(Request $request)
     {
@@ -65,7 +57,6 @@ class ArticleController extends Controller
             $thumbnailPath = $request->file('thumbnail')->store('articles', 'public');
         }
 
-        $article = auth()->user()->articles()->create([
         auth()->user()->articles()->create([
             'title'        => $validated['title'],
             'category'     => $validated['category'],
@@ -80,14 +71,12 @@ class ArticleController extends Controller
             ->with('success', 'Artikel berhasil dibuat.');
     }
 
-    // ── Form edit artikel ──
     // ── Form edit artikel ──────────────────────────────────────
     public function edit(Article $article)
     {
         return view('admin.articles.edit', compact('article'));
     }
 
-    // ── Update artikel ──
     // ── Update artikel ─────────────────────────────────────────
     public function update(Request $request, Article $article)
     {
@@ -101,15 +90,6 @@ class ArticleController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            if ($article->thumbnail) Storage::disk('public')->delete($article->thumbnail);
-            $validated['thumbnail'] = $request->file('thumbnail')->store('articles', 'public');
-        }
-
-        // Set published_at saat pertama kali dipublish
-        if ($validated['status'] === 'published' && !$article->published_at) {
-            $validated['published_at'] = now();
-        }
-
             if ($article->thumbnail) {
                 Storage::disk('public')->delete($article->thumbnail);
             }
@@ -132,7 +112,6 @@ class ArticleController extends Controller
             ->with('success', 'Artikel berhasil diperbarui.');
     }
 
-    // ── Approve (publish) artikel user ──
     // ── Publish artikel ────────────────────────────────────────
     public function publish(Article $article)
     {
@@ -144,17 +123,6 @@ class ArticleController extends Controller
         return back()->with('success', 'Artikel berhasil dipublish!');
     }
 
-    // ── Reject artikel user ──
-    public function reject(Article $article)
-    {
-        $article->update(['status' => 'rejected']);
-        return back()->with('success', 'Artikel ditolak.');
-    }
-
-    // ── Hapus artikel ──
-    public function destroy(Article $article)
-    {
-        if ($article->thumbnail) Storage::disk('public')->delete($article->thumbnail);
     // ── Reject artikel ─────────────────────────────────────────
     public function reject(Article $article)
     {
@@ -177,5 +145,4 @@ class ArticleController extends Controller
         return redirect()->route('admin.articles.index')
             ->with('success', 'Artikel berhasil dihapus.');
     }
-}
 }

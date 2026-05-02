@@ -23,4 +23,3 @@ class ArticlePolicy
         return $user->id === $article->user_id || $user->isAdmin();
     }
 }
-}

@@ -1,43 +1,24 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
-    /**
-     * Run the migrations.
-     */
-    public function up(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_admin')->default(false)->after('email');
-        });
-    }
-
-    /**
-     * Reverse the migrations.
-     */
-    public function down(): void
-    {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
-// NOTE: File ini sengaja dikosongkan karena kolom 'role' sudah ditambahkan
-// di migration 2026_05_02_020201_add_role_to_users_table.php
-// Jika project Anda sudah punya migration ini sebelumnya dengan isi berbeda,
-// HAPUS file ini dan pastikan hanya pakai migration role di atas.
+/**
+ * Migration ini dikosongkan karena kolom autentikasi admin
+ * sudah ditangani oleh migration add_role_to_users_table.
+ *
+ * Jika project belum pernah dijalankan, HAPUS file ini.
+ * Jika sudah pernah di-migrate, biarkan file ini agar tabel
+ * migrations tidak error saat rollback.
+ */
 return new class extends Migration
 {
     public function up(): void
     {
-        // Sudah ditangani oleh migration add_role_to_users_table
-        // Tidak perlu aksi tambahan
+        // Sudah ditangani oleh: add_role_to_users_table
     }
 
     public function down(): void
     {
-        //
+        // Tidak ada yang perlu di-rollback
     }
 };
