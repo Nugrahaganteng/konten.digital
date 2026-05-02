@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 class ArticleController extends Controller
 {
     // ── Semua artikel (semua status) ──
+    // ── Semua artikel (semua status) ───────────────────────────
     public function index(Request $request)
     {
         $query = Article::with('user')->latest();
@@ -24,6 +25,12 @@ class ArticleController extends Controller
 
         $articles = $query->paginate(15);
         $counts   = [
+            $query->where('title', 'like', '%'.$request->search.'%');
+        }
+
+        $articles = $query->paginate(15);
+
+        $counts = [
             'all'       => Article::count(),
             'draft'     => Article::where('status', 'draft')->count(),
             'published' => Article::where('status', 'published')->count(),
@@ -34,12 +41,14 @@ class ArticleController extends Controller
     }
 
     // ── Form buat artikel (admin) ──
+    // ── Form buat artikel baru ─────────────────────────────────
     public function create()
     {
         return view('admin.articles.create');
     }
 
     // ── Simpan artikel baru oleh admin ──
+    // ── Simpan artikel baru oleh admin ─────────────────────────
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -57,6 +66,7 @@ class ArticleController extends Controller
         }
 
         $article = auth()->user()->articles()->create([
+        auth()->user()->articles()->create([
             'title'        => $validated['title'],
             'category'     => $validated['category'],
             'content'      => $validated['content'],
@@ -71,12 +81,14 @@ class ArticleController extends Controller
     }
 
     // ── Form edit artikel ──
+    // ── Form edit artikel ──────────────────────────────────────
     public function edit(Article $article)
     {
         return view('admin.articles.edit', compact('article'));
     }
 
     // ── Update artikel ──
+    // ── Update artikel ─────────────────────────────────────────
     public function update(Request $request, Article $article)
     {
         $validated = $request->validate([
@@ -98,6 +110,22 @@ class ArticleController extends Controller
             $validated['published_at'] = now();
         }
 
+            if ($article->thumbnail) {
+                Storage::disk('public')->delete($article->thumbnail);
+            }
+            $validated['thumbnail'] = $request->file('thumbnail')->store('articles', 'public');
+        }
+
+        // Set published_at pertama kali dipublish
+        if ($validated['status'] === 'published' && ! $article->published_at) {
+            $validated['published_at'] = now();
+        }
+
+        // Reset published_at jika di-reject / draft
+        if (in_array($validated['status'], ['draft', 'rejected'])) {
+            $validated['published_at'] = null;
+        }
+
         $article->update($validated);
 
         return redirect()->route('admin.articles.index')
@@ -105,6 +133,7 @@ class ArticleController extends Controller
     }
 
     // ── Approve (publish) artikel user ──
+    // ── Publish artikel ────────────────────────────────────────
     public function publish(Article $article)
     {
         $article->update([
@@ -126,9 +155,27 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         if ($article->thumbnail) Storage::disk('public')->delete($article->thumbnail);
+    // ── Reject artikel ─────────────────────────────────────────
+    public function reject(Article $article)
+    {
+        $article->update([
+            'status'       => 'rejected',
+            'published_at' => null,
+        ]);
+
+        return back()->with('success', 'Artikel ditolak.');
+    }
+
+    // ── Hapus artikel ──────────────────────────────────────────
+    public function destroy(Article $article)
+    {
+        if ($article->thumbnail) {
+            Storage::disk('public')->delete($article->thumbnail);
+        }
         $article->delete();
 
         return redirect()->route('admin.articles.index')
             ->with('success', 'Artikel berhasil dihapus.');
     }
+}
 }

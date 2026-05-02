@@ -33,13 +33,20 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Cek apakah user adalah admin.
+     */
     public function isAdmin(): bool
     {
         return $this->role === 'admin';
     }
 
+    /**
+     * Relasi ke artikel milik user.
+     */
     public function articles()
     {
         return $this->hasMany(Article::class);
     }
+}
 }

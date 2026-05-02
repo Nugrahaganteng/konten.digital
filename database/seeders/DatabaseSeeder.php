@@ -31,5 +31,17 @@ class DatabaseSeeder extends Seeder
         // Artikel dummy
         Article::factory(10)->create(['user_id' => $admin->id, 'status' => 'published']);
         Article::factory(5)->create(['user_id' => $user->id, 'status' => 'draft']);
+        // ── Buat akun admin default ──────────────────────────────
+        User::firstOrCreate(
+            ['email' => 'admin@kontendigital.id'],
+            [
+                'name'     => 'Admin KontenDigital',
+                'password' => Hash::make('admin123456'),
+                'role'     => 'admin',
+            ]
+        );
+
+        // ── (Opsional) buat user biasa untuk testing ─────────────
+        // User::factory(5)->create();
     }
 }

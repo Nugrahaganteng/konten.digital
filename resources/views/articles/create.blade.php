@@ -1,3 +1,4 @@
+{{-- resources/views/articles/create.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Tulis Artikel')
 
@@ -16,4 +17,7 @@
         ])
     </div>
 </div>
+    @include('articles.partials.form', [
+        'action' => route('articles.store'),
+    ])
 @endsection

@@ -1,3 +1,4 @@
+{{-- resources/views/articles/edit.blade.php --}}
 @extends('layouts.app')
 @section('title', 'Edit Artikel')
 
@@ -17,4 +18,8 @@
         ])
     </div>
 </div>
+    @include('articles.partials.form', [
+        'action'  => route('articles.update', $article),
+        'article' => $article,
+    ])
 @endsection

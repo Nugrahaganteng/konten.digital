@@ -182,4 +182,8 @@ document.getElementById('excerpt').dispatchEvent(new Event('input'));
 document.getElementById('content').dispatchEvent(new Event('input'));
 </script>
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> f331462 (pembuatan admin form dll)
