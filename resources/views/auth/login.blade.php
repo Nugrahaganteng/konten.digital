@@ -1,142 +1,170 @@
-{{-- resources/views/admin/dashboard.blade.php --}}
-@extends('layouts.admin')
-@section('title', 'Dashboard')
+{{-- resources/views/auth/login.blade.php --}}
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login — KontenDigital.id</title>
 
-@section('content')
-<div class="space-y-8">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    {{-- Page Header --}}
-    <div class="flex items-center justify-between">
+    <style>
+        :root { --ink:#0e0b14; --yellow:#f5c518; --purple:#2d1b4e; --punch:#e8402a; --cream:#f7f2e8; }
+
+        body {
+            background: var(--yellow);
+            min-height: 100vh;
+            font-family: 'DM Sans', sans-serif;
+        }
+
+        .card {
+            background: var(--cream);
+            border: 4px solid var(--ink);
+            box-shadow: 10px 10px 0 var(--ink);
+        }
+
+        .logo-box {
+            background: var(--purple);
+            border: 3px solid var(--ink);
+            width: 52px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .field {
+            width: 100%;
+            border: 3px solid var(--ink);
+            background: white;
+            padding: 0.7rem 1rem;
+            font-weight: 700;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .field:focus {
+            box-shadow: 4px 4px 0 var(--purple);
+        }
+
+        .btn-primary {
+            width: 100%;
+            background: var(--purple);
+            color: var(--yellow);
+            font-family: 'Anton', sans-serif;
+            font-size: 1.1rem;
+            letter-spacing: 0.08em;
+            padding: 0.9rem;
+            border: 3px solid var(--ink);
+            box-shadow: 6px 6px 0 var(--ink);
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translate(4px,4px);
+            box-shadow: 2px 2px 0 var(--ink);
+        }
+
+        label {
+            font-weight: 700;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            margin-bottom: 0.4rem;
+            display: block;
+        }
+
+        .error-msg {
+            color: var(--punch);
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .link {
+            color: var(--purple);
+            font-weight: 700;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body class="flex items-center justify-center min-h-screen p-6">
+
+<div class="w-full max-w-md">
+
+    {{-- Logo --}}
+    <a href="{{ route('home') }}" class="flex items-center gap-3 mb-8">
+        <div class="logo-box">
+            <span style="font-family:'Anton'; color:var(--yellow); font-size:1.4rem;">K</span>
+        </div>
         <div>
-            <p class="section-eyebrow mb-1">Selamat Datang Kembali</p>
-            <h1 class="font-black text-4xl text-black leading-none"
-                style="font-family:'Unbounded',sans-serif">Dashboard Admin</h1>
+            <p style="font-family:'Anton';">KONTENDIGITAL</p>
+            <small>Growth Partner</small>
         </div>
-        <div class="text-right">
-            <p class="font-bold text-black/50 text-xs tracking-widest uppercase">
-                {{ now()->format('l, d F Y') }}
-            </p>
-            <p class="font-bold text-black/30 text-xs">{{ now()->format('H:i') }} WIB</p>
-        </div>
-    </div>
+    </a>
 
-    <div class="divider-neo"><span>✦</span></div>
+    <div class="card p-8">
 
-    {{-- Stats Grid --}}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5">
-        @foreach([
-            ['Pesanan Masuk',   '128',   '↑ 12% bulan ini', 'bg-red-500',    'text-white'],
-            ['Press Release',   '1,045', 'Total terbit',    'bg-yellow-400', 'text-black'],
-            ['Media Partner',   '200+',  'Aktif',           'bg-purple-950', 'text-white'],
-            ['Klien Aktif',     '87',    'Bulan ini',       'bg-black',      'text-yellow-400'],
-        ] as [$label, $val, $sub, $bg, $textColor])
-        <div class="border-4 border-black {{ $bg }} p-6 shadow-neo-sm relative overflow-hidden">
-            <div class="absolute top-0 right-0 w-12 h-12 border-b-4 border-l-4 border-black/20"></div>
-            <p class="font-black text-xs tracking-widest uppercase {{ $textColor }} opacity-70 mb-2">
-                {{ $label }}
-            </p>
-            <p class="font-black text-4xl leading-none {{ $textColor }} mb-1"
-               style="font-family:'Unbounded',sans-serif">{{ $val }}</p>
-            <p class="font-bold text-xs {{ $textColor }} opacity-50">{{ $sub }}</p>
-        </div>
-        @endforeach
-    </div>
+        <h1 style="font-family:'Anton'; font-size:2rem; margin-bottom:1rem;">
+            MASUK AKUN
+        </h1>
 
-    {{-- Recent Orders + Quick Actions --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {{-- Status --}}
+        @if(session('status'))
+            <div style="margin-bottom:1rem; font-weight:700;">
+                {{ session('status') }}
+            </div>
+        @endif
 
-        {{-- Recent Orders --}}
-        <div class="lg:col-span-2 card-retro p-6">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="font-black text-xl text-black uppercase tracking-tight"
-                    style="font-family:'Unbounded',sans-serif">Pesanan Terbaru</h3>
-                <a href="{{ route('admin.orders') }}"
-                   class="border-4 border-black bg-white text-black font-black text-xs
-                          uppercase tracking-widest px-4 py-2 shadow-neo-sm
-                          hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
-                    Lihat Semua
-                </a>
+        <form method="POST" action="{{ route('login') }}">
+            @csrf
+
+            {{-- Email --}}
+            <div class="mb-4">
+                <label>Email</label>
+                <input type="email" name="email" class="field"
+                       value="{{ old('email') }}" required>
+                @error('email')
+                    <p class="error-msg">{{ $message }}</p>
+                @enderror
             </div>
 
-            <div class="overflow-x-auto">
-                <table class="w-full">
-                    <thead>
-                        <tr class="border-b-4 border-black">
-                            @foreach(['#ID','Klien','Layanan','Status','Tanggal'] as $h)
-                            <th class="font-black text-xs tracking-widest text-left pb-3 pr-4 uppercase">
-                                {{ $h }}
-                            </th>
-                            @endforeach
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y-2 divide-black/10">
-                        @foreach([
-                            ['#1042','PT Maju Jaya',  'Press Release',     'Tayang',  '2 jam lalu'],
-                            ['#1041','Startup XYZ',   'Backlink Media',    'Proses',  '5 jam lalu'],
-                            ['#1040','Brand ABC',     'Penulisan Artikel', 'Revisi',  'Kemarin'],
-                            ['#1039','CV Sejahtera',  'Press Release',     'Tayang',  'Kemarin'],
-                            ['#1038','Tokopedia',     'Press Conference',  'Selesai', '2 hari lalu'],
-                        ] as [$id, $client, $svc, $status, $date])
-                        <tr class="hover:bg-yellow-400/20 transition-colors">
-                            <td class="font-black text-yellow-600 text-sm py-3 pr-4">{{ $id }}</td>
-                            <td class="font-bold text-black text-sm py-3 pr-4">{{ $client }}</td>
-                            <td class="font-bold text-black/60 text-sm py-3 pr-4">{{ $svc }}</td>
-                            <td class="py-3 pr-4">
-                                @php
-                                $badges = [
-                                    'Tayang'  => 'bg-green-400  text-black',
-                                    'Proses'  => 'bg-yellow-400 text-black',
-                                    'Revisi'  => 'bg-red-400    text-white',
-                                    'Selesai' => 'bg-purple-950 text-white',
-                                ];
-                                $badge = $badges[$status] ?? 'bg-black text-white';
-                                @endphp
-                                <span class="font-black text-xs tracking-widest uppercase
-                                             border-2 border-black px-2 py-0.5 {{ $badge }}">
-                                    {{ $status }}
-                                </span>
-                            </td>
-                            <td class="font-bold text-black/40 text-xs py-3">{{ $date }}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            {{-- Password --}}
+            <div class="mb-4">
+                <label>Password</label>
+                <input type="password" name="password" class="field" required>
+                @error('password')
+                    <p class="error-msg">{{ $message }}</p>
+                @enderror
             </div>
-        </div>
 
-        {{-- Quick Actions --}}
-        <div class="space-y-4">
-            <div class="card-retro p-6">
-                <h4 class="font-black text-lg text-black uppercase tracking-tight mb-4"
-                    style="font-family:'Unbounded',sans-serif">Aksi Cepat</h4>
-                <div class="space-y-3">
-                    @foreach([
-                        [route('admin.orders.create'),   '+ Buat Pesanan Baru'],
-                        [route('admin.media.index'),     '◈ Kelola Media'],
-                        [route('admin.articles.index'),  '✦ Buat Artikel'],
-                        [route('admin.reports.index'),   '◉ Laporan Tayang'],
-                    ] as [$href, $label])
-                    <a href="{{ $href }}"
-                       class="block w-full text-center border-4 border-black bg-white text-black
-                              font-black text-xs uppercase tracking-widest px-4 py-3 shadow-neo-sm
-                              hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
-                        {{ $label }}
+            {{-- Remember --}}
+            <div class="mb-4 flex justify-between items-center">
+                <label style="text-transform:none;">
+                    <input type="checkbox" name="remember">
+                    Ingat saya
+                </label>
+
+                @if(Route::has('password.request'))
+                    <a href="{{ route('password.request') }}" class="link">
+                        Lupa password?
                     </a>
-                    @endforeach
-                </div>
+                @endif
             </div>
 
-            {{-- Tip Card --}}
-            <div class="border-4 border-black bg-purple-950 p-6">
-                <h4 class="font-black text-yellow-400 text-lg uppercase tracking-tight mb-3"
-                    style="font-family:'Unbounded',sans-serif">Tip Hari Ini</h4>
-                <div class="divider-neo opacity-30 mb-4"><span class="text-yellow-400">✦</span></div>
-                <p class="text-white/70 text-xs leading-relaxed font-bold">
-                    Press release dengan angle berita yang kuat dan newsworthy memiliki kemungkinan terbit 3x lebih tinggi di media tier-1.
-                </p>
-            </div>
-        </div>
+            <button type="submit" class="btn-primary">
+                MASUK
+            </button>
+        </form>
+
+        <p style="margin-top:1rem; text-align:center;">
+            Belum punya akun?
+            <a href="{{ route('register') }}" class="link">Daftar</a>
+        </p>
 
     </div>
+
 </div>
-@endsection
+
+</body>
+</html>
