@@ -40,6 +40,16 @@
 /* ── COMPONENTS ───────────────────────────────────────────────────── */
 @layer components {
 
+    .input-neo {
+        @apply w-full bg-white border-4 border-black px-4 py-3 font-bold text-black 
+               shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] outline-none transition-all
+               focus:shadow-none focus:translate-x-1 focus:translate-y-1 focus:bg-yellow-50;
+    }
+
+    .label-neo {
+        @apply block font-black uppercase text-xs tracking-widest text-black mb-2;
+    }
+
     /* ── NAVBAR ── */
     #main-nav {
         @apply fixed top-0 left-0 w-full z-50 border-b-4 border-transparent;
@@ -220,6 +230,9 @@
         animation: glitch-anim 0.15s infinite;
         text-shadow: 5px 5px 0 #ef4444, -5px -5px 0 #22d3ee;
     }
+
+    
+    
 }
 
 /* ── UTILITIES ────────────────────────────────────────────────────── */

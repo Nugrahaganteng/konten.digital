@@ -42,15 +42,15 @@
         @endforeach
     </div>
 
-    {{-- Recent Orders + Quick Actions --}}
+    {{-- Recent Articles + Quick Actions --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-        {{-- Recent Orders --}}
+        {{-- Recent Articles (pakai route yang sudah ada) --}}
         <div class="lg:col-span-2 card-retro p-6">
             <div class="flex items-center justify-between mb-6">
                 <h3 class="font-black text-xl text-black uppercase tracking-tight"
-                    style="font-family:'Unbounded',sans-serif">Pesanan Terbaru</h3>
-                <a href="{{ route('admin.orders') }}"
+                    style="font-family:'Unbounded',sans-serif">Artikel Terbaru</h3>
+                <a href="{{ route('admin.articles.index') }}"
                    class="border-4 border-black bg-white text-black font-black text-xs
                           uppercase tracking-widest px-4 py-2 shadow-neo-sm
                           hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
@@ -62,7 +62,7 @@
                 <table class="w-full">
                     <thead>
                         <tr class="border-b-4 border-black">
-                            @foreach(['#ID','Klien','Layanan','Status','Tanggal'] as $h)
+                            @foreach(['#','Judul','Status','Tanggal']) as $h)
                             <th class="font-black text-xs tracking-widest text-left pb-3 pr-4 uppercase">
                                 {{ $h }}
                             </th>
@@ -70,35 +70,43 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y-2 divide-black/10">
-                        @foreach([
-                            ['#1042','PT Maju Jaya',  'Press Release',     'Tayang',  '2 jam lalu'],
-                            ['#1041','Startup XYZ',   'Backlink Media',    'Proses',  '5 jam lalu'],
-                            ['#1040','Brand ABC',     'Penulisan Artikel', 'Revisi',  'Kemarin'],
-                            ['#1039','CV Sejahtera',  'Press Release',     'Tayang',  'Kemarin'],
-                            ['#1038','Tokopedia',     'Press Conference',  'Selesai', '2 hari lalu'],
-                        ] as [$id, $client, $svc, $status, $date])
+                        {{-- Data artikel dari database --}}
+                        @forelse(\App\Models\Article::latest()->take(5)->get() as $article)
                         <tr class="hover:bg-yellow-400/20 transition-colors">
-                            <td class="font-black text-yellow-600 text-sm py-3 pr-4">{{ $id }}</td>
-                            <td class="font-bold text-black text-sm py-3 pr-4">{{ $client }}</td>
-                            <td class="font-bold text-black/60 text-sm py-3 pr-4">{{ $svc }}</td>
+                            <td class="font-black text-yellow-600 text-sm py-3 pr-4">
+                                #{{ $article->id }}
+                            </td>
+                            <td class="font-bold text-black text-sm py-3 pr-4 max-w-[200px] truncate">
+                                {{ $article->title }}
+                            </td>
                             <td class="py-3 pr-4">
                                 @php
                                 $badges = [
-                                    'Tayang'  => 'bg-green-400  text-black',
-                                    'Proses'  => 'bg-yellow-400 text-black',
-                                    'Revisi'  => 'bg-red-400    text-white',
-                                    'Selesai' => 'bg-purple-950 text-white',
+                                    'published' => 'bg-green-400 text-black',
+                                    'draft'     => 'bg-yellow-400 text-black',
+                                    'rejected'  => 'bg-red-400 text-white',
                                 ];
-                                $badge = $badges[$status] ?? 'bg-black text-white';
+                                $badge = $badges[$article->status] ?? 'bg-black text-white';
                                 @endphp
                                 <span class="font-black text-xs tracking-widest uppercase
                                              border-2 border-black px-2 py-0.5 {{ $badge }}">
-                                    {{ $status }}
+                                    {{ $article->status }}
                                 </span>
                             </td>
-                            <td class="font-bold text-black/40 text-xs py-3">{{ $date }}</td>
+                            <td class="font-bold text-black/40 text-xs py-3">
+                                {{ $article->created_at->diffForHumans() }}
+                            </td>
                         </tr>
-                        @endforeach
+                        @empty
+                        <tr>
+                            <td colspan="4" class="py-12 text-center">
+                                <div class="text-4xl mb-2">📝</div>
+                                <p class="font-black text-black/40 text-sm uppercase tracking-widest">
+                                    Belum ada artikel
+                                </p>
+                            </td>
+                        </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
@@ -110,18 +118,39 @@
                 <h4 class="font-black text-lg text-black uppercase tracking-tight mb-4"
                     style="font-family:'Unbounded',sans-serif">Aksi Cepat</h4>
                 <div class="space-y-3">
-                    @foreach([
-                        [route('admin.orders.create'),   '+ Buat Pesanan Baru'],
-                        [route('admin.media.index'),     '◈ Kelola Media'],
-                        [route('admin.articles.index'),  '✦ Buat Artikel'],
-                        [route('admin.reports.index'),   '◉ Laporan Tayang'],
-                    ] as [$href, $label])
-                    <a href="{{ $href }}"
+
+                    {{-- Route yang sudah ada --}}
+                    <a href="{{ route('admin.articles.index') }}"
                        class="block w-full text-center border-4 border-black bg-white text-black
                               font-black text-xs uppercase tracking-widest px-4 py-3 shadow-neo-sm
                               hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
-                        {{ $label }}
+                        ✦ Kelola Artikel
                     </a>
+
+                    <a href="{{ route('articles.create') }}"
+                       class="block w-full text-center border-4 border-black bg-white text-black
+                              font-black text-xs uppercase tracking-widest px-4 py-3 shadow-neo-sm
+                              hover:bg-yellow-400 hover:translate-y-0.5 hover:shadow-none transition-all">
+                        ✏ Tulis Artikel Baru
+                    </a>
+
+                    {{-- Route belum ada — Coming Soon --}}
+                    @foreach([
+                        ['+ Kelola Pesanan'],
+                        ['◈ Kelola Media'],
+                        ['◉ Laporan Tayang'],
+                    ] as [$label])
+                    <div class="relative">
+                        <div class="block w-full text-center border-4 border-black/30 bg-white/50
+                                    text-black/30 font-black text-xs uppercase tracking-widest
+                                    px-4 py-3 cursor-not-allowed select-none">
+                            {{ $label }}
+                        </div>
+                        <span class="absolute -top-2 -right-2 bg-black text-yellow-400 font-black
+                                     text-[9px] uppercase tracking-widest px-2 py-0.5 border-2 border-black">
+                            Soon
+                        </span>
+                    </div>
                     @endforeach
                 </div>
             </div>
@@ -130,7 +159,9 @@
             <div class="border-4 border-black bg-purple-950 p-6">
                 <h4 class="font-black text-yellow-400 text-lg uppercase tracking-tight mb-3"
                     style="font-family:'Unbounded',sans-serif">Tip Hari Ini</h4>
-                <div class="divider-neo opacity-30 mb-4"><span class="text-yellow-400">✦</span></div>
+                <div class="divider-neo opacity-30 mb-4">
+                    <span class="text-yellow-400">✦</span>
+                </div>
                 <p class="text-white/70 text-xs leading-relaxed font-bold">
                     Press release dengan angle berita yang kuat dan newsworthy memiliki kemungkinan terbit 3x lebih tinggi di media tier-1.
                 </p>
