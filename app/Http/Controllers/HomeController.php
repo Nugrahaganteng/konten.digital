@@ -14,10 +14,37 @@ class HomeController extends Controller
         return view('home', compact('latestArticles'));
     }
 
-    public function services()
-    {
-        return view('services');
-    }
+public function services()
+{
+    $services = [
+        [
+            'title' => 'Jasa Press Release',
+            'slug'  => 'press-release',
+        ],
+        [
+            'title' => 'Jasa Backlink Media',
+            'slug'  => 'backlink',
+        ],
+        [
+            'title' => 'Press Conference',
+            'slug'  => 'press-conference',
+        ],
+        [
+            'title' => 'Penulisan Artikel',
+            'slug'  => 'penulisan-artikel',
+        ],
+        [
+            'title' => 'Script Video',
+            'slug'  => 'script-video',
+        ],
+        [
+            'title' => 'Pelatihan Konten',
+            'slug'  => 'pelatihan-konten',
+        ],
+    ];
+
+    return view('layanan.index', compact('services'));
+}
 
     public function pricing()
     {

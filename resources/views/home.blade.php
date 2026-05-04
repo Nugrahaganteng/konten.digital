@@ -302,27 +302,36 @@
         {{-- 1. Array berisi nama file logo di folder clients kamu --}}
         @php
             $clientLogos = [
-                'tugu.png', 'lunas.png', 'kuliner.png', 'k.png', 
-                'o.png', 'p.png', 'r.png', 'u.png'
+                'tugu.png', 'lunas.png', 'kuliner.png', 'dog.png', 
+                'hikmat.png', 'indo.png', 'kids.png', 'bio.png',
+                'praja.png','price.png','volantis.png','gorem.png',
                 // Kalau nanti ada logo baru, tinggal tambahkan namanya di sini
             ];
         @endphp
 
         {{-- 2. Looping array logonya --}}
-        @foreach($clientLogos as $logo)
-        <div class="bg-yellow-400 aspect-square flex items-center justify-center p-6 
-                    hover:bg-cyan-400 transition-colors duration-300 group cursor-pointer relative">
-            
-            {{-- Path disesuaikan ke folder 'clients/' --}}
-            <img src="{{ asset('images/clients/' . $logo) }}" 
-                 alt="Client Logo {{ $logo }}" 
-                 class="w-full h-full object-contain opacity-70 group-hover:opacity-100 
-                        group-hover:scale-110 group-hover:-rotate-3 transition-all duration-300 
-                        group-hover:drop-shadow-[4px_4px_0_#3b0764] filter grayscale group-hover:grayscale-0">
-            
-            <div class="absolute inset-0 border-4 border-transparent group-hover:border-black transition-all duration-200 pointer-events-none"></div>
-        </div>
-        @endforeach
+     {{-- Looping array logonya --}}
+@foreach($clientLogos as $logo)
+<div class="bg-yellow-400 aspect-square flex items-center justify-center p-8 
+            hover:bg-cyan-400 transition-all duration-500 group cursor-pointer relative overflow-hidden">
+    
+    {{-- Gambar Logo dengan optimasi Smoothness --}}
+    <img src="{{ asset('images/clients/' . $logo) }}" 
+         alt="Client Logo {{ $logo }}" 
+         class="w-full h-full object-contain 
+                opacity-50 group-hover:opacity-100 
+                scale-90 group-hover:scale-100
+                transition-all duration-500 ease-out
+                transform-gpu will-change-transform
+                filter blur-[0.5px] group-hover:blur-0"> {{-- Blur halus dikit pas standby biar pas fokus keliatan tajam --}}
+    
+    {{-- Overlay Border yang muncul dari dalam --}}
+    <div class="absolute inset-0 border-0 group-hover:border-[6px] border-black transition-all duration-200 pointer-events-none"></div>
+
+    {{-- Efek bayangan tambahan saat hover agar terlihat 'naik' --}}
+    <div class="absolute inset-0 opacity-0 group-hover:opacity-10 group-hover:bg-white transition-opacity duration-300 pointer-events-none"></div>
+</div>
+@endforeach
         
     </div>
 </div>
@@ -350,7 +359,7 @@
                     Punya ide gila untuk brand kamu? Kami siap dengar dan wujudkan. Hubungi kami sekarang dan mulai perjalanan pertumbuhan brand kamu melintasi orbit digital.
                 </p>
             </div>
-            <a href="https://wa.me/6281234567890"
+            <a href="https://wa.me/6287786000919"
                class="bg-yellow-400 text-purple-950 font-black text-xl px-10 py-6
                       border-4 border-black shadow-neo hover:translate-x-1 hover:translate-y-1
                       hover:shadow-none transition-all whitespace-nowrap animate-float"
