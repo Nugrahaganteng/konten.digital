@@ -275,7 +275,7 @@
 
     <div class="sidebar-footer">
         <div class="user-info">
-            <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name,0,1)) }}</div>
+            <div class="user-avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
             <div>
                 <div class="user-name">{{ auth()->user()->name }}</div>
                 <div class="user-role">Administrator</div>
@@ -302,7 +302,7 @@
 
     <div class="content">
         @if(session('success'))
-        <div class="alert-success">✓ {{ session('success') }}</div>
+            <div class="alert-success">✓ {{ session('success') }}</div>
         @endif
 
         {{-- STATS --}}
@@ -389,8 +389,4 @@
 </div>
 
 </body>
-<<<<<<< HEAD
 </html>
-=======
-</html>
->>>>>>> f331462 (pembuatan admin form dll)

@@ -17,7 +17,4 @@
         ])
     </div>
 </div>
-    @include('articles.partials.form', [
-        'action' => route('articles.store'),
-    ])
 @endsection

@@ -11,25 +11,19 @@ class DashboardController extends Controller
     public function index()
     {
         $stats = [
-            'total'     => Article::count(),
-            'published' => Article::where('status', 'published')->count(),
-            'draft'     => Article::where('status', 'draft')->count(),
-            'rejected'  => Article::where('status', 'rejected')->count(),
-            'users'     => User::where('role', 'user')->count(),
+            'total_articles'     => Article::count(),
+            'published_articles' => Article::where('status', 'published')->count(),
+            'draft_articles'     => Article::where('status', 'draft')->count(),
+            'rejected_articles'  => Article::where('status', 'rejected')->count(),
+            'total_users'        => User::where('role', 'user')->count(),
         ];
 
-        $pendingArticles = Article::with('user')
-            ->where('status', 'draft')
+        $latestArticles = Article::with('user')
+            ->whereIn('status', ['draft', 'published'])
             ->latest()
-            ->limit(5)
+            ->limit(10)
             ->get();
 
-        $recentArticles = Article::with('user')
-            ->where('status', 'published')
-            ->latest('published_at')
-            ->limit(5)
-            ->get();
-
-        return view('admin.dashboard', compact('stats', 'pendingArticles', 'recentArticles'));
+        return view('admin.dashboard', compact('stats', 'latestArticles'));
     }
 }
