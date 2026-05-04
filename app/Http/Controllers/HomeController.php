@@ -14,41 +14,89 @@ class HomeController extends Controller
         return view('home', compact('latestArticles'));
     }
 
-public function services()
-{
-    $services = [
-        [
-            'title' => 'Jasa Press Release',
-            'slug'  => 'press-release',
-        ],
-        [
-            'title' => 'Jasa Backlink Media',
-            'slug'  => 'backlink',
-        ],
-        [
-            'title' => 'Press Conference',
-            'slug'  => 'press-conference',
-        ],
-        [
-            'title' => 'Penulisan Artikel',
-            'slug'  => 'penulisan-artikel',
-        ],
-        [
-            'title' => 'Script Video',
-            'slug'  => 'script-video',
-        ],
-        [
-            'title' => 'Pelatihan Konten',
-            'slug'  => 'pelatihan-konten',
-        ],
-    ];
+    public function services()
+    {
+        $services = [
+            [
+                'title' => 'Jasa Press Release',
+                'slug'  => 'press-release',
+            ],
+            [
+                'title' => 'Jasa Backlink Media',
+                'slug'  => 'backlink',
+            ],
+            [
+                'title' => 'Press Conference',
+                'slug'  => 'press-conference',
+            ],
+            [
+                'title' => 'Penulisan Artikel',
+                'slug'  => 'penulisan-artikel',
+            ],
+            [
+                'title' => 'Script Video',
+                'slug'  => 'script-video',
+            ],
+            [
+                'title' => 'Pelatihan Konten',
+                'slug'  => 'pelatihan-konten',
+            ],
+        ];
 
-    return view('layanan.index', compact('services'));
-}
+        return view('layanan.index', compact('services'));
+    }
 
     public function pricing()
     {
-        return view('pricing');
+        $packages = [
+            [
+                'name'      => 'Starter',
+                'price'     => '299.000',
+                'period'    => '/ bulan',
+                'badge'     => null,
+                'highlight' => false,
+                'cta'       => 'Pesan Sekarang',
+                'features'  => [
+                    '5 artikel per bulan',
+                    'DA 20–40',
+                    'Garansi tayang 7 hari',
+                    'Laporan URL terbit',
+                ],
+            ],
+            [
+                'name'      => 'Pro',
+                'price'     => '699.000',
+                'period'    => '/ bulan',
+                'badge'     => '⭐ Terlaris',
+                'highlight' => true,
+                'cta'       => 'Pilih Paket Pro',
+                'features'  => [
+                    '15 artikel per bulan',
+                    'DA 40–60',
+                    'Garansi tayang 3 hari',
+                    'Laporan URL terbit',
+                    'Konsultasi SEO 1x/bulan',
+                ],
+            ],
+            [
+                'name'      => 'Enterprise',
+                'price'     => '1.499.000',
+                'period'    => '/ bulan',
+                'badge'     => null,
+                'highlight' => false,
+                'cta'       => 'Hubungi Kami',
+                'features'  => [
+                    '40 artikel per bulan',
+                    'DA 60+',
+                    'Garansi tayang 24 jam',
+                    'Laporan URL terbit',
+                    'Dedicated account manager',
+                    'Konsultasi SEO unlimited',
+                ],
+            ],
+        ];
+
+        return view('pricing', compact('packages'));
     }
 
     public function about()
@@ -57,7 +105,7 @@ public function services()
     }
 
     public function contact()
-    {   
+    {
         return view('contact');
     }
 

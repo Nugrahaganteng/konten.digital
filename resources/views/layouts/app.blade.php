@@ -86,13 +86,6 @@
     <a href="{{ route('contact') }}" class="nav-link-pop">Contact</a>
 </div>
                 {{-- Kanan: Search + Auth + Burger --}}
-                <div class="flex items-center gap-3">
-                    <button class="search-btn" id="search-toggle" aria-label="Search">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-                        </svg>
-                    </button>
 
                     @auth
                     <div class="relative hidden sm:block" id="user-dropdown-wrap">
@@ -139,9 +132,6 @@
                               font-black text-xs uppercase tracking-widest px-4 py-2 shadow-neo-sm
                               hover:bg-yellow-400 hover:translate-y-1 hover:shadow-none transition-all">
                         Masuk
-                    </a>
-                    <a href="{{ route('register') }}" class="btn-pop hidden sm:inline-block">
-                        Daftar
                     </a>
                     @endauth
 
