@@ -72,12 +72,12 @@
         <div class="absolute left-0 mt-2 w-72 bg-white border-4 border-black
                     shadow-neo opacity-0 invisible group-hover:opacity-100
                     group-hover:visible transition-all duration-200 z-50 overflow-hidden">
-            <a href="#" class="dropdown-item-neo">Jasa Press Release</a>
-            <a href="#" class="dropdown-item-neo">Jasa Backlink Media Nasional</a>
-            <a href="#" class="dropdown-item-neo">Jasa Press Conference</a>
-            <a href="#" class="dropdown-item-neo">Jasa Penulisan Artikel</a>
-            <a href="#" class="dropdown-item-neo">Jasa Script Video / Televisi</a>
-            <a href="#" class="dropdown-item-neo">Jasa Pelatihan Konten Kreator</a>
+           <a href="{{ route('layanan.press.release') }}" class="dropdown-item-neo">Press Release</a>
+    <a href="{{ route('layanan.backlink') }}" class="dropdown-item-neo">Backlink Media</a>
+    <a href="{{ route('layanan.press.conference') }}" class="dropdown-item-neo">Press Conference</a>
+    <a href="{{ route('layanan.penulisan.artikel') }}" class="dropdown-item-neo">Penulisan Artikel</a>
+    <a href="{{ route('layanan.script.video') }}" class="dropdown-item-neo">Script Video</a>
+    <a href="{{ route('layanan.pelatihan.konten') }}" class="dropdown-item-neo">Pelatihan Konten</a>
         </div>
     </div>
 
@@ -163,7 +163,7 @@
         <div id="mobile-menu">
             <a href="{{ route('home') }}">Home</a>
            <a href="{{ route('about') }}" class="nav-link-pop">About Us</a>
-            <a href="{{ route('services') }}">Services</a>
+          <a href="{{ route('services') }}">Services</a>
             <a href="{{ route('articles.index') }}">Blog</a>
             <a href="{{ route('pricing') }}">Pricing</a>
             <a href="{{ route('contact') }}">Contact</a>

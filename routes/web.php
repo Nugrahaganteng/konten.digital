@@ -9,6 +9,14 @@ use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
 // ── PUBLIC ────────────────────────────────────────────────────
 Route::get('/',        [HomeController::class, 'index'])->name('home');
 Route::get('/layanan', [HomeController::class, 'services'])->name('services');
+Route::prefix('layanan')->name('layanan.')->group(function () {
+    Route::get('/press-release', fn() => view('layanan.press-release'))->name('press.release');
+    Route::get('/backlink', fn() => view('layanan.backlink'))->name('backlink');
+    Route::get('/press-conference', fn() => view('layanan.press-conference'))->name('press.conference');
+    Route::get('/penulisan-artikel', fn() => view('layanan.penulisan-artikel'))->name('penulisan.artikel');
+    Route::get('/script-video', fn() => view('layanan.script-video'))->name('script.video');
+    Route::get('/pelatihan-konten', fn() => view('layanan.pelatihan-konten'))->name('pelatihan.konten');
+});
 Route::get('/harga',   [HomeController::class, 'pricing'])->name('pricing');
 Route::get('/tentang', [HomeController::class, 'about'])->name('about');
 Route::get('/kontak',  [HomeController::class, 'contact'])->name('contact');
