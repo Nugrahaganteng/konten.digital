@@ -115,10 +115,11 @@ class ArticleController extends Controller
             $validated['thumbnail'] = $request->file('thumbnail')->store('articles', 'public');
         }
 
-        $article->update(array_merge($validated, ['status' => 'draft']));
+        // ── Pertahankan status & published_at yang sudah ada ──
+        $article->update($validated);
 
         return redirect()->route('articles.index')
-            ->with('success', 'Artikel diperbarui dan menunggu review admin.');
+            ->with('success', 'Artikel berhasil diperbarui.');
     }
 
     // ── Hapus artikel ──────────────────────────────────────────

@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Article;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -11,8 +10,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        // ── Buat akun admin default ──────────────────────────────
-        $admin = User::firstOrCreate(
+        // Buat akun admin default
+        User::firstOrCreate(
             ['email' => 'admin@kontendigital.id'],
             [
                 'name'     => 'Admin KontenDigital',
@@ -21,8 +20,8 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // ── Buat user biasa untuk testing ────────────────────────
-        $user = User::firstOrCreate(
+        // Buat user biasa untuk testing
+        User::firstOrCreate(
             ['email' => 'user@kontendigital.id'],
             [
                 'name'     => 'User Demo',
@@ -31,8 +30,6 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // ── Artikel dummy ─────────────────────────────────────────
-        Article::factory(10)->published()->create(['user_id' => $admin->id]);
-        Article::factory(5)->draft()->create(['user_id' => $user->id]);
+        // Tidak ada Article::factory — tidak ada dummy artikel
     }
 }

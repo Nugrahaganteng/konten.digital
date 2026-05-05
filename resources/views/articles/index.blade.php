@@ -48,10 +48,9 @@
     }
 
     /* ── SCANLINE OVERLAY ───────────────── */
-    /* FIX: parent harus position:relative agar ::after bisa inset:0 dengan benar */
     .scanline-overlay {
         position: relative;
-        overflow: hidden; /* tambahan agar pseudo-element tidak keluar batas */
+        overflow: hidden;
     }
     .scanline-overlay::after {
         content: '';
@@ -66,7 +65,7 @@
             rgba(0,0,0,0.06) 4px
         );
         border-radius: inherit;
-        z-index: 1; /* pastikan di atas konten tapi tidak menghalangi klik */
+        z-index: 1;
     }
 
     /* ── HERO BADGE TICKER ──────────────── */
@@ -80,7 +79,6 @@
         display: flex;
         white-space: nowrap;
         animation: ticker 18s linear infinite;
-        /* FIX: gap:0 sudah benar, tapi width harus minimal 200% agar animasi loop mulus */
         width: max-content;
     }
     .ticker-track span {
@@ -248,21 +246,18 @@
         border-right: 3px solid var(--black);
         min-width: 80px;
         justify-content: center;
-        /* FIX: hapus writing-mode:horizontal-tb karena itu nilai default, tidak perlu ditulis */
     }
     .control-row-label .label-icon {
         margin-right: 0.4rem;
         font-size: 0.7rem;
     }
 
-    /* Filter buttons row */
     .filter-panel {
         display: flex;
         flex-wrap: wrap;
         gap: 0;
         align-items: stretch;
         flex: 1;
-        /* FIX: overflow hidden agar filter tidak keluar batas di mobile */
         overflow-x: auto;
     }
     .filter-btn {
@@ -280,7 +275,7 @@
         display: inline-flex;
         align-items: center;
         transition: background 0.1s, color 0.1s;
-        white-space: nowrap; /* FIX: cegah teks filter wrap di mobile */
+        white-space: nowrap;
     }
     .filter-btn:last-child { border-right: none; }
     .filter-btn:hover { background: #ede8e0; color: var(--black); }
@@ -297,7 +292,6 @@
         opacity: 0.6;
     }
 
-    /* Search row */
     .search-wrap {
         display: flex;
         flex: 1;
@@ -397,7 +391,7 @@
         font-weight: 900;
         padding: 0.25rem 0.5rem;
         letter-spacing: 0.05em;
-        z-index: 2; /* FIX: pastikan nomor di atas scanline overlay */
+        z-index: 2;
     }
     .card-category {
         position: absolute;
@@ -413,7 +407,7 @@
         letter-spacing: 0.1em;
         padding: 0.3rem 0.75rem;
         color: var(--black);
-        z-index: 2; /* FIX: pastikan label di atas overlay */
+        z-index: 2;
     }
     .card-body {
         padding: 1.25rem;
@@ -422,6 +416,8 @@
         flex-direction: column;
         gap: 0.75rem;
     }
+    
+    /* FIX: PERBAIKAN TEKS KELUAR BATAS */
     .card-title {
         font-family: 'Unbounded', sans-serif;
         font-size: 0.95rem;
@@ -433,6 +429,11 @@
         -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
+        
+        /* Memaksa kata yang sangat panjang untuk patah/wrap */
+        overflow-wrap: break-word;
+        word-break: break-word;
+        hyphens: auto;
     }
     .article-card:hover .card-title { color: var(--purple); }
 
@@ -447,7 +448,6 @@
         font-size: 0.65rem;
         font-weight: 700;
         color: #555;
-        /* FIX: gap agar tidak overlap saat nama author panjang */
         gap: 0.5rem;
         flex-wrap: wrap;
     }
@@ -460,13 +460,9 @@
         flex-shrink: 0;
     }
 
-    /* ── FEATURED CARD (first article) ─── */
-    /*
-     * FIX: featured card hanya span 2 kolom saat grid memiliki 2+ kolom.
-     * Di breakpoint 1 kolom (mobile), featured tetap normal agar tidak overflow.
-     */
+    /* ── FEATURED CARD ─── */
     .article-card.featured {
-        flex-direction: column; /* default: mobile-first */
+        flex-direction: column;
     }
     @media (min-width: 768px) {
         .article-card.featured {
@@ -486,9 +482,10 @@
         .article-card.featured .card-title {
             font-size: 1.4rem;
             -webkit-line-clamp: 4;
+            /* Pastikan break-word juga aktif di ukuran font besar */
+            overflow-wrap: break-word;
         }
     }
-    /* FIX: di layar 3 kolom, featured span 2 (bukan 3) sehingga 1 kartu lain bisa di sebelahnya */
     @media (min-width: 1024px) {
         .article-card.featured {
             grid-column: span 2;
@@ -509,7 +506,6 @@
         padding: 0.25rem 0.6rem;
         border: 2px solid var(--black);
         margin-bottom: 0.75rem;
-        /* FIX: width fit-content agar badge tidak melebar penuh */
         width: fit-content;
     }
     .featured-badge::before { content: '★'; color: var(--yellow); }
@@ -521,7 +517,6 @@
         box-shadow: var(--card-shadow);
         padding: 4rem 2rem;
         text-align: center;
-        /* FIX: gunakan grid-column untuk semua ukuran layar */
         grid-column: 1 / -1;
     }
     .empty-icon {
@@ -558,7 +553,6 @@
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: var(--black);
-        /* FIX: justify-content agar tombol dismiss bisa di kanan */
         justify-content: space-between;
     }
     .flash-left {
@@ -575,7 +569,6 @@
         font-size: 0.75rem;
         flex-shrink: 0;
     }
-    /* FIX: tombol dismiss flash message */
     .flash-dismiss {
         background: none;
         border: 2px solid var(--black);
@@ -628,7 +621,6 @@
         cursor: not-allowed;
         box-shadow: none;
     }
-    /* FIX: ellipsis pagination untuk banyak halaman */
     .page-ellipsis {
         font-family: 'Space Mono', monospace;
         font-size: 0.75rem;
@@ -636,8 +628,6 @@
         padding: 0 0.25rem;
         line-height: 42px;
     }
-
-
 
     /* ── SECTION HEADING ─────────────────── */
     .section-heading {
@@ -674,15 +664,10 @@
 <div class="page-bg pb-24">
     <div class="max-w-7xl mx-auto px-5 lg:px-14 pt-28">
 
-        {{-- ══════════════════════════════════════
-             HERO
-        ══════════════════════════════════════ --}}
+        {{-- HERO --}}
         <div class="hero-wrap mb-4">
-
-            {{-- FIX: Ticker sekarang berisi konten yang benar --}}
             <div class="ticker-wrap">
                 <div class="ticker-track">
-                    {{-- Duplikat 2x agar animasi translateX(-50%) loop sempurna --}}
                     <span>Strategi Digital</span><span class="sep">✦</span>
                     <span>Konten Kreatif</span><span class="sep">✦</span>
                     <span>Update Teknologi</span><span class="sep">✦</span>
@@ -696,7 +681,6 @@
                 </div>
             </div>
 
-            {{-- Inner panel --}}
             <div class="hero-inner scanline-overlay">
                 <div class="hero-pixel">••••ᗧ</div>
                 <div class="hero-stripe"></div>
@@ -729,22 +713,13 @@
             </div>
         </div>
 
-        {{-- ══════════════════════════════════════
-             CONTROL PANEL
-        ══════════════════════════════════════ --}}
-
+        {{-- CONTROL PANEL --}}
         <div class="control-panel mb-10">
-
-            {{-- Row 1: Category Filter --}}
             <div class="control-row">
                 <div class="control-row-label">
                     <span class="label-icon">▤</span> Filter
                 </div>
                 <div class="filter-panel">
-                    {{--
-                        FIX: preserve query param `search` juga saat pindah kategori,
-                        agar hasil pencarian tidak hilang saat klik filter
-                    --}}
                     <a href="{{ route('articles.index', array_filter(['search' => request('search')])) }}"
                        class="filter-btn {{ !request('category') ? 'active' : '' }}">
                         Semua
@@ -758,15 +733,10 @@
                 </div>
             </div>
 
-            {{-- Row 2: Search --}}
             <div class="control-row">
                 <div class="control-row-label">
                     <span class="label-icon">◎</span> Cari
                 </div>
-                {{--
-                    FIX: preserve SEMUA query param yang relevan via hidden input,
-                    bukan hanya category. Ini agar filter aktif tidak reset saat search.
-                --}}
                 <form action="{{ route('articles.index') }}" method="GET" style="flex:1; display:flex;">
                     @if(request('category'))
                         <input type="hidden" name="category" value="{{ request('category') }}">
@@ -779,12 +749,10 @@
                     </div>
                 </form>
             </div>
-
         </div>
 
         {{-- Flash Message --}}
         @if(session('success'))
-            {{-- FIX: tambah tombol dismiss dan struktur yang lebih proper --}}
             <div class="flash-msg mb-8" id="flash-msg">
                 <div class="flash-left">
                     <span class="flash-check">✓</span>
@@ -794,9 +762,7 @@
             </div>
         @endif
 
-        {{-- ══════════════════════════════════════
-             ARTICLE GRID
-        ══════════════════════════════════════ --}}
+        {{-- ARTICLE GRID --}}
         <div class="section-heading">
             <div class="section-heading-line"></div>
             <span class="section-heading-text">// Artikel — Halaman {{ $articles->currentPage() }}</span>
@@ -805,48 +771,35 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @forelse($articles as $index => $article)
-
                 @php $isFeatured = $index === 0 && $articles->currentPage() === 1 && !request('search') && !request('category'); @endphp
 
                 <a href="{{ route('articles.show', $article->slug) }}"
                    class="article-card {{ $isFeatured ? 'featured' : '' }} group">
 
-                    {{-- Thumbnail --}}
                     <div class="card-thumb">
                         <span class="card-number"># {{ str_pad($articles->firstItem() + $index, 3, '0', STR_PAD_LEFT) }}</span>
-
                         @if($article->thumbnail)
-                            <img src="{{ asset('storage/' . $article->thumbnail) }}"
-                                 alt="{{ $article->title }}"
-                                 loading="lazy">
-                            {{-- FIX: tambah loading="lazy" untuk performa --}}
+                            <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" loading="lazy">
                         @else
                             <div class="card-thumb-fallback">👾</div>
                         @endif
-
                         <span class="card-category">{{ $article->category }}</span>
                     </div>
 
-                    {{-- Body --}}
                     <div class="card-body">
                         @if($isFeatured)
                             <div class="featured-badge">Featured Post</div>
                         @endif
-
                         <h2 class="card-title">{{ $article->title }}</h2>
-
                         <div class="card-meta">
                             <span class="card-author">
                                 <span class="card-author-dot"></span>
-                                {{-- FIX: null-safe operator untuk antisipasi user dihapus --}}
                                 {{ $article->user?->name ?? 'Anonim' }}
                             </span>
                             <span>{{ $article->published_at?->translatedFormat('d M Y') ?? $article->created_at->translatedFormat('d M Y') }}</span>
                         </div>
                     </div>
-
                 </a>
-
             @empty
                 <div class="empty-state">
                     <span class="empty-icon">📭</span>
@@ -864,31 +817,23 @@
             @endforelse
         </div>
 
-        {{-- ══════════════════════════════════════
-             PAGINATION
-             FIX: ganti getUrlRange() dengan logika smart pagination
-             agar tidak render ratusan tombol saat halaman banyak
-        ══════════════════════════════════════ --}}
+        {{-- PAGINATION --}}
         @if($articles->hasPages())
             @php
                 $currentPage = $articles->currentPage();
                 $lastPage    = $articles->lastPage();
-
-                // Tentukan range halaman yang ditampilkan (selalu maks 5 di tengah)
-                $window  = 2;
-                $rangeStart = max(1, $currentPage - $window);
-                $rangeEnd   = min($lastPage, $currentPage + $window);
+                $window      = 2;
+                $rangeStart  = max(1, $currentPage - $window);
+                $rangeEnd    = min($lastPage, $currentPage + $window);
             @endphp
 
             <div class="mt-16 pagination">
-                {{-- Tombol Prev --}}
                 @if($articles->onFirstPage())
                     <span class="page-btn disabled">‹</span>
                 @else
                     <a href="{{ $articles->previousPageUrl() }}" class="page-btn" aria-label="Halaman sebelumnya">‹</a>
                 @endif
 
-                {{-- Halaman pertama + ellipsis kiri --}}
                 @if($rangeStart > 1)
                     <a href="{{ $articles->url(1) }}" class="page-btn">1</a>
                     @if($rangeStart > 2)
@@ -896,17 +841,14 @@
                     @endif
                 @endif
 
-                {{-- Range tengah --}}
                 @for($page = $rangeStart; $page <= $rangeEnd; $page++)
                     <a href="{{ $articles->url($page) }}"
                        class="page-btn {{ $page === $currentPage ? 'active' : '' }}"
-                       aria-label="Halaman {{ $page }}"
                        @if($page === $currentPage) aria-current="page" @endif>
                         {{ $page }}
                     </a>
                 @endfor
 
-                {{-- Ellipsis kanan + halaman terakhir --}}
                 @if($rangeEnd < $lastPage)
                     @if($rangeEnd < $lastPage - 1)
                         <span class="page-ellipsis">…</span>
@@ -914,7 +856,6 @@
                     <a href="{{ $articles->url($lastPage) }}" class="page-btn">{{ $lastPage }}</a>
                 @endif
 
-                {{-- Tombol Next --}}
                 @if($articles->hasMorePages())
                     <a href="{{ $articles->nextPageUrl() }}" class="page-btn" aria-label="Halaman berikutnya">›</a>
                 @else
@@ -922,8 +863,6 @@
                 @endif
             </div>
         @endif
-
     </div>
 </div>
-
 @endsection

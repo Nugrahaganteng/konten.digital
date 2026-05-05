@@ -75,6 +75,9 @@
         text-transform: uppercase;
         margin-bottom: 2rem;
         text-shadow: 4px 4px 0 var(--ink);
+        /* Fix untuk judul yang terlalu panjang */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
     }
 
     /* Article Layout */
@@ -125,12 +128,18 @@
         padding: 1.5rem;
         background: rgba(245, 197, 24, 0.1);
         border-left: 8px solid var(--yellow);
+        /* Fix teks panjang di excerpt */
+        overflow-wrap: break-word;
     }
 
     .article-body {
         font-size: 1.15rem;
         line-height: 1.9;
         color: #2d2d2d;
+        /* FIX UTAMA: Mencegah teks jebol keluar layar */
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        word-break: break-word;
     }
 
     .article-body h2, .article-body h3 {
@@ -150,6 +159,7 @@
     }
 
     .author-circle {
+        flex-shrink: 0;
         width: 50px; height: 50px;
         background: var(--blue);
         border: 3px solid var(--ink);
@@ -211,6 +221,8 @@
         font-size: 0.95rem;
         line-height: 1.3;
         margin-bottom: 0.25rem;
+        /* Mencegah judul di sidebar juga jebol */
+        overflow-wrap: break-word;
     }
 
     /* Buttons */
@@ -361,17 +373,6 @@
                 @endforeach
             </div>
             @endif
-
-            <div class="sidebar-widget" style="background: var(--blue); color: white;">
-                <h3 class="widget-title" style="color: white; border-color: white;">KONTRIBUSI</h3>
-                <p style="font-size: 0.9rem; font-weight: 600; margin-bottom: 1.5rem; line-height: 1.6;">
-                    Punya ide menarik? Tulis artikelmu sekarang dan jadilah bagian dari komunitas kami!
-                </p>
-                <a href="{{ auth()->check() ? route('articles.create') : route('login') }}" 
-                   class="btn-neo btn-yellow" style="width: 100%; box-sizing: border-box;">
-                   Mulai Menulis →
-                </a>
-            </div>
         </aside>
     </div>
 </article>
