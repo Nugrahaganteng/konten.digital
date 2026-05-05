@@ -48,8 +48,10 @@
     }
 
     /* ── SCANLINE OVERLAY ───────────────── */
+    /* FIX: parent harus position:relative agar ::after bisa inset:0 dengan benar */
     .scanline-overlay {
         position: relative;
+        overflow: hidden; /* tambahan agar pseudo-element tidak keluar batas */
     }
     .scanline-overlay::after {
         content: '';
@@ -64,6 +66,7 @@
             rgba(0,0,0,0.06) 4px
         );
         border-radius: inherit;
+        z-index: 1; /* pastikan di atas konten tapi tidak menghalangi klik */
     }
 
     /* ── HERO BADGE TICKER ──────────────── */
@@ -77,7 +80,8 @@
         display: flex;
         white-space: nowrap;
         animation: ticker 18s linear infinite;
-        gap: 0;
+        /* FIX: gap:0 sudah benar, tapi width harus minimal 200% agar animasi loop mulus */
+        width: max-content;
     }
     .ticker-track span {
         padding: 0 2rem;
@@ -155,7 +159,6 @@
         border-left: 4px solid var(--cyan);
         padding-left: 1rem;
     }
-    /* Decorative corner pixel */
     .hero-pixel {
         position: absolute;
         top: 1rem;
@@ -168,7 +171,6 @@
         font-weight: 700;
         user-select: none;
     }
-    /* Deco stripe */
     .hero-stripe {
         position: absolute;
         bottom: 0;
@@ -246,7 +248,7 @@
         border-right: 3px solid var(--black);
         min-width: 80px;
         justify-content: center;
-        writing-mode: horizontal-tb;
+        /* FIX: hapus writing-mode:horizontal-tb karena itu nilai default, tidak perlu ditulis */
     }
     .control-row-label .label-icon {
         margin-right: 0.4rem;
@@ -260,6 +262,8 @@
         gap: 0;
         align-items: stretch;
         flex: 1;
+        /* FIX: overflow hidden agar filter tidak keluar batas di mobile */
+        overflow-x: auto;
     }
     .filter-btn {
         font-family: 'Space Mono', monospace;
@@ -276,6 +280,7 @@
         display: inline-flex;
         align-items: center;
         transition: background 0.1s, color 0.1s;
+        white-space: nowrap; /* FIX: cegah teks filter wrap di mobile */
     }
     .filter-btn:last-child { border-right: none; }
     .filter-btn:hover { background: #ede8e0; color: var(--black); }
@@ -373,7 +378,6 @@
         font-size: 3rem;
         position: relative;
     }
-    /* Pixel deco inside thumb */
     .card-thumb-fallback::before {
         content: '';
         position: absolute;
@@ -393,6 +397,7 @@
         font-weight: 900;
         padding: 0.25rem 0.5rem;
         letter-spacing: 0.05em;
+        z-index: 2; /* FIX: pastikan nomor di atas scanline overlay */
     }
     .card-category {
         position: absolute;
@@ -408,6 +413,7 @@
         letter-spacing: 0.1em;
         padding: 0.3rem 0.75rem;
         color: var(--black);
+        z-index: 2; /* FIX: pastikan label di atas overlay */
     }
     .card-body {
         padding: 1.25rem;
@@ -441,6 +447,9 @@
         font-size: 0.65rem;
         font-weight: 700;
         color: #555;
+        /* FIX: gap agar tidak overlap saat nama author panjang */
+        gap: 0.5rem;
+        flex-wrap: wrap;
     }
     .card-author { display: flex; align-items: center; gap: 0.4rem; }
     .card-author-dot {
@@ -452,24 +461,40 @@
     }
 
     /* ── FEATURED CARD (first article) ─── */
+    /*
+     * FIX: featured card hanya span 2 kolom saat grid memiliki 2+ kolom.
+     * Di breakpoint 1 kolom (mobile), featured tetap normal agar tidak overflow.
+     */
     .article-card.featured {
-        flex-direction: row;
-        grid-column: span 2;
+        flex-direction: column; /* default: mobile-first */
     }
-    .article-card.featured .card-thumb {
-        width: 45%;
-        aspect-ratio: unset;
-        border-bottom: none;
-        border-right: 3px solid var(--black);
-        flex-shrink: 0;
+    @media (min-width: 768px) {
+        .article-card.featured {
+            flex-direction: row;
+            grid-column: span 2;
+        }
+        .article-card.featured .card-thumb {
+            width: 45%;
+            aspect-ratio: unset;
+            border-bottom: none;
+            border-right: 3px solid var(--black);
+            flex-shrink: 0;
+        }
+        .article-card.featured .card-body {
+            padding: 2rem;
+        }
+        .article-card.featured .card-title {
+            font-size: 1.4rem;
+            -webkit-line-clamp: 4;
+        }
     }
-    .article-card.featured .card-body {
-        padding: 2rem;
+    /* FIX: di layar 3 kolom, featured span 2 (bukan 3) sehingga 1 kartu lain bisa di sebelahnya */
+    @media (min-width: 1024px) {
+        .article-card.featured {
+            grid-column: span 2;
+        }
     }
-    .article-card.featured .card-title {
-        font-size: 1.4rem;
-        -webkit-line-clamp: 4;
-    }
+
     .featured-badge {
         display: inline-flex;
         align-items: center;
@@ -484,6 +509,8 @@
         padding: 0.25rem 0.6rem;
         border: 2px solid var(--black);
         margin-bottom: 0.75rem;
+        /* FIX: width fit-content agar badge tidak melebar penuh */
+        width: fit-content;
     }
     .featured-badge::before { content: '★'; color: var(--yellow); }
 
@@ -494,6 +521,7 @@
         box-shadow: var(--card-shadow);
         padding: 4rem 2rem;
         text-align: center;
+        /* FIX: gunakan grid-column untuk semua ukuran layar */
         grid-column: 1 / -1;
     }
     .empty-icon {
@@ -530,6 +558,13 @@
         text-transform: uppercase;
         letter-spacing: 0.08em;
         color: var(--black);
+        /* FIX: justify-content agar tombol dismiss bisa di kanan */
+        justify-content: space-between;
+    }
+    .flash-left {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
     }
     .flash-check {
         width: 28px; height: 28px;
@@ -540,6 +575,20 @@
         font-size: 0.75rem;
         flex-shrink: 0;
     }
+    /* FIX: tombol dismiss flash message */
+    .flash-dismiss {
+        background: none;
+        border: 2px solid var(--black);
+        width: 28px; height: 28px;
+        display: flex; align-items: center; justify-content: center;
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 900;
+        color: var(--black);
+        flex-shrink: 0;
+        transition: background 0.1s;
+    }
+    .flash-dismiss:hover { background: rgba(0,0,0,0.1); }
 
     /* ── PAGINATION ──────────────────────── */
     .pagination {
@@ -579,39 +628,16 @@
         cursor: not-allowed;
         box-shadow: none;
     }
-
-    /* ── FAB ─────────────────────────────── */
-    .fab {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        z-index: 50;
-        background: var(--yellow);
-        border: 3px solid var(--black);
-        padding: 0.9rem 1.5rem;
-        display: flex;
-        align-items: center;
-        gap: 0.6rem;
+    /* FIX: ellipsis pagination untuk banyak halaman */
+    .page-ellipsis {
         font-family: 'Space Mono', monospace;
         font-size: 0.75rem;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--black);
-        text-decoration: none;
-        box-shadow: 6px 6px 0 var(--black);
-        transition: box-shadow 0.12s, transform 0.12s;
+        color: rgba(245,240,232,0.5);
+        padding: 0 0.25rem;
+        line-height: 42px;
     }
-    .fab:hover {
-        box-shadow: 2px 2px 0 var(--black);
-        transform: translate(4px, 4px);
-    }
-    .fab-icon {
-        font-size: 1.1rem;
-        display: inline-block;
-        transition: transform 0.2s;
-    }
-    .fab:hover .fab-icon { transform: rotate(15deg); }
+
+
 
     /* ── SECTION HEADING ─────────────────── */
     .section-heading {
@@ -636,16 +662,6 @@
 
     /* ── RESPONSIVE ──────────────────────── */
     @media (max-width: 768px) {
-        .article-card.featured {
-            flex-direction: column;
-            grid-column: span 1;
-        }
-        .article-card.featured .card-thumb {
-            width: 100%;
-            aspect-ratio: 16/10;
-            border-right: none;
-            border-bottom: 3px solid var(--black);
-        }
         .stats-bar { flex-direction: column; }
         .stats-item { border-right: none; border-bottom: 3px solid var(--black); }
         .stats-item:last-child { border-bottom: none; }
@@ -662,7 +678,23 @@
              HERO
         ══════════════════════════════════════ --}}
         <div class="hero-wrap mb-4">
-            {{-- Ticker tape --}}
+
+            {{-- FIX: Ticker sekarang berisi konten yang benar --}}
+            <div class="ticker-wrap">
+                <div class="ticker-track">
+                    {{-- Duplikat 2x agar animasi translateX(-50%) loop sempurna --}}
+                    <span>Strategi Digital</span><span class="sep">✦</span>
+                    <span>Konten Kreatif</span><span class="sep">✦</span>
+                    <span>Update Teknologi</span><span class="sep">✦</span>
+                    <span>Tips & Trik</span><span class="sep">✦</span>
+                    <span>Inspirasi Bisnis</span><span class="sep">✦</span>
+                    <span>Strategi Digital</span><span class="sep">✦</span>
+                    <span>Konten Kreatif</span><span class="sep">✦</span>
+                    <span>Update Teknologi</span><span class="sep">✦</span>
+                    <span>Tips & Trik</span><span class="sep">✦</span>
+                    <span>Inspirasi Bisnis</span><span class="sep">✦</span>
+                </div>
+            </div>
 
             {{-- Inner panel --}}
             <div class="hero-inner scanline-overlay">
@@ -709,12 +741,16 @@
                     <span class="label-icon">▤</span> Filter
                 </div>
                 <div class="filter-panel">
-                    <a href="{{ route('articles.index') }}"
+                    {{--
+                        FIX: preserve query param `search` juga saat pindah kategori,
+                        agar hasil pencarian tidak hilang saat klik filter
+                    --}}
+                    <a href="{{ route('articles.index', array_filter(['search' => request('search')])) }}"
                        class="filter-btn {{ !request('category') ? 'active' : '' }}">
                         Semua
                     </a>
                     @foreach($categories as $cat)
-                        <a href="{{ route('articles.index', ['category' => $cat]) }}"
+                        <a href="{{ route('articles.index', array_filter(['category' => $cat, 'search' => request('search')])) }}"
                            class="filter-btn {{ request('category') === $cat ? 'active' : '' }}">
                             {{ $cat }}
                         </a>
@@ -727,6 +763,10 @@
                 <div class="control-row-label">
                     <span class="label-icon">◎</span> Cari
                 </div>
+                {{--
+                    FIX: preserve SEMUA query param yang relevan via hidden input,
+                    bukan hanya category. Ini agar filter aktif tidak reset saat search.
+                --}}
                 <form action="{{ route('articles.index') }}" method="GET" style="flex:1; display:flex;">
                     @if(request('category'))
                         <input type="hidden" name="category" value="{{ request('category') }}">
@@ -744,9 +784,13 @@
 
         {{-- Flash Message --}}
         @if(session('success'))
-            <div class="flash-msg mb-8">
-                <span class="flash-check">✓</span>
-                {{ session('success') }}
+            {{-- FIX: tambah tombol dismiss dan struktur yang lebih proper --}}
+            <div class="flash-msg mb-8" id="flash-msg">
+                <div class="flash-left">
+                    <span class="flash-check">✓</span>
+                    {{ session('success') }}
+                </div>
+                <button class="flash-dismiss" onclick="document.getElementById('flash-msg').style.display='none'" aria-label="Tutup notifikasi">✕</button>
             </div>
         @endif
 
@@ -772,7 +816,10 @@
                         <span class="card-number"># {{ str_pad($articles->firstItem() + $index, 3, '0', STR_PAD_LEFT) }}</span>
 
                         @if($article->thumbnail)
-                            <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}">
+                            <img src="{{ asset('storage/' . $article->thumbnail) }}"
+                                 alt="{{ $article->title }}"
+                                 loading="lazy">
+                            {{-- FIX: tambah loading="lazy" untuk performa --}}
                         @else
                             <div class="card-thumb-fallback">👾</div>
                         @endif
@@ -791,7 +838,8 @@
                         <div class="card-meta">
                             <span class="card-author">
                                 <span class="card-author-dot"></span>
-                                {{ $article->user->name }}
+                                {{-- FIX: null-safe operator untuk antisipasi user dihapus --}}
+                                {{ $article->user?->name ?? 'Anonim' }}
                             </span>
                             <span>{{ $article->published_at?->translatedFormat('d M Y') ?? $article->created_at->translatedFormat('d M Y') }}</span>
                         </div>
@@ -803,30 +851,72 @@
                 <div class="empty-state">
                     <span class="empty-icon">📭</span>
                     <h2 class="empty-title">Data Kosong</h2>
-                    <p class="empty-sub">Belum ada artikel yang dipublikasikan.</p>
+                    <p class="empty-sub">
+                        @if(request('search'))
+                            Tidak ada artikel yang cocok dengan "<strong>{{ request('search') }}</strong>".
+                        @elseif(request('category'))
+                            Belum ada artikel di kategori "<strong>{{ request('category') }}</strong>".
+                        @else
+                            Belum ada artikel yang dipublikasikan.
+                        @endif
+                    </p>
                 </div>
             @endforelse
         </div>
 
         {{-- ══════════════════════════════════════
              PAGINATION
+             FIX: ganti getUrlRange() dengan logika smart pagination
+             agar tidak render ratusan tombol saat halaman banyak
         ══════════════════════════════════════ --}}
         @if($articles->hasPages())
+            @php
+                $currentPage = $articles->currentPage();
+                $lastPage    = $articles->lastPage();
+
+                // Tentukan range halaman yang ditampilkan (selalu maks 5 di tengah)
+                $window  = 2;
+                $rangeStart = max(1, $currentPage - $window);
+                $rangeEnd   = min($lastPage, $currentPage + $window);
+            @endphp
+
             <div class="mt-16 pagination">
+                {{-- Tombol Prev --}}
                 @if($articles->onFirstPage())
                     <span class="page-btn disabled">‹</span>
                 @else
-                    <a href="{{ $articles->previousPageUrl() }}" class="page-btn">‹</a>
+                    <a href="{{ $articles->previousPageUrl() }}" class="page-btn" aria-label="Halaman sebelumnya">‹</a>
                 @endif
 
-                @foreach($articles->getUrlRange(1, $articles->lastPage()) as $page => $url)
-                    <a href="{{ $url }}" class="page-btn {{ $page === $articles->currentPage() ? 'active' : '' }}">
+                {{-- Halaman pertama + ellipsis kiri --}}
+                @if($rangeStart > 1)
+                    <a href="{{ $articles->url(1) }}" class="page-btn">1</a>
+                    @if($rangeStart > 2)
+                        <span class="page-ellipsis">…</span>
+                    @endif
+                @endif
+
+                {{-- Range tengah --}}
+                @for($page = $rangeStart; $page <= $rangeEnd; $page++)
+                    <a href="{{ $articles->url($page) }}"
+                       class="page-btn {{ $page === $currentPage ? 'active' : '' }}"
+                       aria-label="Halaman {{ $page }}"
+                       @if($page === $currentPage) aria-current="page" @endif>
                         {{ $page }}
                     </a>
-                @endforeach
+                @endfor
 
+                {{-- Ellipsis kanan + halaman terakhir --}}
+                @if($rangeEnd < $lastPage)
+                    @if($rangeEnd < $lastPage - 1)
+                        <span class="page-ellipsis">…</span>
+                    @endif
+                    <a href="{{ $articles->url($lastPage) }}" class="page-btn">{{ $lastPage }}</a>
+                @endif
+
+                {{-- Tombol Next --}}
                 @if($articles->hasMorePages())
-                    <a href="{{ $articles->nextPageUrl() }}" class="page-btn">›</a>
+                    <a href="{{ $articles->nextPageUrl() }}" class="page-btn" aria-label="Halaman berikutnya">›</a>
                 @else
                     <span class="page-btn disabled">›</span>
                 @endif
@@ -835,14 +925,5 @@
 
     </div>
 </div>
-
-{{-- ══════════════════════════════════════
-     FAB — hanya tampil saat sudah login
-══════════════════════════════════════ --}}
-@auth
-    <a href="{{ route('articles.create') }}" class="fab">
-        <span class="fab-icon">✏️</span> Tulis Artikel
-    </a>
-@endauth
 
 @endsection

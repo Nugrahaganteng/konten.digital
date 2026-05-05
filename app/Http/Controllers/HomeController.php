@@ -3,8 +3,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ContactMail;
 use App\Models\Article;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -17,30 +19,12 @@ class HomeController extends Controller
     public function services()
     {
         $services = [
-            [
-                'title' => 'Jasa Press Release',
-                'slug'  => 'press-release',
-            ],
-            [
-                'title' => 'Jasa Backlink Media',
-                'slug'  => 'backlink',
-            ],
-            [
-                'title' => 'Press Conference',
-                'slug'  => 'press-conference',
-            ],
-            [
-                'title' => 'Penulisan Artikel',
-                'slug'  => 'penulisan-artikel',
-            ],
-            [
-                'title' => 'Script Video',
-                'slug'  => 'script-video',
-            ],
-            [
-                'title' => 'Pelatihan Konten',
-                'slug'  => 'pelatihan-konten',
-            ],
+            ['title' => 'Jasa Press Release',   'slug' => 'press-release'],
+            ['title' => 'Jasa Backlink Media',  'slug' => 'backlink'],
+            ['title' => 'Press Conference',     'slug' => 'press-conference'],
+            ['title' => 'Penulisan Artikel',    'slug' => 'penulisan-artikel'],
+            ['title' => 'Script Video',         'slug' => 'script-video'],
+            ['title' => 'Pelatihan Konten',     'slug' => 'pelatihan-konten'],
         ];
 
         return view('layanan.index', compact('services'));
@@ -111,13 +95,23 @@ class HomeController extends Controller
 
     public function sendContact(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name'    => 'required|string|max:100',
-            'email'   => 'required|email',
+            'phone'   => 'required|string|max:20',
+            'email'   => 'required|email|max:150',
+            'service' => 'required|string',
             'message' => 'required|string|min:10',
         ]);
 
-        // TODO: kirim email / simpan ke DB
-        return back()->with('success', 'Pesan berhasil dikirim!');
+        Mail::to('muhammadarifkywildan@gmail.com')
+            ->send(new ContactMail(
+                senderName:  $validated['name'],
+                senderEmail: $validated['email'],
+                senderPhone: $validated['phone'],
+                service:     $validated['service'],
+                userMessage: $validated['message'],
+            ));
+
+        return back()->with('success', '✅ Pesan berhasil dikirim! Kami akan menghubungi Anda segera.');
     }
 }
