@@ -79,6 +79,63 @@
 
 <body class="antialiased min-h-screen bg-yellow-400">
 
+{{-- ── LOADING SCREEN ─────────────────────────────────────────── --}}
+{{-- ── LOADING SCREEN SPLIT REVEAL ───────────────────────────── --}}
+<div id="ls-wrap" style="position:fixed;inset:0;z-index:9999;overflow:hidden;font-family:'Space Grotesk',sans-serif;">
+
+    {{-- Panel atas (kuning) --}}
+    <div id="ls-top"
+         style="position:absolute;top:0;left:0;right:0;height:50%;
+                background:#facc15;border-bottom:4px solid black;
+                transition:transform 1s cubic-bezier(.77,0,.18,1);z-index:10;">
+    </div>
+
+    {{-- Panel bawah (navy) --}}
+    <div id="ls-bottom"
+         style="position:absolute;bottom:0;left:0;right:0;height:50%;
+                background:#1a1a2e;border-top:4px solid black;
+                transition:transform 1s cubic-bezier(.77,0,.18,1);z-index:10;">
+    </div>
+
+    {{-- Konten tengah --}}
+    <div id="ls-center"
+         style="position:absolute;inset:0;z-index:20;
+                display:flex;flex-direction:column;align-items:center;
+                justify-content:center;gap:28px;
+                transition:opacity 0.3s ease;">
+
+        {{-- Logo --}}
+        <div style="display:flex;align-items:center;gap:18px;
+                    animation:ls-pop 0.5s cubic-bezier(.34,1.56,.64,1) 0.2s both;">
+            <div style="width:64px;height:64px;background:#1e1b4b;
+                        border:4px solid black;border-radius:14px;
+                        box-shadow:6px 6px 0 black;
+                        display:flex;align-items:center;justify-content:center;">
+                <span style="color:#facc15;font-size:32px;font-weight:900;
+                             font-family:'Unbounded',sans-serif;">K</span>
+            </div>
+            <div style="line-height:1.1;">
+                <p style="margin:0;font-weight:900;font-size:22px;color:#1a1a2e;
+                          text-transform:uppercase;font-family:'Unbounded',sans-serif;
+                          letter-spacing:-0.5px;">KontenDigital</p>
+                <p style="margin:0;font-size:12px;font-weight:800;color:#ef4444;
+                          text-transform:uppercase;letter-spacing:4px;">Growth Partner</p>
+            </div>
+        </div>
+
+        {{-- Garis --}}
+        <div style="width:120px;height:5px;background:black;
+                    animation:ls-line 0.6s ease 0.5s both;"></div>
+
+        {{-- Label --}}
+        <p style="margin:0;font-size:14px;font-weight:800;color:#1a1a2e;
+                  text-transform:uppercase;letter-spacing:4px;
+                  animation:ls-pop 0.5s cubic-bezier(.34,1.56,.64,1) 0.4s both;">
+            Memuat halaman…
+        </p>
+    </div>
+</div>
+
     {{-- ── NAVBAR ─────────────────────────────────────────────────── --}}
     {{-- FIX: Hapus class inline bg/border/sticky dari sini karena sudah di CSS #main-nav --}}
     <nav id="main-nav">
@@ -245,6 +302,8 @@
                                 </form>
                             </div>
                         </div>
+
+                        
                     @else
                         {{-- ── TOMBOL MASUK (Guest) ── --}}
                         <a href="{{ route('login') }}"
@@ -518,7 +577,7 @@
             {{-- Bottom Footer --}}
             <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">
-                    © {{ date('Y') }} Kontendigital.id — ALL RIGHTS RESERVED
+                    © {{ date('Y') }} Kontendigital.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN
                 </p>
                 <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all">
                     <i class="fa-solid fa-arrow-up text-sm"></i>
@@ -556,6 +615,17 @@
             }
         });
 
+//detik-detik loading screen sebelum hilang
+   window.addEventListener('load', function () {
+        setTimeout(function () {
+            document.getElementById('ls-top').style.transform    = 'translateY(-100%)';
+            document.getElementById('ls-bottom').style.transform = 'translateY(100%)';
+            document.getElementById('ls-center').style.opacity   = '0';
+            setTimeout(function () {
+                document.getElementById('ls-wrap').remove();
+            }, 1100);
+        }, 1800); {{-- ganti angka ini untuk durasi tampil --}}
+    });
         // ── Services Accordion (Mobile) ───────────────────────────────
         const servicesToggle  = document.getElementById('services-toggle');
         const servicesSub     = document.getElementById('services-sub');

@@ -175,52 +175,58 @@
             <div class="w-5 h-5 bg-red-500 border-2 border-black rounded-full flex-shrink-0 animate-radar"></div>
         </div>
 
-        @php
-        $svcs = [
-            [
-                'tab' => 'Press Release',
-                'title' => "Jasa Press\nRelease",
-                'body' => 'Layanan publikasi informasi resmi brand Anda ke berbagai media massa untuk meningkatkan jangkauan.',
-                'bg' => 'SOCIAL',
-                'img' => 'r.png'
-            ],
-            [
-                'tab' => 'Backlink Media',
-                'title' => "Jasa Backlink\nMedia Nasional",
-                'body' => 'Tingkatkan otoritas domain dan peringkat SEO website Anda melalui backlink berkualitas dari media nasional.',
-                'bg' => 'NEWS',
-                'img' => 'i.png'
-            ],
-            [
-                'tab' => 'Press Conference',
-                'title' => "Jasa Press\nConference / Pers",
-                'body' => 'Pengorganisasian konferensi pers profesional untuk mengomunikasikan pesan penting kepada publik.',
-                'bg' => 'ART',
-                'img' => 'k.png'
-            ],
-            [
-                'tab' => 'Penulisan Artikel',
-                'title' => "Jasa Penulisan\nArtikel",
-                'body' => 'Pembuatan konten artikel yang menarik, informatif, dan dioptimasi untuk kebutuhan digital Anda.',
-                'bg' => 'GROW',
-                'img' => 'c.png'
-            ],
-            [
-                'tab' => 'Script Video',
-                'title' => "Jasa Penulisan\nScript Video / TV",
-                'body' => 'Penyusunan naskah kreatif untuk produksi video komersial, media sosial, maupun tayangan televisi.',
-                'bg' => 'NEWS',
-                'img' => 'U.png'
-            ],
-            [
-                'tab' => 'Pelatihan Kreator',
-                'title' => "Jasa Pelatihan\nKonten Kreator",
-                'body' => 'Program pelatihan intensif untuk mengasah kemampuan dalam menciptakan konten digital yang berdampak.',
-                'bg' => 'ART',
-                'img' => 'P.png'
-            ],
-        ];
-        @endphp
+       @php
+$svcs = [
+    [
+        'tab' => 'Press Release',
+        'title' => "Jasa Press\nRelease",
+        'body' => 'Layanan publikasi informasi resmi brand Anda ke berbagai media massa untuk meningkatkan jangkauan.',
+        'bg' => 'SOCIAL',
+        'img' => 'r.png',
+        'route' => 'layanan.press.release'
+    ],
+    [
+        'tab' => 'Backlink Media',
+        'title' => "Jasa Backlink\nMedia Nasional",
+        'body' => 'Tingkatkan otoritas domain dan peringkat SEO website Anda melalui backlink berkualitas dari media nasional.',
+        'bg' => 'NEWS',
+        'img' => 'i.png',
+        'route' => 'layanan.backlink'
+    ],
+    [
+        'tab' => 'Press Conference',
+        'title' => "Jasa Press\nConference / Pers",
+        'body' => 'Pengorganisasian konferensi pers profesional untuk mengomunikasikan pesan penting kepada publik.',
+        'bg' => 'ART',
+        'img' => 'k.png',
+        'route' => 'layanan.press.conference'
+    ],
+    [
+        'tab' => 'Penulisan Artikel',
+        'title' => "Jasa Penulisan\nArtikel",
+        'body' => 'Pembuatan konten artikel yang menarik, informatif, dan dioptimasi untuk kebutuhan digital Anda.',
+        'bg' => 'GROW',
+        'img' => 'c.png',
+        'route' => 'layanan.penulisan.artikel'
+    ],
+    [
+        'tab' => 'Script Video',
+        'title' => "Jasa Penulisan\nScript Video / TV",
+        'body' => 'Penyusunan naskah kreatif untuk produksi video komersial, media sosial, maupun tayangan televisi.',
+        'bg' => 'NEWS',
+        'img' => 'U.png',
+        'route' => 'layanan.script.video'
+    ],
+    [
+        'tab' => 'Pelatihan Kreator',
+        'title' => "Jasa Pelatihan\nKonten Kreator",
+        'body' => 'Program pelatihan intensif untuk mengasah kemampuan dalam menciptakan konten digital yang berdampak.',
+        'bg' => 'ART',
+        'img' => 'P.png',
+        'route' => 'layanan.pelatihan.konten'
+    ],
+];
+@endphp
 
         <div class="reveal">
             {{-- Tabs Container --}}
@@ -252,7 +258,9 @@
                     </h3>
                     <p class="text-black/80 font-bold leading-relaxed mb-8 max-w-sm">{{ $s['body'] }}</p>
                     <div>
-                        <a href="#contact" class="btn-pop inline-block">PELAJARI LEBIH →</a>
+                      <a href="{{ route($s['route']) }}" class="btn-pop inline-block">
+    PELAJARI LEBIH →
+</a>
                     </div>
                 </div>
 
