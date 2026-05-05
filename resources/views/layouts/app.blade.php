@@ -624,7 +624,7 @@
             setTimeout(function () {
                 document.getElementById('ls-wrap').remove();
             }, 1100);
-        }, 1800); {{-- ganti angka ini untuk durasi tampil --}}
+        }, 1800);
     });
         // ── Services Accordion (Mobile) ───────────────────────────────
         const servicesToggle  = document.getElementById('services-toggle');
