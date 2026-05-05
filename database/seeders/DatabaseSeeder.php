@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Article;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -11,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // Buat akun admin default
-        User::firstOrCreate(
+        $admin = User::firstOrCreate(
             ['email' => 'admin@kontendigital.id'],
             [
                 'name'     => 'Admin KontenDigital',
@@ -30,6 +31,23 @@ class DatabaseSeeder extends Seeder
             ]
         );
 
-        // Tidak ada Article::factory — tidak ada dummy artikel
+        // Seed artikel asli kamu di sini
+        $articles = [
+            [
+                'title'        => 'Judul Artikel Kamu Di Sini',   // <-- ganti ini
+                'category'     => 'Press Release',                 // <-- ganti ini
+                'content'      => 'Isi konten artikel kamu...',    // <-- ganti ini
+                'status'       => 'published',
+                'published_at' => now(),
+            ],
+            // tambah artikel lain kalau ada...
+        ];
+
+        foreach ($articles as $data) {
+            Article::firstOrCreate(
+                ['title' => $data['title']],
+                array_merge($data, ['user_id' => $admin->id])
+            );
+        }
     }
 }
