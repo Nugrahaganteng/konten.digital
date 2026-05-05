@@ -103,7 +103,7 @@ class HomeController extends Controller
             'message' => 'required|string|min:10',
         ]);
 
-        Mail::to('muhammadarifkywildan@gmail.com')
+        Mail::to('nugrahafirizki@gmail.com')
             ->send(new ContactMail(
                 senderName:  $validated['name'],
                 senderEmail: $validated['email'],
