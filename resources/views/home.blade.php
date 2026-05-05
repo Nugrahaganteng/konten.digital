@@ -177,19 +177,57 @@
 
         @php
         $svcs = [
-            ['tab'=>'Social Media','title'=>"Social Media\nManagement",'body'=>'Tingkatkan engagement brand kamu di media sosial dengan konten berkualitas tinggi.','bg'=>'SOCIAL','img'=>'r.png'],
-            ['tab'=>'Press Release','title'=>"Press\nRelease",'body'=>'Publikasikan brand kamu ke 200+ media nasional terpercaya untuk kredibilitas maksimal.','bg'=>'NEWS','img'=>'i.png'],
-            ['tab'=>'Visual Design','title'=>"Visual\nDesign",'body'=>'Desain visual yang bold, unik, dan berkesan untuk identitas brand kamu agar tampil beda.','bg'=>'ART','img'=>'k.png'],
-            ['tab'=>'SEO','title'=>"SEO\nManagement",'body'=>'Strategi SEO memastikan website kamu mudah ditemukan oleh target audiens yang tepat.','bg'=>'GROW','img'=>'c.png'],
+            [
+                'tab' => 'Press Release',
+                'title' => "Jasa Press\nRelease",
+                'body' => 'Layanan publikasi informasi resmi brand Anda ke berbagai media massa untuk meningkatkan jangkauan.',
+                'bg' => 'SOCIAL',
+                'img' => 'r.png'
+            ],
+            [
+                'tab' => 'Backlink Media',
+                'title' => "Jasa Backlink\nMedia Nasional",
+                'body' => 'Tingkatkan otoritas domain dan peringkat SEO website Anda melalui backlink berkualitas dari media nasional.',
+                'bg' => 'NEWS',
+                'img' => 'i.png'
+            ],
+            [
+                'tab' => 'Press Conference',
+                'title' => "Jasa Press\nConference / Pers",
+                'body' => 'Pengorganisasian konferensi pers profesional untuk mengomunikasikan pesan penting kepada publik.',
+                'bg' => 'ART',
+                'img' => 'k.png'
+            ],
+            [
+                'tab' => 'Penulisan Artikel',
+                'title' => "Jasa Penulisan\nArtikel",
+                'body' => 'Pembuatan konten artikel yang menarik, informatif, dan dioptimasi untuk kebutuhan digital Anda.',
+                'bg' => 'GROW',
+                'img' => 'c.png'
+            ],
+            [
+                'tab' => 'Script Video',
+                'title' => "Jasa Penulisan\nScript Video / TV",
+                'body' => 'Penyusunan naskah kreatif untuk produksi video komersial, media sosial, maupun tayangan televisi.',
+                'bg' => 'NEWS',
+                'img' => 'U.png'
+            ],
+            [
+                'tab' => 'Pelatihan Kreator',
+                'title' => "Jasa Pelatihan\nKonten Kreator",
+                'body' => 'Program pelatihan intensif untuk mengasah kemampuan dalam menciptakan konten digital yang berdampak.',
+                'bg' => 'ART',
+                'img' => 'P.png'
+            ],
         ];
         @endphp
 
         <div class="reveal">
-            {{-- Tabs --}}
-            <div class="flex flex-wrap border-4 border-black mt-8 overflow-hidden shadow-neo">
+            {{-- Tabs Container --}}
+            {{-- Menggunakan Grid agar semua tab memiliki lebar yang sama dan rapi --}}
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border-4 border-black mt-8 overflow-hidden shadow-neo bg-black gap-[4px]">
                 @foreach($svcs as $i => $s)
-                <button class="stab font-black text-xs md:text-sm px-6 py-4 border-r-4 border-black
-                               last:border-r-0 transition-all uppercase tracking-widest
+                <button class="stab font-black text-[10px] md:text-xs px-2 py-4 transition-all uppercase tracking-tighter md:tracking-widest
                                {{ $i === 0 ? 'bg-black text-yellow-400' : 'bg-white text-black hover:bg-yellow-400' }}"
                         data-idx="{{ $i }}"
                         style="font-family:'Unbounded',sans-serif">
@@ -209,7 +247,7 @@
                     <div class="corner-ornament tl"></div>
                     <div class="corner-ornament br"></div>
                     <h3 class="font-black leading-none text-purple-950 mb-6 text-glitch-heavy"
-                        style="font-family:'Unbounded',sans-serif; font-size:clamp(2.5rem,4vw,4rem)">
+                        style="font-family:'Unbounded',sans-serif; font-size:clamp(2rem,4vw,3.5rem)">
                         {!! nl2br(e($s['title'])) !!}
                     </h3>
                     <p class="text-black/80 font-bold leading-relaxed mb-8 max-w-sm">{{ $s['body'] }}</p>
@@ -219,9 +257,9 @@
                 </div>
 
                 {{-- Visual --}}
-                <div class="group bg-purple-950 min-h-[400px] flex items-center justify-center relative overflow-hidden border-l-4 border-black">
+                <div class="group bg-purple-950 min-h-[350px] md:min-h-[450px] flex items-center justify-center relative overflow-hidden border-t-4 md:border-t-0 md:border-l-4 border-black">
                     <div class="absolute inset-0 flex items-center justify-center select-none pointer-events-none">
-                         <span class="font-black opacity-10 text-[10rem] text-white tracking-tighter transition-transform duration-700 group-hover:scale-125 group-hover:rotate-6" 
+                         <span class="font-black opacity-10 text-[6rem] md:text-[10rem] text-white tracking-tighter transition-transform duration-700 group-hover:scale-125 group-hover:rotate-6" 
                                style="font-family:'Unbounded',sans-serif">
                             {{ $s['bg'] }}
                         </span>

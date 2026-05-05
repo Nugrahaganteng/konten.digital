@@ -4,37 +4,64 @@
 
 @section('content')
 
-{{-- HERO SECTION --}}
-<section class="relative pt-32 pb-24 bg-white border-b-8 border-black overflow-hidden">
+{{-- HERO SECTION - Tema Kuning & Ungu --}}
+<section class="relative pt-32 pb-24 bg-[#FFD200] border-b-8 border-black overflow-hidden">
+    {{-- Decorative Background Icon --}}
+    <div class="absolute top-20 right-10 opacity-20 animate-pulse hidden md:block">
+        <svg class="w-40 h-40 text-[#3D0066]" fill="currentColor" viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"/></svg>
+    </div>
+
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+        {{-- Text Content --}}
         <div class="space-y-8">
-            <div class="inline-block px-6 py-2 border-4 border-black bg-[#F2B038] transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <span class="text-black font-black text-sm tracking-widest uppercase">UPGRADE SKILL KONTEN KREATORMU</span>
+            <div class="inline-block px-6 py-2 border-4 border-black bg-[#3D0066] transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                <span class="text-white font-black text-sm tracking-widest uppercase">✦ UPGRADE SKILL KONTEN KREATORMU</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-black text-black leading-none uppercase tracking-tighter">
-                Ciptakan Konten <span class="bg-[#3B82F6] text-white px-4 inline-block transform rotate-1">Inovatif</span> dengan Smartphone
+            <h1 class="text-6xl md:text-8xl font-black text-[#3D0066] leading-[0.9] uppercase tracking-tighter">
+                Ciptakan Konten <br>
+                <span class="bg-black text-[#FFD200] px-4 inline-block transform rotate-1 italic">Inovatif</span> <br>
+                dengan Smartphone
             </h1>
 
-            <p class="text-xl font-bold text-black/80 leading-relaxed">
-                Ikuti pelatihan konten kreator bersama Kontendigital.id. Materi ini akan membantu kamu menjadi kreator handal mulai dari proses pengambilan video, editing, hingga publikasi yang sesuai platform.
+            <div class="border-l-4 border-black pl-4 py-2">
+                <p class="text-xl font-bold text-black italic leading-tight">
+                    "Ubah perangkat harian Anda menjadi mesin produksi konten profesional."
+                </p>
+            </div>
+
+            <p class="text-lg font-bold text-black/80 max-w-md">
+                Ikuti pelatihan konten kreator bersama Kontendigital.id. Materi komprehensif mulai dari pengambilan video, editing, hingga strategi publikasi.
             </p>
 
-            <div class="flex flex-wrap gap-4">
-                <a href="https://api.whatsapp.com/send?phone=6287786000919" 
-                   class="btn-pop bg-[#3B82F6] text-white px-10 py-5 text-2xl">
-                    KONSULTASI SEKARANG →
-                </a>
-            </div>
+            <a href="https://api.whatsapp.com/send?phone=6287786000919" 
+                class="inline-block bg-black text-white px-10 py-5 text-2xl font-black border-4 border-black shadow-[8px_8px_0px_0px_rgba(230,30,80,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all uppercase tracking-tighter">
+                KONSULTASI SEKARANG →
+            </a>
         </div>
 
-        <div class="relative flex justify-center">
-            <div class="absolute inset-0 bg-[#F2B038] border-4 border-black rounded-full translate-x-4 translate-y-4 -z-10"></div>
-            {{-- Image reference from Screen Shot 2026-05-05 at 13.48.xx --}}
-            <img src="/images/creator-training-hero.png" alt="Pelatihan Konten Kreator" class="w-full max-w-md h-auto border-8 border-black shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] grayscale hover:grayscale-0 transition-all duration-500">
+        {{-- Visual Side --}}
+        <div class="relative flex justify-center items-center h-[550px]">
+            {{-- Big Frame --}}
+            <div class="absolute w-[420px] h-[420px] border-[6px] border-black rounded-[40px] -translate-x-6 -translate-y-6"></div>
             
-            <div class="absolute -bottom-5 right-0 bg-white border-4 border-black p-4 font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                ✅ Pengajar Bersertifikasi BNSP
+            {{-- Circle Container --}}
+            <div class="relative w-[380px] h-[380px] bg-[#E61E50] border-[6px] border-black rounded-full shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+                <img src="/images/latihan.png" alt="Pelatihan Konten Kreator" 
+                     class="absolute w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-4">
+                
+                {{-- Floating Badge BNSP --}}
+                <div class="absolute -bottom-8 right-0 bg-white border-4 border-black px-6 py-3 shadow-[6px_6px_0px_0px_rgba(61,0,102,1)] z-20 flex items-center gap-3">
+                    <div class="bg-[#FFD200] border-2 border-black p-1">
+                        <svg class="w-5 h-5 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
+                    </div>
+                    <span class="font-black text-sm uppercase">Pengajar Bersertifikasi BNSP</span>
+                </div>
+            </div>
+
+            {{-- Decorative Badges --}}
+            <div class="absolute top-5 -right-4 bg-[#3D0066] text-white border-4 border-black px-4 py-2 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-30">
+                ✦ LIVE WORKSHOP
             </div>
         </div>
     </div>
@@ -43,7 +70,7 @@
 {{-- MENGAPA HARUS IKUT --}}
 <section class="py-24 bg-white border-b-8 border-black">
     <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl md:text-6xl font-black uppercase mb-16 italic text-center underline decoration-8 decoration-[#3B82F6]">Mengapa Harus Ikut Pelatihan Kami?</h2>
+        <h2 class="text-5xl font-black uppercase mb-16 text-center italic tracking-tighter text-[#3D0066]">Mengapa Harus Ikut Pelatihan Kami?</h2>
         <div class="grid md:grid-cols-4 gap-8">
             @php
                 $reasons = [
@@ -54,21 +81,23 @@
                 ];
             @endphp
             @foreach($reasons as $reason)
-            <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group hover:-translate-y-2 transition-all">
-                <h3 class="font-black text-xl uppercase mb-4 leading-tight">{{ $reason[0] }}</h3>
-                <p class="font-bold text-sm text-black/70">{{ $reason[1] }}</p>
+            <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] group hover:bg-[#3D0066] transition-all">
+                <div class="w-12 h-12 bg-[#FFD200] border-2 border-black flex items-center justify-center mb-6 group-hover:bg-white transition-colors">
+                    <svg class="w-6 h-6 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                </div>
+                <h3 class="font-black text-xl uppercase mb-4 group-hover:text-[#FFD200] transition-colors leading-none">{{ $reason[0] }}</h3>
+                <p class="font-bold text-sm leading-tight group-hover:text-white transition-colors">{{ $reason[1] }}</p>
             </div>
             @endforeach
         </div>
     </div>
 </section>
 
-{{-- MODUL MATERI (ACCORDION STYLE) --}}
-<section class="py-24 bg-[#3B82F6] border-b-8 border-black">
+{{-- MODUL MATERI --}}
+<section class="py-24 bg-[#3D0066] border-b-8 border-black">
     <div class="max-w-5xl mx-auto px-6">
         <div class="text-center mb-16">
-            <h2 class="text-5xl font-black text-white uppercase mb-4">Apa Saja Materi Pelatihan Kami?</h2>
-            <p class="text-white font-bold">Pelatihan ini mencakup berbagai aspek penting dalam pembuatan konten.</p>
+            <h2 class="text-5xl font-black text-[#FFD200] uppercase mb-4 tracking-tighter underline decoration-8 decoration-black underline-offset-8">Apa Saja Materi Pelatihan Kami?</h2>
         </div>
 
         <div class="space-y-4">
@@ -82,14 +111,18 @@
                     ['Modul 6: Cuan dari Ngonten', 'Strategi monetisasi, affiliate marketing, endorse, dan penjualan produk/jasa.']
                 ];
             @endphp
-            @foreach($modules as $index => $module)
-            <div class="bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] overflow-hidden">
-                <div class="p-6 flex justify-between items-center cursor-pointer hover:bg-gray-50 transition-colors">
-                    <h3 class="font-black text-xl uppercase">{{ $module[0] }}</h3>
-                    <span class="text-3xl font-black">+</span>
+            @foreach($modules as $module)
+            <div class="bg-white border-4 border-black shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] group hover:bg-[#FFD200] transition-all">
+                <div class="p-6 flex justify-between items-center cursor-pointer">
+                    <div class="flex items-center gap-4">
+                        <div class="w-8 h-8 bg-black flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M12 4v16m8-8H4"></path></svg>
+                        </div>
+                        <h3 class="font-black text-xl uppercase leading-none">{{ $module[0] }}</h3>
+                    </div>
                 </div>
-                <div class="px-6 pb-6 pt-2 border-t-2 border-black/10">
-                    <p class="font-bold text-black/70">{{ $module[1] }}</p>
+                <div class="px-16 pb-6 italic font-bold text-black/70 group-hover:text-black">
+                    "{{ $module[1] }}"
                 </div>
             </div>
             @endforeach
@@ -100,7 +133,7 @@
 {{-- SIAPA YANG COCOK --}}
 <section class="py-24 bg-white border-b-8 border-black">
     <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-5xl font-black text-center uppercase mb-20 tracking-tighter italic">Siapa Saja yang Cocok Mengikuti Pelatihan Ini?</h2>
+        <h2 class="text-5xl font-black text-center uppercase mb-20 tracking-tighter italic text-[#3D0066]">Siapa Saja yang Cocok?</h2>
         <div class="grid md:grid-cols-4 gap-8 text-center">
             @php
                 $targets = [
@@ -111,8 +144,10 @@
                 ];
             @endphp
             @foreach($targets as $target)
-            <div class="flex flex-col items-center">
-                <div class="w-20 h-20 bg-[#F2B038] border-4 border-black mb-6 rotate-3"></div>
+            <div class="flex flex-col items-center group">
+                <div class="w-20 h-20 bg-[#FFD200] border-4 border-black mb-6 rotate-3 flex items-center justify-center group-hover:bg-[#E61E50] group-hover:rotate-0 transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
+                    <svg class="w-10 h-10 text-black group-hover:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                </div>
                 <h3 class="font-black text-xl uppercase mb-3 leading-tight">{{ $target[0] }}</h3>
                 <p class="font-bold text-sm text-black/60">{{ $target[1] }}</p>
             </div>
@@ -122,11 +157,11 @@
 </section>
 
 {{-- FINAL CTA --}}
-<section class="py-32 bg-[#F2B038] text-center">
+<section class="py-32 bg-[#FFD200] text-center border-t-8 border-black">
     <div class="max-w-4xl mx-auto px-6">
-        <h2 class="text-5xl md:text-7xl font-black uppercase mb-10 leading-none">Siap Menciptakan Konten Berkualitas?</h2>
+        <h2 class="text-6xl md:text-8xl font-black uppercase mb-10 leading-[0.8] tracking-tighter text-[#3D0066]">SIAP JADI <br> KREATOR?</h2>
         <a href="https://api.whatsapp.com/send?phone=6287786000919" 
-           class="inline-block bg-black text-white px-12 py-6 text-2xl font-black border-4 border-black shadow-[10px_10px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all">
+           class="inline-block bg-black text-white px-12 py-6 text-2xl font-black border-4 border-black shadow-[10px_10px_0px_0px_rgba(230,30,80,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all uppercase">
             HUBUNGI KAMI SEKARANG →
         </a>
     </div>

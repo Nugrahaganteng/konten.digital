@@ -5,49 +5,75 @@
 @section('content')
 
 {{-- 1. HERO SECTION (Berdasarkan Konten Baru) --}}
-<section class="relative pt-32 pb-24 overflow-hidden border-b-8 border-black bg-[#FFD700]">
-    {{-- Dekorasi Floating Elements ala Arcade --}}
-    <div class="absolute top-20 left-10 w-16 h-16 bg-purple-900 border-4 border-black rotate-12 opacity-20 animate-bounce"></div>
-    <div class="absolute bottom-20 right-10 w-20 h-20 bg-white border-4 border-black -rotate-12 opacity-30 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]"></div>
-
-    <div class="max-w-6xl mx-auto px-6 text-center relative z-10">
-        {{-- Badge Kecil --}}
-        <div class="inline-block bg-black text-white px-4 py-1 mb-8 border-2 border-white shadow-[4px_4px_0px_0px_rgba(48,0,84,1)]">
-            <span class="text-xs font-black uppercase tracking-[0.3em]">Press Release Service</span>
-        </div>
-
-        <h1 class="text-6xl md:text-8xl font-black mb-8 leading-none uppercase italic tracking-tighter text-purple-950">
-            JASA PRESS <br> 
-            <span class="relative inline-block">
-                RELEASE
-                {{-- Garis Bawah Dekoratif --}}
-                <div class="absolute -bottom-2 left-0 w-full h-4 bg-purple-900/20 -z-10"></div>
-            </span>
-            <br>
-            <span class="bg-purple-950 text-[#FFD700] px-6 py-2 inline-block -rotate-1 mt-4 shadow-[12px_12px_0px_0px_rgba(0,0,0,1)] tracking-normal text-5xl md:text-7xl not-italic">
-                KONTENDIGITAL.ID
-            </span>
-        </h1>
-
-        <p class="max-w-3xl mx-auto text-xl md:text-2xl font-bold mb-12 text-purple-950/90 leading-tight">
-            "Mitra terpercaya dalam komunikasi dan pemasaran digital yang mudah, murah, cepat, dan terjamin kualitasnya."
-        </p>
-
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-6">
-            {{-- Tombol Utama --}}
-            <a href="https://api.whatsapp.com/send?phone=6287786000919" 
-               class="group relative bg-purple-950 text-[#FFD700] px-12 py-6 font-black text-2xl uppercase border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all duration-200">
-                KONSULTASI SEKARANG
-                <span class="inline-block group-hover:translate-x-2 transition-transform ml-2">→</span>
-            </a>
-            
-           
-        </div>
+<section class="relative pt-32 pb-24 overflow-hidden border-b-8 border-black bg-[#FFD200]">
+    {{-- Decorative Background Rocket --}}
+    <div class="absolute bottom-10 right-10 opacity-40 animate-pulse hidden md:block">
+        <svg class="w-24 h-24 text-[#E61E50]" fill="currentColor" viewBox="0 0 24 24"><path d="M13.13 14.71L8.5 10.08L10 8.58L14.63 13.21L13.13 14.71M16 11L11.5 6.5L12.58 5.42C13.08 4.92 13.9 4.92 14.41 5.42L18.58 9.58C19.08 10.09 19.08 10.91 18.58 11.42L16 11M5.41 18.59L2 22L5.41 18.59C5.91 19.09 6.74 19.09 7.24 18.59L11.38 14.45L6.75 9.82L2.61 13.96C2.11 14.46 2.11 15.29 2.61 15.79L5.41 18.59Z"/></svg>
     </div>
 
-    {{-- Overlay Scanlines --}}
-    <div class="absolute inset-0 pointer-events-none opacity-5 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%]"></div>
-</section>>
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-10">
+        {{-- SISI KIRI: TEXT CONTENT --}}
+        <div class="space-y-6">
+            {{-- Badge Ungu Atas --}}
+            <div class="inline-block px-4 py-1 border-2 border-black bg-[#3D0066] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
+                <span class="text-white font-black text-xs tracking-widest uppercase">✦ JASA KONFERENSI PERS (KHUSUS JOGJA)</span>
+            </div>
+
+            <h1 class="text-6xl md:text-7xl font-black text-[#3D0066] leading-[0.9] uppercase tracking-tighter">
+                BERSAMA <br>
+                WARTAWAN DARI <br>
+                <span class="bg-black text-[#FFD200] px-2 italic">MEDIA TERNAMA</span>
+            </h1>
+
+            {{-- Quote Section --}}
+            <div class="border-l-4 border-black pl-4 py-2">
+                <p class="text-lg font-bold text-black italic">
+                    "Ubah statement menjadi berita nasional dalam sekejap."
+                </p>
+            </div>
+
+            <p class="text-lg font-bold text-black/80 max-w-md leading-tight">
+                Selain membantu mengundang wartawan/media untuk Anda, kami menangani pembuatan artikel press release, undangan media, distribusi berita, hingga monitoring pemuatan berita secara tuntas.
+            </p>
+
+            {{-- Tombol Konsultasi --}}
+            <a href="https://api.whatsapp.com/send?phone=6287786000919" 
+               class="inline-block px-10 py-4 bg-black text-white font-black text-xl border-4 border-black hover:bg-[#3D0066] transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] uppercase tracking-tighter">
+                KONSULTASI SEKARANG →
+            </a>
+        </div>
+
+        {{-- SISI KANAN: VISUAL (Frame & Circle) --}}
+        <div class="relative flex justify-center items-center h-[550px]">
+            {{-- Frame Hitam Melenceng --}}
+            <div class="absolute w-[420px] h-[430px] border-[6px] border-black rounded-[40px] -translate-x-6 -translate-y-4"></div>
+            
+            {{-- Lingkaran Merah --}}
+            <div class="relative w-[400px] h-[400px] bg-[#E61E50] border-[6px] border-black rounded-full shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-visible">
+                
+                {{-- Foto Orang (Ganti source ke foto Anda) --}}
+                <img src="/images/press1.png" alt="Press Release" 
+                     class="absolute bottom-0 w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform translate-y-6">
+                
+                {{-- Bubble Chat GOOD NEWS --}}
+                <div class="absolute top-10 -right-16 bg-white border-4 border-black rounded-full px-6 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-20">
+                    <span class="font-black text-sm text-black uppercase">GOOD NEWS!!!</span>
+                    <div class="absolute -bottom-2 left-4 w-4 h-4 bg-white border-b-4 border-r-4 border-black rotate-45"></div>
+                </div>
+
+                {{-- Badge Press Release (Kanan Atas) --}}
+                <div class="absolute -top-12 -right-8 bg-[#3D0066] text-white border-4 border-black px-5 py-2 font-black text-xs uppercase shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-30">
+                    ✦ PRESS RELEASE
+                </div>
+
+                {{-- Badge Launching Produk (Kiri Bawah) --}}
+                <div class="absolute -bottom-10 -left-12 bg-white text-black border-4 border-black px-5 py-2 font-black text-xs uppercase shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 z-30">
+                    ✦ LAUNCHING PRODUK
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 {{-- 2. MENGAPA HARUS PRESS RELEASE (Berdasarkan Gambar 5) --}}
 <section class="py-24 bg-[#1a88d1] border-b-4 border-black text-white">

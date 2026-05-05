@@ -4,166 +4,153 @@
 
 @section('content')
 
-{{-- HERO SECTION --}}
-<section class="relative pt-32 pb-24 bg-white border-b-8 border-black overflow-hidden">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-        <div class="space-y-8">
-            <div class="inline-block px-6 py-2 border-4 border-black bg-[#F2B038] transform -rotate-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                <span class="text-black font-black text-sm tracking-widest uppercase">JASA PENULIS ARTIKEL SEO TERPERCAYA</span>
+{{-- HERO SECTION - Berdasarkan Foto Referensi --}}
+<section class="relative pt-32 pb-24 bg-[#FFD200] overflow-hidden border-b-8 border-black">
+    {{-- Decorative Background Elements (Tailwind Rocket & Star) --}}
+    <div class="absolute bottom-10 right-10 opacity-40 animate-bounce hidden md:block">
+        <svg class="w-24 h-24 text-[#E61E50]" fill="currentColor" viewBox="0 0 24 24"><path d="M13.13 14.71L8.5 10.08L10 8.58L14.63 13.21L13.13 14.71M16 11L11.5 6.5L12.58 5.42C13.08 4.92 13.9 4.92 14.41 5.42L18.58 9.58C19.08 10.09 19.08 10.91 18.58 11.42L16 11M5.41 18.59L2 22L5.41 18.59C5.91 19.09 6.74 19.09 7.24 18.59L11.38 14.45L6.75 9.82L2.61 13.96C2.11 14.46 2.11 15.29 2.61 15.79L5.41 18.59Z"/></svg>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-4 items-center relative z-10">
+        {{-- Text Side --}}
+        <div class="space-y-6">
+            <div class="inline-block px-4 py-1 border-2 border-black bg-[#3D0066] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
+                <span class="text-white font-black text-xs tracking-widest uppercase">✦ JASA PENULIS ARTIKEL SEO</span>
             </div>
 
-            <h1 class="text-5xl md:text-7xl font-black text-black leading-none uppercase tracking-tighter">
-                Dapatkan Konten <span class="bg-[#3B82F6] text-white px-4 inline-block transform rotate-1">Berkualitas</span> Tanpa Batas
+            <h1 class="text-6xl md:text-8xl font-black text-[#3D0066] leading-[0.9] uppercase tracking-tighter">
+                DAPATKAN <br>
+                KONTEN <br>
+                <span class="bg-black text-[#FFD200] px-2 italic">BERKUALITAS</span>
             </h1>
 
-            <p class="text-xl font-bold text-black/80 leading-relaxed">
-                Jasa penulis artikel SEO, konten media, jasa copywriter, dan masih banyak lagi. Kami juga melayani pembuatan script untuk kebutuhan video di televisi, YouTube, maupun media social lainnya.
+            <div class="border-l-4 border-black pl-4 py-2">
+                <p class="text-xl font-bold text-black italic">
+                    "Ubah ide Anda menjadi konten yang merajai Google."
+                </p>
+            </div>
+
+            <p class="text-lg font-bold text-black/80 max-w-md leading-tight">
+                Jasa penulis artikel SEO, konten media, copywriter, dan script video YouTube/Social Media dengan riset keyword mendalam.
             </p>
 
-            <div class="flex flex-wrap gap-4">
-                <a href="https://api.whatsapp.com/send?phone=6287786000919" 
-                   class="btn-pop bg-[#3B82F6] text-white px-10 py-5 text-2xl">
-                    KONSULTASI SEKARANG →
-                </a>
-            </div>
+            <a href="https://api.whatsapp.com/send?phone=6287786000919" 
+               class="inline-block px-8 py-4 bg-black text-white font-black text-xl border-4 border-black hover:bg-[#3D0066] transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] uppercase tracking-tighter">
+                KONSULTASI SEKARANG →
+            </a>
         </div>
 
-        <div class="relative">
-            <div class="absolute inset-0 bg-[#F2B038] border-4 border-black rounded-full translate-x-4 translate-y-4 -z-10"></div>
-            <img src="/images/article-hero.png" alt="Penulisan Artikel" class="w-full h-auto border-8 border-black shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] grayscale hover:grayscale-0 transition-all duration-500">
-            
-            {{-- Floating Badges --}}
-            <div class="absolute -top-5 -right-5 bg-white border-4 border-black p-4 font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] animate-bounce">
-                ✅ SEO Friendly
-            </div>
-            <div class="absolute -bottom-5 -left-5 bg-black text-white border-4 border-white p-4 font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                Hasil Bergaransi
-            </div>
+        {{-- Image Side (Neo-Brutalism Frame) --}}
+       <div class="relative flex justify-center items-center h-[600px]">
+    {{-- 1. Kotak Frame Hitam Besar di Belakang --}}
+    <div class="absolute w-[450px] h-[450px] border-[6px] border-black rounded-[50px] -translate-x-4 -translate-y-4"></div>
+    
+    {{-- 2. Lingkaran Merah dengan Shadow Hitam --}}
+    <div class="relative w-[400px] h-[400px] bg-[#E61E50] border-[6px] border-black rounded-full shadow-[25px_25px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+        
+        {{-- 3. Foto Orang (Dikeluarkan dari overflow agar tidak terpotong) --}}
+        <img src="/images/tulis1.png" alt="Penulisan Artikel" 
+             class="absolute bottom-0 w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform translate-y-5">
+
+        {{-- 4. Bubble "GOOD NEWS!!!" --}}
+        <div class="absolute top-20 -right-16 bg-white border-4 border-black rounded-full px-6 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-20">
+            <span class="font-black text-sm text-black uppercase">GOOD NEWS!!!</span>
+            {{-- Ekor Bubble --}}
+            <div class="absolute -bottom-2 left-4 w-4 h-4 bg-white border-b-4 border-r-4 border-black rotate-45"></div>
         </div>
+
+        {{-- 5. Badge Ungu: SEO FRIENDLY --}}
+        <div class="absolute top-5 -right-20 bg-[#3D0066] text-white border-4 border-black px-6 py-2 font-black text-sm uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-30">
+            ✦ SEO FRIENDLY
+        </div>
+
+        {{-- 6. Badge Putih: GARANSI LOLOS COPYSKAPE --}}
+        <div class="absolute -bottom-10 -left-24 bg-white text-black border-4 border-black px-6 py-3 font-black text-sm uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 z-30">
+            ✦ GARANSI LOLOS COPYSKAPE
+        </div>
+    </div>
+</div>
     </div>
 </section>
 
 {{-- MASALAH & SOLUSI --}}
 <section class="py-24 bg-white border-b-8 border-black">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        <div class="relative">
-            <img src="/images/thinking-woman.png" class="w-full grayscale border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
+        <div class="relative group">
+            <div class="absolute inset-0 bg-[#FFD200] border-4 border-black translate-x-4 translate-y-4 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform"></div>
+            <img src="/images/tulis.png" class="w-full grayscale border-4 border-black shadow-none">
         </div>
         <div>
-            <h2 class="text-4xl font-black uppercase mb-10 leading-tight">Apakah Anda Mengalami Hal Ini?</h2>
+            <h2 class="text-4xl font-black uppercase mb-10 leading-tight text-[#3D0066]">Apakah Anda Mengalami Hal Ini?</h2>
             <div class="space-y-4">
                 @php
                     $problems = [
                         'Tidak tahu cara riset kata kunci',
-                        'Merasa harga jasa penulisan artikel sangat mahal',
+                        'Harga jasa penulisan artikel sangat mahal',
                         'Butuh banyak artikel dalam waktu cepat',
-                        'Tidak punya ide untuk menulis',
-                        'Trauma dengan jasa penulis artikel asal-asalan',
-                        'Tidak punya banyak waktu'
+                        'Trauma dengan jasa penulis asal-asalan',
+                        'Tidak punya waktu untuk konsisten posting'
                     ];
                 @endphp
                 @foreach($problems as $problem)
-                <div class="flex items-center gap-4 p-4 bg-red-50 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <span class="text-red-600 font-black text-xl">✘</span>
-                    <span class="font-bold">{{ $problem }}</span>
+                <div class="flex items-center gap-4 p-4 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-red-50 transition-colors group">
+                    {{-- Icon X dari Tailwind --}}
+                    <div class="w-8 h-8 bg-black flex items-center justify-center border-2 border-white group-hover:bg-red-600">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </div>
+                    <span class="font-black uppercase text-sm">{{ $problem }}</span>
                 </div>
                 @endforeach
             </div>
-            <p class="mt-10 text-2xl font-black italic text-[#3B82F6]">Jika iya, maka berarti Kontendigital.id solusinya!</p>
         </div>
     </div>
 </section>
 
 {{-- WHY TRUST US --}}
-<section class="py-24 bg-[#3B82F6] border-b-8 border-black">
-    <div class="max-w-7xl mx-auto px-6 text-center text-white">
-        <h2 class="text-4xl md:text-6xl font-black uppercase mb-16 italic">Mengapa Harus Percaya pada Kontendigital.id?</h2>
+<section class="py-24 bg-[#3D0066] border-b-8 border-black">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-6xl font-black uppercase mb-16 italic text-[#FFD200]">Mengapa Harus Kami?</h2>
         <div class="grid md:grid-cols-3 gap-8">
             @php
                 $trusts = [
-                    'Konsultasi Gratis', 'Penulis Profesional & Berpengalaman', 'Lolos Copyright', 
-                    'Revisi Sepuasnya', 'Harga Murah', 'Pengerjaan Cepat'
+                    'Konsultasi Gratis', 'Penulis Profesional', 'Lolos Copyright', 
+                    'Revisi Sepuasnya', 'Harga Kompetitif', 'Pengerjaan Cepat'
                 ];
             @endphp
             @foreach($trusts as $trust)
-            <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] text-black">
-                <div class="w-12 h-12 bg-[#F2B038] border-2 border-black mx-auto mb-4 flex items-center justify-center">
-                    <span class="text-white">✔</span>
+            <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_#FFD200] group hover:-translate-y-2 transition-transform">
+                {{-- Icon Check dari Tailwind --}}
+                <div class="w-14 h-14 bg-black border-4 border-[#FFD200] mx-auto mb-6 flex items-center justify-center transform group-hover:rotate-12 transition-transform">
+                    <svg class="w-8 h-8 text-[#FFD200]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path></svg>
                 </div>
-                <h3 class="font-black text-xl uppercase">{{ $trust }}</h3>
+                <h3 class="font-black text-xl uppercase leading-none">{{ $trust }}</h3>
             </div>
             @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- GOOGLE VS AUDIENS --}}
-<section class="py-24 bg-white border-b-8 border-black">
-    <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl font-black text-center uppercase mb-16">Mengapa Brand Anda Membutuhkan Konten Artikel SEO yang Relevan dan Berkualitas?</h2>
-        <div class="grid md:grid-cols-2 gap-10">
-            {{-- Google Side --}}
-            <div class="border-8 border-black shadow-[12px_12px_0px_0px_#ef4444]">
-                <div class="bg-[#ef4444] p-4 text-white font-black uppercase border-b-4 border-black">Dari Sisi Google, Konten Tersebut Dapat:</div>
-                <div class="p-8 space-y-6">
-                    <div class="flex gap-4 font-bold"><span class="text-green-600">✔</span> Menunjukkan keahlian penulis</div>
-                    <div class="flex gap-4 font-bold"><span class="text-green-600">✔</span> Menambah kredibilitas konten dan brand</div>
-                    <div class="flex gap-4 font-bold"><span class="text-green-600">✔</span> Meningkatkan otoritas dan kewenangan website Anda</div>
-                </div>
-            </div>
-            {{-- Audiens Side --}}
-            <div class="border-8 border-black shadow-[12px_12px_0px_0px_#3B82F6]">
-                <div class="bg-[#3B82F6] p-4 text-white font-black uppercase border-b-4 border-black">Dari Sisi Audiens, Konten Tersebut Bisa:</div>
-                <div class="p-8 space-y-6">
-                    <div class="flex gap-4 font-bold"><span class="text-green-600">✔</span> Menjawab kebutuhan atau masalah mereka</div>
-                    <div class="flex gap-4 font-bold"><span class="text-green-600">✔</span> Meningkatkan keterlibatan (engagement)</div>
-                    <div class="flex gap-4 font-bold"><span class="text-green-600">✔</span> Memperkuat kepercayaan karena informasi konten kredibel</div>
-                </div>
-            </div>
         </div>
     </div>
 </section>
 
 {{-- TOPIK --}}
-<section class="py-24 bg-[#F2B038] border-b-8 border-black">
+<section class="py-24 bg-[#FFD200] border-b-8 border-black">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
         <div>
-            <h2 class="text-4xl font-black uppercase mb-6">Jasa Penulisan Apa yang Anda Butuhkan?</h2>
-            <p class="font-bold mb-10">Kami menyediakan berbagai jenis konten, mulai dari artikel ringan hingga yang membutuhkan riset mendalam.</p>
-            <div class="grid grid-cols-2 gap-y-4 font-black">
+            <h2 class="text-5xl font-black uppercase mb-6 text-[#3D0066]">Topik Penulisan</h2>
+            <p class="font-bold mb-10 text-xl border-b-4 border-black pb-2 inline-block">Kami Menguasai Berbagai Niche Industri:</p>
+            <div class="grid grid-cols-2 gap-y-4">
                 @php
-                    $topics = ['Teknologi', 'Kesehatan', 'Website', 'Parenting', 'Pendidikan', 'Travel', 'Otomotif', 'Zakat', 'Musik', 'Gaya Hidup', 'Furniture', 'Kuliner', 'Haji & Umroh', 'Desain Grafis'];
+                    $topics = ['Teknologi', 'Kesehatan', 'Parenting', 'Pendidikan', 'Travel', 'Otomotif', 'Kuliner', 'Lifestyle'];
                 @endphp
                 @foreach($topics as $topic)
-                <div class="flex items-center gap-2 underline decoration-4 decoration-black">✦ {{ $topic }}</div>
+                <div class="flex items-center gap-3 font-black uppercase group">
+                    <span class="w-3 h-3 bg-black group-hover:bg-[#E61E50] transition-colors"></span>
+                    <span class="border-b-2 border-transparent group-hover:border-black">{{ $topic }}</span>
+                </div>
                 @endforeach
-                <div class="italic">...dan masih banyak lagi</div>
             </div>
         </div>
-        <img src="/images/woman-laptop.png" class="w-full border-8 border-black shadow-[15px_15px_0px_0px_rgba(0,0,0,1)]">
-    </div>
-</section>
-
-{{-- CARA BEKERJA --}}
-<section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-5xl font-black text-center uppercase mb-20">Bagaimana Kami Bekerja?</h2>
-        <div class="grid md:grid-cols-5 gap-4">
-            @php
-                $steps = [
-                    ['1. Konsultasi', 'Sampaikan kebutuhan Anda dan target audiens.'],
-                    ['2. Perencanaan', 'Kami merancang konten sesuai tujuan Anda.'],
-                    ['3. Penulisan', 'Penulis mulai mengerjakan artikel sesuai brief.'],
-                    ['4. Tahap Revisi', 'Layanan revisi untuk memastikan kepuasan Anda.'],
-                    ['5. Pengiriman', 'Artikel siap meningkatkan kualitas konten Anda.']
-                ];
-            @endphp
-            @foreach($steps as $step)
-            <div class="p-6 border-4 border-black bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] hover:-translate-y-2 transition-transform">
-                <h3 class="font-black text-lg mb-4 uppercase leading-tight">{{ $step[0] }}</h3>
-                <p class="text-sm font-bold text-black/70">{{ $step[1] }}</p>
-            </div>
-            @endforeach
+        <div class="relative">
+            <div class="absolute inset-0 border-4 border-black translate-x-4 translate-y-4"></div>
+            <img src="/images/tulis2.png" class="relative w-full border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
         </div>
     </div>
 </section>
