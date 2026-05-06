@@ -137,7 +137,6 @@
 </div>
 
     {{-- ── NAVBAR ─────────────────────────────────────────────────── --}}
-    {{-- FIX: Hapus class inline bg/border/sticky dari sini karena sudah di CSS #main-nav --}}
     <nav id="main-nav">
         <div class="max-w-7xl mx-auto px-6">
             <div class="flex items-center justify-between h-20">
@@ -193,6 +192,19 @@
 
                 {{-- Right Side: Auth --}}
                 <div class="flex items-center gap-4">
+
+                    {{-- ── ORDER NOW BUTTON ── --}}
+                    <a href="https://wa.me/6287786000919"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="hidden md:inline-flex items-center gap-2 px-5 py-2.5
+                              bg-white border-[3px] border-black font-black text-sm uppercase
+                              tracking-tight text-[#1a1a2e] shadow-neo-sm
+                              hover:bg-yellow-300 transition-colors">
+                        Order Now
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+
                     @auth
                         {{-- ── AVATAR + DROPDOWN (Desktop) ── --}}
                         <div class="avatar-wrapper relative hidden md:block">
@@ -302,20 +314,9 @@
                                 </form>
                             </div>
                         </div>
-
-                        
-                    @else
-                        {{-- ── TOMBOL MASUK (Guest) ── --}}
-                        <a href="{{ route('login') }}"
-                           class="hidden md:inline-block border-4 border-black bg-white text-black
-                                  font-black text-xs uppercase tracking-widest px-4 py-2 shadow-neo-sm
-                                  hover:bg-yellow-400 hover:translate-y-1 hover:shadow-none transition-all">
-                            Masuk
-                        </a>
                     @endauth
 
                     {{-- Burger Mobile --}}
-                    {{-- FIX: tambah min-w dan min-h agar area klik cukup besar di HP --}}
                     <button id="burger"
                             class="md:hidden text-black p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                             aria-label="Buka menu">
@@ -330,7 +331,6 @@
     </nav>
 
     {{-- ── MOBILE MENU (Full Screen Overlay) ─────────────────────── --}}
-    {{-- FIX: Hapus class 'hidden', ganti ke style="display:none" agar tidak konflik dengan Tailwind purge --}}
     <div id="mobile-menu"
          class="md:hidden fixed inset-0 z-[100] bg-yellow-400 overflow-y-auto"
          style="display: none;">
@@ -346,7 +346,6 @@
                     <p class="text-[0.6rem] font-bold text-red-500 uppercase tracking-[0.15em]">Growth Partner</p>
                 </div>
             </a>
-            {{-- FIX: Tombol Close — tambah min-w/min-h agar mudah diklik di HP --}}
             <button id="close-menu"
                     class="text-black p-2 min-w-[44px] min-h-[44px] flex items-center justify-center"
                     aria-label="Tutup menu">
@@ -436,6 +435,18 @@
                 Contact
                 <i class="fa-solid fa-arrow-right text-sm opacity-30"></i>
             </a>
+
+            {{-- Order Now Mobile --}}
+            <a href="https://wa.me/6287786000919"
+               target="_blank"
+               rel="noopener noreferrer"
+               class="mt-6 flex items-center justify-center gap-2 w-full py-4
+                      bg-[#1a1a2e] border-4 border-black font-black text-base uppercase
+                      tracking-tight text-yellow-400 shadow-neo">
+                <i class="fab fa-whatsapp text-lg"></i>
+                Order Now
+                <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
         </div>
 
         {{-- Auth Section Mobile --}}
@@ -493,15 +504,6 @@
                         </button>
                     </form>
                 </div>
-            @else
-                {{-- Guest: Tombol Login --}}
-                <a href="{{ route('login') }}"
-                   class="block w-full text-center border-4 border-black bg-[#1a1a2e] text-yellow-400
-                          font-black text-sm uppercase tracking-widest px-4 py-4 shadow-neo
-                          hover:bg-purple-950 transition-all">
-                    <i class="fa-solid fa-right-to-bracket mr-2"></i>
-                    Masuk Sekarang
-                </a>
             @endauth
         </div>
 
@@ -535,10 +537,10 @@
                     
                     {{-- Social Media --}}
                     <div class="flex items-center gap-6">
-                        <a href="https://www.instagram.com/kontendigitalid/" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-instagram"></i></a>
-                        <a href="https://www.facebook.com/people/Kontendigitalid/61564783021098/" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-facebook-f"></i></a>
-                        <a href="https://www.youtube.com/@kontendigitalid" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-youtube"></i></a>
-                        <a href="https://www.tiktok.com/@kontendigitalid" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-youtube"></i></a>
+                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-tiktok"></i></a>
                     </div>
                 </div>
 
@@ -593,8 +595,6 @@
         const mobileMenu  = document.getElementById('mobile-menu');
         const closeMenu   = document.getElementById('close-menu');
 
-        // FIX: Ganti classList.add/remove('hidden') → style.display
-        // supaya tidak konflik dengan Tailwind CSS purge
         function openMenu() {
             mobileMenu.style.display = 'block';
             document.body.style.overflow = 'hidden';
@@ -615,17 +615,18 @@
             }
         });
 
-//detik-detik loading screen sebelum hilang
-   window.addEventListener('load', function () {
-        setTimeout(function () {
-            document.getElementById('ls-top').style.transform    = 'translateY(-100%)';
-            document.getElementById('ls-bottom').style.transform = 'translateY(100%)';
-            document.getElementById('ls-center').style.opacity   = '0';
+        // Loading screen
+        window.addEventListener('load', function () {
             setTimeout(function () {
-                document.getElementById('ls-wrap').remove();
-            }, 1100);
-        }, 1800);
-    });
+                document.getElementById('ls-top').style.transform    = 'translateY(-100%)';
+                document.getElementById('ls-bottom').style.transform = 'translateY(100%)';
+                document.getElementById('ls-center').style.opacity   = '0';
+                setTimeout(function () {
+                    document.getElementById('ls-wrap').remove();
+                }, 1100);
+            }, 1800);
+        });
+
         // ── Services Accordion (Mobile) ───────────────────────────────
         const servicesToggle  = document.getElementById('services-toggle');
         const servicesSub     = document.getElementById('services-sub');

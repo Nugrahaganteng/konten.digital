@@ -96,11 +96,6 @@
             </button>
         </form>
 
-        <p style="margin-top:1rem; text-align:center;">
-            Belum punya akun?
-            <a href="{{ route('register') }}" class="link">Daftar</a>
-        </p>
-
     </div>
 
 </div>

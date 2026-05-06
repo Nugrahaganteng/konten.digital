@@ -34,7 +34,6 @@
 {{-- ── SECTION 2: SYARAT UMUM (BIRU CERAH - Sesuai Gambar) ───── --}}
 <section class="bg-[#3B82F6] border-b-8 border-black py-24 relative">
     {{-- Aksen Dekorasi --}}
-    <div class="absolute top-10 right-10 w-20 h-20 bg-[#FFD200] border-4 border-black rounded-full opacity-50"></div>
     
     <div class="max-w-5xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">

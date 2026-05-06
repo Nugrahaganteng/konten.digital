@@ -26,9 +26,21 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        // Jika bukan admin, logout dan tolak akses
+        if (! auth()->user()->isAdmin()) {
+            Auth::guard('web')->logout();
+
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->withErrors([
+                'email' => 'Akses ditolak. Hanya admin yang dapat login.',
+            ]);
+        }
+
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home', absolute: false));
+        return redirect()->route('admin.dashboard');
     }
 
     /**
@@ -42,6 +54,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('login');
     }
 }

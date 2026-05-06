@@ -209,7 +209,7 @@ function kirimKeWhatsApp() {
         return;
     }
 
-    const nomorWA = '6285693795510';
+    const nomorWA = '6283871325422';
 
     const teks =
 `Halo Kontendigital.id! Saya ingin konsultasi.
