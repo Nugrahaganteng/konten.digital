@@ -194,16 +194,7 @@
                 <div class="flex items-center gap-4">
 
                     {{-- ── ORDER NOW BUTTON ── --}}
-                    <a href="https://wa.me/6287786000919"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="hidden md:inline-flex items-center gap-2 px-5 py-2.5
-                              bg-white border-[3px] border-black font-black text-sm uppercase
-                              tracking-tight text-[#1a1a2e] shadow-neo-sm
-                              hover:bg-yellow-300 transition-colors">
-                        Order Now
-                        <i class="fa-solid fa-arrow-right text-xs"></i>
-                    </a>
+               
 
                     @auth
                         {{-- ── AVATAR + DROPDOWN (Desktop) ── --}}
