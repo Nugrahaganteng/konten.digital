@@ -134,7 +134,7 @@
                         $contacts = [
                             ['M3 8L12 13L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z', 'Email Official', 'kontendigitalid10@gmail.com', 'bg-[#FFD200]'],
                             ['M12 18L12 21M12 3L12 6M3 12L6 12M18 12L21 12M17 17L19 19M5 5L7 7M17 7L19 5M5 17L7 15', 'WhatsApp 1', '+62 877-8600-0919', 'bg-[#E61E50] text-white'],
-                            ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', 'Head Office', 'Jakarta, Indonesia', 'bg-[#3D0066] text-white'],
+                            ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', 'Head Office', 'Kontendigital.id, Kaligawe, RT.02, Gandekan, Kapanewon, Kec. Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55711', 'bg-[#3D0066] text-white'],
                         ];
                     @endphp
 

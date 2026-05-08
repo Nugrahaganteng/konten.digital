@@ -113,14 +113,14 @@ class HomeController extends Controller
         ]);
 
         // Redirect ke WhatsApp dengan pesan otomatis
-        $text = "Halo, ada pesan masuk dari website:%0A%0A"
-              . "*Nama:* {$validated['name']}%0A"
-              . "*No. WA:* {$validated['phone']}%0A"
-              . "*Email:* {$validated['email']}%0A"
-              . "*Layanan:* {$validated['service']}%0A"
-              . "*Pesan:* {$validated['message']}";
+      $text = "Halo Kontendigital.id! Saya ingin konsultasi.%0A%0A"
+      . "*Nama*: {$validated['name']}%0A"
+      . "*No. WA*: {$validated['phone']}%0A"
+      . "*Email*: {$validated['email']}%0A"
+      . "*Layanan*: {$validated['service']}%0A"
+      . "*Detail*: {$validated['message']}";
 
-        return redirect("https://wa.me/6285693795510?text={$text}");
+return redirect("https://wa.me/6283871325422?text={$text}");
     }
 
     public function pressRelease()
