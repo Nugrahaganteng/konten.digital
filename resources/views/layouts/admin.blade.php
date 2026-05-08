@@ -138,7 +138,7 @@
                 <a href="{{ route('home') }}" target="_blank" class="font-black text-xs text-black/60 hover:text-black tracking-widest uppercase transition-colors">
                     ↗ LIHAT WEBSITE
                 </a>
-                <div class="font-bold text-black/50 text-xs tracking-widest">{{ now()->format('H:i') }}</div>
+                <div id="clock-wib" class="font-bold text-black/70 text-xs tracking-widest"></div>
             </div>
         </header>
 
@@ -184,6 +184,20 @@
             sidebar.classList.remove('open');
             overlay.classList.add('hidden');
         });
+
+        // Jam WIB Realtime
+        function updateClock() {
+            const now = new Date();
+            const wib = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Jakarta' }));
+            const h = String(wib.getHours()).padStart(2, '0');
+            const m = String(wib.getMinutes()).padStart(2, '0');
+            const s = String(wib.getSeconds()).padStart(2, '0');
+            const days = ['Minggu','Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
+            const day = days[wib.getDay()];
+            document.getElementById('clock-wib').textContent = day + ', ' + h + ':' + m + ':' + s + ' WIB';
+        }
+        updateClock();
+        setInterval(updateClock, 1000);
     </script>
 
     @stack('scripts')

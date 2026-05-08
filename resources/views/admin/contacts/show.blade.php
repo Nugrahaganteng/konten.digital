@@ -19,7 +19,7 @@
             </div>
             <div class="text-right">
                 <p class="font-anton text-xs text-gray-400 uppercase">Tanggal Masuk</p>
-                <p class="font-bold">{{ $contact->created_at->format('d F Y - H:i') }}</p>
+                <p class="font-bold">{{ $contact->created_at->format('d F Y') }}</p>
             </div>
         </div>
 
