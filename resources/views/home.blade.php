@@ -214,7 +214,7 @@ $svcs = [
         'title' => "Jasa Penulisan\nScript Video / TV",
         'body' => 'Penyusunan naskah kreatif untuk produksi video komersial, media sosial, maupun tayangan televisi.',
         'bg' => 'NEWS',
-        'img' => 'U.png',
+        'img' => 'u.png',
         'route' => 'layanan.script.video'
     ],
     [
@@ -222,7 +222,7 @@ $svcs = [
         'title' => "Jasa Pelatihan\nKonten Kreator",
         'body' => 'Program pelatihan intensif untuk mengasah kemampuan dalam menciptakan konten digital yang berdampak.',
         'bg' => 'ART',
-        'img' => 'P.png',
+        'img' => 'p.png',
         'route' => 'layanan.pelatihan.konten'
     ],
 ];
