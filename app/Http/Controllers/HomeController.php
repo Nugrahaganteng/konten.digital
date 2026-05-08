@@ -1,12 +1,10 @@
 <?php
-// app/Http/Controllers/HomeController.php
 
 namespace App\Http\Controllers;
 
-use App\Mail\ContactMail;
 use App\Models\Article;
+use App\Models\ContactSubmission;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 
 class HomeController extends Controller
 {
@@ -103,15 +101,65 @@ class HomeController extends Controller
             'message' => 'required|string|min:10',
         ]);
 
-        Mail::to('nugrahafirizki@gmail.com')
-            ->send(new ContactMail(
-                senderName:  $validated['name'],
-                senderEmail: $validated['email'],
-                senderPhone: $validated['phone'],
-                service:     $validated['service'],
-                userMessage: $validated['message'],
-            ));
+        // Simpan ke database agar muncul di admin panel
+        ContactSubmission::create([
+            'name'       => $validated['name'],
+            'whatsapp'   => $validated['phone'],
+            'email'      => $validated['email'],
+            'service'    => $validated['service'],
+            'message'    => $validated['message'],
+            'ip_address' => $request->ip(),
+            'status'     => 'new',
+        ]);
 
-        return back()->with('success', '✅ Pesan berhasil dikirim! Kami akan menghubungi Anda segera.');
+        // Redirect ke WhatsApp dengan pesan otomatis
+        $text = "Halo, ada pesan masuk dari website:%0A%0A"
+              . "*Nama:* {$validated['name']}%0A"
+              . "*No. WA:* {$validated['phone']}%0A"
+              . "*Email:* {$validated['email']}%0A"
+              . "*Layanan:* {$validated['service']}%0A"
+              . "*Pesan:* {$validated['message']}";
+
+        return redirect("https://wa.me/6285693795510?text={$text}");
+    }
+
+    public function pressRelease()
+    {
+        return view('layanan.press-release');
+    }
+
+    public function backlink()
+    {
+        return view('layanan.backlink');
+    }
+
+    public function pressConference()
+    {
+        return view('layanan.press-conference');
+    }
+
+    public function penulisanArtikel()
+    {
+        return view('layanan.penulisan-artikel');
+    }
+
+    public function scriptVideo()
+    {
+        return view('layanan.script-video');
+    }
+
+    public function pelatihanKonten()
+    {
+        return view('layanan.pelatihan-konten');
+    }
+
+    public function caraOrder()
+    {
+        return view('pages.cara-order');
+    }
+
+    public function syaratKetentuan()
+    {
+        return view('pages.syarat-ketentuan');
     }
 }

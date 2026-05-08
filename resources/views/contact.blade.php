@@ -57,54 +57,74 @@
                     KIRIM <span class="text-[#E61E50]">PESAN</span> CEPAT
                 </h2>
 
-                <div class="space-y-8" id="wa-form">
+                {{-- ✅ SUCCESS MESSAGE --}}
+                @if(session('success'))
+                <div class="mb-6 bg-green-100 border-4 border-green-600 text-green-800 font-bold p-4">
+                    {{ session('success') }}
+                </div>
+                @endif
+
+                {{-- ✅ VALIDATION ERRORS --}}
+                @if($errors->any())
+                <div class="mb-6 bg-[#E61E50]/10 border-4 border-[#E61E50] p-4">
+                    <p class="font-black text-[#E61E50] uppercase mb-2">Mohon perbaiki isian berikut:</p>
+                    <ul class="list-disc pl-5 space-y-1">
+                        @foreach($errors->all() as $error)
+                            <li class="font-bold text-sm text-black">{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
+                {{-- ✅ FORM — POST ke server (simpan ke DB lalu redirect WA) --}}
+                <form method="POST" action="{{ route('contact.send') }}" class="space-y-8">
+                    @csrf
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                         <div class="space-y-2">
                             <label class="font-black uppercase text-xs tracking-widest text-[#3D0066]">Nama Lengkap</label>
-                            <input type="text" id="wa-name"
-                                class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                            <input type="text" name="name" value="{{ old('name') }}"
+                                class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] @error('name') border-[#E61E50] @enderror"
                                 placeholder="Siapa nama Anda?">
                         </div>
                         <div class="space-y-2">
                             <label class="font-black uppercase text-xs tracking-widest text-[#3D0066]">No. WhatsApp</label>
-                            <input type="text" id="wa-phone"
-                                class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                            <input type="text" name="phone" value="{{ old('phone') }}"
+                                class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] @error('phone') border-[#E61E50] @enderror"
                                 placeholder="0812xxxx">
                         </div>
                     </div>
 
                     <div class="space-y-2">
                         <label class="font-black uppercase text-xs tracking-widest text-[#3D0066]">Alamat Email</label>
-                        <input type="email" id="wa-email"
-                            class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
+                        <input type="email" name="email" value="{{ old('email') }}"
+                            class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] @error('email') border-[#E61E50] @enderror"
                             placeholder="email@bisnisanda.com">
                     </div>
 
                     <div class="space-y-2">
                         <label class="font-black uppercase text-xs tracking-widest text-[#3D0066]">Layanan Utama</label>
-                        <select id="wa-service"
-                            class="w-full border-4 border-black p-4 font-black uppercase text-sm appearance-none bg-white focus:bg-[#FFD200]/20 focus:outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-pointer">
+                        <select name="service"
+                            class="w-full border-4 border-black p-4 font-black uppercase text-sm appearance-none bg-white focus:bg-[#FFD200]/20 focus:outline-none shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] cursor-pointer @error('service') border-[#E61E50] @enderror">
                             <option value="">-- Pilih Layanan --</option>
-                            <option>Press Release</option>
-                            <option>Backlink Media</option>
-                            <option>Penulisan Artikel</option>
-                            <option>Press Conference</option>
-                            <option>Script Video</option>
+                            @foreach(['Press Release','Backlink Media','Penulisan Artikel','Press Conference','Script Video'] as $svc)
+                                <option value="{{ $svc }}" {{ old('service') === $svc ? 'selected' : '' }}>{{ $svc }}</option>
+                            @endforeach
                         </select>
                     </div>
 
                     <div class="space-y-2">
                         <label class="font-black uppercase text-xs tracking-widest text-[#3D0066]">Detail Kebutuhan</label>
-                        <textarea id="wa-message" rows="5"
-                            class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]"
-                            placeholder="Apa target yang ingin Anda capai?"></textarea>
+                        <textarea name="message" rows="5"
+                            class="w-full border-4 border-black p-4 font-bold focus:bg-[#FFD200]/20 focus:outline-none transition-colors shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] @error('message') border-[#E61E50] @enderror"
+                            placeholder="Apa target yang ingin Anda capai?">{{ old('message') }}</textarea>
                     </div>
 
-                    <button type="button" onclick="kirimKeWhatsApp()"
+                    <button type="submit"
                         class="w-full bg-[#3D0066] text-white font-black uppercase py-6 text-2xl border-4 border-black shadow-[10px_10px_0px_0px_rgba(255,210,0,1)] hover:translate-x-1 hover:translate-y-1 hover:shadow-none transition-all italic">
                         Kirim Pesan Sekarang →
                     </button>
-                </div>
+                </form>
             </div>
 
             {{-- KOLOM INFO (5/12) --}}
@@ -194,35 +214,5 @@
         </div>
     </div>
 </section>
-
-{{-- ── SCRIPT WHATSAPP ──────────────────────────────────────── --}}
-<script>
-function kirimKeWhatsApp() {
-    const name    = document.getElementById('wa-name').value.trim();
-    const phone   = document.getElementById('wa-phone').value.trim();
-    const email   = document.getElementById('wa-email').value.trim();
-    const service = document.getElementById('wa-service').value;
-    const message = document.getElementById('wa-message').value.trim();
-
-    if (!name || !phone || !email || !service || !message) {
-        alert('Mohon lengkapi semua field sebelum mengirim.');
-        return;
-    }
-
-    const nomorWA = '6283871325422';
-
-    const teks =
-`Halo Kontendigital.id! Saya ingin konsultasi.
-
-*Nama*: ${name}
-*No. WA*: ${phone}
-*Email*: ${email}
-*Layanan*: ${service}
-*Detail*: ${message}`;
-
-    const url = `https://wa.me/${nomorWA}?text=${encodeURIComponent(teks)}`;
-    window.open(url, '_blank');
-}
-</script>
 
 @endsection
