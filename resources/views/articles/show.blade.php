@@ -338,8 +338,8 @@
                         @auth
                             @can('update', $article)
                                 <div style="display: flex; gap: 1rem;">
-                                    <a href="{{ route('articles.edit', $article) }}" class="btn-neo btn-yellow">Edit</a>
-                                    <form action="{{ route('articles.destroy', $article) }}" method="POST" onsubmit="return confirm('Hapus artikel?')">
+                                <a href="{{ route('admin.articles.edit', $article) }}" class="btn-neo btn-yellow">Edit</a>
+                                <form action="{{ route('admin.articles.destroy', $article) }}" method="POST" onsubmit="return confirm('Hapus artikel?')">
                                         @csrf @method('DELETE')
                                         <button class="btn-neo btn-punch">Hapus</button>
                                     </form>
