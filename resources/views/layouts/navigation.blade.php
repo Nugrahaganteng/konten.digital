@@ -16,9 +16,9 @@
                 </div>
                 <div class="leading-none">
                     <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]"
-                       style="font-family:'Unbounded',sans-serif">KontenDigital</p>
+                       style="font-family:'Unbounded',sans-serif">HNP Communications</p>
                     <p class="text-[0.6rem] font-bold text-red-500 uppercase tracking-[0.15em]">
-                        Growth Partner
+                        Your Strategic PR and Digital Partner
                     </p>
                 </div>
             </a>

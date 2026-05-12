@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'KontenDigital.id') }}</title>
+    <title>{{ config('app.name', 'HNP Communications.id') }}</title>
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -29,13 +29,13 @@
                         flex items-center justify-center
                         group-hover:rotate-6 transition-transform shadow-neo-sm">
                 <span class="text-yellow-400 font-black text-xl"
-                      style="font-family:'Unbounded',sans-serif">K</span>
+                      style="font-family:'Unbounded',sans-serif">H</span>
             </div>
             <div class="leading-none">
                 <p class="font-black text-lg uppercase tracking-tight text-black"
-                   style="font-family:'Unbounded',sans-serif">KontenDigital</p>
+                   style="font-family:'Unbounded',sans-serif">HNP Communications</p>
                 <p class="text-[0.6rem] font-bold text-red-600 uppercase tracking-[0.15em]">
-                    Growth Partner
+                    Your Strategic PR and Digital Partner
                 </p>
             </div>
         </a>

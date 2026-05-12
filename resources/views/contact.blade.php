@@ -1,9 +1,18 @@
 {{-- resources/views/contact.blade.php --}}
 @extends('layouts.app')
-
 @section('title', 'Hubungi Kami - Konsultasi Gratis')
 
 @section('content')
+
+@php
+    $heroS = $sections->get('hero');
+    $infoS = $sections->get('info');
+    $ctaS  = $sections->get('cta_bottom');
+
+    $hv = fn($k, $d = '') => $heroS ? ($heroS->get($k) ?: $d) : $d;
+    $iv = fn($k, $d = '') => $infoS ? ($infoS->get($k) ?: $d) : $d;
+    $bv = fn($k, $d = '') => $ctaS  ? ($ctaS->get($k)  ?: $d) : $d;
+@endphp
 
 {{-- ── HERO SECTION ──────────────────────────────────────────── --}}
 <section class="bg-[#FFD200] border-b-8 border-black pt-32 pb-24 relative overflow-hidden">
@@ -13,29 +22,37 @@
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div class="max-w-3xl">
             <div class="inline-block bg-[#3D0066] text-white font-black text-xs uppercase tracking-widest px-4 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 transform -rotate-1">
-                ✦ Let's Talk Business
+                {{ $hv('badge_text', "✦ Let's Talk Business") }}
             </div>
             <h1 class="font-black text-6xl md:text-8xl leading-[0.9] uppercase text-[#3D0066] mb-8 tracking-tighter">
-                KONSULTASI <br><span class="bg-black text-[#FFD200] px-4 inline-block transform rotate-1">GRATIS!</span>
+                {{ $hv('title', 'KONSULTASI') }}
+                <br><span class="bg-black text-[#FFD200] px-4 inline-block transform rotate-1">GRATIS!</span>
             </h1>
             <div class="border-l-8 border-black pl-6 py-2 mb-8">
                 <p class="font-bold text-2xl text-black italic leading-tight">
-                    "Ubah statement menjadi berita nasional dalam sekejap."
+                    "{{ $hv('subtitle', 'Ubah statement menjadi berita nasional dalam sekejap.') }}"
                 </p>
             </div>
             <p class="font-bold text-lg text-black/80 max-w-xl leading-relaxed mb-10">
-                Siap meledakkan brand Anda di media nasional? Ceritakan kebutuhan Anda dan biar tim ahli kami yang mengurus sisanya.
+                {{ $hv('description', 'Siap meledakkan brand Anda di media nasional? Ceritakan kebutuhan Anda dan biar tim ahli kami yang mengurus sisanya.') }}
             </p>
-            <a href="#form-pesan" class="inline-block bg-black text-white px-10 py-5 font-black text-xl uppercase border-4 border-black shadow-[8px_8px_0px_0px_rgba(230,30,80,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all">
-                Mulai Diskusi Sekarang →
+            <a href="#form-pesan"
+               class="inline-block bg-black text-white px-10 py-5 font-black text-xl uppercase border-4 border-black shadow-[8px_8px_0px_0px_rgba(230,30,80,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all">
+                {{ $hv('cta_text', 'Mulai Diskusi Sekarang →') }}
             </a>
         </div>
 
         <div class="relative flex justify-center items-center h-[500px]">
             <div class="absolute w-[400px] h-[400px] border-8 border-black rounded-[40px] translate-x-6 translate-y-6"></div>
             <div class="relative w-[380px] h-[380px] bg-[#E61E50] border-8 border-black rounded-full shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-hidden">
-                <img src="/images/kontak.png" alt="Consultation"
-                     class="absolute w-[120%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-6">
+                @if($heroS && $heroS->get('image'))
+                    <img src="{{ Storage::url($heroS->get('image')) }}"
+                         alt="Consultation"
+                         class="absolute w-[120%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-6">
+                @else
+                    <img src="/images/kontak.png" alt="Consultation"
+                         class="absolute w-[120%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-6">
+                @endif
             </div>
             <div class="absolute -top-5 -right-5 bg-white text-black border-4 border-black px-4 py-2 font-black rotate-12 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                 ✦ FAST RESPONSE
@@ -49,7 +66,7 @@
     <div class="max-w-7xl mx-auto px-6">
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-16">
 
-            {{-- KOLOM FORM (7/12) --}}
+            {{-- KOLOM FORM --}}
             <div class="lg:col-span-7 bg-[#F8F8F8] border-8 border-black p-8 md:p-12 shadow-[16px_16px_0px_0px_rgba(61,0,102,1)] relative">
                 <div class="absolute -top-4 -left-4 w-12 h-12 bg-[#FFD200] border-4 border-black rotate-45"></div>
 
@@ -57,14 +74,12 @@
                     KIRIM <span class="text-[#E61E50]">PESAN</span> CEPAT
                 </h2>
 
-                {{-- ✅ SUCCESS MESSAGE --}}
                 @if(session('success'))
                 <div class="mb-6 bg-green-100 border-4 border-green-600 text-green-800 font-bold p-4">
                     {{ session('success') }}
                 </div>
                 @endif
 
-                {{-- ✅ VALIDATION ERRORS --}}
                 @if($errors->any())
                 <div class="mb-6 bg-[#E61E50]/10 border-4 border-[#E61E50] p-4">
                     <p class="font-black text-[#E61E50] uppercase mb-2">Mohon perbaiki isian berikut:</p>
@@ -76,7 +91,6 @@
                 </div>
                 @endif
 
-                {{-- ✅ FORM — POST ke server (simpan ke DB lalu redirect WA) --}}
                 <form method="POST" action="{{ route('contact.send') }}" class="space-y-8">
                     @csrf
 
@@ -127,25 +141,42 @@
                 </form>
             </div>
 
-            {{-- KOLOM INFO (5/12) --}}
+            {{-- KOLOM INFO --}}
             <div class="lg:col-span-5 space-y-8">
                 <div class="grid grid-cols-1 gap-6">
                     @php
-                        $contacts = [
-                            ['M3 8L12 13L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z', 'Email Official', 'kontendigitalid10@gmail.com', 'bg-[#FFD200]'],
-                            ['M12 18L12 21M12 3L12 6M3 12L6 12M18 12L21 12M17 17L19 19M5 5L7 7M17 7L19 5M5 17L7 15', 'WhatsApp 1', '+62 877-8600-0919', 'bg-[#E61E50] text-white'],
-                            ['M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z', 'Head Office', 'Kontendigital.id, Kaligawe, RT.02, Gandekan, Kapanewon, Kec. Bantul, Kabupaten Bantul, Daerah Istimewa Yogyakarta 55711', 'bg-[#3D0066] text-white'],
+                        $contactItems = [
+                            [
+                                'icon' => 'M3 8L12 13L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z',
+                                'label' => 'Email Official',
+                                'value' => $iv('email', 'kontendigitalid10@gmail.com'),
+                                'bg'    => 'bg-[#FFD200]',
+                            ],
+                            [
+                                'icon' => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
+                                'label' => 'WhatsApp',
+                                'value' => $iv('whatsapp', '+62 877-8600-0919'),
+                                'bg'    => 'bg-[#E61E50] text-white',
+                            ],
+                            [
+                                'icon' => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
+                                'label' => 'Head Office',
+                                'value' => $iv('address', 'Kaligawe, RT.02, Gandekan, Bantul, DIY 55711'),
+                                'bg'    => 'bg-[#3D0066] text-white',
+                            ],
                         ];
                     @endphp
 
-                    @foreach($contacts as [$path, $label, $val, $color])
+                    @foreach($contactItems as $item)
                     <div class="border-4 border-black p-6 flex items-center gap-6 group hover:translate-x-2 transition-transform bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
-                        <div class="w-16 h-16 {{ $color }} border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $path }}"></path></svg>
+                        <div class="w-16 h-16 {{ $item['bg'] }} border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] shrink-0">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="{{ $item['icon'] }}"></path>
+                            </svg>
                         </div>
                         <div>
-                            <p class="font-black uppercase text-[10px] tracking-widest opacity-60">{{ $label }}</p>
-                            <p class="font-black text-lg">{{ $val }}</p>
+                            <p class="font-black uppercase text-[10px] tracking-widest opacity-60">{{ $item['label'] }}</p>
+                            <p class="font-black text-lg">{{ $item['value'] }}</p>
                         </div>
                     </div>
                     @endforeach
@@ -156,12 +187,15 @@
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#FFD200] rotate-45 border-4 border-black flex items-end justify-center pb-2">
                         <span class="text-black font-black text-xs">READY</span>
                     </div>
-                    <h3 class="font-black text-3xl uppercase mb-4 text-[#FFD200] italic">RESPON < 1 JAM</h3>
+                    <h3 class="font-black text-3xl uppercase mb-4 text-[#FFD200] italic">
+                        {{ $bv('response_time', 'RESPON < 1 JAM') }}
+                    </h3>
                     <p class="font-bold text-gray-400 leading-relaxed mb-8">
-                        Tim admin kami standby di jam kerja (09:00 - 17:00 WIB) untuk memastikan setiap pertanyaan Anda terjawab dengan tuntas.
+                        {{ $bv('description', 'Tim admin kami standby di jam kerja (09:00 - 17:00 WIB) untuk memastikan setiap pertanyaan Anda terjawab dengan tuntas.') }}
                     </p>
-                    <a href="https://wa.me/6287786000919" class="block text-center bg-[#E61E50] text-white font-black uppercase py-4 border-4 border-black hover:bg-white hover:text-black transition-all">
-                        Chat Via WhatsApp Sekarang →
+                    <a href="{{ $bv('cta_url', 'https://wa.me/6287786000919') }}"
+                       class="block text-center bg-[#E61E50] text-white font-black uppercase py-4 border-4 border-black hover:bg-white hover:text-black transition-all">
+                        {{ $bv('cta_text', 'Chat Via WhatsApp Sekarang →') }}
                     </a>
                 </div>
             </div>
@@ -177,10 +211,9 @@
             <div class="absolute -top-6 left-10 z-30 bg-[#E61E50] text-white border-4 border-black px-6 py-2 font-black uppercase italic shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] pointer-events-none">
                 ✦ Lokasi Workshop Kami
             </div>
-
             <div class="relative z-10 border-8 border-black shadow-[20px_20px_0px_0px_rgba(255,210,0,1)] overflow-hidden bg-gray-200">
                 <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.541432426!2d110.326699!3d-7.8710662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9d7b99c960b%3A0x8b4b7b8be95d72f1!2sKontendigital.id!5e0!3m2!1sid!2sid!4v1714392000000!5m2!1sid!2sid"
+                    src="{{ $iv('maps_embed', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.541432426!2d110.326699!3d-7.8710662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9d7b99c960b%3A0x8b4b7b8be95d72f1!2sKontendigital.id!5e0!3m2!1sid!2sid!4v1714392000000!5m2!1sid!2sid') }}"
                     class="w-full h-[450px] grayscale contrast-125 hover:grayscale-0 transition-all duration-700 block"
                     style="border:0;"
                     allowfullscreen=""
@@ -188,9 +221,8 @@
                     referrerpolicy="no-referrer-when-downgrade">
                 </iframe>
             </div>
-
             <div class="mt-8 flex justify-end relative z-20">
-                <a href="https://www.google.com/maps/dir//Kontendigital.id/@-7.8710662,110.326699,20z"
+                <a href="{{ $iv('maps_url', 'https://www.google.com/maps/dir//Kontendigital.id') }}"
                    target="_blank"
                    class="bg-black text-white px-8 py-4 font-black uppercase border-4 border-black shadow-[6px_6px_0px_0px_rgba(230,30,80,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 transition-all italic inline-block">
                     Buka Petunjuk Arah →
@@ -205,8 +237,8 @@
     <div class="max-w-7xl mx-auto px-6 text-center">
         <h3 class="text-[#FFD200] font-black text-3xl uppercase italic mb-10 tracking-tighter">KONEKSIKAN BRAND ANDA</h3>
         <div class="flex flex-wrap justify-center gap-6">
-            @foreach(['Instagram' => 'instagram.com/kontendigitalid/', 'Facebook' => 'facebook.com/people/Kontendigitalid/61564783021098/', 'TikTok' => 'tiktok.com/@kontendigitalid'] as $name => $link)
-                <a href="https://{{ $link }}" target="_blank"
+            @foreach(['Instagram' => 'https://instagram.com/kontendigitalid/', 'Facebook' => 'https://facebook.com/people/Kontendigitalid/61564783021098/', 'TikTok' => 'https://tiktok.com/@kontendigitalid'] as $name => $link)
+                <a href="{{ $link }}" target="_blank"
                    class="px-8 py-4 bg-white border-4 border-black font-black uppercase hover:bg-[#FFD200] hover:-translate-y-2 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                     {{ $name }}
                 </a>

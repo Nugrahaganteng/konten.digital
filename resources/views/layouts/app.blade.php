@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'KontenDigital.id') }} — @yield('title')</title>
+    <title>{{ config('app.name', 'HNP Communications.id') }} — @yield('title')</title>
 
     {{-- Fonts --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -112,14 +112,14 @@
                         box-shadow:6px 6px 0 black;
                         display:flex;align-items:center;justify-content:center;">
                 <span style="color:#facc15;font-size:32px;font-weight:900;
-                             font-family:'Unbounded',sans-serif;">K</span>
+                             font-family:'Unbounded',sans-serif;">H</span>
             </div>
             <div style="line-height:1.1;">
                 <p style="margin:0;font-weight:900;font-size:22px;color:#1a1a2e;
                           text-transform:uppercase;font-family:'Unbounded',sans-serif;
-                          letter-spacing:-0.5px;">KontenDigital</p>
+                          letter-spacing:-0.5px;">HNP Communications</p>
                 <p style="margin:0;font-size:12px;font-weight:800;color:#ef4444;
-                          text-transform:uppercase;letter-spacing:4px;">Growth Partner</p>
+                          text-transform:uppercase;letter-spacing:4px;">Your Strategic PR and Digital Partner</p>
             </div>
         </div>
 
@@ -147,13 +147,13 @@
                                 flex items-center justify-center
                                 group-hover:rotate-6 transition-transform">
                         <span class="text-yellow-400 font-black text-lg"
-                              style="font-family:'Unbounded',sans-serif">K</span>
+                              style="font-family:'Unbounded',sans-serif">H</span>
                     </div>
                     <div class="leading-none">
                         <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]"
-                           style="font-family:'Unbounded',sans-serif">KontenDigital</p>
+                           style="font-family:'Unbounded',sans-serif">HNP Communications</p>
                         <p class="text-[0.6rem] font-bold text-red-500 uppercase tracking-[0.15em]">
-                            Growth Partner
+                            Your Strategic PR and Digital Partner
                         </p>
                     </div>
                 </a>
@@ -330,11 +330,11 @@
         <div class="flex items-center justify-between h-20 px-6 border-b-4 border-black sticky top-0 bg-yellow-400 z-10">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl flex items-center justify-center">
-                    <span class="text-yellow-400 font-black text-lg" style="font-family:'Unbounded',sans-serif">K</span>
+                    <span class="text-yellow-400 font-black text-lg" style="font-family:'Unbounded',sans-serif">H</span>
                 </div>
                 <div class="leading-none">
-                    <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]" style="font-family:'Unbounded',sans-serif">KontenDigital</p>
-                    <p class="text-[0.6rem] font-bold text-red-500 uppercase tracking-[0.15em]">Growth Partner</p>
+                    <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]" style="font-family:'Unbounded',sans-serif">HNP Communications</p>
+                    <p class="text-[0.6rem] font-bold text-red-500 uppercase tracking-[0.15em]">Your Strategic PR and Digital Partner</p>
                 </div>
             </a>
             <button id="close-menu"
@@ -523,7 +523,7 @@
                         di Era Digital
                     </h2>
                     <p class="text-slate-400 text-lg md:text-xl font-medium max-w-xl leading-relaxed font-plus">
-                        Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari Kontendigital.id. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.
+                        Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.
                     </p>
                     
                     {{-- Social Media --}}
@@ -570,7 +570,7 @@
             {{-- Bottom Footer --}}
             <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
                 <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">
-                    © {{ date('Y') }} Kontendigital.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN
+                    © {{ date('Y') }} HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN
                 </p>
                 <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all">
                     <i class="fa-solid fa-arrow-up text-sm"></i>

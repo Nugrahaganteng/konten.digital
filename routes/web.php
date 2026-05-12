@@ -6,6 +6,12 @@ use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ContactSubmissionController;
 use App\Http\Controllers\Admin\ArticleController as AdminArticleController;
+use App\Http\Controllers\Admin\SiteSettingController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\TestimonialController;
+use App\Http\Controllers\Admin\FaqController;
+use App\Http\Controllers\Admin\ClientLogoController;
+use App\Http\Controllers\Admin\PageSectionController; // ← TAMBAH INI
 
 // ── PUBLIC ROUTES ─────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -48,4 +54,50 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/clients',  fn() => "Clients")->name('clients.index');
     Route::get('/reports',  fn() => "Reports")->name('reports.index');
     Route::get('/settings', fn() => "Settings")->name('settings');
+
+    // ══════════════════════════════════════════════════════════════════
+    // ── CMS ROUTES ────────────────────────────────────────────────────
+    // ══════════════════════════════════════════════════════════════════
+
+    // Site Settings (Hero, About, Contact, Footer, SEO, Social)
+    Route::get('cms/settings/{group?}',  [SiteSettingController::class, 'index'])->name('cms.settings');
+    Route::post('cms/settings/{group}',  [SiteSettingController::class, 'update'])->name('cms.settings.update');
+
+    // Layanan / Services
+    Route::post('cms/services/reorder',                  [ServiceController::class, 'reorder'])->name('cms.services.reorder');  // ← HARUS sebelum {service}
+    Route::get('cms/services',                           [ServiceController::class, 'index'])->name('cms.services.index');
+    Route::get('cms/services/create',                    [ServiceController::class, 'create'])->name('cms.services.create');
+    Route::post('cms/services',                          [ServiceController::class, 'store'])->name('cms.services.store');
+    Route::get('cms/services/{service}/edit',            [ServiceController::class, 'edit'])->name('cms.services.edit');
+    Route::put('cms/services/{service}',                 [ServiceController::class, 'update'])->name('cms.services.update');
+    Route::delete('cms/services/{service}',              [ServiceController::class, 'destroy'])->name('cms.services.destroy');
+
+    // Testimoni
+    Route::get('cms/testimonials',                       [TestimonialController::class, 'index'])->name('cms.testimonials.index');
+    Route::get('cms/testimonials/create',                [TestimonialController::class, 'create'])->name('cms.testimonials.create');
+    Route::post('cms/testimonials',                      [TestimonialController::class, 'store'])->name('cms.testimonials.store');
+    Route::get('cms/testimonials/{testimonial}/edit',    [TestimonialController::class, 'edit'])->name('cms.testimonials.edit');
+    Route::put('cms/testimonials/{testimonial}',         [TestimonialController::class, 'update'])->name('cms.testimonials.update');
+    Route::delete('cms/testimonials/{testimonial}',      [TestimonialController::class, 'destroy'])->name('cms.testimonials.destroy');
+
+    // FAQ
+    Route::get('cms/faqs',                               [FaqController::class, 'index'])->name('cms.faqs.index');
+    Route::get('cms/faqs/create',                        [FaqController::class, 'create'])->name('cms.faqs.create');
+    Route::post('cms/faqs',                              [FaqController::class, 'store'])->name('cms.faqs.store');
+    Route::get('cms/faqs/{faq}/edit',                    [FaqController::class, 'edit'])->name('cms.faqs.edit');
+    Route::put('cms/faqs/{faq}',                         [FaqController::class, 'update'])->name('cms.faqs.update');
+    Route::delete('cms/faqs/{faq}',                      [FaqController::class, 'destroy'])->name('cms.faqs.destroy');
+
+    // Logo Klien
+    Route::get('cms/clients',                            [ClientLogoController::class, 'index'])->name('cms.clients.index');
+    Route::post('cms/clients',                           [ClientLogoController::class, 'store'])->name('cms.clients.store');
+    Route::delete('cms/clients/{client}',                [ClientLogoController::class, 'destroy'])->name('cms.clients.destroy');
+    Route::patch('cms/clients/{client}/toggle',          [ClientLogoController::class, 'toggleActive'])->name('cms.clients.toggle');
+
+    // ── Page Sections CMS (Homepage builder) ──────────────────────────
+    Route::post('cms/page-sections/reorder',                         [PageSectionController::class, 'reorder'])->name('cms.page-sections.reorder');   // ← HARUS sebelum {pageSection}
+    Route::get('cms/page-sections/{page?}',                          [PageSectionController::class, 'index'])->name('cms.page-sections.index');
+    Route::get('cms/page-sections/section/{pageSection}/edit',       [PageSectionController::class, 'edit'])->name('cms.page-sections.edit');
+    Route::put('cms/page-sections/section/{pageSection}',            [PageSectionController::class, 'update'])->name('cms.page-sections.update');
+    Route::patch('cms/page-sections/section/{pageSection}/toggle',   [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
 });
