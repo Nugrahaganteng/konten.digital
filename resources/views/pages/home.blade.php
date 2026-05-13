@@ -5,15 +5,22 @@
 
 @php
     // ── Ambil data section dari CMS ─────────────────────────────────
-    // Jika section belum ada di DB, semua ->get() akan return null-safe default
-    $hero  = $sections->get('hero');
-    $stats = $sections->get('stats');
-    $about = $sections->get('about_agency');
+    $hero    = $sections->get('hero');
+    $stats   = $sections->get('stats');
+    $marquee = $sections->get('marquee');
+    $about   = $sections->get('about_agency');
+    $svcSec  = $sections->get('services');
+    $clients = $sections->get('clients');
+    $cta     = $sections->get('contact_cta');
 
-    // ── Helper closure untuk ambil nilai dengan fallback ────────────
-    $h = fn(string $key, string $default = '') => $hero  ? ($hero->get($key)  ?: $default) : $default;
-    $s = fn(string $key, string $default = '') => $stats ? ($stats->get($key) ?: $default) : $default;
-    $a = fn(string $key, string $default = '') => $about ? ($about->get($key) ?: $default) : $default;
+    // ── Helper closures ─────────────────────────────────────────────
+    $h  = fn(string $key, string $default = '') => $hero    ? ($hero->get($key)    ?: $default) : $default;
+    $st = fn(string $key, string $default = '') => $stats   ? ($stats->get($key)   ?: $default) : $default;
+    $mq = fn(string $key, string $default = '') => $marquee ? ($marquee->get($key) ?: $default) : $default;
+    $a  = fn(string $key, string $default = '') => $about   ? ($about->get($key)   ?: $default) : $default;
+    $sv = fn(string $key, string $default = '') => $svcSec  ? ($svcSec->get($key)  ?: $default) : $default;
+    $cl = fn(string $key, string $default = '') => $clients ? ($clients->get($key) ?: $default) : $default;
+    $ct = fn(string $key, string $default = '') => $cta     ? ($cta->get($key)     ?: $default) : $default;
 @endphp
 
 {{-- ══ HERO ═════════════════════════════════════════════ --}}
@@ -58,7 +65,7 @@
                 </div>
             </div>
 
-            {{-- Maskot: gambar dari CMS kalau ada, fallback ke SVG bawaan --}}
+            {{-- Maskot --}}
             <div class="animate-ufo">
                 @if($hero && $hero->get('image'))
                     <img src="{{ Storage::url($hero->get('image')) }}"
@@ -87,37 +94,37 @@
         <div class="flex flex-col items-end gap-4 reveal">
             {{-- Stat 1 --}}
             <div class="border-4 border-black shadow-neo p-5 text-right hover:-translate-y-2 hover:-translate-x-2 transition-transform cursor-pointer"
-                 style="background-color: {{ $s('stat_1_color', '#3b0764') }}">
+                 style="background-color: {{ $st('stat_1_color', '#3b0764') }}">
                 <span class="block font-black text-5xl leading-none text-yellow-400"
                       style="font-family:'Unbounded',sans-serif">
-                    {{ $s('stat_1_number', '200+') }}
+                    {{ $st('stat_1_number', '200+') }}
                 </span>
                 <span class="block text-xs font-bold uppercase tracking-widest text-yellow-400/60 mt-1">
-                    {{ $s('stat_1_label', 'Media Partner') }}
+                    {{ $st('stat_1_label', 'Media Partner') }}
                 </span>
             </div>
 
             {{-- Stat 2 --}}
             <div class="border-4 border-black shadow-neo p-5 text-right hover:-translate-y-2 hover:-translate-x-2 transition-transform cursor-pointer"
-                 style="background-color: {{ $s('stat_2_color', '#ef4444') }}">
+                 style="background-color: {{ $st('stat_2_color', '#ef4444') }}">
                 <span class="block font-black text-5xl leading-none text-white"
                       style="font-family:'Unbounded',sans-serif">
-                    {{ $s('stat_2_number', '5+') }}
+                    {{ $st('stat_2_number', '5+') }}
                 </span>
                 <span class="block text-xs font-bold uppercase tracking-widest text-white/60 mt-1">
-                    {{ $s('stat_2_label', 'Tahun Pengalaman') }}
+                    {{ $st('stat_2_label', 'Tahun Pengalaman') }}
                 </span>
             </div>
 
             {{-- Stat 3 --}}
             <div class="border-4 border-black shadow-neo p-5 text-right hover:-translate-y-2 hover:-translate-x-2 transition-transform cursor-pointer"
-                 style="background-color: {{ $s('stat_3_color', '#14b8a6') }}">
+                 style="background-color: {{ $st('stat_3_color', '#14b8a6') }}">
                 <span class="block font-black text-5xl leading-none text-black"
                       style="font-family:'Unbounded',sans-serif">
-                    {{ $s('stat_3_number', '1K+') }}
+                    {{ $st('stat_3_number', '1K+') }}
                 </span>
                 <span class="block text-xs font-bold uppercase tracking-widest text-black/60 mt-1">
-                    {{ $s('stat_3_label', 'Klien Puas') }}
+                    {{ $st('stat_3_label', 'Klien Puas') }}
                 </span>
             </div>
         </div>
@@ -132,21 +139,22 @@
 </section>
 
 {{-- ══ MARQUEE ════════════════════════════════════════════ --}}
-<div class="overflow-hidden bg-red-500 border-t-4 border-b-4 border-black py-3">
+<div class="overflow-hidden border-t-4 border-b-4 border-black py-3"
+     style="background-color: {{ $mq('bg_color', '#ef4444') }}">
     <div class="animate-ticker">
         @for($i = 0; $i < 8; $i++)
         <div class="flex items-center gap-10 px-10 whitespace-nowrap font-black text-sm
                     uppercase tracking-widest text-white"
              style="font-family:'Unbounded',sans-serif">
-            PRESS RELEASE
+            {{ $mq('item_1', 'PRESS RELEASE') }}
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            200+ MEDIA NASIONAL
+            {{ $mq('item_2', '200+ MEDIA NASIONAL') }}
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            GARANSI TAYANG
+            {{ $mq('item_3', 'GARANSI TAYANG') }}
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            PROSES CEPAT
+            {{ $mq('item_4', 'PROSES CEPAT') }}
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            KONTEN DIGITAL
+            {{ $mq('item_5', 'KONTEN DIGITAL') }}
         </div>
         @endfor
     </div>
@@ -167,7 +175,6 @@
                          alt="{{ $a('title', 'About Us') }}"
                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 @else
-                    {{-- Fallback: ilustrasi SVG bawaan --}}
                     <svg width="380" height="280" viewBox="0 0 380 280" fill="none" class="group-hover:scale-110 transition-transform duration-500">
                         <circle cx="190" cy="140" r="120" fill="#facc15" opacity="0.15"/>
                         <circle cx="190" cy="100" r="65" fill="#3b82f6"/>
@@ -181,10 +188,15 @@
                     </svg>
                 @endif
             </div>
+            {{-- Badge pojok kanan bawah --}}
             <div class="absolute -bottom-4 -right-4 bg-red-500 border-4 border-black shadow-neo p-4 animate-float">
                 <div class="font-black text-white text-3xl leading-none"
-                     style="font-family:'Unbounded',sans-serif">98%</div>
-                <div class="text-white/60 text-xs font-bold uppercase tracking-widest mt-1">Tingkat Kepuasan</div>
+                     style="font-family:'Unbounded',sans-serif">
+                    {{ $a('badge_stat', '98%') }}
+                </div>
+                <div class="text-white/60 text-xs font-bold uppercase tracking-widest mt-1">
+                    {{ $a('badge_label', 'Tingkat Kepuasan') }}
+                </div>
             </div>
         </div>
 
@@ -200,7 +212,7 @@
                 {!! nl2br(e($a('title', "Wish\nGranted!"))) !!}
             </h2>
             <p class="text-white/80 font-bold leading-relaxed mb-8">
-                {{ $a('description', 'Berbasis di Bogor, Indonesia, kami adalah agensi digital kreatif yang berspesialisasi memberikan solusi dengan formula ideal. Kami membawa brand ke fase pertumbuhan luar biasa melalui pendekatan kekeluargaan yang modern ala luar angkasa.') }}
+                {{ $a('description', 'Berbasis di Bogor, Indonesia, kami adalah agensi digital kreatif yang berspesialisasi memberikan solusi dengan formula ideal.') }}
             </p>
 
             <div class="grid grid-cols-2 gap-px bg-black border-4 border-black shadow-neo">
@@ -229,62 +241,37 @@
     <div class="max-w-7xl mx-auto relative z-10">
         <div class="flex items-center gap-6 mb-8 reveal bg-white border-4 border-black p-4 shadow-neo w-fit">
             <span class="font-black text-black text-2xl whitespace-nowrap uppercase"
-                  style="font-family:'Unbounded',sans-serif">Our Services.</span>
+                  style="font-family:'Unbounded',sans-serif">
+                {{ $sv('section_title', 'Our Services.') }}
+            </span>
             <div class="w-5 h-5 bg-red-500 border-2 border-black rounded-full flex-shrink-0 animate-radar"></div>
         </div>
 
-       @php
-$svcs = [
-    [
-        'tab' => 'Press Release',
-        'title' => "Jasa Press\nRelease",
-        'body' => 'Layanan publikasi informasi resmi brand Anda ke berbagai media massa untuk meningkatkan jangkauan.',
-        'bg' => 'SOCIAL',
-        'img' => 'r.png',
-        'route' => 'layanan.press.release'
-    ],
-    [
-        'tab' => 'Backlink Media',
-        'title' => "Jasa Backlink\nMedia Nasional",
-        'body' => 'Tingkatkan otoritas domain dan peringkat SEO website Anda melalui backlink berkualitas dari media nasional.',
-        'bg' => 'NEWS',
-        'img' => 'i.png',
-        'route' => 'layanan.backlink'
-    ],
-    [
-        'tab' => 'Press Conference',
-        'title' => "Jasa Press\nConference / Pers",
-        'body' => 'Pengorganisasian konferensi pers profesional untuk mengomunikasikan pesan penting kepada publik.',
-        'bg' => 'ART',
-        'img' => 'k.png',
-        'route' => 'layanan.press.conference'
-    ],
-    [
-        'tab' => 'Penulisan Artikel',
-        'title' => "Jasa Penulisan\nArtikel",
-        'body' => 'Pembuatan konten artikel yang menarik, informatif, dan dioptimasi untuk kebutuhan digital Anda.',
-        'bg' => 'GROW',
-        'img' => 'c.png',
-        'route' => 'layanan.penulisan.artikel'
-    ],
-    [
-        'tab' => 'Script Video',
-        'title' => "Jasa Penulisan\nScript Video / TV",
-        'body' => 'Penyusunan naskah kreatif untuk produksi video komersial, media sosial, maupun tayangan televisi.',
-        'bg' => 'NEWS',
-        'img' => 'u.png',
-        'route' => 'layanan.script.video'
-    ],
-    [
-        'tab' => 'Pelatihan Kreator',
-        'title' => "Jasa Pelatihan\nKonten Kreator",
-        'body' => 'Program pelatihan intensif untuk mengasah kemampuan dalam menciptakan konten digital yang berdampak.',
-        'bg' => 'ART',
-        'img' => 'p.png',
-        'route' => 'layanan.pelatihan.konten'
-    ],
-];
-@endphp
+        @php
+        // Bangun array $svcs dari CMS, fallback ke nilai default jika kosong
+        $svcDefaults = [
+            ['tab'=>'Press Release',     'title'=>"Jasa Press\nRelease",           'body'=>'Layanan publikasi informasi resmi brand Anda ke berbagai media massa.',        'bg'=>'SOCIAL', 'img'=>'r.png', 'route'=>'layanan.press.release'],
+            ['tab'=>'Backlink Media',    'title'=>"Jasa Backlink\nMedia Nasional", 'body'=>'Tingkatkan otoritas domain dan peringkat SEO website Anda.',                   'bg'=>'NEWS',   'img'=>'i.png', 'route'=>'layanan.backlink'],
+            ['tab'=>'Press Conference',  'title'=>"Jasa Press\nConference / Pers", 'body'=>'Pengorganisasian konferensi pers profesional untuk komunikasi pesan penting.', 'bg'=>'ART',    'img'=>'k.png', 'route'=>'layanan.press.conference'],
+            ['tab'=>'Penulisan Artikel', 'title'=>"Jasa Penulisan\nArtikel",       'body'=>'Pembuatan konten artikel yang menarik, informatif, dan dioptimasi.',           'bg'=>'GROW',   'img'=>'c.png', 'route'=>'layanan.penulisan.artikel'],
+            ['tab'=>'Script Video',      'title'=>"Jasa Penulisan\nScript Video",  'body'=>'Penyusunan naskah kreatif untuk produksi video komersial.',                    'bg'=>'NEWS',   'img'=>'u.png', 'route'=>'layanan.script.video'],
+            ['tab'=>'Pelatihan Kreator', 'title'=>"Jasa Pelatihan\nKonten Kreator",'body'=>'Program pelatihan intensif menciptakan konten digital yang berdampak.',        'bg'=>'ART',    'img'=>'p.png', 'route'=>'layanan.pelatihan.konten'],
+        ];
+
+        $svcs = [];
+        foreach ($svcDefaults as $i => $def) {
+            $n = $i + 1;
+            $svcs[] = [
+                'tab'   => $sv("svc_{$n}_tab",   $def['tab']),
+                'title' => $sv("svc_{$n}_title", $def['title']),
+                'body'  => $sv("svc_{$n}_body",  $def['body']),
+                'bg'    => $sv("svc_{$n}_bg",    $def['bg']),
+                'route' => $sv("svc_{$n}_route", $def['route']),
+                'img'   => $svcSec ? $svcSec->get("svc_{$n}_img") : null,
+                'img_fallback' => $def['img'],
+            ];
+        }
+        @endphp
 
         <div class="reveal">
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 border-4 border-black mt-8 overflow-hidden shadow-neo bg-black gap-[4px]">
@@ -320,9 +307,15 @@ $svcs = [
                               style="font-family:'Unbounded',sans-serif">{{ $s['bg'] }}</span>
                     </div>
                     <div class="relative z-10 w-4/5 h-4/5 transform transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3">
-                        <img src="{{ asset('images/' . $s['img']) }}"
-                             alt="{{ $s['tab'] }}"
-                             class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow">
+                        @if($s['img'])
+                            <img src="{{ Storage::url($s['img']) }}"
+                                 alt="{{ $s['tab'] }}"
+                                 class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow">
+                        @else
+                            <img src="{{ asset('images/' . $s['img_fallback']) }}"
+                                 alt="{{ $s['tab'] }}"
+                                 class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow">
+                        @endif
                     </div>
                     <div class="absolute top-4 right-4 w-12 h-12 bg-yellow-400 border-4 border-black rounded-full mix-blend-difference animate-radar"></div>
                 </div>
@@ -338,7 +331,9 @@ $svcs = [
         <div class="flex flex-col md:flex-row border-4 border-black shadow-neo mb-12 reveal">
             <div class="bg-purple-950 text-yellow-400 px-8 py-5 border-b-4 md:border-b-0 md:border-r-4 border-black flex items-center justify-center lg:justify-start min-w-[250px]">
                 <h2 class="font-black text-2xl uppercase tracking-widest text-glitch"
-                    style="font-family:'Unbounded',sans-serif">Our Clients.</h2>
+                    style="font-family:'Unbounded',sans-serif">
+                    {{ $cl('section_title', 'Our Clients.') }}
+                </h2>
             </div>
             <div class="bg-yellow-400 flex-1 relative overflow-hidden flex items-center py-4 px-6">
                 <div class="absolute inset-0 flex items-center px-6">
@@ -366,16 +361,19 @@ $svcs = [
         <div class="border-4 border-black bg-black shadow-neo reveal">
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-1">
                 @php
-                $clientLogos = [
-                    'tugu.png','lunas.png','kuliner.png','dog.png',
-                    'hikmat.png','indo.png','kids.png','bio.png',
-                    'praja.png','price.png','volantis.png','gorem.png',
-                ];
+                // Ambil logo dari CMS (logo_1 s/d logo_12), fallback ke file statis lama
+                $staticLogos = ['tugu.png','lunas.png','kuliner.png','dog.png','hikmat.png','indo.png','kids.png','bio.png','praja.png','price.png','volantis.png','gorem.png'];
                 @endphp
-                @foreach($clientLogos as $logo)
+
+                @for($n = 1; $n <= 12; $n++)
+                @php
+                    $logoPath = $clients ? $clients->get("logo_{$n}") : null;
+                    $staticFallback = $staticLogos[$n - 1] ?? null;
+                @endphp
+                @if($logoPath || $staticFallback)
                 <div class="bg-yellow-400 aspect-square flex items-center justify-center p-8
                             hover:bg-cyan-400 transition-all duration-500 group cursor-pointer relative overflow-hidden">
-                    <img src="{{ asset('images/clients/' . $logo) }}"
+                    <img src="{{ $logoPath ? Storage::url($logoPath) : asset('images/clients/' . $staticFallback) }}"
                          alt="Client Logo"
                          class="w-full h-full object-contain opacity-50 group-hover:opacity-100
                                 scale-90 group-hover:scale-100 transition-all duration-500 ease-out
@@ -383,14 +381,16 @@ $svcs = [
                     <div class="absolute inset-0 border-0 group-hover:border-[6px] border-black transition-all duration-200 pointer-events-none"></div>
                     <div class="absolute inset-0 opacity-0 group-hover:opacity-10 group-hover:bg-white transition-opacity duration-300 pointer-events-none"></div>
                 </div>
-                @endforeach
+                @endif
+                @endfor
             </div>
         </div>
     </div>
 </section>
 
 {{-- ══ CONTACT CTA ════════════════════════════════════════ --}}
-<section class="bg-red-500 border-b-4 border-black py-20 px-6 lg:px-16 relative overflow-hidden" id="contact">
+<section class="border-b-4 border-black py-20 px-6 lg:px-16 relative overflow-hidden" id="contact"
+         style="background-color: {{ $ct('bg_color', '#ef4444') }}">
     <div class="absolute top-0 right-0 w-64 h-64 bg-yellow-400 border-8 border-black rounded-full translate-x-1/2 -translate-y-1/2 animate-spin-slow"></div>
 
     <div class="max-w-7xl mx-auto">
@@ -398,20 +398,28 @@ $svcs = [
             <div>
                 <span class="inline-block bg-black text-yellow-400 font-black text-xs
                              tracking-widest uppercase px-4 py-2 mb-5 animate-bounce-heavy border-2 border-transparent shadow-neo-sm"
-                      style="font-family:'Unbounded',sans-serif">✦ HUBUNGI KAMI</span>
+                      style="font-family:'Unbounded',sans-serif">
+                    {{ $ct('badge', $ct('badge_text', '✦ HUBUNGI KAMI')) }}
+                </span>
                 <h2 class="font-black text-white leading-none mb-5 text-glitch-heavy"
                     style="font-family:'Unbounded',sans-serif; font-size:clamp(2.5rem,5vw,5rem)">
-                    Let's Build<br>Something<br><span class="text-black" style="-webkit-text-stroke: 1px white;">Different.</span>
+                    {{ $ct('title_line1', "Let's Build") }}<br>
+                    {{ $ct('title_line2', 'Something') }}<br>
+                    <span class="text-black" style="-webkit-text-stroke: 1px white;">
+                        {{ $ct('title_line3', 'Different.') }}
+                    </span>
                 </h2>
                 <p class="text-white font-bold leading-relaxed max-w-lg bg-black/20 p-4 border-l-4 border-yellow-400">
-                    Punya ide gila untuk brand kamu? Kami siap dengar dan wujudkan. Hubungi kami sekarang dan mulai perjalanan pertumbuhan brand kamu melintasi orbit digital.
+                    {{ $ct('description', 'Punya ide gila untuk brand kamu? Kami siap dengar dan wujudkan. Hubungi kami sekarang dan mulai perjalanan pertumbuhan brand kamu melintasi orbit digital.') }}
                 </p>
             </div>
-            <a href="https://wa.me/6287786000919"
+            <a href="{{ $ct('cta_url', 'https://wa.me/6287786000919') }}"
                class="bg-yellow-400 text-purple-950 font-black text-xl px-10 py-6
                       border-4 border-black shadow-neo hover:translate-x-1 hover:translate-y-1
                       hover:shadow-none transition-all whitespace-nowrap animate-float"
-               style="font-family:'Unbounded',sans-serif">LET'S CHAT →</a>
+               style="font-family:'Unbounded',sans-serif">
+                {{ $ct('cta_text', "LET'S CHAT →") }}
+            </a>
         </div>
 
         <div class="flex justify-center gap-12 pt-10 mt-10 border-t-4 border-black text-5xl relative z-10">
@@ -428,6 +436,6 @@ $svcs = [
 
 @push('scripts')
 <script>
-    // Tab Logics and Mouse Parallax are handled in app.js for a cleaner setup
+    // Tab logic handled in app.js
 </script>
 @endpush
