@@ -32,7 +32,7 @@ Route::get('/layanan/script-video',      [HomeController::class, 'scriptVideo'])
 Route::get('/layanan/pelatihan-konten',  [HomeController::class, 'pelatihanKonten'])->name('layanan.pelatihan.konten');
 
 // ── AUTH (Laravel Breeze) ─────────────────────────────────────
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // ── ADMIN PANEL ───────────────────────────────────────────────
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
@@ -100,4 +100,15 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('cms/page-sections/section/{pageSection}/edit',       [PageSectionController::class, 'edit'])->name('cms.page-sections.edit');
     Route::put('cms/page-sections/section/{pageSection}',            [PageSectionController::class, 'update'])->name('cms.page-sections.update');
     Route::patch('cms/page-sections/section/{pageSection}/toggle',   [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
+
+    // ── Page Sections CMS (Homepage builder) ──────────────────────────
+    Route::post('cms/page-sections/reorder',                                          [PageSectionController::class, 'reorder'])->name('cms.page-sections.reorder');
+    Route::get('cms/page-sections/{page?}',                                           [PageSectionController::class, 'index'])->name('cms.page-sections.index');
+    Route::get('cms/page-sections/section/{pageSection}/edit',                        [PageSectionController::class, 'edit'])->name('cms.page-sections.edit');
+    Route::put('cms/page-sections/section/{pageSection}',                             [PageSectionController::class, 'update'])->name('cms.page-sections.update');
+    Route::patch('cms/page-sections/section/{pageSection}/toggle',                    [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
+
+    // ── BARU: History & Restore ────────────────────────────────────────
+    Route::get('cms/page-sections/section/{pageSection}/histories',                   [PageSectionController::class, 'histories'])->name('cms.page-sections.histories');
+    Route::post('cms/page-sections/section/{pageSection}/restore/{history}',          [PageSectionController::class, 'restore'])->name('cms.page-sections.restore');
 });

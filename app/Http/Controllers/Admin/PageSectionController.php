@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\PageSection;
+use App\Models\PageSectionHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,6 +24,8 @@ class PageSectionController extends Controller
         'layanan-pelatihan-konten',
     ];
 
+    // ── Index ────────────────────────────────────────────────────────
+
     public function index(Request $request, string $page = 'home')
     {
         if (!in_array($page, $this->availablePages)) {
@@ -33,27 +36,47 @@ class PageSectionController extends Controller
 
         $sections = PageSection::forPage($page)->ordered()->get();
 
+        // Ambil history count per section untuk tampilan index
+        $historyCounts = PageSectionHistory::whereIn('page_section_id', $sections->pluck('id'))
+            ->selectRaw('page_section_id, count(*) as total')
+            ->groupBy('page_section_id')
+            ->pluck('total', 'page_section_id');
+
         // view: resources/views/admin/cms/page-sections/index.blade.php
         return view('admin.cms.page-sections.index', [
             'sections'       => $sections,
             'page'           => $page,
             'availablePages' => $this->availablePages,
+            'historyCounts'  => $historyCounts,
         ]);
     }
+
+    // ── Edit ─────────────────────────────────────────────────────────
 
     public function edit(PageSection $pageSection)
     {
-        $fields = $pageSection->getFields();
+        $fields    = $pageSection->getFields();
+        $histories = PageSectionHistory::where('page_section_id', $pageSection->id)
+            ->orderByDesc('saved_at')
+            ->orderByDesc('id')
+            ->limit(5)
+            ->get();
 
         // view: resources/views/admin/cms/page-sections/form.blade.php
         return view('admin.cms.page-sections.form', [
-            'section' => $pageSection,
-            'fields'  => $fields,
+            'section'   => $pageSection,
+            'fields'    => $fields,
+            'histories' => $histories,
         ]);
     }
 
+    // ── Update ───────────────────────────────────────────────────────
+
     public function update(Request $request, PageSection $pageSection)
     {
+        // Simpan snapshot SEBELUM update
+        PageSectionHistory::snapshot($pageSection, 5);
+
         $fields  = $pageSection->getFields();
         $content = $pageSection->content ?? [];
 
@@ -86,11 +109,78 @@ class PageSectionController extends Controller
             ->with('success', 'Section "' . $pageSection->label . '" berhasil diperbarui!');
     }
 
+    // ── Restore ──────────────────────────────────────────────────────
+
+    public function restore(PageSection $pageSection, PageSectionHistory $history)
+    {
+        // Pastikan history milik section ini
+        if ($history->page_section_id !== $pageSection->id) {
+            abort(403);
+        }
+
+        // Simpan state saat ini sebelum restore (agar bisa undo restore juga)
+        PageSectionHistory::snapshot($pageSection, 5);
+
+        $pageSection->update([
+            'content'   => $history->content,
+            'is_active' => $history->is_active,
+        ]);
+
+        return redirect()
+            ->route('admin.cms.page-sections.edit', $pageSection)
+            ->with('success', 'Section berhasil dikembalikan ke versi ' . $history->saved_at->format('d M Y, H:i') . '!');
+    }
+
+    // ── History Modal Data (AJAX) ─────────────────────────────────────
+
+    public function histories(PageSection $pageSection)
+    {
+        $fields    = $pageSection->getFields();
+        $histories = PageSectionHistory::where('page_section_id', $pageSection->id)
+            ->orderByDesc('saved_at')
+            ->orderByDesc('id')
+            ->limit(5)
+            ->get();
+
+        return response()->json([
+            'section'   => [
+                'id'          => $pageSection->id,
+                'label'       => $pageSection->label,
+                'section_key' => $pageSection->section_key,
+                'page'        => $pageSection->page,
+            ],
+            'histories' => $histories->map(function ($h) use ($fields) {
+                // Buat preview dari 3 field pertama
+                $preview = [];
+                foreach (array_slice($fields, 0, 3) as $field) {
+                    $val = $h->content[$field['key']] ?? null;
+                    if ($val && $field['type'] !== 'image' && $field['type'] !== 'color') {
+                        $preview[] = [
+                            'label' => $field['label'],
+                            'value' => mb_substr(strip_tags($val), 0, 50),
+                        ];
+                    }
+                }
+                return [
+                    'id'         => $h->id,
+                    'saved_at'   => $h->saved_at->format('d M Y, H:i:s'),
+                    'saved_diff' => $h->saved_at->diffForHumans(),
+                    'is_active'  => $h->is_active,
+                    'preview'    => $preview,
+                ];
+            }),
+        ]);
+    }
+
+    // ── Toggle Active ─────────────────────────────────────────────────
+
     public function toggleActive(PageSection $pageSection)
     {
         $pageSection->update(['is_active' => !$pageSection->is_active]);
         return back()->with('success', 'Status section berhasil diubah.');
     }
+
+    // ── Reorder ───────────────────────────────────────────────────────
 
     public function reorder(Request $request)
     {
@@ -105,6 +195,8 @@ class PageSectionController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    // ── Seed Missing ──────────────────────────────────────────────────
 
     private function seedMissingSection(string $page): void
     {

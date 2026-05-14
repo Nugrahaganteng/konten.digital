@@ -5,31 +5,69 @@
 @push('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 <style>
-    /* ── Base ─────────────────────────────────────── */
+    /* ── Reset & Base ─────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+
     :root {
-        --bg:        #0f0f13;
-        --surface:   #18181f;
-        --surface2:  #22222d;
-        --border:    #2e2e3a;
-        --accent:    #7c6af7;
-        --accent2:   #f7c26a;
-        --danger:    #f76a6a;
-        --success:   #6af7a8;
-        --text:      #e8e8f0;
-        --muted:     #7a7a95;
-        --radius:    10px;
+        --bg:        #f5f5f7;
+        --surface:   #ffffff;
+        --surface2:  #f9f9fb;
+        --border:    rgba(0,0,0,.08);
+        --border-md: rgba(0,0,0,.13);
+        --accent:    #5a4fcf;
+        --accent-bg: rgba(90,79,207,.08);
+        --danger:    #d94f4f;
+        --success:   #2da870;
+        --warning:   #c97b1e;
+        --warning-bg:rgba(201,123,30,.09);
+        --text:      #111118;
+        --muted:     #6b6b80;
+        --hint:      #9999b0;
+        --radius-sm: 6px;
+        --radius-md: 9px;
+        --radius-lg: 13px;
+        --shadow-sm: 0 1px 3px rgba(0,0,0,.07);
     }
 
-    body { background: var(--bg); color: var(--text); font-family: 'DM Sans', 'Segoe UI', sans-serif; }
+    @media (prefers-color-scheme: dark) {
+        :root {
+            --bg:        #0e0e12;
+            --surface:   #18181f;
+            --surface2:  #1f1f28;
+            --border:    rgba(255,255,255,.07);
+            --border-md: rgba(255,255,255,.12);
+            --accent:    #7c6af7;
+            --accent-bg: rgba(124,106,247,.10);
+            --danger:    #e06060;
+            --success:   #3ec47a;
+            --warning:   #e0972a;
+            --warning-bg:rgba(224,151,42,.10);
+            --text:      #e8e8f0;
+            --muted:     #8888a0;
+            --hint:      #5a5a72;
+            --shadow-sm: 0 1px 4px rgba(0,0,0,.35);
+        }
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'DM Sans', 'Segoe UI', sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+    }
 
     /* ── Layout ───────────────────────────────────── */
+    .page-wrap { padding: 1.5rem; }
+
     .form-layout {
         display: grid;
-        grid-template-columns: 1fr 300px;
-        gap: 1.5rem;
+        grid-template-columns: 1fr 260px;
+        gap: 1rem;
         align-items: start;
     }
-    @media (max-width: 900px) {
+
+    @media (max-width: 860px) {
         .form-layout { grid-template-columns: 1fr; }
         .form-sidebar { order: -1; }
     }
@@ -38,141 +76,150 @@
     .form-header {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        margin-bottom: 2rem;
+        gap: .75rem;
+        margin-bottom: 1.5rem;
         flex-wrap: wrap;
     }
+
     .btn-back {
         display: inline-flex;
         align-items: center;
-        gap: .4rem;
-        font-size: .8rem;
-        font-weight: 600;
+        gap: .35rem;
+        font-size: 12px;
+        font-weight: 500;
         color: var(--muted);
         text-decoration: none;
-        padding: .4rem .8rem;
-        border-radius: 6px;
-        border: 1.5px solid var(--border);
-        transition: all .2s;
+        padding: .35rem .75rem;
+        border-radius: var(--radius-sm);
+        border: .5px solid var(--border-md);
+        transition: color .15s, border-color .15s;
     }
-    .btn-back:hover { color: var(--text); border-color: #4b4b62; }
+    .btn-back:hover { color: var(--text); border-color: var(--muted); }
+
     .form-title {
-        font-size: 1.3rem;
-        font-weight: 700;
-        font-family: 'DM Mono', monospace;
+        font-size: 15px;
+        font-weight: 600;
         display: flex;
         align-items: center;
-        gap: .5rem;
+        gap: .45rem;
     }
-    .page-badge {
-        font-size: .62rem;
+    .form-title i { color: var(--muted); font-size: 14px; }
+
+    .pill {
+        font-size: 11px;
+        padding: 2px 9px;
+        border-radius: 20px;
+        font-family: 'DM Mono', monospace;
+        letter-spacing: .03em;
+    }
+    .pill-page {
         background: var(--surface2);
-        border: 1.5px solid var(--border);
+        border: .5px solid var(--border-md);
         color: var(--muted);
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-family: 'DM Mono', monospace;
-        letter-spacing: .06em;
-        text-transform: uppercase;
     }
-    .section-badge {
-        font-size: .62rem;
-        background: rgba(124,106,247,.15);
-        border: 1.5px solid rgba(124,106,247,.3);
+    .pill-key {
+        background: var(--accent-bg);
+        border: .5px solid rgba(90,79,207,.2);
         color: var(--accent);
-        padding: 2px 8px;
-        border-radius: 4px;
-        font-family: 'DM Mono', monospace;
-        letter-spacing: .06em;
     }
 
     /* ── Card ─────────────────────────────────────── */
     .card {
         background: var(--surface);
-        border: 1.5px solid var(--border);
-        border-radius: var(--radius);
+        border: .5px solid var(--border-md);
+        border-radius: var(--radius-lg);
+        box-shadow: var(--shadow-sm);
         overflow: hidden;
     }
-    .card-header-bar {
+
+    .card-head {
         display: flex;
         align-items: center;
-        gap: .7rem;
-        padding: .9rem 1.2rem;
+        gap: .6rem;
+        padding: .75rem 1rem;
         background: var(--surface2);
-        border-bottom: 1.5px solid var(--border);
-        font-weight: 700;
-        font-size: .88rem;
+        border-bottom: .5px solid var(--border);
+        font-size: 13px;
+        font-weight: 600;
     }
-    .card-header-bar i { color: var(--accent); }
-    .card-content { padding: 1.4rem 1.2rem; display: flex; flex-direction: column; gap: 1.4rem; }
+    .card-head i { color: var(--muted); }
+    .fields-count {
+        margin-left: auto;
+        font-size: 11px;
+        color: var(--hint);
+        font-family: 'DM Mono', monospace;
+    }
 
-    /* ── Field Groups ─────────────────────────────── */
-    .field-group { display: flex; flex-direction: column; gap: .45rem; }
-
-    .field-label-row {
+    .card-body {
+        padding: 1.1rem;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: .5rem;
+        flex-direction: column;
+        gap: 1.1rem;
     }
+
+    /* ── Field Group ──────────────────────────────── */
+    .field-group { display: flex; flex-direction: column; gap: .4rem; }
+
+    .field-group + .field-group {
+        padding-top: 1.1rem;
+        border-top: .5px solid var(--border);
+    }
+
     .field-label {
-        font-size: .8rem;
-        font-weight: 700;
+        font-size: 12px;
+        font-weight: 600;
         color: var(--text);
         display: flex;
         align-items: center;
         gap: .4rem;
     }
-    .field-label .type-tag {
+    .type-tag {
         font-family: 'DM Mono', monospace;
-        font-size: .6rem;
+        font-size: 10px;
+        font-weight: 400;
         background: var(--surface2);
-        border: 1px solid var(--border);
-        color: var(--muted);
+        border: .5px solid var(--border-md);
+        color: var(--hint);
         padding: 1px 6px;
-        border-radius: 3px;
-        letter-spacing: .05em;
+        border-radius: 4px;
+        letter-spacing: .04em;
     }
 
     /* ── Inputs ───────────────────────────────────── */
     .inp {
         width: 100%;
         background: var(--surface2);
-        border: 1.5px solid var(--border);
-        border-radius: 7px;
+        border: .5px solid var(--border-md);
+        border-radius: var(--radius-md);
         color: var(--text);
-        font-size: .87rem;
-        padding: .65rem .9rem;
+        font-size: 13px;
+        padding: .55rem .8rem;
         outline: none;
-        transition: border-color .2s, box-shadow .2s;
+        transition: border-color .15s, box-shadow .15s;
         font-family: inherit;
         resize: none;
     }
     .inp:focus {
         border-color: var(--accent);
-        box-shadow: 0 0 0 3px rgba(124,106,247,.15);
+        box-shadow: 0 0 0 3px var(--accent-bg);
     }
-    .inp::placeholder { color: var(--muted); }
-    textarea.inp { min-height: 100px; line-height: 1.6; }
+    .inp::placeholder { color: var(--hint); }
+    textarea.inp { min-height: 90px; line-height: 1.6; }
 
     /* ── Color Picker ─────────────────────────────── */
-    .color-wrap {
-        display: flex;
-        align-items: center;
-        gap: .75rem;
-    }
+    .color-wrap { display: flex; align-items: center; gap: .6rem; }
     .color-swatch-btn {
-        width: 44px;
-        height: 44px;
-        border-radius: 8px;
-        border: 2px solid var(--border);
+        width: 38px;
+        height: 38px;
+        border-radius: var(--radius-md);
+        border: .5px solid var(--border-md);
         cursor: pointer;
         flex-shrink: 0;
-        transition: border-color .2s, transform .15s;
         position: relative;
         overflow: hidden;
+        transition: border-color .15s, transform .15s;
     }
-    .color-swatch-btn:hover { border-color: var(--accent); transform: scale(1.08); }
+    .color-swatch-btn:hover { border-color: var(--accent); transform: scale(1.06); }
     .color-swatch-btn input[type="color"] {
         position: absolute;
         inset: 0;
@@ -183,26 +230,22 @@
         border: none;
         padding: 0;
     }
-    .color-hex {
-        font-family: 'DM Mono', monospace;
-        font-size: .82rem;
-        flex: 1;
-    }
+    .color-hex { font-family: 'DM Mono', monospace; font-size: 12px; flex: 1; }
 
     /* ── Image Upload ─────────────────────────────── */
     .image-upload-area {
-        border: 2px dashed var(--border);
-        border-radius: 8px;
-        padding: 1.2rem;
+        border: .5px dashed var(--border-md);
+        border-radius: var(--radius-md);
+        padding: 1.25rem 1rem;
         text-align: center;
-        transition: border-color .2s, background .2s;
+        transition: border-color .15s, background .15s;
         cursor: pointer;
         position: relative;
     }
     .image-upload-area:hover,
     .image-upload-area.drag-over {
         border-color: var(--accent);
-        background: rgba(124,106,247,.05);
+        background: var(--accent-bg);
     }
     .image-upload-area input[type="file"] {
         position: absolute;
@@ -212,163 +255,345 @@
         width: 100%;
         height: 100%;
     }
-    .upload-icon { font-size: 1.8rem; color: var(--muted); margin-bottom: .5rem; }
-    .upload-text { font-size: .78rem; color: var(--muted); }
-    .upload-text strong { color: var(--accent); }
+    .upload-icon { font-size: 20px; color: var(--hint); margin-bottom: .4rem; }
+    .upload-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .upload-text strong { color: var(--accent); font-weight: 500; }
 
-    /* Image preview */
-    .img-preview-wrap {
-        position: relative;
-        display: inline-block;
-        margin-bottom: .6rem;
-    }
+    .img-preview-wrap { position: relative; display: inline-block; margin-bottom: .5rem; }
     .img-preview {
         max-width: 100%;
-        max-height: 180px;
-        border-radius: 6px;
-        border: 1.5px solid var(--border);
+        max-height: 160px;
+        border-radius: var(--radius-md);
+        border: .5px solid var(--border-md);
         object-fit: cover;
         display: block;
     }
     .img-remove-btn {
         position: absolute;
-        top: -8px;
-        right: -8px;
-        width: 22px;
-        height: 22px;
+        top: -7px; right: -7px;
+        width: 20px; height: 20px;
         background: var(--danger);
         border: none;
         border-radius: 50%;
         color: #fff;
-        font-size: .65rem;
+        font-size: 9px;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: transform .2s;
+        transition: transform .15s;
     }
     .img-remove-btn:hover { transform: scale(1.15); }
     .img-filename {
-        font-size: .7rem;
-        color: var(--muted);
-        margin-top: .3rem;
+        font-size: 10px;
+        color: var(--hint);
+        margin-top: .25rem;
         font-family: 'DM Mono', monospace;
         word-break: break-all;
     }
 
-    /* ── Divider between field groups ─────────────── */
-    .field-divider {
-        border: none;
-        border-top: 1px solid var(--border);
-        margin: 0;
-    }
-
     /* ── Sidebar ──────────────────────────────────── */
-    .sidebar-card { position: sticky; top: 1.5rem; }
+    .form-sidebar { display: flex; flex-direction: column; gap: .75rem; }
+    .sidebar-sticky { position: sticky; top: 1.25rem; display: flex; flex-direction: column; gap: .75rem; }
 
-    /* Status toggle in sidebar */
     .status-row {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        padding: 1rem 1.2rem;
+        padding: .75rem 1rem;
         background: var(--surface2);
-        border-bottom: 1.5px solid var(--border);
+        border-bottom: .5px solid var(--border);
     }
-    .status-label { font-size: .85rem; font-weight: 700; }
-    .toggle {
-        position: relative;
-        width: 44px;
-        height: 24px;
-        cursor: pointer;
+    .status-label {
+        font-size: 13px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: .45rem;
+    }
+    .status-dot {
+        width: 6px; height: 6px;
+        border-radius: 50%;
         display: inline-block;
     }
+    .status-dot.active   { background: var(--success); }
+    .status-dot.inactive { background: var(--hint); }
+
+    /* Toggle */
+    .toggle { position: relative; width: 36px; height: 20px; cursor: pointer; display: inline-block; }
     .toggle input { opacity: 0; width: 0; height: 0; }
     .toggle-track {
-        position: absolute;
-        inset: 0;
-        background: var(--border);
+        position: absolute; inset: 0;
+        background: var(--border-md);
         border-radius: 999px;
-        transition: background .25s;
+        transition: background .2s;
     }
     .toggle input:checked ~ .toggle-track { background: var(--success); }
     .toggle-thumb {
         position: absolute;
-        top: 4px;
-        left: 4px;
-        width: 16px;
-        height: 16px;
+        top: 3px; left: 3px;
+        width: 14px; height: 14px;
         background: #fff;
         border-radius: 50%;
-        transition: transform .25s;
+        transition: transform .2s;
         pointer-events: none;
     }
-    .toggle input:checked ~ .toggle-thumb { transform: translateX(20px); }
+    .toggle input:checked ~ .toggle-thumb { transform: translateX(16px); }
 
-    /* Section info in sidebar */
-    .sidebar-info { padding: 1rem 1.2rem; display: flex; flex-direction: column; gap: .6rem; }
-    .info-row { display: flex; flex-direction: column; gap: .2rem; }
-    .info-key { font-size: .68rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-family: 'DM Mono', monospace; }
-    .info-val { font-size: .82rem; font-weight: 600; }
+    .sidebar-info { padding: .85rem 1rem; display: flex; flex-direction: column; gap: .6rem; }
+    .info-row { display: flex; flex-direction: column; gap: 2px; }
+    .info-key {
+        font-size: 10px;
+        color: var(--hint);
+        text-transform: uppercase;
+        letter-spacing: .05em;
+        font-family: 'DM Mono', monospace;
+    }
+    .info-val { font-size: 13px; font-weight: 500; }
+    .info-val.mono { font-family: 'DM Mono', monospace; color: var(--accent); font-size: 12px; }
 
-    /* ── Submit Button ────────────────────────────── */
+    /* Submit */
     .btn-submit {
         width: 100%;
-        background: var(--accent);
-        color: #fff;
+        background: var(--text);
+        color: var(--surface);
         border: none;
-        border-radius: 8px;
-        padding: .85rem;
-        font-size: .9rem;
-        font-weight: 700;
+        border-radius: var(--radius-md);
+        padding: .6rem;
+        font-size: 13px;
+        font-weight: 600;
         cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: .5rem;
-        transition: opacity .2s, transform .15s;
-        letter-spacing: .02em;
+        gap: .4rem;
+        transition: opacity .15s;
+        margin-top: .25rem;
     }
-    .btn-submit:hover { opacity: .88; transform: translateY(-1px); }
-    .btn-submit:active { transform: translateY(0); }
+    .btn-submit:hover { opacity: .8; }
+
+    .link-cancel {
+        display: block;
+        text-align: center;
+        font-size: 12px;
+        color: var(--hint);
+        text-decoration: none;
+        padding: .4rem;
+        transition: color .15s;
+    }
+    .link-cancel:hover { color: var(--muted); }
 
     /* ── Alert ────────────────────────────────────── */
     .alert {
-        padding: .85rem 1.1rem;
-        border-radius: var(--radius);
-        border-left: 4px solid;
-        margin-bottom: 1.5rem;
-        font-size: .88rem;
-        font-weight: 600;
+        padding: .65rem .9rem;
+        border-radius: var(--radius-md);
+        border-left: 2px solid;
+        margin-bottom: 1.25rem;
+        font-size: 13px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
     }
-    .alert-success { background: rgba(106,247,168,.08); border-color: var(--success); color: var(--success); }
-    .alert-error   { background: rgba(247,106,106,.08); border-color: var(--danger);  color: var(--danger); }
+    .alert-success { background: rgba(45,168,112,.08); border-color: var(--success); color: var(--success); }
+    .alert-error   { background: rgba(217,79,79,.08);  border-color: var(--danger);  color: var(--danger); }
+    .alert-warning { background: var(--warning-bg);    border-color: var(--warning); color: var(--warning); }
 
-    /* ── Field count indicator ────────────────────── */
-    .fields-count {
-        font-size: .72rem;
-        color: var(--muted);
-        font-family: 'DM Mono', monospace;
-        margin-left: auto;
+    /* ── History Panel ────────────────────────────── */
+    .history-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .5rem;
+        padding: .75rem 1rem;
+        cursor: pointer;
+        user-select: none;
+        font-size: 13px;
+        font-weight: 600;
+        transition: background .15s;
     }
+    .history-header:hover { background: var(--surface2); }
+    .history-header-left { display: flex; align-items: center; gap: .5rem; }
+    .history-header-left i { color: var(--muted); }
+
+    .history-count-badge {
+        font-size: 10px;
+        background: var(--warning-bg);
+        border: .5px solid rgba(201,123,30,.25);
+        color: var(--warning);
+        padding: 1px 7px;
+        border-radius: 4px;
+        font-family: 'DM Mono', monospace;
+    }
+    .history-chevron { color: var(--hint); font-size: 11px; transition: transform .2s; }
+    .history-chevron.open { transform: rotate(180deg); }
+
+    .history-body { display: none; flex-direction: column; }
+    .history-body.open { display: flex; }
+
+    .history-item {
+        padding: .75rem 1rem;
+        border-top: .5px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        gap: .4rem;
+        transition: background .15s;
+    }
+    .history-item:hover { background: var(--surface2); }
+
+    .history-item-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .5rem;
+    }
+    .history-time-abs { font-size: 12px; font-weight: 600; font-family: 'DM Mono', monospace; }
+    .history-time-rel { font-size: 11px; color: var(--hint); }
+
+    .history-status {
+        font-size: 10px;
+        padding: 1px 6px;
+        border-radius: 4px;
+        font-weight: 600;
+        letter-spacing: .03em;
+    }
+    .history-status.active   { background: rgba(45,168,112,.12); color: var(--success); border: .5px solid rgba(45,168,112,.25); }
+    .history-status.inactive { background: var(--surface2);       color: var(--hint);    border: .5px solid var(--border-md); }
+
+    .history-preview-row { display: flex; gap: .4rem; font-size: 11px; }
+    .history-preview-key { color: var(--hint); min-width: 60px; flex-shrink: 0; font-family: 'DM Mono', monospace; }
+    .history-preview-val { color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 130px; }
+
+    .btn-restore {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: .35rem;
+        width: 100%;
+        padding: .4rem;
+        border-radius: var(--radius-sm);
+        border: .5px solid rgba(201,123,30,.3);
+        background: var(--warning-bg);
+        color: var(--warning);
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity .15s;
+        margin-top: .1rem;
+    }
+    .btn-restore:hover { opacity: .75; }
+
+    .history-empty {
+        padding: 1.5rem 1rem;
+        text-align: center;
+        color: var(--hint);
+        font-size: 12px;
+    }
+    .history-empty i { display: block; font-size: 18px; margin-bottom: .4rem; }
+
+    /* ── Restore Confirm Modal ────────────────────── */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,.5);
+        z-index: 9998;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        backdrop-filter: blur(3px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+        background: var(--surface);
+        border: .5px solid var(--border-md);
+        border-radius: var(--radius-lg);
+        padding: 1.75rem;
+        max-width: 380px;
+        width: 90%;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,.25);
+        animation: modalIn .2s ease;
+    }
+    @keyframes modalIn {
+        from { transform: scale(.94); opacity: 0; }
+        to   { transform: scale(1);   opacity: 1; }
+    }
+    .modal-icon {
+        width: 48px; height: 48px;
+        background: var(--warning-bg);
+        border: .5px solid rgba(201,123,30,.25);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto .9rem;
+        font-size: 18px;
+        color: var(--warning);
+    }
+    .modal-title { font-size: 15px; font-weight: 600; margin-bottom: .35rem; }
+    .modal-desc  { font-size: 12px; color: var(--muted); margin-bottom: 1.1rem; line-height: 1.6; }
+    .modal-time  {
+        font-family: 'DM Mono', monospace;
+        font-size: 12px;
+        background: var(--surface2);
+        border: .5px solid var(--border-md);
+        border-radius: var(--radius-sm);
+        padding: .45rem .8rem;
+        margin-bottom: 1.1rem;
+        color: var(--warning);
+    }
+    .modal-actions { display: flex; gap: .6rem; }
+    .btn-modal-cancel {
+        flex: 1;
+        padding: .55rem;
+        border-radius: var(--radius-md);
+        border: .5px solid var(--border-md);
+        background: transparent;
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all .15s;
+    }
+    .btn-modal-cancel:hover { border-color: var(--muted); color: var(--text); }
+    .btn-modal-confirm {
+        flex: 1;
+        padding: .55rem;
+        border-radius: var(--radius-md);
+        border: none;
+        background: var(--warning);
+        color: #fff;
+        font-size: 13px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity .15s;
+    }
+    .btn-modal-confirm:hover { opacity: .85; }
 
     /* ── Scrollbar ────────────────────────────────── */
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border-md); border-radius: 3px; }
 </style>
 @endpush
 
 @section('content')
+<div class="page-wrap">
 
-{{-- Alert --}}
+{{-- Alerts --}}
 @if(session('success'))
-<div class="alert alert-success"><i class="fas fa-check-circle me-2"></i>{{ session('success') }}</div>
+<div class="alert alert-success">
+    <i class="fas fa-circle-check"></i>{{ session('success') }}
+</div>
+@endif
+@if(session('warning'))
+<div class="alert alert-warning">
+    <i class="fas fa-clock-rotate-left"></i>{{ session('warning') }}
+</div>
 @endif
 @if($errors->any())
 <div class="alert alert-error">
-    <i class="fas fa-exclamation-circle me-2"></i>
-    {{ $errors->first() }}
+    <i class="fas fa-circle-exclamation"></i>{{ $errors->first() }}
 </div>
 @endif
 
@@ -378,11 +603,11 @@
         <i class="fas fa-arrow-left"></i> Kembali
     </a>
     <div class="form-title">
-        <i class="fas fa-pen-to-square" style="color:var(--accent)"></i>
+        <i class="fas fa-pen-to-square"></i>
         Edit Section
     </div>
-    <span class="page-badge">{{ $section->page }}</span>
-    <span class="section-badge">{{ $section->section_key }}</span>
+    <span class="pill pill-page">{{ $section->page }}</span>
+    <span class="pill pill-key">{{ $section->section_key }}</span>
 </div>
 
 {{-- Form --}}
@@ -397,15 +622,15 @@
 
         {{-- ── Main Fields ──────────────────────────── --}}
         <div class="card">
-            <div class="card-header-bar">
+            <div class="card-head">
                 <i class="fas fa-sliders"></i>
                 {{ $section->label }}
                 <span class="fields-count">{{ count($fields) }} field</span>
             </div>
-            <div class="card-content">
+            <div class="card-body">
 
                 @if(empty($fields))
-                <p style="color:var(--muted); font-size:.85rem; text-align:center; padding:2rem 0">
+                <p style="color:var(--hint); font-size:13px; text-align:center; padding:2rem 0">
                     Tidak ada field untuk section ini.
                 </p>
                 @else
@@ -420,19 +645,13 @@
                     $inputId     = 'field_' . $key;
                 @endphp
 
-                @if($idx > 0)
-                <hr class="field-divider">
-                @endif
-
                 <div class="field-group" id="group_{{ $key }}">
-                    <div class="field-label-row">
-                        <label class="field-label" for="{{ $inputId }}">
-                            {{ $label }}
-                            <span class="type-tag">{{ $type }}</span>
-                        </label>
-                    </div>
+                    <label class="field-label" for="{{ $inputId }}">
+                        {{ $label }}
+                        <span class="type-tag">{{ $type }}</span>
+                    </label>
 
-                    {{-- ── TEXT ── --}}
+                    {{-- TEXT --}}
                     @if($type === 'text')
                         <input type="text"
                                id="{{ $inputId }}"
@@ -441,7 +660,7 @@
                                placeholder="{{ $placeholder }}"
                                class="inp">
 
-                    {{-- ── TEXTAREA ── --}}
+                    {{-- TEXTAREA --}}
                     @elseif($type === 'textarea')
                         <textarea id="{{ $inputId }}"
                                   name="{{ $key }}"
@@ -449,9 +668,9 @@
                                   class="inp"
                                   rows="4">{{ old($key, $currentVal) }}</textarea>
 
-                    {{-- ── COLOR ── --}}
+                    {{-- COLOR --}}
                     @elseif($type === 'color')
-                        @php $colorVal = old($key, $currentVal ?: '#7c6af7'); @endphp
+                        @php $colorVal = old($key, $currentVal ?: '#5a4fcf'); @endphp
                         <div class="color-wrap">
                             <label class="color-swatch-btn" style="background:{{ $colorVal }}">
                                 <input type="color"
@@ -472,15 +691,13 @@
                                    oninput="syncColorFromHex(this, '{{ $inputId }}')">
                         </div>
 
-                    {{-- ── IMAGE ── --}}
+                    {{-- IMAGE --}}
                     @elseif($type === 'image')
                         <div class="image-upload-area" id="drop_{{ $key }}"
                              ondragover="handleDragOver(event, this)"
                              ondragleave="handleDragLeave(event, this)"
                              ondrop="handleFileDrop(event, '{{ $key }}')">
 
-                            {{-- Hidden input to clear image (future) --}}
-                            {{-- Current image preview --}}
                             @if($currentVal)
                             <div class="img-preview-wrap" id="preview_wrap_{{ $key }}">
                                 <img src="{{ Storage::url($currentVal) }}"
@@ -493,9 +710,7 @@
                                         title="Hapus gambar">
                                     <i class="fas fa-times"></i>
                                 </button>
-                                <p class="img-filename" id="filename_{{ $key }}">
-                                    {{ basename($currentVal) }}
-                                </p>
+                                <p class="img-filename" id="filename_{{ $key }}">{{ basename($currentVal) }}</p>
                             </div>
                             @else
                             <div id="preview_wrap_{{ $key }}" style="display:none">
@@ -510,23 +725,20 @@
                             </div>
                             @endif
 
-                            {{-- Upload prompt --}}
                             <div id="upload_prompt_{{ $key }}" {{ $currentVal ? 'style=display:none' : '' }}>
                                 <div class="upload-icon"><i class="fas fa-cloud-arrow-up"></i></div>
                                 <div class="upload-text">
                                     <strong>Klik untuk pilih</strong> atau drag & drop gambar<br>
-                                    <span style="font-size:.7rem">PNG, JPG, WEBP — maks 2MB</span>
+                                    <span style="font-size:11px; color:var(--hint)">PNG, JPG, WEBP — maks 2MB</span>
                                 </div>
                             </div>
 
-                            {{-- Actual file input --}}
                             <input type="file"
                                    name="{{ $key }}"
                                    id="{{ $inputId }}"
                                    accept="image/*"
                                    onchange="handleImageChange(this, '{{ $key }}')">
                         </div>
-
                     @endif
                 </div>
                 @endforeach
@@ -537,65 +749,159 @@
 
         {{-- ── Sidebar ───────────────────────────────── --}}
         <div class="form-sidebar">
+            <div class="sidebar-sticky">
 
-            {{-- Publish Card --}}
-            <div class="card sidebar-card">
+                {{-- Publish Card --}}
+                <div class="card">
+                    <div class="status-row">
+                        <span class="status-label">
+                            <span class="status-dot {{ $section->is_active ? 'active' : 'inactive' }}"></span>
+                            Status Section
+                        </span>
+                        <label class="toggle" title="Aktif / Nonaktif">
+                            <input type="checkbox" name="is_active" value="1" {{ $section->is_active ? 'checked' : '' }}>
+                            <span class="toggle-track"></span>
+                            <span class="toggle-thumb"></span>
+                        </label>
+                    </div>
 
-                {{-- Status Toggle --}}
-                <div class="status-row">
-                    <span class="status-label">
-                        <i class="fas fa-circle" style="font-size:.55rem; color:{{ $section->is_active ? 'var(--success)' : 'var(--muted)' }}; margin-right:.4rem"></i>
-                        Status Section
-                    </span>
-                    <label class="toggle" title="Aktif / Nonaktif">
-                        <input type="checkbox" name="is_active" value="1" {{ $section->is_active ? 'checked' : '' }}>
-                        <span class="toggle-track"></span>
-                        <span class="toggle-thumb"></span>
-                    </label>
+                    <div class="sidebar-info">
+                        <div class="info-row">
+                            <span class="info-key">Halaman</span>
+                            <span class="info-val">{{ $section->page }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Section Key</span>
+                            <span class="info-val mono">{{ $section->section_key }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Urutan</span>
+                            <span class="info-val">#{{ $section->order }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-key">Terakhir diubah</span>
+                            <span class="info-val" style="font-size:12px">{{ $section->updated_at->diffForHumans() }}</span>
+                        </div>
+
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-floppy-disk"></i>
+                            Simpan Perubahan
+                        </button>
+
+                        <a href="{{ route('admin.cms.page-sections.index', ['page' => $section->page]) }}"
+                           class="link-cancel">
+                            Batal & Kembali
+                        </a>
+                    </div>
                 </div>
 
-                {{-- Info --}}
-                <div class="sidebar-info">
-                    <div class="info-row">
-                        <span class="info-key">Halaman</span>
-                        <span class="info-val">{{ $section->page }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">Section Key</span>
-                        <span class="info-val" style="font-family:'DM Mono',monospace; font-size:.78rem; color:var(--accent)">{{ $section->section_key }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">Urutan</span>
-                        <span class="info-val">#{{ $section->order }}</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">Terakhir diubah</span>
-                        <span class="info-val" style="font-size:.78rem">{{ $section->updated_at->diffForHumans() }}</span>
+                {{-- History Panel --}}
+                <div class="card">
+                    <div class="history-header" onclick="toggleHistory()" id="history-toggle">
+                        <div class="history-header-left">
+                            <i class="fas fa-clock-rotate-left"></i>
+                            Riwayat Versi
+                            @if($histories->isNotEmpty())
+                            <span class="history-count-badge">{{ $histories->count() }} tersimpan</span>
+                            @endif
+                        </div>
+                        <i class="fas fa-chevron-down history-chevron" id="history-chevron"></i>
                     </div>
 
-                    {{-- Submit --}}
-                    <button type="submit" class="btn-submit" style="margin-top:.5rem">
-                        <i class="fas fa-floppy-disk"></i>
-                        Simpan Perubahan
-                    </button>
+                    <div class="history-body" id="history-body">
+                        @if($histories->isEmpty())
+                        <div class="history-empty">
+                            <i class="fas fa-history"></i>
+                            Belum ada riwayat.<br>
+                            <span style="font-size:11px">Riwayat tersimpan otomatis setiap kali menyimpan.</span>
+                        </div>
+                        @else
+                        @foreach($histories as $history)
+                        <div class="history-item">
+                            <div class="history-item-top">
+                                <div>
+                                    <div class="history-time-abs">{{ $history->saved_at->format('d M Y, H:i') }}</div>
+                                    <div class="history-time-rel">{{ $history->saved_at->diffForHumans() }}</div>
+                                </div>
+                                <span class="history-status {{ $history->is_active ? 'active' : 'inactive' }}">
+                                    {{ $history->is_active ? 'AKTIF' : 'NONAKTIF' }}
+                                </span>
+                            </div>
 
-                    {{-- Kembali --}}
-                    <a href="{{ route('admin.cms.page-sections.index', ['page' => $section->page]) }}"
-                       style="display:block; text-align:center; font-size:.78rem; color:var(--muted); text-decoration:none; margin-top:.3rem; padding:.4rem">
-                        Batal & Kembali
-                    </a>
+                            @php
+                                $previewFields  = array_slice($section->getFields(), 0, 3);
+                                $previewContent = $history->content ?? [];
+                            @endphp
+                            <div>
+                                @foreach($previewFields as $pf)
+                                @php
+                                    $pVal    = $previewContent[$pf['key']] ?? null;
+                                    $showVal = ($pVal && !in_array($pf['type'], ['image','color']))
+                                        ? Str::limit(strip_tags($pVal), 35)
+                                        : null;
+                                @endphp
+                                @if($showVal)
+                                <div class="history-preview-row">
+                                    <span class="history-preview-key">{{ Str::limit($pf['label'], 10) }}</span>
+                                    <span class="history-preview-val">{{ $showVal }}</span>
+                                </div>
+                                @endif
+                                @endforeach
+                            </div>
+
+                            <button type="button"
+                                    class="btn-restore"
+                                    onclick="confirmRestore({{ $history->id }}, '{{ $history->saved_at->format('d M Y, H:i') }}', '{{ $history->saved_at->diffForHumans() }}')">
+                                <i class="fas fa-rotate-left"></i>
+                                Pulihkan versi ini
+                            </button>
+                        </div>
+                        @endforeach
+                        @endif
+                    </div>
                 </div>
+
             </div>
-
         </div>
+
     </div>
 </form>
 
+{{-- Restore Confirm Modal --}}
+<div class="modal-overlay" id="restore-modal">
+    <div class="modal-box">
+        <div class="modal-icon"><i class="fas fa-rotate-left"></i></div>
+        <div class="modal-title">Pulihkan Versi Ini?</div>
+        <div class="modal-desc">
+            Data saat ini akan digantikan dengan versi yang dipilih.<br>
+            Tenang — versi saat ini akan otomatis disimpan ke riwayat.
+        </div>
+        <div class="modal-time" id="modal-time-display">—</div>
+        <div class="modal-actions">
+            <button type="button" class="btn-modal-cancel" onclick="closeRestoreModal()">Batal</button>
+            <button type="button" class="btn-modal-confirm" id="btn-confirm-restore">
+                <i class="fas fa-rotate-left"></i> Ya, Pulihkan
+            </button>
+        </div>
+    </div>
+</div>
+
+{{-- Hidden restore forms --}}
+@foreach($histories as $history)
+<form method="POST"
+      action="{{ route('admin.cms.page-sections.restore', [$section, $history]) }}"
+      id="restore-form-{{ $history->id }}"
+      style="display:none">
+    @csrf
+</form>
+@endforeach
+
+</div>{{-- /page-wrap --}}
 @endsection
 
 @push('scripts')
 <script>
-/* ── Image Upload Handling ──────────────────────────── */
+/* ── Image Upload ───────────────────────────────── */
 function handleImageChange(input, key) {
     const file = input.files[0];
     if (!file) return;
@@ -609,18 +915,13 @@ function handleImageChange(input, key) {
 
 function handleFileDrop(e, key) {
     e.preventDefault();
-    const area = document.getElementById('drop_' + key);
-    area.classList.remove('drag-over');
-
+    document.getElementById('drop_' + key).classList.remove('drag-over');
     const file = e.dataTransfer.files[0];
     if (!file || !file.type.startsWith('image/')) return;
-
-    // Assign to the file input
     const input = document.getElementById('field_' + key);
     const dt    = new DataTransfer();
     dt.items.add(file);
     input.files = dt.files;
-
     showImagePreview(key, file);
 }
 
@@ -630,9 +931,7 @@ function handleDragOver(e, area) {
 }
 
 function handleDragLeave(e, area) {
-    if (!area.contains(e.relatedTarget)) {
-        area.classList.remove('drag-over');
-    }
+    if (!area.contains(e.relatedTarget)) area.classList.remove('drag-over');
 }
 
 function showImagePreview(key, file) {
@@ -642,9 +941,8 @@ function showImagePreview(key, file) {
         const img    = document.getElementById('preview_' + key);
         const fname  = document.getElementById('filename_' + key);
         const prompt = document.getElementById('upload_prompt_' + key);
-
-        img.src = ev.target.result;
-        fname.textContent = file.name;
+        img.src            = ev.target.result;
+        fname.textContent  = file.name;
         wrap.style.display = 'inline-block';
         if (prompt) prompt.style.display = 'none';
     };
@@ -657,15 +955,14 @@ function clearImage(key) {
     const fname  = document.getElementById('filename_' + key);
     const prompt = document.getElementById('upload_prompt_' + key);
     const input  = document.getElementById('field_' + key);
-
-    img.src = '';
-    fname.textContent = '';
-    input.value = '';
+    img.src            = '';
+    fname.textContent  = '';
+    input.value        = '';
     wrap.style.display = 'none';
     if (prompt) prompt.style.display = 'block';
 }
 
-/* ── Color Hex Sync ─────────────────────────────────── */
+/* ── Color Sync ─────────────────────────────────── */
 function syncColorFromHex(hexInput, colorInputId) {
     const val = hexInput.value;
     if (/^#[0-9a-fA-F]{6}$/.test(val)) {
@@ -675,17 +972,50 @@ function syncColorFromHex(hexInput, colorInputId) {
     }
 }
 
-/* ── Unsaved changes warning ────────────────────────── */
+/* ── History Toggle ─────────────────────────────── */
+function toggleHistory() {
+    document.getElementById('history-body').classList.toggle('open');
+    document.getElementById('history-chevron').classList.toggle('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    @if($histories->isNotEmpty())
+    toggleHistory();
+    @endif
+});
+
+/* ── Restore Modal ──────────────────────────────── */
+let pendingRestoreId = null;
+
+function confirmRestore(historyId, timeAbs, timeRel) {
+    pendingRestoreId = historyId;
+    document.getElementById('modal-time-display').textContent = timeAbs + ' (' + timeRel + ')';
+    document.getElementById('restore-modal').classList.add('open');
+}
+
+function closeRestoreModal() {
+    document.getElementById('restore-modal').classList.remove('open');
+    pendingRestoreId = null;
+}
+
+document.getElementById('btn-confirm-restore').addEventListener('click', () => {
+    if (!pendingRestoreId) return;
+    const form = document.getElementById('restore-form-' + pendingRestoreId);
+    if (form) form.submit();
+});
+
+document.getElementById('restore-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeRestoreModal();
+});
+
+/* ── Unsaved changes warning ────────────────────── */
 let formChanged = false;
 const form = document.getElementById('section-form');
 if (form) {
     form.addEventListener('change', () => { formChanged = true; });
     form.addEventListener('submit', () => { formChanged = false; });
     window.addEventListener('beforeunload', e => {
-        if (formChanged) {
-            e.preventDefault();
-            e.returnValue = '';
-        }
+        if (formChanged) { e.preventDefault(); e.returnValue = ''; }
     });
 }
 </script>
