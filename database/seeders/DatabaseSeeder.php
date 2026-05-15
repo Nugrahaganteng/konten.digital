@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
     {
         // Buat akun admin default
         User::firstOrCreate(
-            ['email' => 'admin@kontendigital.id'],
+            ['email' => 'admin@hnp.id'],
             [
-                'name'     => 'Admin KontenDigital',
+                'name'     => 'Admin HNP',
                 'password' => Hash::make('admin123456'),
                 'role'     => 'admin',
             ]
