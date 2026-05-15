@@ -506,79 +506,6 @@
         @yield('content')
     </main>
 
-    {{-- ── FOOTER ──────────────────────────────────────────────────── --}}
-    <footer class="footer-modern pt-24 pb-12 text-white overflow-hidden relative border-t-8 border-black">
-        {{-- Subtle Glow --}}
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-[120px]"></div>
-        
-        <div class="max-w-7xl mx-auto px-6 relative z-10">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-20">
-                
-                {{-- Column 1: Deskripsi --}}
-                <div class="lg:col-span-7 space-y-8">
-                    <h2 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tighter uppercase" 
-                        style="font-family:'Unbounded',sans-serif">
-                        Bersama Kami, <br>
-                        <span class="text-yellow-400">Raih Kesuksesan</span> <br>
-                        di Era Digital
-                    </h2>
-                    <p class="text-slate-400 text-lg md:text-xl font-medium max-w-xl leading-relaxed font-plus">
-                        Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.
-                    </p>
-                    
-                    {{-- Social Media --}}
-                    <div class="flex items-center gap-6">
-                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-instagram"></i></a>
-                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-youtube"></i></a>
-                        <a href="#" target="_blank" class="text-2xl text-slate-400 hover:text-white transition-all hover:scale-110"><i class="fab fa-tiktok"></i></a>
-                    </div>
-                </div>
-
-                {{-- Column 2: Kontak WhatsApp --}}
-                <div class="lg:col-span-5 space-y-4 font-plus">
-                    <p class="text-yellow-400 font-bold uppercase tracking-[0.2em] text-sm mb-6">Hubungi Kami</p>
-                    
-                    <a href="https://wa.me/6287786000919" target="_blank" class="wa-card-modern p-5 rounded-2xl flex items-center justify-between group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-500">
-                                <i class="fab fa-whatsapp text-2xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Whatsapp Hotline</p>
-                                <p class="text-lg font-bold tracking-tight">+62 877-8600-0919</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-arrow-right text-slate-600 group-hover:translate-x-1 group-hover:text-white transition-all"></i>
-                    </a>
-
-                    <a href="https://wa.me/628121967610" target="_blank" class="wa-card-modern p-5 rounded-2xl flex items-center justify-between group">
-                        <div class="flex items-center gap-4">
-                            <div class="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center text-green-500">
-                                <i class="fab fa-whatsapp text-2xl"></i>
-                            </div>
-                            <div>
-                                <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">Whatsapp Hotline</p>
-                                <p class="text-lg font-bold tracking-tight">+62 812-1967-610</p>
-                            </div>
-                        </div>
-                        <i class="fa-solid fa-arrow-right text-slate-600 group-hover:translate-x-1 group-hover:text-white transition-all"></i>
-                    </a>
-                </div>
-            </div>
-
-            {{-- Bottom Footer --}}
-            <div class="pt-10 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
-                <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">
-                    © {{ date('Y') }} HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN
-                </p>
-                <a href="#" class="w-10 h-10 border border-white/10 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black transition-all">
-                    <i class="fa-solid fa-arrow-up text-sm"></i>
-                </a>
-            </div>
-        </div>
-    </footer>
-
     {{-- ── JAVASCRIPT ──────────────────────────────────────────────── --}}
     <script>
         // ── Mobile Menu ──────────────────────────────────────────────
@@ -631,4 +558,5 @@
 
     @stack('scripts')
 </body>
+@include('components.site-footer')
 </html>

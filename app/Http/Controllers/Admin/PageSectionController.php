@@ -22,7 +22,7 @@ class PageSectionController extends Controller
         'layanan-penulisan-artikel',
         'layanan-script-video',
         'layanan-pelatihan-konten',
-        'footer', // ← ditambahkan karena ada di schema
+        'footer',
     ];
 
     // ── Index ────────────────────────────────────────────────────────
@@ -84,14 +84,12 @@ class PageSectionController extends Controller
 
             if ($type === 'image') {
                 if ($request->hasFile($key) && $request->file($key)->isValid()) {
-                    // Hapus file lama jika ada
                     if (!empty($content[$key])) {
                         Storage::disk('public')->delete($content[$key]);
                     }
                     $content[$key] = $request->file($key)
                         ->store('sections/' . $pageSection->page, 'public');
                 }
-                // Tidak ada file baru → nilai lama tetap
             } else {
                 $content[$key] = $request->input($key, '');
             }
@@ -115,7 +113,6 @@ class PageSectionController extends Controller
             abort(403, 'History tidak milik section ini.');
         }
 
-        // Snapshot state saat ini sebelum restore (supaya bisa undo)
         PageSectionHistory::snapshot($pageSection, 5);
 
         $pageSection->update([
@@ -128,7 +125,7 @@ class PageSectionController extends Controller
             ->with('success', 'Section berhasil dikembalikan ke versi ' . $history->saved_at->format('d M Y, H:i') . '!');
     }
 
-    // ── Histories (AJAX) ──────────────────────────────────────────────
+    // ── Histories (AJAX) ─────────────────────────────────────────────
 
     public function histories(PageSection $pageSection)
     {
@@ -168,7 +165,7 @@ class PageSectionController extends Controller
         ]);
     }
 
-    // ── Toggle Active ─────────────────────────────────────────────────
+    // ── Toggle Active ────────────────────────────────────────────────
 
     public function toggleActive(PageSection $pageSection)
     {
@@ -177,7 +174,7 @@ class PageSectionController extends Controller
         return back()->with('success', 'Status section "' . $pageSection->label . '" berhasil diubah.');
     }
 
-    // ── Reorder ───────────────────────────────────────────────────────
+    // ── Reorder ──────────────────────────────────────────────────────
 
     public function reorder(Request $request)
     {
@@ -193,7 +190,7 @@ class PageSectionController extends Controller
         return response()->json(['success' => true]);
     }
 
-    // ── Seed Missing ──────────────────────────────────────────────────
+    // ── Seed Missing ─────────────────────────────────────────────────
 
     private function seedMissingSection(string $page): void
     {
