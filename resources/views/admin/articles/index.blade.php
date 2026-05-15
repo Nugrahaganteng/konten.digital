@@ -255,6 +255,9 @@
              <a href="{{ route('articles.index') }}" class="nav-item" target="_blank">
             <span class="nav-icon">📖</span> Halaman Blog
         </a>
+         <a href="{{ route('articles.index') }}" class="nav-item" target="_blank">
+            <span class="nav-icon">📖</span> Halaman Blog
+        </a>
         </nav>
 
         <div class="sidebar-footer">

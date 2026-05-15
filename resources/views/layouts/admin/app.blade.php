@@ -109,45 +109,17 @@
                             <span class="text-base leading-none">✉</span> Pesan Masuk
                         </a>
                     </li>
+                       <li>
+                        <a href="{{ route('admin.cms.page-sections.index') }}"
+                           class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
+                            <span class="text-base leading-none">✉</span> cms kontrol
+                        </a>
+                    </li>
                 </ul>
             </div>
 
-            {{-- CMS --}}
-            <div>
-                <p class="sidebar-section-label mb-2">CMS</p>
-                <ul class="space-y-0.5">
-                    <li>
-                        <a href="{{ route('admin.cms.services.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.cms.services.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">⚙</span> Layanan
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.cms.testimonials.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.cms.testimonials.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">★</span> Testimoni
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.cms.faqs.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.cms.faqs.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">❓</span> FAQ
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.cms.clients.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.cms.clients.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">◎</span> Logo Klien
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.cms.settings') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.cms.settings*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">⊞</span> Site Settings
-                        </a>
-                    </li>
-                </ul>
-            </div>
+          
+           
 
             {{-- SITE --}}
             <div>
