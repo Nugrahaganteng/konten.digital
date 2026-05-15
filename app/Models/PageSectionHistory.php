@@ -30,7 +30,7 @@ class PageSectionHistory extends Model
     // ── Statics ──────────────────────────────────────────────────────
 
     /**
-     * Simpan snapshot sebelum update, trim ke max 5 entri.
+     * Simpan snapshot sebelum update, trim ke max N entri.
      */
     public static function snapshot(PageSection $section, int $maxHistory = 5): void
     {
@@ -41,14 +41,12 @@ class PageSectionHistory extends Model
             'saved_at'        => now(),
         ]);
 
-        // Ambil ID yang mau disimpan (N terbaru)
         $keepIds = static::where('page_section_id', $section->id)
             ->orderByDesc('saved_at')
             ->orderByDesc('id')
             ->take($maxHistory)
             ->pluck('id');
 
-        // Hapus semua selain yang disimpan
         if ($keepIds->isNotEmpty()) {
             static::where('page_section_id', $section->id)
                 ->whereNotIn('id', $keepIds)

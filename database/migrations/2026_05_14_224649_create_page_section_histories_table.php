@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('restored_by')->nullable(); // label siapa yang restore (opsional)
             $table->timestamp('saved_at')->useCurrent();
             $table->timestamps();
+
+            $table->index(['page_section_id', 'saved_at']);
         });
     }
 

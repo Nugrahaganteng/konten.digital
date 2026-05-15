@@ -11,7 +11,7 @@ use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\FaqController;
 use App\Http\Controllers\Admin\ClientLogoController;
-use App\Http\Controllers\Admin\PageSectionController; // ← TAMBAH INI
+use App\Http\Controllers\Admin\PageSectionController;
 
 // ── PUBLIC ROUTES ─────────────────────────────────────────────
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -64,7 +64,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('cms/settings/{group}',  [SiteSettingController::class, 'update'])->name('cms.settings.update');
 
     // Layanan / Services
-    Route::post('cms/services/reorder',                  [ServiceController::class, 'reorder'])->name('cms.services.reorder');  // ← HARUS sebelum {service}
+    Route::post('cms/services/reorder',                  [ServiceController::class, 'reorder'])->name('cms.services.reorder');
     Route::get('cms/services',                           [ServiceController::class, 'index'])->name('cms.services.index');
     Route::get('cms/services/create',                    [ServiceController::class, 'create'])->name('cms.services.create');
     Route::post('cms/services',                          [ServiceController::class, 'store'])->name('cms.services.store');
@@ -94,21 +94,27 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::delete('cms/clients/{client}',                [ClientLogoController::class, 'destroy'])->name('cms.clients.destroy');
     Route::patch('cms/clients/{client}/toggle',          [ClientLogoController::class, 'toggleActive'])->name('cms.clients.toggle');
 
-    // ── Page Sections CMS (Homepage builder) ──────────────────────────
-    Route::post('cms/page-sections/reorder',                         [PageSectionController::class, 'reorder'])->name('cms.page-sections.reorder');   // ← HARUS sebelum {pageSection}
-    Route::get('cms/page-sections/{page?}',                          [PageSectionController::class, 'index'])->name('cms.page-sections.index');
-    Route::get('cms/page-sections/section/{pageSection}/edit',       [PageSectionController::class, 'edit'])->name('cms.page-sections.edit');
-    Route::put('cms/page-sections/section/{pageSection}',            [PageSectionController::class, 'update'])->name('cms.page-sections.update');
-    Route::patch('cms/page-sections/section/{pageSection}/toggle',   [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
+    // ── Page Sections CMS ─────────────────────────────────────────────
+    // PENTING: route statis harus SEBELUM route dengan {pageSection}
+    Route::post('cms/page-sections/reorder',
+        [PageSectionController::class, 'reorder'])->name('cms.page-sections.reorder');
 
-    // ── Page Sections CMS (Homepage builder) ──────────────────────────
-    Route::post('cms/page-sections/reorder',                                          [PageSectionController::class, 'reorder'])->name('cms.page-sections.reorder');
-    Route::get('cms/page-sections/{page?}',                                           [PageSectionController::class, 'index'])->name('cms.page-sections.index');
-    Route::get('cms/page-sections/section/{pageSection}/edit',                        [PageSectionController::class, 'edit'])->name('cms.page-sections.edit');
-    Route::put('cms/page-sections/section/{pageSection}',                             [PageSectionController::class, 'update'])->name('cms.page-sections.update');
-    Route::patch('cms/page-sections/section/{pageSection}/toggle',                    [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
+    Route::get('cms/page-sections/{page?}',
+        [PageSectionController::class, 'index'])->name('cms.page-sections.index')
+        ->where('page', '[a-z0-9\-]+');
 
-    // ── BARU: History & Restore ────────────────────────────────────────
-    Route::get('cms/page-sections/section/{pageSection}/histories',                   [PageSectionController::class, 'histories'])->name('cms.page-sections.histories');
-    Route::post('cms/page-sections/section/{pageSection}/restore/{history}',          [PageSectionController::class, 'restore'])->name('cms.page-sections.restore');
+    Route::get('cms/page-sections/section/{pageSection}/edit',
+        [PageSectionController::class, 'edit'])->name('cms.page-sections.edit');
+
+    Route::put('cms/page-sections/section/{pageSection}',
+        [PageSectionController::class, 'update'])->name('cms.page-sections.update');
+
+    Route::patch('cms/page-sections/section/{pageSection}/toggle',
+        [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
+
+    Route::get('cms/page-sections/section/{pageSection}/histories',
+        [PageSectionController::class, 'histories'])->name('cms.page-sections.histories');
+
+    Route::post('cms/page-sections/section/{pageSection}/restore/{history}',
+        [PageSectionController::class, 'restore'])->name('cms.page-sections.restore');
 });

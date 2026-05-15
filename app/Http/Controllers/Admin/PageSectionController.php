@@ -22,6 +22,7 @@ class PageSectionController extends Controller
         'layanan-penulisan-artikel',
         'layanan-script-video',
         'layanan-pelatihan-konten',
+        'footer', // ← ditambahkan karena ada di schema
     ];
 
     // ── Index ────────────────────────────────────────────────────────
@@ -36,13 +37,11 @@ class PageSectionController extends Controller
 
         $sections = PageSection::forPage($page)->ordered()->get();
 
-        // Ambil history count per section untuk tampilan index
         $historyCounts = PageSectionHistory::whereIn('page_section_id', $sections->pluck('id'))
             ->selectRaw('page_section_id, count(*) as total')
             ->groupBy('page_section_id')
             ->pluck('total', 'page_section_id');
 
-        // view: resources/views/admin/cms/page-sections/index.blade.php
         return view('admin.cms.page-sections.index', [
             'sections'       => $sections,
             'page'           => $page,
@@ -62,7 +61,6 @@ class PageSectionController extends Controller
             ->limit(5)
             ->get();
 
-        // view: resources/views/admin/cms/page-sections/form.blade.php
         return view('admin.cms.page-sections.form', [
             'section'   => $pageSection,
             'fields'    => $fields,
@@ -86,15 +84,15 @@ class PageSectionController extends Controller
 
             if ($type === 'image') {
                 if ($request->hasFile($key) && $request->file($key)->isValid()) {
+                    // Hapus file lama jika ada
                     if (!empty($content[$key])) {
                         Storage::disk('public')->delete($content[$key]);
                     }
                     $content[$key] = $request->file($key)
                         ->store('sections/' . $pageSection->page, 'public');
                 }
-                // tidak ada file baru → nilai lama tetap
+                // Tidak ada file baru → nilai lama tetap
             } else {
-                // text, textarea, color, termasuk maps_embed & maps_url
                 $content[$key] = $request->input($key, '');
             }
         }
@@ -113,12 +111,11 @@ class PageSectionController extends Controller
 
     public function restore(PageSection $pageSection, PageSectionHistory $history)
     {
-        // Pastikan history milik section ini
         if ($history->page_section_id !== $pageSection->id) {
-            abort(403);
+            abort(403, 'History tidak milik section ini.');
         }
 
-        // Simpan state saat ini sebelum restore (agar bisa undo restore juga)
+        // Snapshot state saat ini sebelum restore (supaya bisa undo)
         PageSectionHistory::snapshot($pageSection, 5);
 
         $pageSection->update([
@@ -131,7 +128,7 @@ class PageSectionController extends Controller
             ->with('success', 'Section berhasil dikembalikan ke versi ' . $history->saved_at->format('d M Y, H:i') . '!');
     }
 
-    // ── History Modal Data (AJAX) ─────────────────────────────────────
+    // ── Histories (AJAX) ──────────────────────────────────────────────
 
     public function histories(PageSection $pageSection)
     {
@@ -143,18 +140,17 @@ class PageSectionController extends Controller
             ->get();
 
         return response()->json([
-            'section'   => [
+            'section' => [
                 'id'          => $pageSection->id,
                 'label'       => $pageSection->label,
                 'section_key' => $pageSection->section_key,
                 'page'        => $pageSection->page,
             ],
             'histories' => $histories->map(function ($h) use ($fields) {
-                // Buat preview dari 3 field pertama
                 $preview = [];
                 foreach (array_slice($fields, 0, 3) as $field) {
                     $val = $h->content[$field['key']] ?? null;
-                    if ($val && $field['type'] !== 'image' && $field['type'] !== 'color') {
+                    if ($val && !in_array($field['type'], ['image', 'color'])) {
                         $preview[] = [
                             'label' => $field['label'],
                             'value' => mb_substr(strip_tags($val), 0, 50),
@@ -177,7 +173,8 @@ class PageSectionController extends Controller
     public function toggleActive(PageSection $pageSection)
     {
         $pageSection->update(['is_active' => !$pageSection->is_active]);
-        return back()->with('success', 'Status section berhasil diubah.');
+
+        return back()->with('success', 'Status section "' . $pageSection->label . '" berhasil diubah.');
     }
 
     // ── Reorder ───────────────────────────────────────────────────────
