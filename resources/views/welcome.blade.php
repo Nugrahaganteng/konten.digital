@@ -9,7 +9,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ config('app.name', 'KontenDigital.id') }}</title>
+    <title>{{ config('app.name', 'HNP Communications.id') }}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,12 +27,11 @@
         <div class="flex items-center justify-center gap-4 mb-12">
             <div class="w-16 h-16 bg-purple-950 border-4 border-black rounded-2xl
                         flex items-center justify-center shadow-neo">
-                <span class="text-yellow-400 font-black text-2xl"
-                      style="font-family:'Unbounded',sans-serif">K</span>
+                <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
             </div>
             <div class="text-left">
                 <p class="font-black text-2xl text-black leading-none uppercase"
-                   style="font-family:'Unbounded',sans-serif">KontenDigital</p>
+                   style="font-family:'Unbounded',sans-serif">HNP Communications</p>
                 <p class="text-xs font-bold text-red-600 uppercase tracking-widest">.id</p>
             </div>
         </div>

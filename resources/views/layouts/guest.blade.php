@@ -28,8 +28,7 @@
             <div class="w-12 h-12 bg-purple-950 border-4 border-black rounded-xl
                         flex items-center justify-center
                         group-hover:rotate-6 transition-transform shadow-neo-sm">
-                <span class="text-yellow-400 font-black text-xl"
-                      style="font-family:'Unbounded',sans-serif">H</span>
+                <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
             </div>
             <div class="leading-none">
                 <p class="font-black text-lg uppercase tracking-tight text-black"

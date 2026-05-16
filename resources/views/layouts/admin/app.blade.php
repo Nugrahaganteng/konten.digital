@@ -12,165 +12,235 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    <style>
-        #sidebar {
-            position: fixed;
-            inset-y: 0;
-            left: 0;
-            width: 16rem;
-            background: #300066;
-            display: flex;
-            flex-direction: column;
-            z-index: 40;
-            transition: transform .3s;
-            border-right: 4px solid #000;
-        }
-        @media (max-width: 1023px) {
-            #sidebar { transform: translateX(-100%); }
-            #sidebar.open { transform: translateX(0); }
-        }
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.65rem 0.75rem;
-            font-size: 0.68rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: rgba(255,255,255,0.5);
-            border: 2px solid transparent;
-            transition: all .15s;
-            border-radius: 2px;
-        }
-        .sidebar-link:hover {
-            color: #FFD200;
-            background: rgba(255,210,0,0.08);
-            border-color: rgba(255,210,0,0.2);
-        }
-        .sidebar-link.active {
-            color: #FFD200;
-            background: rgba(255,210,0,0.15);
-            border-color: #FFD200;
-        }
-        .sidebar-section-label {
-            color: rgba(255,210,0,0.35);
-            font-size: 0.58rem;
-            font-weight: 900;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            padding: 0 0.75rem;
-            margin-bottom: 0.4rem;
-        }
-    </style>
+   <style>
+    /* HAPUS CSS LAMA, GANTI DENGAN YANG INI */
+    #sidebar {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 16rem;
+        background: #300066;
+        display: flex;
+        flex-direction: column;
+        border-right: 4px solid #000000;
+        z-index: 40;
+        transition: transform .3s;
+    }
+    @media (max-width: 1023px) {
+        #sidebar { transform: translateX(-100%); }
+        #sidebar.open { transform: translateX(0); }
+    }
+
+    /* Label judul seksi menu (Main Menu, Site, Akun) */
+    .sidebar-section-label {
+        color: rgba(255, 210, 0, 0.35); 
+        font-size: 0.58rem; 
+        font-weight: 900; 
+        letter-spacing: 0.18em; 
+        text-transform: uppercase; 
+        padding: 0 0.75rem; 
+        margin-bottom: 0.65rem;
+        margin-top: 0;
+    }
+
+    /* Gaya dasar link menu */
+    .sidebar-link {
+        display: flex;
+        align-items: center;
+        gap: 0.85rem;
+        padding: 0.75rem 0.85rem;
+        font-size: 0.7rem;
+        font-weight: 900;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.5);
+        border: 2px solid transparent;
+        text-decoration: none;
+        transition: all 0.2s ease-in-out;
+        border-radius: 4px;
+    }
+
+    /* Ukuran Ikon SVG ala Tailwind Heroicons */
+    .sidebar-icon {
+        width: 1.15rem;
+        height: 1.15rem;
+        flex-shrink: 0;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    /* Efek Hover (Kursor di atas menu) */
+    .sidebar-link:hover {
+        color: #FFD200;
+        background: rgba(255, 210, 0, 0.06);
+        border-color: rgba(255, 210, 0, 0.2);
+    }
+
+    /* Animasi ikon sedikit bergeser ke kanan saat di-hover */
+    .sidebar-link:hover .sidebar-icon {
+        transform: translateX(2px);
+    }
+
+    /* Menu Aktif / Terpilih */
+    .sidebar-link.active {
+        color: #FFD200;
+        background: rgba(255, 210, 0, 0.12);
+        border-color: #FFD200;
+    }
+
+    /* Khusus Tombol Keluar / Logout */
+    .button-logout {
+        color: rgba(248, 113, 113, 0.7);
+    }
+    .button-logout:hover {
+        color: #f87171 !important;
+        background: rgba(248, 113, 113, 0.1) !important;
+        border-color: rgba(248, 113, 113, 0.3) !important;
+    }
+</style>
 
     @stack('styles')
 </head>
 <body class="bg-gray-50 min-h-screen flex antialiased" style="font-family:'Space Grotesk',sans-serif;">
 
     {{-- ── SIDEBAR ──────────────────────────────────────────────────── --}}
-    <aside id="sidebar">
+   {{-- ── PREMIUM MODERN SIDEBAR START ────────────────────────────────────────────────── --}}
+<aside id="sidebar" style="
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 16rem;
+    background: #300066;
+    display: flex;
+    flex-direction: column;
+    border-right: 4px solid #000000;
+    font-family: 'Space Grotesk', sans-serif;
+    z-index: 40;
+">
 
-        {{-- Logo --}}
-        <div class="p-5 border-b-4 border-black shrink-0">
-            <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3">
-                <div class="w-10 h-10 bg-yellow-400 border-4 border-black rounded-lg flex items-center justify-center shrink-0">
-                    <span class="font-black text-black text-sm" style="font-family:'Unbounded',sans-serif">HC</span>
-                </div>
-                <div>
-                    <p class="font-black text-white text-xs tracking-widest uppercase leading-tight" style="font-family:'Unbounded',sans-serif">HNP Communications</p>
-                    <p class="text-yellow-400/60 text-[0.58rem] font-bold tracking-widest uppercase mt-0.5">Admin Panel</p>
-                </div>
-            </a>
+    {{-- 1. HEADER LOGO (Dibuat lebih tebal & kontras) --}}
+    <div style="padding: 1.5rem 1.25rem; border-bottom: 4px solid #000000; flex-shrink: 0; background-color: rgba(0,0,0,0.05);">
+        <a href="{{ route('admin.dashboard') }}" style="display: flex; align-items: center; gap: 0.85rem; text-decoration: none;">
+            <div style="width: 2.75rem; height: 2.75rem; background-color: #FFD200; border: 4px solid #000000; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 2px 2px 0px #000000;">
+                <img src="images/hikeandpeak.png" style="width: 38px; height: 38px; object-fit: contain;" alt="Logo">
+            </div>
+            <div>
+                <p style="font-family:'Unbounded',sans-serif; color: #ffffff; font-weight: 900; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0; line-height: 1.2;">
+                   HNP Communications
+                </p>
+                <p style="color: rgba(255, 210, 0, 0.65); font-size: 0.58rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin: 0; margin-top: 0.25rem;">
+                   Admin Panel
+                </p>
+            </div>
+        </a>
+    </div>
+
+    {{-- 2. NAVIGASI MENU (Memanjang ke bawah dengan scroll halus jika penuh) --}}
+    <nav style="flex: 1 1 0%; padding: 1.75rem 0.85rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1.75rem;">
+        
+        {{-- Kelompok: MAIN MENU --}}
+        <div>
+            <p class="sidebar-section-label">Main Menu</p>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.35rem;">
+                <li>
+                    <a href="{{ route('admin.dashboard') }}" class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+                        <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                        </svg>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.articles.index') }}" class="sidebar-link {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
+                        <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Manajemen Artikel
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.contacts.index') }}" class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
+                        <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        Pesan Masuk
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('admin.cms.page-sections.index') }}" class="sidebar-link {{ request()->routeIs('admin.cms.*') ? 'active' : '' }}">
+                        <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                        CMS Kontrol
+                    </a>
+                </li>
+            </ul>
         </div>
 
-        {{-- Nav --}}
-        <nav class="flex-1 py-5 px-3 overflow-y-auto space-y-5">
+        {{-- Kelompok: SITE --}}
+        <div>
+            <p class="sidebar-section-label">Site</p>
+            <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.35rem;">
+                <li>
+                    <a href="{{ route('home') }}" target="_blank" class="sidebar-link">
+                        <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                        </svg>
+                        Lihat Website
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('articles.index') }}" target="_blank" class="sidebar-link">
+                        <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                        Halaman Blog
+                    </a>
+                </li>
+            </ul>
+        </div>
 
-            {{-- MAIN MENU --}}
-            <div>
-                <p class="sidebar-section-label mb-2">Main Menu</p>
-                <ul class="space-y-0.5">
-                    <li>
-                        <a href="{{ route('admin.dashboard') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                            <span class="text-base leading-none">◈</span> Dashboard
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.articles.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.articles.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">✍</span> Manajemen Artikel
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.contacts.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">✉</span> Pesan Masuk
-                        </a>
-                    </li>
-                       <li>
-                        <a href="{{ route('admin.cms.page-sections.index') }}"
-                           class="sidebar-link {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}">
-                            <span class="text-base leading-none">✉</span> cms kontrol
-                        </a>
-                    </li>
-                </ul>
+        {{-- Kelompok: AKUN --}}
+        <div>
+            <p class="sidebar-section-label">Akun</p>
+            <ul style="list-style: none; padding: 0; margin: 0;">
+                <li>
+                    <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+                        @csrf
+                        <button type="submit" class="sidebar-link button-logout" style="width: 100%; text-align: left; background: transparent; cursor: pointer;">
+                            <svg class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                            </svg>
+                            Keluar
+                        </button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+
+    </nav>
+
+    {{-- 3. INFORMASI USER (Bagian Paling Bawah) --}}
+    <div style="border-top: 4px solid #000000; padding: 1.25rem 1rem; flex-shrink: 0; background-color: rgba(0,0,0,0.15);">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div style="width: 2.5rem; height: 2.5rem; background-color: #FFD200; border: 2px solid #000000; border-radius: 0.5rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 1.5px 1.5px 0px #000000;">
+                <span style="font-weight: 900; color: #000000; font-size: 0.75rem; letter-spacing: 0.05em;">
+                    {{ strtoupper(substr(auth()->user()->name ?? 'AD', 0, 2)) }}
+                </span>
             </div>
-
-          
-           
-
-            {{-- SITE --}}
-            <div>
-                <p class="sidebar-section-label mb-2">Site</p>
-                <ul class="space-y-0.5">
-                    <li>
-                        <a href="{{ route('home') }}" target="_blank"
-                           class="sidebar-link">
-                            <span class="text-base leading-none">↗</span> Lihat Website
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{{ route('articles.index') }}" target="_blank"
-                           class="sidebar-link">
-                            <span class="text-base leading-none">📰</span> Halaman Blog
-                        </a>
-                    </li>
-                </ul>
-            </div>
-
-            {{-- LOGOUT --}}
-            <div>
-                <p class="sidebar-section-label mb-2">Akun</p>
-                <ul class="space-y-0.5">
-                    <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit"
-                                    class="sidebar-link w-full text-left text-red-400/70 hover:text-red-400 hover:bg-red-400/10 hover:border-red-400/30">
-                                <span class="text-base leading-none">⏻</span> Keluar
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-
-        </nav>
-
-        {{-- User Info --}}
-        <div class="p-4 border-t-4 border-black shrink-0">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-yellow-400 border-2 border-black rounded-lg flex items-center justify-center shrink-0">
-                    <span class="font-black text-black text-xs">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 2)) }}</span>
-                </div>
-                <div class="min-w-0">
-                    <p class="text-white font-bold text-xs truncate">{{ auth()->user()->name ?? 'Administrator' }}</p>
-                    <p class="text-yellow-400/50 text-[0.62rem] truncate">{{ auth()->user()->email ?? '' }}</p>
-                </div>
+            <div style="min-width: 0; flex: 1 1 0%;">
+                <p style="color: #ffffff; font-weight: 700; font-size: 0.75rem; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; letter-spacing: 0.02em;">
+                    {{ auth()->user()->name ?? 'Admin HNP' }}
+                </p>
+                <p style="color: rgba(255, 210, 0, 0.5); font-size: 0.62rem; font-weight: 500; margin: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 0.1rem;">
+                    {{ auth()->user()->email ?? 'admin@hnp.id' }}
+                </p>
             </div>
         </div>
-    </aside>
+    </div>
+</aside>
+{{-- ── PREMIUM MODERN SIDEBAR END ──────────────────────────────────────────────────── --}}
 
     {{-- ── MAIN AREA ────────────────────────────────────────────────── --}}
     <div class="flex-1 flex flex-col lg:ml-64 min-h-screen">

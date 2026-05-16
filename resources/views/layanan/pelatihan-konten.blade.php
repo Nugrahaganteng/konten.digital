@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pelatihan Konten Kreator - Kontendigital.id')
+@section('title', 'Pelatihan Konten Kreator - HNP Communications.id')
 
 @section('content')
 
@@ -107,7 +107,7 @@
             </div>
 
             <p class="text-lg font-bold text-black/80 max-w-md">
-                {{ $hv('description', 'Ikuti pelatihan konten kreator bersama Kontendigital.id. Materi komprehensif mulai dari pengambilan video, editing, hingga strategi publikasi.') }}
+                {{ $hv('description', 'Ikuti pelatihan konten kreator bersama HNP Communications    .id. Materi komprehensif mulai dari pengambilan video, editing, hingga strategi publikasi.') }}
             </p>
 
             <a href="{{ $hv('cta_url', 'https://api.whatsapp.com/send?phone=6287786000919') }}"

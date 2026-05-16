@@ -107,13 +107,11 @@
         {{-- Logo --}}
         <div style="display:flex;align-items:center;gap:18px;
                     animation:ls-pop 0.5s cubic-bezier(.34,1.56,.64,1) 0.2s both;">
-            <div style="width:64px;height:64px;background:#1e1b4b;
-                        border:4px solid black;border-radius:14px;
-                        box-shadow:6px 6px 0 black;
-                        display:flex;align-items:center;justify-content:center;">
-                <span style="color:#facc15;font-size:32px;font-weight:900;
-                             font-family:'Unbounded',sans-serif;">H</span>
-            </div>
+     <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
+            flex items-center justify-center
+            group-hover:rotate-6 transition-transform">
+    <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
+</div>
             <div style="line-height:1.1;">
                 <p style="margin:0;font-weight:900;font-size:22px;color:#1a1a2e;
                           text-transform:uppercase;font-family:'Unbounded',sans-serif;
@@ -143,12 +141,11 @@
 
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                    <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
-                                flex items-center justify-center
-                                group-hover:rotate-6 transition-transform">
-                        <span class="text-yellow-400 font-black text-lg"
-                              style="font-family:'Unbounded',sans-serif">H</span>
-                    </div>
+                   <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
+            flex items-center justify-center
+            group-hover:rotate-6 transition-transform">
+    <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
+</div>
                     <div class="leading-none">
                         <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]"
                            style="font-family:'Unbounded',sans-serif">HNP Communications</p>
@@ -330,7 +327,7 @@
         <div class="flex items-center justify-between h-20 px-6 border-b-4 border-black sticky top-0 bg-yellow-400 z-10">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl flex items-center justify-center">
-                    <span class="text-yellow-400 font-black text-lg" style="font-family:'Unbounded',sans-serif">H</span>
+                    <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
                 </div>
                 <div class="leading-none">
                     <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]" style="font-family:'Unbounded',sans-serif">HNP Communications</p>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Jasa Backlink Media Nasional - Kontendigital.id')
+@section('title', 'Jasa Backlink Media Nasional - HNP Communications.id')
 
 @section('content')
 
@@ -31,7 +31,7 @@
         </div>
 
         <h1 class="text-6xl md:text-9xl font-black text-[#430A5D] leading-none uppercase tracking-tighter mb-8 drop-shadow-[6px_6px_0px_#000]">
-            {{ $hv('title', 'KONTENDIGITAL') }}<span class="text-white">.ID</span>
+            {{ $hv('title', 'BACKLINK') }}<span class="text-white">.ID</span>
         </h1>
 
         <p class="text-xl md:text-2xl font-bold text-black max-w-3xl mx-auto mb-10 leading-relaxed">
@@ -150,7 +150,7 @@
 <section class="py-24 bg-white">
     <div class="max-w-7xl mx-auto px-6">
         <h2 class="text-4xl md:text-5xl font-black text-black uppercase mb-16 leading-tight">
-            {{ $yv('title', 'Mengapa Klien Memilih Jasa Kontendigital.id?') }}
+            {{ $yv('title', 'Mengapa Klien Memilih Jasa HNP Communications.id?') }}
         </h2>
 
         @php

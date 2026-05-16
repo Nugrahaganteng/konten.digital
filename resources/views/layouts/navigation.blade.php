@@ -11,8 +11,7 @@
                 <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
                             flex items-center justify-center
                             group-hover:rotate-6 transition-transform">
-                    <span class="text-yellow-400 font-black text-lg"
-                          style="font-family:'Unbounded',sans-serif">K</span>
+                    <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
                 </div>
                 <div class="leading-none">
                     <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]"

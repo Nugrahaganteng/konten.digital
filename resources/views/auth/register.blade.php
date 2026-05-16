@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Daftar — KontenDigital.id</title>
+    <title>Daftar — HNP Communications.id</title>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;700;900&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
@@ -137,11 +137,11 @@
         {{-- Logo --}}
         <a href="{{ route('home') }}" class="flex items-center gap-3 mb-8">
             <div class="logo-box">
-                <span style="font-family:'Anton',sans-serif;font-size:1.4rem;color:var(--yellow);">K</span>
+                <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
             </div>
             <div>
-                <p style="font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--ink);letter-spacing:0.02em;margin:0;">KONTENDIGITAL</p>
-                <p style="font-size:0.6rem;font-weight:700;color:var(--punch);text-transform:uppercase;letter-spacing:0.15em;margin:0;">Growth Partner</p>
+                <p style="font-family:'Anton',sans-serif;font-size:1.1rem;color:var(--ink);letter-spacing:0.02em;margin:0;">HNP Communications</p>
+                <p style="font-size:0.6rem;font-weight:700;color:var(--punch);text-transform:uppercase;letter-spacing:0.15em;margin:0;">Your Strategic PR and Digital Partner</p>
             </div>
         </a>
 
@@ -221,7 +221,7 @@
         </div>
 
         <p style="text-align:center;margin-top:1.5rem;font-size:0.75rem;font-weight:700;opacity:0.5;text-transform:uppercase;letter-spacing:0.1em;">
-            © {{ date('Y') }} KontenDigital.id
+            © {{ date('Y') }} HNP Communications.id
         </p>
 
     </div>

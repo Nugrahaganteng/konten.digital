@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Login — KontenDigital.id</title>
+    <title>Login — HNP Communications.id</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -35,11 +35,11 @@
     {{-- Logo --}}
     <a href="{{ route('home') }}" class="flex items-center gap-3 mb-8">
         <div class="logo-box">
-            <span style="font-family:'Anton'; color:var(--yellow); font-size:1.4rem;">K</span>
+            <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
         </div>
         <div>
-            <p style="font-family:'Anton';">KONTENDIGITAL</p>
-            <small>Growth Partner</small>
+            <p style="font-family:'Anton';">HNP Communications</p>
+            <small>Your Strategic PR and Digital Partner</small>
         </div>
     </a>
 

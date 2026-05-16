@@ -1,5 +1,5 @@
 {{--
-    SITE FOOTER — CMS-Driven
+    SITE FOOTER — CMS-Driven (Neon Noir / Cyber Brutalist Style)
     Membaca data dari PageSection model (page: 'footer')
     Sections: main, contact, social
 --}}
@@ -7,7 +7,6 @@
 @php
     use App\Models\PageSection;
 
-    // Ambil semua section footer sekaligus (di-cache per request via static)
     static $footerSections = null;
     if ($footerSections === null) {
         $footerSections = PageSection::ofPage('footer');
@@ -17,7 +16,6 @@
     $fContact = $footerSections->get('contact');
     $fSocial  = $footerSections->get('social');
 
-    // Helper: get value atau fallback ke placeholder dari schema
     $get = fn($section, $key, $fallback = '') =>
         optional($section)->get($key, '') ?: $fallback;
 
@@ -25,8 +23,8 @@
     $headline1  = $get($fMain, 'headline_1',  'Bersama Kami,');
     $headline2  = $get($fMain, 'headline_2',  'Raih Kesuksesan');
     $headline3  = $get($fMain, 'headline_3',  'di Era Digital');
-    $desc       = $get($fMain, 'description', 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications.');
-    $copyright  = $get($fMain, 'copyright',   '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED');
+    $desc       = $get($fMain, 'description', 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.');
+    $copyright  = $get($fMain, 'copyright',   '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN');
 
     // ── CONTACT ───────────────────────────────────────────
     $wa1Number  = $get($fContact, 'wa1_number', '6287786000919');
@@ -40,7 +38,6 @@
     $youtube    = $get($fSocial, 'youtube',   '#');
     $tiktok     = $get($fSocial, 'tiktok',    '#');
 
-    // Navigasi layanan (statis — bisa diextend ke CMS kalau perlu)
     $services = [
         ['name' => 'Press Release',       'route' => 'layanan.press.release'],
         ['name' => 'Backlink Media',       'route' => 'layanan.backlink'],
@@ -60,529 +57,474 @@
     ];
 @endphp
 
-<footer class="hnp-footer">
+<footer class="hnp-footer-modern text-white overflow-hidden relative">
 
-    {{-- ── Neon Top Border ──────────────────────────────────────────── --}}
+    {{-- Neon Strip Top Border --}}
     <div class="footer-top-strip"></div>
 
-    {{-- ── Main Grid ───────────────────────────────────────────────── --}}
-    <div class="footer-inner">
+    {{-- Glow blobs --}}
+    <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 translate-y-1/3 -translate-x-1/4 w-80 h-80 bg-yellow-500/5 rounded-full blur-[100px] pointer-events-none"></div>
 
-        {{-- Col 1: Brand + Headline --}}
-        <div class="footer-brand-col">
-            <div class="footer-logo-mark">
-                <span class="logo-letters">HC</span>
-            </div>
-            <div class="footer-brand-name">HNP<br><span>Communications</span></div>
+    <div class="max-w-7xl mx-auto px-6 relative z-10 pt-20 pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-16">
 
-            <div class="footer-headline">
-                <span class="fh-line fh-normal">{{ $headline1 }}</span>
-                <span class="fh-line fh-accent">{{ $headline2 }}</span>
-                <span class="fh-line fh-normal">{{ $headline3 }}</span>
-            </div>
+            {{-- ═══════════════════════════════════════
+                 Column 1: Brand & Headline
+            ════════════════════════════════════════ --}}
+            <div class="lg:col-span-7 space-y-8">
 
-            <p class="footer-desc">{{ $desc }}</p>
+                {{-- ── LOGO PURE TAILWIND CSS (no icon) ── --}}
+                <div class="brand-wrapper flex items-center gap-3">
 
-            {{-- Social Icons --}}
-            <div class="footer-socials">
-                @if($instagram && $instagram !== '#')
-                <a href="{{ $instagram }}" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-                </a>
-                @endif
-                @if($facebook && $facebook !== '#')
-                <a href="{{ $facebook }}" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-                </a>
-                @endif
-                @if($youtube && $youtube !== '#')
-                <a href="{{ $youtube }}" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46a2.78 2.78 0 0 0-1.95 1.96A29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58A2.78 2.78 0 0 0 3.41 19.6C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.95A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="white"/></svg>
-                </a>
-                @endif
-                @if($tiktok && $tiktok !== '#')
-                <a href="{{ $tiktok }}" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok">
-                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.69a8.27 8.27 0 0 0 4.83 1.55V6.79a4.86 4.86 0 0 1-1.07-.1z"/></svg>
-                </a>
-                @endif
-            </div>
-        </div>
+                    {{-- Logo Mark: huruf HNP dalam kotak jajaran genjang kuning --}}
+                    <div class="logo-mark-wrap relative flex-shrink-0">
+                        {{-- Kotak kuning miring (clip-path parallelogram) --}}
+                        <div class="logo-bg-shape"></div>
+                        {{-- Teks "HNP" di atasnya --}}
+                        <span class="logo-mark-text">HNP</span>
+                    </div>
 
-        {{-- Col 2: Layanan --}}
-        <div class="footer-nav-col">
-            <div class="footer-col-label">
-                <span class="col-label-dot"></span>
-                LAYANAN
-            </div>
-            <ul class="footer-nav-list">
-                @foreach($services as $svc)
-                <li>
-                    <a href="{{ route($svc['route']) }}" class="footer-nav-link">
-                        <span class="nav-arrow">→</span>
-                        {{ $svc['name'] }}
+                    {{-- Nama brand di sebelah kanan logo --}}
+                    <div class="logo-brand-block">
+                        <div class="logo-brand-main">Communications</div>
+                        <div class="logo-brand-sub">
+                            <span class="logo-brand-dot"></span>
+                            <span>Media &amp; Content Agency</span>
+                        </div>
+                    </div>
+                </div>
+                {{-- ── END LOGO ── --}}
+
+                <h2 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tighter uppercase" style="font-family:'Unbounded',sans-serif">
+                    {{ $headline1 }} <br>
+                    <span class="text-yellow-400">{{ $headline2 }}</span> <br>
+                    {{ $headline3 }}
+                </h2>
+
+                <p class="text-slate-400 text-lg md:text-xl font-medium max-w-xl leading-relaxed font-plus">
+                    {{ $desc }}
+                </p>
+
+                {{-- Social Media Icons --}}
+                <div class="flex items-center gap-5">
+                    @if($instagram && $instagram !== '#')
+                    <a href="{{ $instagram }}" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
                     </a>
-                </li>
-                @endforeach
-            </ul>
-        </div>
-
-        {{-- Col 3: Navigasi --}}
-        <div class="footer-nav-col">
-            <div class="footer-col-label">
-                <span class="col-label-dot"></span>
-                NAVIGASI
-            </div>
-            <ul class="footer-nav-list">
-                @foreach($navLinks as $nl)
-                <li>
-                    <a href="{{ route($nl['route']) }}" class="footer-nav-link">
-                        <span class="nav-arrow">→</span>
-                        {{ $nl['name'] }}
+                    @endif
+                    @if($facebook && $facebook !== '#')
+                    <a href="{{ $facebook }}" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
                     </a>
-                </li>
-                @endforeach
-            </ul>
+                    @endif
+                    @if($youtube && $youtube !== '#')
+                    <a href="{{ $youtube }}" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    @endif
+                    @if($tiktok && $tiktok !== '#')
+                    <a href="{{ $tiktok }}" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+                    @endif
+                </div>
+            </div>
+
+            {{-- ═══════════════════════════════════════
+                 Column 2: Nav, Layanan & WhatsApp
+            ════════════════════════════════════════ --}}
+            <div class="lg:col-span-5 flex flex-col gap-8 font-plus">
+
+                {{-- Quick Links: Layanan & Navigasi berdampingan --}}
+                <div class="grid grid-cols-2 gap-6">
+
+                    {{-- LAYANAN --}}
+                    <div>
+                        <div class="footer-col-label mb-3">
+                            <span class="col-label-dot"></span> LAYANAN
+                        </div>
+                        <ul class="footer-nav-list">
+                            @foreach($services as $i => $svc)
+                            <li>
+                                <a href="{{ route($svc['route']) }}" class="footer-nav-link group">
+                                    <span class="footer-nav-num">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
+                                    <span class="footer-nav-text">{{ $svc['name'] }}</span>
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    {{-- NAVIGASI --}}
+                    <div>
+                        <div class="footer-col-label mb-3">
+                            <span class="col-label-dot"></span> NAVIGASI
+                        </div>
+                        <ul class="footer-nav-list">
+                            @foreach($navLinks as $nl)
+                            <li>
+                                <a href="{{ route($nl['route']) }}" class="footer-nav-link group">
+                                    <span class="footer-nav-dash">—</span>
+                                    <span class="footer-nav-text">{{ $nl['name'] }}</span>
+                                </a>
+                            </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+
+                {{-- HUBUNGI KAMI --}}
+                <div>
+                    <div class="footer-col-label mb-3">
+                        <span class="col-label-dot"></span> HUBUNGI KAMI
+                    </div>
+                    <div class="space-y-3">
+
+                        @if($wa1Number)
+                        <a href="https://wa.me/{{ $wa1Number }}" target="_blank" rel="noopener" class="wa-card-modern p-4 rounded-xl flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-green-500/10 rounded-full flex items-center justify-center text-green-400 group-hover:bg-green-500/20 transition-all flex-shrink-0">
+                                    <i class="fab fa-whatsapp text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono">Whatsapp Hotline 1</p>
+                                    <p class="text-sm font-bold tracking-tight text-slate-200 group-hover:text-white transition-colors font-mono">{{ $wa1Label }}</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all text-xs"></i>
+                        </a>
+                        @endif
+
+                        @if($wa2Number)
+                        <a href="https://wa.me/{{ $wa2Number }}" target="_blank" rel="noopener" class="wa-card-modern wa-card-alt p-4 rounded-xl flex items-center justify-between group">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 bg-cyan-500/10 rounded-full flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/20 transition-all flex-shrink-0">
+                                    <i class="fab fa-whatsapp text-xl"></i>
+                                </div>
+                                <div>
+                                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono">Whatsapp Hotline 2</p>
+                                    <p class="text-sm font-bold tracking-tight text-slate-200 group-hover:text-white transition-colors font-mono">{{ $wa2Label }}</p>
+                                </div>
+                            </div>
+                            <i class="fa-solid fa-arrow-right text-slate-600 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all text-xs"></i>
+                        </a>
+                        @endif
+
+                    </div>
+                </div>
+            </div>
         </div>
 
-        {{-- Col 4: Kontak / WhatsApp --}}
-        <div class="footer-contact-col">
-            <div class="footer-col-label">
-                <span class="col-label-dot"></span>
-                HUBUNGI KAMI
-            </div>
-
-            <div class="wa-cards">
-                @if($wa1Number)
-                <a href="https://wa.me/{{ $wa1Number }}" target="_blank" rel="noopener" class="wa-card">
-                    <div class="wa-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                    </div>
-                    <div class="wa-info">
-                        <span class="wa-label-text">WhatsApp Hotline 1</span>
-                        <span class="wa-number">{{ $wa1Label }}</span>
-                    </div>
-                    <div class="wa-arrow">↗</div>
-                </a>
-                @endif
-
-                @if($wa2Number)
-                <a href="https://wa.me/{{ $wa2Number }}" target="_blank" rel="noopener" class="wa-card wa-card-alt">
-                    <div class="wa-icon">
-                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
-                    </div>
-                    <div class="wa-info">
-                        <span class="wa-label-text">WhatsApp Hotline 2</span>
-                        <span class="wa-number">{{ $wa2Label }}</span>
-                    </div>
-                    <div class="wa-arrow">↗</div>
-                </a>
-                @endif
-            </div>
-
-            {{-- Fast Response Badge --}}
-            <div class="response-badge">
-                <span class="response-dot"></span>
-                RESPON CEPAT &lt; 1 JAM
-            </div>
+        {{-- Bottom Footer Bar --}}
+        <div class="pt-8 border-t border-slate-800/60 flex flex-col md:flex-row justify-between items-center gap-6">
+            <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest text-center md:text-left font-mono">
+                {{ $copyright }}
+            </p>
+            <a href="#"
+               class="w-10 h-10 border border-slate-800 bg-slate-900/40 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all group"
+               onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
+               aria-label="Kembali ke atas">
+                <i class="fa-solid fa-arrow-up text-sm transform group-hover:-translate-y-0.5 transition-transform"></i>
+            </a>
         </div>
-
     </div>
-
-    {{-- ── Divider ──────────────────────────────────────────────────── --}}
-    <div class="footer-divider"></div>
-
-    {{-- ── Bottom Bar ───────────────────────────────────────────────── --}}
-    <div class="footer-bottom">
-        <span class="copyright-text">{{ $copyright }}</span>
-        <div class="footer-bottom-links">
-            <a href="{{ route('syarat-ketentuan') }}" class="bottom-link">Syarat & Ketentuan</a>
-            <span class="bottom-sep">·</span>
-            <a href="{{ route('contact') }}" class="bottom-link">Kontak</a>
-        </div>
-    </div>
-
 </footer>
 
 <style>
 /* ══════════════════════════════════════════════════════════
-   HNP FOOTER — CMS-Driven
-   Dark Retro Arcade · Neon Noir
+   HNP FOOTER — Neon Noir / Deep Purple Theme
    ══════════════════════════════════════════════════════════ */
 
-.hnp-footer {
-    --f-bg:       #070712;
-    --f-bg2:      #0D0D20;
-    --f-panel:    #111120;
-    --f-border:   #1E1E38;
-    --f-border2:  #2C2C50;
-    --f-yellow:   #F5E642;
-    --f-cyan:     #00E5FF;
-    --f-lime:     #B8FF00;
-    --f-magenta:  #FF2D6B;
-    --f-text:     #E8E8F0;
-    --f-text2:    #8888B0;
-    --f-muted:    #44446A;
-
-    background: var(--f-bg);
-    color: var(--f-text);
-    font-family: 'Barlow', 'Segoe UI', sans-serif;
+.hnp-footer-modern {
+    background-color: #1a0033;
     position: relative;
+    color: #ffffff;
     overflow: hidden;
+    padding: 60px 0 30px 0;
+}
+
+/* Neon strip top */
+.footer-top-strip {
+    height: 4px;
+    background: linear-gradient(90deg, #F5E642 0%, #FF2D6B 50%, #00E5FF 100%);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
 }
 
 /* Noise texture */
-.hnp-footer::before {
+.hnp-footer-modern::before {
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-    background-size: 200px 200px;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 0;
-}
-
-/* Scanlines */
-.hnp-footer::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.06) 2px, rgba(0,0,0,.06) 4px);
-    pointer-events: none;
-    z-index: 0;
-}
-
-/* Top neon strip */
-.footer-top-strip {
-    height: 3px;
-    background: linear-gradient(90deg, var(--f-yellow) 0%, var(--f-cyan) 40%, var(--f-magenta) 70%, transparent 100%);
-    position: relative;
     z-index: 1;
 }
 
-/* ── Inner layout ───────────────────────────────────────── */
-.footer-inner {
+/* ─────────────────────────────────────────
+   LOGO — Pure CSS, no icon dependency
+   ───────────────────────────────────────── */
+
+.brand-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+/* Wrapper posisi relative agar text bisa ditumpuk di atas shape */
+.logo-mark-wrap {
     position: relative;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
-    gap: 2.5rem;
-    padding: 3.5rem 5vw 3rem;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-
-@media (max-width: 1100px) {
-    .footer-inner { grid-template-columns: 1fr 1fr; gap: 2rem; }
-}
-@media (max-width: 640px) {
-    .footer-inner { grid-template-columns: 1fr; gap: 2rem; padding: 2.5rem 1.5rem 2rem; }
-}
-
-/* ── Brand Col ──────────────────────────────────────────── */
-.footer-brand-col { display: flex; flex-direction: column; gap: .9rem; }
-
-.footer-logo-mark {
-    width: 52px; height: 52px;
-    background: var(--f-yellow);
+    width: 62px;
+    height: 48px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
-    flex-shrink: 0;
 }
-.logo-letters {
-    font-family: 'Bebas Neue', 'Impact', sans-serif;
-    font-size: 1.3rem;
-    color: #0A0A14;
-    font-weight: 900;
-    letter-spacing: .05em;
-}
-.footer-brand-name {
-    font-family: 'Bebas Neue', 'Impact', sans-serif;
-    font-size: 1.4rem;
-    letter-spacing: .1em;
-    line-height: 1.1;
-    color: var(--f-text);
-}
-.footer-brand-name span { color: var(--f-yellow); }
 
-.footer-headline {
+/* Kotak kuning berbentuk jajaran genjang (parallelogram) */
+.logo-bg-shape {
+    position: absolute;
+    inset: 0;
+    background: #F5E642;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    border-radius: 2px;
+}
+
+/* Shadow/layer kedua di belakang untuk efek depth */
+.logo-bg-shape::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: #c9bb2a;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transform: translate(3px, 3px);
+    z-index: -1;
+    border-radius: 2px;
+}
+
+/* Teks "HNP" di atas shape kuning */
+.logo-mark-text {
+    position: relative;
+    z-index: 2;
+    font-family: 'Bebas Neue', 'Impact', 'Arial Black', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #1a0033;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    user-select: none;
+}
+
+/* Nama brand di sebelah kanan */
+.logo-brand-block {
     display: flex;
     flex-direction: column;
-    gap: 0;
-    margin: .5rem 0 .2rem;
+    gap: 3px;
 }
-.fh-line {
+
+.logo-brand-main {
     font-family: 'Bebas Neue', 'Impact', sans-serif;
-    font-size: 1.75rem;
-    letter-spacing: .06em;
-    line-height: 1.05;
-    display: block;
-}
-.fh-normal { color: var(--f-text); }
-.fh-accent { color: var(--f-yellow); }
-
-.footer-desc {
-    font-size: .78rem;
-    color: var(--f-text2);
-    line-height: 1.7;
-    max-width: 320px;
-}
-
-/* Social buttons */
-.footer-socials {
-    display: flex;
-    gap: .5rem;
-    flex-wrap: wrap;
-    margin-top: .25rem;
-}
-.social-btn {
-    width: 36px; height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid var(--f-border2);
-    border-radius: 4px;
-    background: var(--f-panel);
-    color: var(--f-text2);
-    transition: all .15s;
-    flex-shrink: 0;
-}
-.social-btn svg { width: 16px; height: 16px; }
-.social-btn:hover {
-    border-color: var(--f-yellow);
-    color: var(--f-yellow);
-    background: rgba(245,230,66,.08);
-    box-shadow: 0 0 10px rgba(245,230,66,.2);
-    transform: translateY(-2px);
-}
-
-/* ── Nav Cols ───────────────────────────────────────────── */
-.footer-nav-col { display: flex; flex-direction: column; gap: .85rem; }
-
-.footer-col-label {
-    font-family: 'IBM Plex Mono', 'Courier New', monospace;
-    font-size: .6rem;
+    font-size: 1.4rem;
     font-weight: 700;
-    color: var(--f-muted);
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    letter-spacing: .15em;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.logo-brand-sub {
     display: flex;
     align-items: center;
-    gap: .5rem;
-    padding-bottom: .6rem;
-    border-bottom: 1px solid var(--f-border);
-    position: relative;
+    gap: 5px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.55rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #a389bd;
 }
-.footer-col-label::after {
-    content: '';
-    position: absolute;
-    bottom: -1px; left: 0;
-    width: 30px; height: 1px;
-    background: var(--f-yellow);
-}
-.col-label-dot {
-    width: 5px; height: 5px;
-    background: var(--f-yellow);
+
+.logo-brand-dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: #F5E642;
     border-radius: 50%;
+    box-shadow: 0 0 4px #F5E642;
     flex-shrink: 0;
 }
+
+/* ─────────────────────────────────────────
+   NAVIGASI LIST
+   ───────────────────────────────────────── */
 
 .footer-nav-list {
     list-style: none;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: .3rem;
 }
+
+.footer-nav-list li {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-nav-list li:last-child {
+    border-bottom: none;
+}
+
 .footer-nav-link {
-    font-size: .78rem;
-    color: var(--f-text2);
-    text-decoration: none;
     display: flex;
     align-items: center;
-    gap: .45rem;
-    padding: .3rem 0;
-    transition: all .15s;
-    border-bottom: 1px solid transparent;
+    gap: 7px;
+    padding: 7px 0;
+    text-decoration: none;
+    transition: all 0.18s ease;
+    white-space: nowrap;
 }
+
 .footer-nav-link:hover {
-    color: var(--f-cyan);
-    padding-left: .3rem;
-}
-.nav-arrow {
-    font-size: .65rem;
-    color: var(--f-muted);
-    transition: all .15s;
-    flex-shrink: 0;
-    opacity: 0;
-}
-.footer-nav-link:hover .nav-arrow {
-    opacity: 1;
-    color: var(--f-cyan);
-    transform: translateX(2px);
+    padding-left: 5px;
 }
 
-/* ── Contact Col ────────────────────────────────────────── */
-.footer-contact-col { display: flex; flex-direction: column; gap: .85rem; }
+.footer-nav-num {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #4b0082;
+    min-width: 18px;
+    transition: color 0.18s;
+}
 
-.wa-cards { display: flex; flex-direction: column; gap: .6rem; }
+.footer-nav-dash {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    color: #4b0082;
+    min-width: 18px;
+    transition: color 0.18s;
+}
 
-.wa-card {
+.footer-nav-text {
+    font-size: 0.72rem;
+    color: #94a3b8;
+    transition: color 0.18s;
+    letter-spacing: 0.01em;
+}
+
+.footer-nav-link:hover .footer-nav-num,
+.footer-nav-link:hover .footer-nav-dash {
+    color: #F5E642;
+}
+
+.footer-nav-link:hover .footer-nav-text {
+    color: #F5E642;
+}
+
+/* ─────────────────────────────────────────
+   LABEL KOLOM
+   ───────────────────────────────────────── */
+
+.footer-col-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.58rem;
+    font-weight: 700;
+    color: #a389bd;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
     display: flex;
     align-items: center;
-    gap: .75rem;
-    padding: .7rem .9rem;
-    border: 1px solid var(--f-border2);
-    border-radius: 6px;
-    background: var(--f-panel);
+    gap: 6px;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    margin-bottom: 0.75rem;
+}
+
+.col-label-dot {
+    width: 5px;
+    height: 5px;
+    background: #F5E642;
+    border-radius: 50%;
+    box-shadow: 0 0 5px #F5E642;
+    flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────
+   SOCIAL BUTTONS
+   ───────────────────────────────────────── */
+
+.social-btn {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #4b0082;
+    border-radius: 8px;
+    background: #2d0059;
+    color: #F5E642;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-decoration: none;
-    transition: all .2s;
+}
+
+.social-btn:hover {
+    border-color: #F5E642;
+    color: #ffffff;
+    background: #4b0082;
+    box-shadow: 0 0 15px rgba(245, 230, 66, 0.25);
+    transform: translateY(-3px) rotate(5deg);
+}
+
+/* ─────────────────────────────────────────
+   WHATSAPP CARDS
+   ───────────────────────────────────────── */
+
+.wa-card-modern {
+    background: #2d0059;
+    border: 1px solid #4b0082;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    text-decoration: none;
     position: relative;
     overflow: hidden;
 }
-.wa-card::before {
+
+.wa-card-modern::before {
     content: '';
     position: absolute;
-    left: 0; top: 0; bottom: 0;
+    left: 0;
+    top: 0;
+    bottom: 0;
     width: 3px;
     background: #25D366;
     transform: scaleY(0);
     transform-origin: bottom;
-    transition: transform .2s;
+    transition: transform 0.3s;
 }
-.wa-card:hover::before { transform: scaleY(1); }
-.wa-card:hover {
+
+.wa-card-modern:hover::before {
+    transform: scaleY(1);
+}
+
+.wa-card-modern:hover {
+    background: #390070;
     border-color: #25D366;
-    background: rgba(37,211,102,.06);
-    box-shadow: 0 0 16px rgba(37,211,102,.15);
-    transform: translateX(3px);
+    transform: translateX(4px);
+    box-shadow: 0 8px 20px -10px rgba(37, 211, 102, 0.3);
 }
-.wa-card-alt::before { background: var(--f-cyan); }
+
+.wa-card-alt::before {
+    background: #00E5FF;
+}
+
 .wa-card-alt:hover {
-    border-color: var(--f-cyan);
-    background: rgba(0,229,255,.06);
-    box-shadow: 0 0 16px rgba(0,229,255,.12);
+    border-color: #00E5FF;
+    box-shadow: 0 8px 20px -10px rgba(0, 229, 255, 0.3);
 }
-
-.wa-icon {
-    width: 34px; height: 34px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #25D366;
-    flex-shrink: 0;
-}
-.wa-card-alt .wa-icon { color: var(--f-cyan); }
-.wa-icon svg { width: 22px; height: 22px; }
-
-.wa-info {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-}
-.wa-label-text {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: .55rem;
-    color: var(--f-muted);
-    text-transform: uppercase;
-    letter-spacing: .08em;
-}
-.wa-number {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: .78rem;
-    font-weight: 700;
-    color: var(--f-text);
-}
-.wa-arrow {
-    font-size: .9rem;
-    color: var(--f-muted);
-    transition: all .15s;
-}
-.wa-card:hover .wa-arrow {
-    color: #25D366;
-    transform: translate(2px, -2px);
-}
-.wa-card-alt:hover .wa-arrow { color: var(--f-cyan); }
-
-.response-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: .45rem;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: .62rem;
-    font-weight: 700;
-    color: var(--f-lime);
-    background: rgba(184,255,0,.06);
-    border: 1px solid rgba(184,255,0,.2);
-    border-radius: 4px;
-    padding: .4rem .75rem;
-    letter-spacing: .06em;
-    text-transform: uppercase;
-    width: fit-content;
-    margin-top: .25rem;
-}
-.response-dot {
-    width: 7px; height: 7px;
-    background: var(--f-lime);
-    border-radius: 50%;
-    box-shadow: 0 0 6px var(--f-lime);
-    animation: respPip 2s ease infinite;
-    flex-shrink: 0;
-}
-@keyframes respPip { 0%,100% { opacity:1; } 50% { opacity:.25; } }
-
-/* ── Divider ────────────────────────────────────────────── */
-.footer-divider {
-    position: relative;
-    z-index: 1;
-    height: 1px;
-    background: var(--f-border);
-    margin: 0 5vw;
-}
-.footer-divider::after {
-    content: '';
-    position: absolute;
-    left: 0; top: 0;
-    width: 120px; height: 1px;
-    background: linear-gradient(90deg, var(--f-yellow), transparent);
-}
-
-/* ── Bottom Bar ─────────────────────────────────────────── */
-.footer-bottom {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: .75rem;
-    padding: 1.1rem 5vw;
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.copyright-text {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: .62rem;
-    color: var(--f-muted);
-    letter-spacing: .06em;
-    text-transform: uppercase;
-}
-.footer-bottom-links {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-}
-.bottom-link {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: .62rem;
-    color: var(--f-muted);
-    text-decoration: none;
-    text-transform: uppercase;
-    letter-spacing: .06em;
-    transition: color .15s;
-}
-.bottom-link:hover { color: var(--f-yellow); }
-.bottom-sep { color: var(--f-border2); font-size: .65rem; }
 </style>

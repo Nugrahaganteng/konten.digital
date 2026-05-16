@@ -95,7 +95,7 @@ class HomeController extends Controller
                  . "💬 *Pesan*   :\n{$data['message']}\n\n"
                  . "─────────────────────\n"
                  . "⏰ " . now()->format('d/m/Y H:i') . " WIB\n"
-                 . "_Kontendigital.id_";
+                 . "_HNP Communications.id_";
 
         try {
             $ch = curl_init('https://api.fonnte.com/send');
