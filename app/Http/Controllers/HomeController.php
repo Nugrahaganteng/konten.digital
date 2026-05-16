@@ -14,13 +14,13 @@ use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
-    // ── Helper: load sections untuk satu halaman ─────────────────────
+    // ── Helper: load sections untuk satu halaman ──────────────────────────────
     private function sections(string $page): \Illuminate\Support\Collection
     {
         return PageSection::ofPage($page);
     }
 
-    // ── HOME ──────────────────────────────────────────────────────────
+    // ── HOME ──────────────────────────────────────────────────────────────────
     public function index()
     {
         $sections     = $this->sections('home');
@@ -32,58 +32,98 @@ class HomeController extends Controller
         return view('pages.home', compact('sections', 'services', 'testimonials', 'faqs', 'clients'));
     }
 
-    // ── ABOUT ─────────────────────────────────────────────────────────
+    // ── ABOUT ─────────────────────────────────────────────────────────────────
     public function about()
     {
         $sections = $this->sections('about');
         return view('about', compact('sections'));
     }
 
-    // ── CONTACT ───────────────────────────────────────────────────────
+    // ── CONTACT ───────────────────────────────────────────────────────────────
     public function contact()
     {
         $sections = $this->sections('contact');
         return view('contact', compact('sections'));
     }
 
+    /**
+     * PERBAIKAN UTAMA sendContact:
+     * 1. Validasi input server-side
+     * 2. Simpan ke DB (ContactSubmission) → data muncul di admin panel
+     * 3. Kirim notifikasi WhatsApp ke admin via Fonnte
+     * 4. Redirect user ke WhatsApp dengan pesan terisi otomatis
+     */
     public function sendContact(Request $request)
     {
+        // ── 1. Validasi ──────────────────────────────────────────────────────
         $validated = $request->validate([
             'name'    => 'required|string|max:255',
             'email'   => 'required|email|max:255',
-            'phone'   => 'required|string|max:20',
+            'phone'   => ['required', 'string', 'max:15', 'regex:/^[0-9+]+$/'],
             'service' => 'required|string',
             'message' => 'required|string|min:10',
+        ], [
+            'name.required'    => 'Nama lengkap wajib diisi.',
+            'email.required'   => 'Alamat email wajib diisi.',
+            'email.email'      => 'Format email tidak valid.',
+            'phone.required'   => 'No. WhatsApp wajib diisi.',
+            'phone.regex'      => 'No. WhatsApp hanya boleh berisi angka dan tanda +.',
+            'service.required' => 'Pilih layanan yang dibutuhkan.',
+            'message.required' => 'Detail kebutuhan wajib diisi.',
+            'message.min'      => 'Detail kebutuhan minimal 10 karakter.',
         ]);
 
-        // Simpan ke DB (ContactSubmission)
+        // ── 2. Simpan ke database ─────────────────────────────────────────────
+        // Data ini yang akan muncul di admin panel /admin/contacts
         \App\Models\ContactSubmission::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
-            'whatsapp' => $validated['phone'], // remap phone → whatsapp
+            'whatsapp' => $validated['phone'],
             'service'  => $validated['service'],
             'message'  => $validated['message'],
         ]);
 
-        // Kirim notifikasi WhatsApp via Fonnte
+        // ── 3. Kirim notifikasi ke admin via Fonnte (WhatsApp) ───────────────
         $this->sendWhatsAppNotification($validated);
 
-        // Kirim email notif (opsional)
-        // Mail::to('hello@kontendigital.id')->send(new \App\Mail\ContactMail($validated));
+        // ── 4. Redirect user ke WhatsApp dengan pesan terisi otomatis ────────
+        // Nomor WhatsApp tujuan (admin/CS)
+        $adminWaNumber = '6283871325422';
 
-        return back()->with('success', 'Pesan Anda berhasil dikirim! Tim kami akan menghubungi Anda segera.');
+        $text = "Halo Kontendigital.id!\n\n"
+              . "Saya ingin berkonsultasi mengenai layanan Anda.\n\n"
+              . "*Nama*    : {$validated['name']}\n"
+              . "*No. HP*  : {$validated['phone']}\n"
+              . "*Email*   : {$validated['email']}\n"
+              . "*Layanan* : {$validated['service']}\n\n"
+              . "*Kebutuhan Saya*:\n{$validated['message']}\n\n"
+              . "Mohon informasinya, terima kasih!";
+
+        $waUrl = "https://wa.me/{$adminWaNumber}?text=" . urlencode($text);
+
+        // Redirect ke WhatsApp (tab baru tidak bisa via redirect, maka gunakan
+        // session flag lalu buka via JS di halaman, atau langsung redirect)
+        return redirect($waUrl);
+
+        /*
+         * ── ALTERNATIF: Jika ingin tetap di halaman (tidak redirect ke WA) ──
+         * Uncomment baris di bawah dan comment return redirect() di atas.
+         * Gunakan ini jika Anda ingin user membuka WA sendiri via tombol.
+         *
+         * return back()->with('success', 'Pesan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda.');
+         */
     }
 
     /**
      * Kirim notifikasi WhatsApp ke nomor admin via Fonnte API.
-     * Daftar token gratis di https://fonnte.com
+     * Daftar & ambil token gratis di https://fonnte.com
      */
     private function sendWhatsAppNotification(array $data): void
     {
         $token = env('FONNTE_TOKEN');
 
         if (empty($token)) {
-            Log::warning('FONNTE_TOKEN belum diset di .env, notifikasi WhatsApp tidak terkirim.');
+            Log::warning('FONNTE_TOKEN belum diset di .env, notifikasi WhatsApp admin tidak terkirim.');
             return;
         }
 
@@ -105,10 +145,10 @@ class HomeController extends Controller
                 CURLOPT_HTTPHEADER     => [
                     "Authorization: {$token}",
                 ],
-                CURLOPT_POSTFIELDS     => [
-                    'target'  => '083871325422', // nomor HP admin
-                    'message' => $message,
-                    'countryCode' => '62',       // kode negara Indonesia
+                CURLOPT_POSTFIELDS => [
+                    'target'      => '083871325422', // nomor HP admin
+                    'message'     => $message,
+                    'countryCode' => '62',           // kode negara Indonesia
                 ],
             ]);
 
@@ -122,7 +162,7 @@ class HomeController extends Controller
                     'response'  => $response,
                 ]);
             } else {
-                Log::info('WhatsApp notifikasi terkirim', ['response' => $response]);
+                Log::info('WhatsApp notifikasi admin terkirim', ['response' => $response]);
             }
 
         } catch (\Exception $e) {
@@ -131,23 +171,23 @@ class HomeController extends Controller
         }
     }
 
-    // ── CARA ORDER ────────────────────────────────────────────────────
+    // ── CARA ORDER ────────────────────────────────────────────────────────────
     public function caraOrder()
     {
         $sections = $this->sections('cara-order');
         return view('pages.cara-order', compact('sections'));
     }
 
-    // ── SYARAT & KETENTUAN ────────────────────────────────────────────
+    // ── SYARAT & KETENTUAN ────────────────────────────────────────────────────
     public function syaratKetentuan()
     {
         $sections = $this->sections('syarat-ketentuan');
         return view('pages.syarat-ketentuan', compact('sections'));
     }
 
-    // ══════════════════════════════════════════════════════════════════
-    // ── LAYANAN PAGES ─────────────────────────────────────────────────
-    // ══════════════════════════════════════════════════════════════════
+    // ════════════════════════════════════════════════════════════════════════════
+    // ── LAYANAN PAGES ─────────────────────────────────────────────────────────
+    // ════════════════════════════════════════════════════════════════════════════
 
     public function pressRelease()
     {
