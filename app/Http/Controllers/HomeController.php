@@ -90,7 +90,7 @@ class HomeController extends Controller
         // Nomor WhatsApp tujuan (admin/CS)
         $adminWaNumber = '6283871325422';
 
-        $text = "Halo Kontendigital.id!\n\n"
+        $text = "Halo HNP Communications.id!\n\n"
               . "Saya ingin berkonsultasi mengenai layanan Anda.\n\n"
               . "*Nama*    : {$validated['name']}\n"
               . "*No. HP*  : {$validated['phone']}\n"

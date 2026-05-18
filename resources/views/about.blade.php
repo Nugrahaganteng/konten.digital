@@ -145,7 +145,7 @@
 </section>
 
 {{-- ══ GALLERY ════════════════════════════════════════════ --}}
-<section class="bg-purple-950 border-b-4 border-black py-24 px-6 overflow-hidden">
+<!-- <section class="bg-purple-950 border-b-4 border-black py-24 px-6 overflow-hidden">
     <div id="galleryContainer" class="flex gap-6 overflow-x-auto pb-12 snap-x snap-mandatory no-scrollbar">
         @foreach(['kantor1.jpg','tim1.jpg','kerja2.jpg','event.jpg'] as $img)
         <div class="flex-none w-[85vw] md:w-[500px] snap-center">
@@ -157,7 +157,7 @@
         </div>
         @endforeach
     </div>
-</section>
+</section> -->
 
 {{-- ══ WE ARE DIFFERENT ════════════════════════════════════ --}}
 <section class="bg-red-500 border-b-4 border-black py-24 px-6 lg:px-16">

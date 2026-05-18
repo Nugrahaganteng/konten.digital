@@ -425,7 +425,7 @@
             </a>
 
             {{-- Order Now Mobile --}}
-            <a href="https://wa.me/6287786000919"
+            <!-- <a href="https://wa.me/6287786000919"
                target="_blank"
                rel="noopener noreferrer"
                class="mt-6 flex items-center justify-center gap-2 w-full py-4
@@ -434,7 +434,7 @@
                 <i class="fab fa-whatsapp text-lg"></i>
                 Order Now
                 <i class="fa-solid fa-arrow-right text-sm"></i>
-            </a>
+            </a> -->
         </div>
 
         {{-- Auth Section Mobile --}}

@@ -280,7 +280,7 @@
 </section>
 
 {{-- ── SOCIAL FOOTER ─────────────────────────────────────────────────────────── --}}
-<section class="bg-[#3D0066] py-16 border-t-8 border-black">
+<!-- <section class="bg-[#3D0066] py-16 border-t-8 border-black">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <h3 class="text-[#FFD200] font-black text-3xl uppercase italic mb-10 tracking-tighter">KONEKSIKAN BRAND ANDA</h3>
         <div class="flex flex-wrap justify-center gap-6">
@@ -292,7 +292,7 @@
             @endforeach
         </div>
     </div>
-</section>
+</section> -->
 
 {{-- ── SCRIPT ────────────────────────────────────────────────────────────────── --}}
 <script>
