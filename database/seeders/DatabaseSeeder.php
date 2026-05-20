@@ -1,4 +1,5 @@
 <?php
+// database/seeders/DatabaseSeeder.php
 
 namespace Database\Seeders;
 
@@ -19,5 +20,10 @@ class DatabaseSeeder extends Seeder
                 'role'     => 'admin',
             ]
         );
+
+        // Seed services
+        $this->call([
+            ServiceSeeder::class,
+        ]);
     }
 }
