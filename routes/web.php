@@ -59,20 +59,27 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     // ── CMS ROUTES ────────────────────────────────────────────────────
     // ══════════════════════════════════════════════════════════════════
 
-    // Site Settings (Hero, About, Contact, Footer, SEO, Social)
+    // Site Settings
     Route::get('cms/settings/{group?}',  [SiteSettingController::class, 'index'])->name('cms.settings');
     Route::post('cms/settings/{group}',  [SiteSettingController::class, 'update'])->name('cms.settings.update');
 
-    // Layanan / Services
-    Route::post('cms/services/reorder',                  [ServiceController::class, 'reorder'])->name('cms.services.reorder');
-    Route::get('cms/services',                           [ServiceController::class, 'index'])->name('cms.services.index');
-    Route::get('cms/services/create',                    [ServiceController::class, 'create'])->name('cms.services.create');
-    Route::post('cms/services',                          [ServiceController::class, 'store'])->name('cms.services.store');
-    Route::get('cms/services/{service}/edit',            [ServiceController::class, 'edit'])->name('cms.services.edit');
-    Route::put('cms/services/{service}',                 [ServiceController::class, 'update'])->name('cms.services.update');
-    Route::delete('cms/services/{service}',              [ServiceController::class, 'destroy'])->name('cms.services.destroy');
+    // ── Toggle visibility satu field (eye button — AJAX) ──────────────
+    Route::patch('cms/page-sections/section/{pageSection}/toggle-field',
+        [PageSectionController::class, 'toggleField'])->name('cms.page-sections.toggle-field');
 
-    // Testimoni
+    // ── Layanan / Services ────────────────────────────────────────────
+    // PENTING: route statis (reorder, create) harus SEBELUM route {service}
+    Route::post('cms/services/reorder',         [ServiceController::class, 'reorder'])->name('cms.services.reorder');
+    Route::get('cms/services',                  [ServiceController::class, 'index'])->name('cms.services.index');
+    Route::get('cms/services/create',           [ServiceController::class, 'create'])->name('cms.services.create');
+    Route::post('cms/services',                 [ServiceController::class, 'store'])->name('cms.services.store');
+    Route::get('cms/services/{service}/edit',   [ServiceController::class, 'edit'])->name('cms.services.edit');
+    Route::put('cms/services/{service}',        [ServiceController::class, 'update'])->name('cms.services.update');
+    Route::delete('cms/services/{service}',     [ServiceController::class, 'destroy'])->name('cms.services.destroy');
+    // ↓ Route toggle — dipakai oleh widget navbar di Page Sections
+    Route::patch('cms/services/{service}/toggle', [ServiceController::class, 'toggle'])->name('cms.services.toggle');
+
+    // ── Testimoni ─────────────────────────────────────────────────────
     Route::get('cms/testimonials',                       [TestimonialController::class, 'index'])->name('cms.testimonials.index');
     Route::get('cms/testimonials/create',                [TestimonialController::class, 'create'])->name('cms.testimonials.create');
     Route::post('cms/testimonials',                      [TestimonialController::class, 'store'])->name('cms.testimonials.store');
@@ -80,7 +87,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('cms/testimonials/{testimonial}',         [TestimonialController::class, 'update'])->name('cms.testimonials.update');
     Route::delete('cms/testimonials/{testimonial}',      [TestimonialController::class, 'destroy'])->name('cms.testimonials.destroy');
 
-    // FAQ
+    // ── FAQ ───────────────────────────────────────────────────────────
     Route::get('cms/faqs',                               [FaqController::class, 'index'])->name('cms.faqs.index');
     Route::get('cms/faqs/create',                        [FaqController::class, 'create'])->name('cms.faqs.create');
     Route::post('cms/faqs',                              [FaqController::class, 'store'])->name('cms.faqs.store');
@@ -88,7 +95,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::put('cms/faqs/{faq}',                         [FaqController::class, 'update'])->name('cms.faqs.update');
     Route::delete('cms/faqs/{faq}',                      [FaqController::class, 'destroy'])->name('cms.faqs.destroy');
 
-    // Logo Klien
+    // ── Logo Klien ────────────────────────────────────────────────────
     Route::get('cms/clients',                            [ClientLogoController::class, 'index'])->name('cms.clients.index');
     Route::post('cms/clients',                           [ClientLogoController::class, 'store'])->name('cms.clients.store');
     Route::delete('cms/clients/{client}',                [ClientLogoController::class, 'destroy'])->name('cms.clients.destroy');

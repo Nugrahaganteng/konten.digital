@@ -10,12 +10,22 @@
     $ketS    = $sections->get('ketentuan_penulisan');
     $ctaS    = $sections->get('cta');
 
-    $hv = fn($k, $d = '') => $heroS   ? ($heroS->get($k)   ?: $d) : $d;
-    $pv = fn($k, $d = '') => $syaratS ? ($syaratS->get($k) ?: $d) : $d;
-    $kv = fn($k, $d = '') => $ketS    ? ($ketS->get($k)    ?: $d) : $d;
-    $cv = fn($k, $d = '') => $ctaS    ? ($ctaS->get($k)    ?: $d) : $d;
+    // ── Helper: sama persis seperti di home ──────────────────────────────────
+    // null  = field HIDDEN  → jangan render elemen HTML-nya
+    // string = field aktif  → tampilkan nilainya (atau $default jika kosong)
+    $val = function(?\App\Models\PageSection $section, string $key, string $default = '') {
+        if (!$section) return $default;
+        if ($section->isFieldHidden($key)) return null;
+        $v = data_get($section->content, $key);
+        return ($v !== null && $v !== '') ? $v : $default;
+    };
 
-    // Build rules dari CMS dengan fallback
+    $hv = fn(string $k, string $d = '') => $val($heroS,   $k, $d);
+    $pv = fn(string $k, string $d = '') => $val($syaratS, $k, $d);
+    $kv = fn(string $k, string $d = '') => $val($ketS,    $k, $d);
+    $cv = fn(string $k, string $d = '') => $val($ctaS,    $k, $d);
+
+    // Build rules PR dari CMS dengan fallback
     $defaultPrRules = [
         'Berita yang diterbitkan wajib memiliki news value (informasi manfaat bagi pembaca).',
         'Bukan berisi ajakan membeli langsung (hard selling), cara belanja, atau teknikal penggunaan.',
@@ -28,10 +38,12 @@
     ];
     $prRules = [];
     for ($i = 1; $i <= 8; $i++) {
-        $val = $pv("rule_{$i}", $defaultPrRules[$i-1]);
-        if ($val) $prRules[] = $val;
+        $rval = $pv("rule_{$i}", $defaultPrRules[$i-1]);
+        // null = hidden → skip; string = tampilkan
+        if ($rval !== null) $prRules[] = $rval;
     }
 
+    // Build rules Artikel dari CMS dengan fallback
     $defaultArRules = [
         'Standar penulisan jurnalistik (5W + 1H).',
         'Wajib mencantumkan narasumber yang kredibel.',
@@ -43,8 +55,9 @@
     ];
     $articleRules = [];
     for ($i = 1; $i <= 7; $i++) {
-        $val = $kv("rule_{$i}", $defaultArRules[$i-1]);
-        if ($val) $articleRules[] = $val;
+        $aval = $kv("rule_{$i}", $defaultArRules[$i-1]);
+        // null = hidden → skip; string = tampilkan
+        if ($aval !== null) $articleRules[] = $aval;
     }
 @endphp
 
@@ -55,21 +68,30 @@
             <div class="inline-block bg-[#3D0066] text-white font-black text-xs uppercase tracking-widest px-4 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 transform -rotate-1">
                 ✦ Legal & Kebijakan
             </div>
+
+            {{-- Title --}}
+            @if($hv('title') !== null)
             <h1 class="font-black text-6xl md:text-8xl leading-[0.9] uppercase text-[#3D0066] mb-8 tracking-tighter">
                 {{ $hv('title', 'SYARAT &') }}
                 <br><span class="bg-black text-[#FFD200] px-4 inline-block transform rotate-1">KETENTUAN</span>
             </h1>
+            @endif
+
+            {{-- Subtitle --}}
+            @if($hv('subtitle') !== null)
             <div class="border-l-8 border-black pl-6 py-2 mb-8">
                 <p class="font-bold text-2xl text-black italic leading-tight">
                     "{{ $hv('subtitle', 'Transparansi adalah kunci kenyamanan kerjasama kita.') }}"
                 </p>
             </div>
+            @endif
         </div>
 
         <div class="relative flex justify-center items-center h-[400px]">
             <div class="absolute w-[350px] h-[350px] bg-[#E61E50] border-8 border-black rounded-full shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-visible">
-                @if($heroS && $heroS->get('image'))
-                    <img src="{{ Storage::url($heroS->get('image')) }}"
+                @php $heroSyaratImage = ($heroS && !$heroS->isFieldHidden('image')) ? data_get($heroS->content, 'image') : null; @endphp
+                @if($heroSyaratImage)
+                    <img src="{{ Storage::url($heroSyaratImage) }}"
                          alt="Syarat & Ketentuan"
                          class="absolute w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-4">
                 @else
@@ -82,6 +104,8 @@
 </section>
 
 {{-- ── SECTION 2: SYARAT UMUM PR ──────────────────────────── --}}
+{{-- Hanya tampilkan section ini jika ada minimal 1 rule yang tidak di-hidden --}}
+@if(count($prRules) > 0)
 <section class="bg-[#3B82F6] border-b-8 border-black py-24 relative">
     <div class="max-w-5xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
@@ -104,15 +128,23 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- ── SECTION 3: KETENTUAN PENULISAN ─────────────────────── --}}
+{{-- Hanya tampilkan section ini jika ada minimal 1 rule yang tidak di-hidden --}}
+@if(count($articleRules) > 0)
 <section class="bg-white border-b-8 border-black py-24 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-12 gap-12 items-center">
 
         {{-- Visual --}}
+        @php $ketImage = ($ketS && !$ketS->isFieldHidden('image')) ? data_get($ketS->content, 'image') : null; @endphp
         <div class="md:col-span-5 relative">
             <div class="border-8 border-black p-4 bg-[#FFD200] shadow-[15px_15px_0px_0px_rgba(230,30,80,1)]">
-                <img src="/images/skc.png" alt="Writing Rules" class="w-full border-4 border-black grayscale">
+                @if($ketImage)
+                    <img src="{{ Storage::url($ketImage) }}" alt="Writing Rules" class="w-full border-4 border-black grayscale">
+                @else
+                    <img src="/images/skc.png" alt="Writing Rules" class="w-full border-4 border-black grayscale">
+                @endif
             </div>
         </div>
 
@@ -137,6 +169,7 @@
         </div>
     </div>
 </section>
+@endif
 
 {{-- ── SECTION 4: FAQ ──────────────────────────────────────── --}}
 <section class="bg-[#1A1A1A] border-b-8 border-black py-24 relative" x-data>
@@ -179,14 +212,20 @@
 {{-- ── SECTION 5: CTA ──────────────────────────────────────── --}}
 <section class="bg-[#FFD200] border-b-8 border-black py-24 text-center relative overflow-hidden">
     <div class="max-w-4xl mx-auto px-6 relative z-10">
+
+        @if($cv('title') !== null)
         <h2 class="font-black text-6xl md:text-8xl uppercase text-[#3D0066] leading-[0.8] mb-12 tracking-tighter italic">
             {{ $cv('title', 'BUTUH BANTUAN') }}
             <br><span class="text-black bg-white px-4 inline-block transform rotate-2">LEBIH LANJUT?</span>
         </h2>
+        @endif
+
+        @if($cv('cta_url') !== null || $cv('cta_text') !== null)
         <a href="{{ $cv('cta_url', 'https://api.whatsapp.com/send?phone=6287786000919') }}"
            class="inline-block bg-[#3D0066] text-white px-16 py-8 font-black text-3xl uppercase border-8 border-black shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-3 hover:translate-y-3 transition-all">
             {{ $cv('cta_text', 'HUBUNGI ADMIN SEKARANG →') }}
         </a>
+        @endif
     </div>
 </section>
 

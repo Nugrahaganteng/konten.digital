@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Models\PageSection;
+use App\Models\Service;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -20,10 +21,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // ── Seed footer sections jika belum ada ─────────────────────
-        // Ini berjalan sekali setiap request, sangat ringan karena
-        // hanya query count + early return jika sudah lengkap.
-        $this->seedFooterSections();
+        // ── Inject active services ke navbar ──────────────────────────────
+        // $navServices akan otomatis tersedia di layouts/app.blade.php
+        // Hanya query 1x per request, di-cache oleh Laravel view composer.
+        view()->composer('layouts.app', function ($view) {
+            $view->with('navServices', Service::active()->ordered()->get());
+        });
     }
 
     /**

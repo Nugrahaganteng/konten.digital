@@ -13,14 +13,25 @@
     $clients = $sections->get('clients');
     $cta     = $sections->get('contact_cta');
 
-    // ── Helper closures ─────────────────────────────────────────────
-    $h  = fn(string $key, string $default = '') => $hero    ? ($hero->get($key)    ?: $default) : $default;
-    $st = fn(string $key, string $default = '') => $stats   ? ($stats->get($key)   ?: $default) : $default;
-    $mq = fn(string $key, string $default = '') => $marquee ? ($marquee->get($key) ?: $default) : $default;
-    $a  = fn(string $key, string $default = '') => $about   ? ($about->get($key)   ?: $default) : $default;
-    $sv = fn(string $key, string $default = '') => $svcSec  ? ($svcSec->get($key)  ?: $default) : $default;
-    $cl = fn(string $key, string $default = '') => $clients ? ($clients->get($key) ?: $default) : $default;
-    $ct = fn(string $key, string $default = '') => $cta     ? ($cta->get($key)     ?: $default) : $default;
+    // ── Helper: ambil nilai field (null jika hidden, fallback jika kosong) ──
+    // Bedakan 3 kondisi:
+    //   - field hidden  → return null  (elemen HTML tidak dirender)
+    //   - field ada & isi → return nilai
+    //   - field kosong  → return $default
+    $val = function(?\App\Models\PageSection $section, string $key, string $default = '') {
+        if (!$section) return $default;
+        if ($section->isFieldHidden($key)) return null;   // ← hidden = null
+        $v = data_get($section->content, $key);
+        return ($v !== null && $v !== '') ? $v : $default;
+    };
+
+    $h  = fn(string $key, string $default = '') => $val($hero,    $key, $default);
+    $st = fn(string $key, string $default = '') => $val($stats,   $key, $default);
+    $mq = fn(string $key, string $default = '') => $val($marquee, $key, $default);
+    $a  = fn(string $key, string $default = '') => $val($about,   $key, $default);
+    $sv = fn(string $key, string $default = '') => $val($svcSec,  $key, $default);
+    $cl = fn(string $key, string $default = '') => $val($clients, $key, $default);
+    $ct = fn(string $key, string $default = '') => $val($cta,     $key, $default);
 @endphp
 
 {{-- ══ HERO ═════════════════════════════════════════════ --}}
@@ -36,39 +47,54 @@
 
         {{-- Kiri --}}
         <div class="flex flex-col gap-6 reveal">
+
+            {{-- Badge: hanya render jika TIDAK hidden --}}
+            @if($h('badge_text') !== null)
             <span class="inline-flex items-center gap-2 bg-red-500 text-white font-black text-xs
                          tracking-widest uppercase px-4 py-2 border-[2.5px] border-black w-fit
                          -rotate-1 group hover:rotate-2 transition-transform cursor-default shadow-neo-sm"
                   style="font-family:'Unbounded',sans-serif">
                 ✦ {{ $h('badge_text', 'DIGITAL AGENCY') }}
             </span>
+            @endif
 
+            {{-- Subtitle --}}
+            @if($h('subtitle') !== null)
             <p class="text-lg font-bold text-purple-950 max-w-xs leading-relaxed text-glitch cursor-default">
                 {!! nl2br(e($h('subtitle', "Kami bukan agensi biasa.\nKami adalah partner kreatif yang bikin brand kamu berkesan di galaksi ini."))) !!}
             </p>
+            @endif
 
+            {{-- CTA --}}
+            @if($h('cta_url') !== null || $h('cta_text') !== null)
             <a href="{{ $h('cta_url', 'https://wa.me/6281234567890') }}"
                class="btn-pop w-fit text-base px-8 py-3 group">
                 <span class="inline-block group-hover:translate-x-2 transition-transform">
                     {{ $h('cta_text', 'MULAI SEKARANG →') }}
                 </span>
             </a>
+            @endif
         </div>
 
         {{-- Tengah --}}
         <div class="flex flex-col items-center reveal relative">
             <div class="font-black leading-none text-center text-purple-950 text-glitch-heavy"
                  style="font-family:'Unbounded',sans-serif; font-size:clamp(4rem,10vw,8rem);">
+                @if($h('title_line1') !== null)
                 <div>{{ $h('title_line1', 'KONTEN') }}</div>
+                @endif
+                @if($h('title_line2') !== null)
                 <div class="text-transparent" style="-webkit-text-stroke:3px #2d1b4e">
                     {{ $h('title_line2', 'DIGITAL') }}
                 </div>
+                @endif
             </div>
 
             {{-- Maskot --}}
+            @php $heroImage = ($hero && !$hero->isFieldHidden('image')) ? data_get($hero->content, 'image') : null; @endphp
             <div class="animate-ufo">
-                @if($hero && $hero->get('image'))
-                    <img src="{{ Storage::url($hero->get('image')) }}"
+                @if($heroImage)
+                    <img src="{{ Storage::url($heroImage) }}"
                          alt="Maskot"
                          class="w-56 mt-4"
                          style="filter:drop-shadow(8px 8px 0 #000)">
@@ -93,40 +119,58 @@
         {{-- Kanan: Stats --}}
         <div class="flex flex-col items-end gap-4 reveal">
             {{-- Stat 1 --}}
+            @if($st('stat_1_number') !== null || $st('stat_1_label') !== null)
             <div class="border-4 border-black shadow-neo p-5 text-right hover:-translate-y-2 hover:-translate-x-2 transition-transform cursor-pointer"
                  style="background-color: {{ $st('stat_1_color', '#3b0764') }}">
+                @if($st('stat_1_number') !== null)
                 <span class="block font-black text-5xl leading-none text-yellow-400"
                       style="font-family:'Unbounded',sans-serif">
                     {{ $st('stat_1_number', '200+') }}
                 </span>
+                @endif
+                @if($st('stat_1_label') !== null)
                 <span class="block text-xs font-bold uppercase tracking-widest text-yellow-400/60 mt-1">
                     {{ $st('stat_1_label', 'Media Partner') }}
                 </span>
+                @endif
             </div>
+            @endif
 
             {{-- Stat 2 --}}
+            @if($st('stat_2_number') !== null || $st('stat_2_label') !== null)
             <div class="border-4 border-black shadow-neo p-5 text-right hover:-translate-y-2 hover:-translate-x-2 transition-transform cursor-pointer"
                  style="background-color: {{ $st('stat_2_color', '#ef4444') }}">
+                @if($st('stat_2_number') !== null)
                 <span class="block font-black text-5xl leading-none text-white"
                       style="font-family:'Unbounded',sans-serif">
                     {{ $st('stat_2_number', '5+') }}
                 </span>
+                @endif
+                @if($st('stat_2_label') !== null)
                 <span class="block text-xs font-bold uppercase tracking-widest text-white/60 mt-1">
                     {{ $st('stat_2_label', 'Tahun Pengalaman') }}
                 </span>
+                @endif
             </div>
+            @endif
 
             {{-- Stat 3 --}}
+            @if($st('stat_3_number') !== null || $st('stat_3_label') !== null)
             <div class="border-4 border-black shadow-neo p-5 text-right hover:-translate-y-2 hover:-translate-x-2 transition-transform cursor-pointer"
                  style="background-color: {{ $st('stat_3_color', '#14b8a6') }}">
+                @if($st('stat_3_number') !== null)
                 <span class="block font-black text-5xl leading-none text-black"
                       style="font-family:'Unbounded',sans-serif">
                     {{ $st('stat_3_number', '1K+') }}
                 </span>
+                @endif
+                @if($st('stat_3_label') !== null)
                 <span class="block text-xs font-bold uppercase tracking-widest text-black/60 mt-1">
                     {{ $st('stat_3_label', 'Klien Puas') }}
                 </span>
+                @endif
             </div>
+            @endif
         </div>
     </div>
 
@@ -146,15 +190,15 @@
         <div class="flex items-center gap-10 px-10 whitespace-nowrap font-black text-sm
                     uppercase tracking-widest text-white"
              style="font-family:'Unbounded',sans-serif">
-            {{ $mq('item_1', 'PRESS RELEASE') }}
+            @if($mq('item_1') !== null) {{ $mq('item_1', 'PRESS RELEASE') }} @endif
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            {{ $mq('item_2', '200+ MEDIA NASIONAL') }}
+            @if($mq('item_2') !== null) {{ $mq('item_2', '200+ MEDIA NASIONAL') }} @endif
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            {{ $mq('item_3', 'GARANSI TAYANG') }}
+            @if($mq('item_3') !== null) {{ $mq('item_3', 'GARANSI TAYANG') }} @endif
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            {{ $mq('item_4', 'PROSES CEPAT') }}
+            @if($mq('item_4') !== null) {{ $mq('item_4', 'PROSES CEPAT') }} @endif
             <span class="w-3 h-3 bg-yellow-400 border-2 border-black rounded-full flex-shrink-0 animate-radar"></span>
-            {{ $mq('item_5', 'KONTEN DIGITAL') }}
+            @if($mq('item_5') !== null) {{ $mq('item_5', 'KONTEN DIGITAL') }} @endif
         </div>
         @endfor
     </div>
@@ -170,8 +214,9 @@
         <div class="relative reveal">
             <div class="border-4 border-yellow-400 bg-yellow-400 overflow-hidden aspect-[4/3]
                         flex items-center justify-center shadow-[14px_14px_0px_0px_#ef4444] group">
-                @if($about && $about->get('image'))
-                    <img src="{{ Storage::url($about->get('image')) }}"
+                @php $aboutImage = ($about && !$about->isFieldHidden('image')) ? data_get($about->content, 'image') : null; @endphp
+                @if($aboutImage)
+                    <img src="{{ Storage::url($aboutImage) }}"
                          alt="{{ $a('title', 'About Us') }}"
                          class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
                 @else
@@ -189,15 +234,21 @@
                 @endif
             </div>
             {{-- Badge pojok kanan bawah --}}
+            @if($a('badge_stat') !== null || $a('badge_label') !== null)
             <div class="absolute -bottom-4 -right-4 bg-red-500 border-4 border-black shadow-neo p-4 animate-float">
+                @if($a('badge_stat') !== null)
                 <div class="font-black text-white text-3xl leading-none"
                      style="font-family:'Unbounded',sans-serif">
                     {{ $a('badge_stat', '98%') }}
                 </div>
+                @endif
+                @if($a('badge_label') !== null)
                 <div class="text-white/60 text-xs font-bold uppercase tracking-widest mt-1">
                     {{ $a('badge_label', 'Tingkat Kepuasan') }}
                 </div>
+                @endif
             </div>
+            @endif
         </div>
 
         {{-- Teks --}}
@@ -207,13 +258,17 @@
                   style="font-family:'Unbounded',sans-serif">
                 ABOUT US
             </span>
+            @if($a('title') !== null)
             <h2 class="font-black text-white leading-none mb-6 text-glitch-heavy"
                 style="font-family:'Unbounded',sans-serif; font-size:clamp(3rem,5vw,5rem)">
                 {!! nl2br(e($a('title', "Wish\nGranted!"))) !!}
             </h2>
+            @endif
+            @if($a('description') !== null)
             <p class="text-white/80 font-bold leading-relaxed mb-8">
                 {{ $a('description', 'Berbasis di Bogor, Indonesia, kami adalah agensi digital kreatif yang berspesialisasi memberikan solusi dengan formula ideal.') }}
             </p>
+            @endif
 
             <div class="grid grid-cols-2 gap-px bg-black border-4 border-black shadow-neo">
                 @foreach([['200+','Media Partner'],['1K+','Happy Clients'],['5+','Tahun Berdiri'],['8','Jenis Layanan']] as [$v,$l])
@@ -225,7 +280,7 @@
                 @endforeach
             </div>
 
-            @if($a('cta_url') || $a('cta_text'))
+            @if($a('cta_url') !== null || $a('cta_text') !== null)
             <div class="mt-8">
                 <a href="{{ $a('cta_url', '/about') }}" class="btn-pop inline-block">
                     {{ $a('cta_text', 'Pelajari Lebih →') }}
@@ -239,6 +294,7 @@
 {{-- ══ SERVICES ═══════════════════════════════════════════ --}}
 <section class="bg-cyan-400 bg-retro-grid border-b-4 border-black py-20 px-6 lg:px-16 relative" id="services">
     <div class="max-w-7xl mx-auto relative z-10">
+        @if($sv('section_title') !== null)
         <div class="flex items-center gap-6 mb-8 reveal bg-white border-4 border-black p-4 shadow-neo w-fit">
             <span class="font-black text-black text-2xl whitespace-nowrap uppercase"
                   style="font-family:'Unbounded',sans-serif">
@@ -246,9 +302,9 @@
             </span>
             <div class="w-5 h-5 bg-red-500 border-2 border-black rounded-full flex-shrink-0 animate-radar"></div>
         </div>
+        @endif
 
         @php
-        // Bangun array $svcs dari CMS, fallback ke nilai default jika kosong
         $svcDefaults = [
             ['tab'=>'Press Release',     'title'=>"Jasa Press\nRelease",           'body'=>'Layanan publikasi informasi resmi brand Anda ke berbagai media massa.',        'bg'=>'SOCIAL', 'img'=>'r.png', 'route'=>'layanan.press.release'],
             ['tab'=>'Backlink Media',    'title'=>"Jasa Backlink\nMedia Nasional", 'body'=>'Tingkatkan otoritas domain dan peringkat SEO website Anda.',                   'bg'=>'NEWS',   'img'=>'i.png', 'route'=>'layanan.backlink'],
@@ -261,13 +317,14 @@
         $svcs = [];
         foreach ($svcDefaults as $i => $def) {
             $n = $i + 1;
+            $imgHidden = $svcSec && $svcSec->isFieldHidden("svc_{$n}_img");
             $svcs[] = [
-                'tab'   => $sv("svc_{$n}_tab",   $def['tab']),
-                'title' => $sv("svc_{$n}_title", $def['title']),
-                'body'  => $sv("svc_{$n}_body",  $def['body']),
-                'bg'    => $sv("svc_{$n}_bg",    $def['bg']),
-                'route' => $sv("svc_{$n}_route", $def['route']),
-                'img'   => $svcSec ? $svcSec->get("svc_{$n}_img") : null,
+                'tab'          => $sv("svc_{$n}_tab",   $def['tab']),
+                'title'        => $sv("svc_{$n}_title", $def['title']),
+                'body'         => $sv("svc_{$n}_body",  $def['body']),
+                'bg'           => $sv("svc_{$n}_bg",    $def['bg']),
+                'route'        => $sv("svc_{$n}_route", $def['route']),
+                'img'          => (!$imgHidden && $svcSec) ? data_get($svcSec->content, "svc_{$n}_img") : null,
                 'img_fallback' => $def['img'],
             ];
         }
@@ -292,11 +349,15 @@
                 <div class="p-8 md:p-12 relative flex flex-col justify-center">
                     <div class="corner-ornament tl"></div>
                     <div class="corner-ornament br"></div>
+                    @if($s['title'] !== null)
                     <h3 class="font-black leading-none text-purple-950 mb-6 text-glitch-heavy"
                         style="font-family:'Unbounded',sans-serif; font-size:clamp(2rem,4vw,3.5rem)">
                         {!! nl2br(e($s['title'])) !!}
                     </h3>
+                    @endif
+                    @if($s['body'] !== null)
                     <p class="text-black/80 font-bold leading-relaxed mb-8 max-w-sm">{{ $s['body'] }}</p>
+                    @endif
                     <div>
                         <a href="{{ route($s['route']) }}" class="btn-pop inline-block">PELAJARI LEBIH →</a>
                     </div>
@@ -330,10 +391,12 @@
     <div class="max-w-7xl mx-auto relative z-10">
         <div class="flex flex-col md:flex-row border-4 border-black shadow-neo mb-12 reveal">
             <div class="bg-purple-950 text-yellow-400 px-8 py-5 border-b-4 md:border-b-0 md:border-r-4 border-black flex items-center justify-center lg:justify-start min-w-[250px]">
+                @if($cl('section_title') !== null)
                 <h2 class="font-black text-2xl uppercase tracking-widest text-glitch"
                     style="font-family:'Unbounded',sans-serif">
                     {{ $cl('section_title', 'Our Clients.') }}
                 </h2>
+                @endif
             </div>
             <div class="bg-yellow-400 flex-1 relative overflow-hidden flex items-center py-4 px-6">
                 <div class="absolute inset-0 flex items-center px-6">
@@ -361,16 +424,16 @@
         <div class="border-4 border-black bg-black shadow-neo reveal">
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-1">
                 @php
-                // Ambil logo dari CMS (logo_1 s/d logo_12), fallback ke file statis lama
                 $staticLogos = ['tugu.png','lunas.png','kuliner.png','dog.png','hikmat.png','indo.png','kids.png','bio.png','praja.png','price.png','volantis.png','gorem.png'];
                 @endphp
 
                 @for($n = 1; $n <= 12; $n++)
                 @php
-                    $logoPath = $clients ? $clients->get("logo_{$n}") : null;
-                    $staticFallback = $staticLogos[$n - 1] ?? null;
+                    $logoHidden     = $clients && $clients->isFieldHidden("logo_{$n}");
+                    $logoPath       = (!$logoHidden && $clients) ? data_get($clients->content, "logo_{$n}") : null;
+                    $staticFallback = $logoHidden ? null : ($staticLogos[$n - 1] ?? null);
                 @endphp
-                @if($logoPath || $staticFallback)
+                @if(!$logoHidden && ($logoPath || $staticFallback))
                 <div class="bg-yellow-400 aspect-square flex items-center justify-center p-8
                             hover:bg-cyan-400 transition-all duration-500 group cursor-pointer relative overflow-hidden">
                     <img src="{{ $logoPath ? Storage::url($logoPath) : asset('images/clients/' . $staticFallback) }}"
@@ -396,23 +459,35 @@
     <div class="max-w-7xl mx-auto">
         <div class="grid grid-cols-1 md:grid-cols-[1fr_auto] gap-12 items-center reveal relative z-10">
             <div>
+                @if($ct('badge') !== null || $ct('badge_text') !== null)
                 <span class="inline-block bg-black text-yellow-400 font-black text-xs
                              tracking-widest uppercase px-4 py-2 mb-5 animate-bounce-heavy border-2 border-transparent shadow-neo-sm"
                       style="font-family:'Unbounded',sans-serif">
-                    {{ $ct('badge', $ct('badge_text', '✦ HUBUNGI KAMI')) }}
+                    {{ $ct('badge') ?? $ct('badge_text', '✦ HUBUNGI KAMI') }}
                 </span>
+                @endif
+
+                @if($ct('title_line1') !== null || $ct('title_line2') !== null || $ct('title_line3') !== null)
                 <h2 class="font-black text-white leading-none mb-5 text-glitch-heavy"
                     style="font-family:'Unbounded',sans-serif; font-size:clamp(2.5rem,5vw,5rem)">
-                    {{ $ct('title_line1', "Let's Build") }}<br>
-                    {{ $ct('title_line2', 'Something') }}<br>
+                    @if($ct('title_line1') !== null) {{ $ct('title_line1', "Let's Build") }}<br> @endif
+                    @if($ct('title_line2') !== null) {{ $ct('title_line2', 'Something') }}<br> @endif
+                    @if($ct('title_line3') !== null)
                     <span class="text-black" style="-webkit-text-stroke: 1px white;">
                         {{ $ct('title_line3', 'Different.') }}
                     </span>
+                    @endif
                 </h2>
+                @endif
+
+                @if($ct('description') !== null)
                 <p class="text-white font-bold leading-relaxed max-w-lg bg-black/20 p-4 border-l-4 border-yellow-400">
-                    {{ $ct('description', 'Punya ide gila untuk brand kamu? Kami siap dengar dan wujudkan. Hubungi kami sekarang dan mulai perjalanan pertumbuhan brand kamu melintasi orbit digital.') }}
+                    {{ $ct('description', 'Punya ide gila untuk brand kamu? Kami siap dengar dan wujudkan.') }}
                 </p>
+                @endif
             </div>
+
+            @if($ct('cta_url') !== null || $ct('cta_text') !== null)
             <a href="{{ $ct('cta_url', 'https://wa.me/6287786000919') }}"
                class="bg-yellow-400 text-purple-950 font-black text-xl px-10 py-6
                       border-4 border-black shadow-neo hover:translate-x-1 hover:translate-y-1
@@ -420,6 +495,7 @@
                style="font-family:'Unbounded',sans-serif">
                 {{ $ct('cta_text', "LET'S CHAT →") }}
             </a>
+            @endif
         </div>
 
         <div class="flex justify-center gap-12 pt-10 mt-10 border-t-4 border-black text-5xl relative z-10">

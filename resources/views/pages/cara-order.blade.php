@@ -9,9 +9,19 @@
     $stepsS = $sections->get('steps');
     $ctaS   = $sections->get('cta');
 
-    $hv = fn($k, $d = '') => $heroS  ? ($heroS->get($k)  ?: $d) : $d;
-    $sv = fn($k, $d = '') => $stepsS ? ($stepsS->get($k) ?: $d) : $d;
-    $cv = fn($k, $d = '') => $ctaS   ? ($ctaS->get($k)   ?: $d) : $d;
+    // ── Helper: sama persis seperti di home ──────────────────────────────────
+    // null  = field HIDDEN  → jangan render elemen HTML-nya
+    // string = field aktif  → tampilkan nilainya (atau $default jika kosong)
+    $val = function(?\App\Models\PageSection $section, string $key, string $default = '') {
+        if (!$section) return $default;
+        if ($section->isFieldHidden($key)) return null;
+        $v = data_get($section->content, $key);
+        return ($v !== null && $v !== '') ? $v : $default;
+    };
+
+    $hv = fn(string $k, string $d = '') => $val($heroS,  $k, $d);
+    $sv = fn(string $k, string $d = '') => $val($stepsS, $k, $d);
+    $cv = fn(string $k, string $d = '') => $val($ctaS,   $k, $d);
 
     // Build steps array dari CMS dengan fallback hardcode
     $defaultSteps = [
@@ -46,10 +56,16 @@
 
     $builtSteps = [];
     for ($i = 1; $i <= 10; $i++) {
+        $titleVal = $sv("step_{$i}_title", $defaultSteps[$i-1][0]);
+        $descVal  = $sv("step_{$i}_desc",  $defaultSteps[$i-1][1]);
+
+        // Jika kedua field hidden, skip step ini sepenuhnya
+        if ($titleVal === null && $descVal === null) continue;
+
         $builtSteps[] = [
             'no'    => str_pad($i, 2, '0', STR_PAD_LEFT),
-            'title' => $sv("step_{$i}_title", $defaultSteps[$i-1][0]),
-            'desc'  => $sv("step_{$i}_desc",  $defaultSteps[$i-1][1]),
+            'title' => $titleVal,
+            'desc'  => $descVal,
             'bg'    => $stepColors[$i-1],
             'text'  => $stepTextColors[$i-1],
         ];
@@ -60,28 +76,45 @@
 <section class="bg-[#FFD200] border-b-8 border-black pt-32 pb-24 relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div class="max-w-3xl">
+
+            {{-- Badge --}}
+            @if($hv('badge_text') !== null)
             <div class="inline-block bg-[#3D0066] text-white font-black text-xs uppercase tracking-widest px-4 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 transform -rotate-1">
                 {{ $hv('badge_text', '✦ Panduan Pemesanan') }}
             </div>
+            @endif
+
+            {{-- Title --}}
+            @if($hv('title') !== null)
             <h1 class="font-black text-6xl md:text-8xl leading-[0.9] uppercase text-[#3D0066] mb-8 tracking-tighter">
                 {{ $hv('title', 'ALUR KERJA') }}
                 <br><span class="bg-black text-[#FFD200] px-4 inline-block transform rotate-1">ORDER</span>
             </h1>
+            @endif
+
+            {{-- Subtitle --}}
+            @if($hv('subtitle') !== null)
             <div class="border-l-4 border-black pl-4 py-2 mb-8">
                 <p class="font-bold text-xl text-black italic leading-tight">
                     "{{ $hv('subtitle', 'Proses transparan, hasil maksimal untuk pesan Anda.') }}"
                 </p>
             </div>
+            @endif
+
+            {{-- Description --}}
+            @if($hv('description') !== null)
             <p class="font-bold text-lg text-black/80 max-w-xl leading-relaxed">
                 {{ $hv('description', 'Kami memastikan setiap langkah pengerjaan Press Release dilakukan secara profesional agar pesan Anda sampai ke audiens yang tepat melalui media ternama.') }}
             </p>
+            @endif
         </div>
 
         <div class="relative flex justify-center items-center h-[450px]">
             <div class="absolute w-[380px] h-[380px] border-[6px] border-black rounded-[40px] -translate-x-4 -translate-y-4"></div>
             <div class="relative w-[350px] h-[350px] bg-[#E61E50] border-[6px] border-black rounded-full shadow-[15px_15px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-visible">
-                @if($heroS && $heroS->get('image'))
-                    <img src="{{ Storage::url($heroS->get('image')) }}"
+                @php $heroOrderImage = ($heroS && !$heroS->isFieldHidden('image')) ? data_get($heroS->content, 'image') : null; @endphp
+                @if($heroOrderImage)
+                    <img src="{{ Storage::url($heroOrderImage) }}"
                          alt="Cara Order"
                          class="absolute w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-4">
                 @else
@@ -115,10 +148,14 @@
                         <span class="font-black text-2xl text-black">{{ $step['no'] }}</span>
                     </div>
                     <div>
+                        @if($step['title'] !== null)
                         <h3 class="font-black text-2xl uppercase mb-3 leading-tight {{ $step['text'] }}">{{ $step['title'] }}</h3>
+                        @endif
+                        @if($step['desc'] !== null)
                         <p class="font-bold leading-relaxed {{ $step['text'] }} {{ $step['text'] === 'text-white' ? 'opacity-90' : 'text-black/70' }}">
                             {{ $step['desc'] }}
                         </p>
+                        @endif
                     </div>
                     <div class="absolute top-4 right-4 opacity-10 group-hover:opacity-100 transition-opacity">
                         <svg class="w-6 h-6 {{ $step['text'] }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -135,14 +172,20 @@
 {{-- ── CTA ──────────────────────────────────────────────────── --}}
 <section class="bg-[#3D0066] border-b-8 border-black py-32 text-center">
     <div class="max-w-4xl mx-auto px-6">
+
+        @if($cv('title') !== null)
         <h2 class="font-black text-5xl md:text-8xl uppercase text-white leading-[0.8] mb-12 tracking-tighter">
             {{ $cv('title', 'SIAP UNTUK') }}
             <br><span class="text-[#FFD200]">GO PUBLIC?</span>
         </h2>
+        @endif
+
+        @if($cv('cta_url') !== null || $cv('cta_text') !== null)
         <a href="{{ $cv('cta_url', 'https://api.whatsapp.com/send?phone=6287786000919') }}"
            class="inline-block bg-[#E61E50] text-white font-black text-2xl uppercase tracking-tighter px-12 py-6 border-4 border-black shadow-[10px_10px_0px_0px_rgba(255,255,255,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all">
             {{ $cv('cta_text', 'Order via WhatsApp →') }}
         </a>
+        @endif
     </div>
 </section>
 

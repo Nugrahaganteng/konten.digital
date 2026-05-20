@@ -1,4 +1,5 @@
 <?php
+// app/Http/Controllers/Admin/ServiceController.php
 
 namespace App\Http\Controllers\Admin;
 
@@ -10,6 +11,16 @@ use Illuminate\Support\Str;
 
 class ServiceController extends Controller
 {
+    // ── Daftar route yang tersedia untuk dropdown ──────────────────────
+    public const ROUTE_OPTIONS = [
+        'layanan.press.release'     => 'Press Release',
+        'layanan.backlink'          => 'Backlink Media',
+        'layanan.press.conference'  => 'Press Conference',
+        'layanan.penulisan.artikel' => 'Penulisan Artikel',
+        'layanan.script.video'      => 'Script Video',
+        'layanan.pelatihan.konten'  => 'Pelatihan Konten',
+    ];
+
     public function index()
     {
         $services = Service::ordered()->get();
@@ -18,7 +29,10 @@ class ServiceController extends Controller
 
     public function create()
     {
-        return view('admin.cms.services.form', ['service' => new Service()]);
+        return view('admin.cms.services.form', [
+            'service'      => new Service(),
+            'routeOptions' => self::ROUTE_OPTIONS,
+        ]);
     }
 
     public function store(Request $request)
@@ -26,6 +40,7 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title'           => 'required|string|max:255',
             'tab_label'       => 'required|string|max:100',
+            'route_name'      => 'nullable|string|max:100',
             'description'     => 'required|string',
             'content'         => 'nullable|string',
             'image'           => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -51,7 +66,10 @@ class ServiceController extends Controller
 
     public function edit(Service $service)
     {
-        return view('admin.cms.services.form', compact('service'));
+        return view('admin.cms.services.form', [
+            'service'      => $service,
+            'routeOptions' => self::ROUTE_OPTIONS,
+        ]);
     }
 
     public function update(Request $request, Service $service)
@@ -59,6 +77,7 @@ class ServiceController extends Controller
         $validated = $request->validate([
             'title'           => 'required|string|max:255',
             'tab_label'       => 'required|string|max:100',
+            'route_name'      => 'nullable|string|max:100',
             'description'     => 'required|string',
             'content'         => 'nullable|string',
             'image'           => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
@@ -93,6 +112,26 @@ class ServiceController extends Controller
 
         return redirect()->route('admin.cms.services.index')
             ->with('success', 'Layanan berhasil dihapus.');
+    }
+
+    // ── AJAX: toggle aktif/nonaktif ───────────────────────────────────
+    // Route: PATCH /admin/cms/services/{service}/toggle
+    // Dipanggil dari widget navbar di halaman Page Sections (index.blade.php)
+    public function toggle(Service $service)
+    {
+        $service->update(['is_active' => !$service->is_active]);
+
+        $activeCount = Service::where('is_active', true)->count();
+        $totalCount  = Service::count();
+
+        return response()->json([
+            'success'      => true,
+            'is_active'    => $service->is_active,
+            'title'        => $service->title,
+            'id'           => $service->id,
+            'active_count' => $activeCount,
+            'total_count'  => $totalCount,
+        ]);
     }
 
     // ── AJAX: update urutan via drag & drop ───────────────────────────

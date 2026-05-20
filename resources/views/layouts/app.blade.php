@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700;900&family=Unbounded:wght@400;900&display=swap" rel="stylesheet">
-    
+
     {{-- Font Awesome --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
@@ -21,7 +21,7 @@
     <style>
         body { font-family: 'Space Grotesk', sans-serif; }
         .font-plus { font-family: 'Plus Jakarta Sans', sans-serif; }
-        
+
         /* ── FIX: Navbar sticky + background ── */
         #main-nav {
             position: sticky;
@@ -33,15 +33,15 @@
 
         /* Footer Deep Navy */
         .footer-modern {
-            background-color: #1a1a2e; 
+            background-color: #1a1a2e;
         }
-        
+
         .wa-card-modern {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
             transition: all 0.3s ease;
         }
-        
+
         .wa-card-modern:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: #fbbf24;
@@ -79,7 +79,6 @@
 
 <body class="antialiased min-h-screen bg-yellow-400">
 
-{{-- ── LOADING SCREEN ─────────────────────────────────────────── --}}
 {{-- ── LOADING SCREEN SPLIT REVEAL ───────────────────────────── --}}
 <div id="ls-wrap" style="position:fixed;inset:0;z-index:9999;overflow:hidden;font-family:'Space Grotesk',sans-serif;">
 
@@ -107,11 +106,11 @@
         {{-- Logo --}}
         <div style="display:flex;align-items:center;gap:18px;
                     animation:ls-pop 0.5s cubic-bezier(.34,1.56,.64,1) 0.2s both;">
-     <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
-            flex items-center justify-center
-            group-hover:rotate-6 transition-transform">
-    <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
-</div>
+            <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
+                   flex items-center justify-center
+                   group-hover:rotate-6 transition-transform">
+                <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
+            </div>
             <div style="line-height:1.1;">
                 <p style="margin:0;font-weight:900;font-size:22px;color:#1a1a2e;
                           text-transform:uppercase;font-family:'Unbounded',sans-serif;
@@ -141,11 +140,11 @@
 
                 {{-- Logo --}}
                 <a href="{{ route('home') }}" class="flex items-center gap-3 group">
-                   <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
-            flex items-center justify-center
-            group-hover:rotate-6 transition-transform">
-    <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
-</div>
+                    <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl
+                           flex items-center justify-center
+                           group-hover:rotate-6 transition-transform">
+                        <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
+                    </div>
                     <div class="leading-none">
                         <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]"
                            style="font-family:'Unbounded',sans-serif">HNP Communications</p>
@@ -160,6 +159,8 @@
                     <a href="{{ route('home') }}" class="nav-link-pop">Home</a>
                     <a href="{{ route('about') }}" class="nav-link-pop">About Us</a>
 
+                    {{-- ── Services Dropdown (dynamic dari DB) ── --}}
+                    @if(isset($navServices) && $navServices->isNotEmpty())
                     <div class="relative group">
                         <button class="nav-link-pop flex items-center gap-1 focus:outline-none">
                             Services
@@ -172,14 +173,15 @@
                         <div class="absolute left-0 mt-2 w-72 bg-white border-4 border-black
                                     shadow-neo opacity-0 invisible group-hover:opacity-100
                                     group-hover:visible transition-all duration-200 z-50 overflow-hidden">
-                            <a href="{{ route('layanan.press.release') }}" class="dropdown-item-neo">Press Release</a>
-                            <a href="{{ route('layanan.backlink') }}" class="dropdown-item-neo">Backlink Media</a>
-                            <a href="{{ route('layanan.press.conference') }}" class="dropdown-item-neo">Press Conference</a>
-                            <a href="{{ route('layanan.penulisan.artikel') }}" class="dropdown-item-neo">Penulisan Artikel</a>
-                            <a href="{{ route('layanan.script.video') }}" class="dropdown-item-neo">Script Video</a>
-                            <a href="{{ route('layanan.pelatihan.konten') }}" class="dropdown-item-neo">Pelatihan Konten</a>
+                            @foreach($navServices as $service)
+                                <a href="{{ $service->url }}" class="dropdown-item-neo">
+                                    {{ $service->title }}
+                                </a>
+                            @endforeach
                         </div>
                     </div>
+                    @endif
+                    {{-- ── End Services Dropdown ── --}}
 
                     <a href="{{ route('articles.index') }}" class="nav-link-pop">Blog</a>
                     <a href="{{ route('cara-order') }}" class="nav-link-pop">Cara Order</a>
@@ -189,9 +191,6 @@
 
                 {{-- Right Side: Auth --}}
                 <div class="flex items-center gap-4">
-
-                    {{-- ── ORDER NOW BUTTON ── --}}
-               
 
                     @auth
                         {{-- ── AVATAR + DROPDOWN (Desktop) ── --}}
@@ -327,7 +326,7 @@
         <div class="flex items-center justify-between h-20 px-6 border-b-4 border-black sticky top-0 bg-yellow-400 z-10">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
                 <div class="w-11 h-11 bg-purple-950 border-[3px] border-black rounded-xl flex items-center justify-center">
-                    <img src="images/hikeandpeak.png" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
+                    <img src="{{ asset('images/hikeandpeak.png') }}" style="width: 36px; height: 36px; object-fit: contain;" alt="Logo">
                 </div>
                 <div class="leading-none">
                     <p class="font-black text-base uppercase tracking-tight text-[#1a1a2e]" style="font-family:'Unbounded',sans-serif">HNP Communications</p>
@@ -357,7 +356,8 @@
                 <i class="fa-solid fa-arrow-right text-sm opacity-30"></i>
             </a>
 
-            {{-- Services Accordion --}}
+            {{-- ── Services Accordion Mobile (dynamic dari DB) ── --}}
+            @if(isset($navServices) && $navServices->isNotEmpty())
             <div class="border-b-2 border-black/10">
                 <button id="services-toggle"
                         class="w-full flex items-center justify-between font-black text-lg uppercase py-4 text-[#1a1a2e]">
@@ -367,38 +367,17 @@
                     </svg>
                 </button>
                 <div id="services-sub" class="hidden pb-3 pl-2 space-y-1">
-                    <a href="{{ route('layanan.press.release') }}"
-                       class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-newspaper w-4 text-center text-purple-700 text-sm"></i>
-                        Press Release
-                    </a>
-                    <a href="{{ route('layanan.backlink') }}"
-                       class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-link w-4 text-center text-purple-700 text-sm"></i>
-                        Backlink Media
-                    </a>
-                    <a href="{{ route('layanan.press.conference') }}"
-                       class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-microphone w-4 text-center text-purple-700 text-sm"></i>
-                        Press Conference
-                    </a>
-                    <a href="{{ route('layanan.penulisan.artikel') }}"
-                       class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-pen-nib w-4 text-center text-purple-700 text-sm"></i>
-                        Penulisan Artikel
-                    </a>
-                    <a href="{{ route('layanan.script.video') }}"
-                       class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-clapperboard w-4 text-center text-purple-700 text-sm"></i>
-                        Script Video
-                    </a>
-                    <a href="{{ route('layanan.pelatihan.konten') }}"
-                       class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-chalkboard-user w-4 text-center text-purple-700 text-sm"></i>
-                        Pelatihan Konten
-                    </a>
+                    @foreach($navServices as $service)
+                        <a href="{{ $service->url }}"
+                           class="flex items-center gap-3 py-2.5 px-3 text-[#1a1a2e]/80 font-semibold hover:bg-black/5 rounded-lg transition-colors">
+                            <i class="{{ $service->icon_class ?: 'fa-solid fa-circle' }} w-4 text-center text-purple-700 text-sm"></i>
+                            {{ $service->title }}
+                        </a>
+                    @endforeach
                 </div>
             </div>
+            @endif
+            {{-- ── End Services Accordion Mobile ── --}}
 
             <a href="{{ route('articles.index') }}"
                class="flex items-center justify-between font-black text-lg uppercase py-4 border-b-2 border-black/10 text-[#1a1a2e] hover:text-purple-950 transition-colors">
@@ -423,18 +402,6 @@
                 Contact
                 <i class="fa-solid fa-arrow-right text-sm opacity-30"></i>
             </a>
-
-            {{-- Order Now Mobile --}}
-            <!-- <a href="https://wa.me/6287786000919"
-               target="_blank"
-               rel="noopener noreferrer"
-               class="mt-6 flex items-center justify-center gap-2 w-full py-4
-                      bg-[#1a1a2e] border-4 border-black font-black text-base uppercase
-                      tracking-tight text-yellow-400 shadow-neo">
-                <i class="fab fa-whatsapp text-lg"></i>
-                Order Now
-                <i class="fa-solid fa-arrow-right text-sm"></i>
-            </a> -->
         </div>
 
         {{-- Auth Section Mobile --}}
@@ -547,10 +514,12 @@
         const servicesSub     = document.getElementById('services-sub');
         const servicesChevron = document.getElementById('services-chevron');
 
-        servicesToggle.addEventListener('click', function() {
-            const isHidden = servicesSub.classList.toggle('hidden');
-            servicesChevron.classList.toggle('rotate', !isHidden);
-        });
+        if (servicesToggle) {
+            servicesToggle.addEventListener('click', function() {
+                const isHidden = servicesSub.classList.toggle('hidden');
+                servicesChevron.classList.toggle('rotate', !isHidden);
+            });
+        }
     </script>
 
     @stack('scripts')

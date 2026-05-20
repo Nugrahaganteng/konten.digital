@@ -11,7 +11,7 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
-        'title', 'slug', 'tab_label', 'description', 'content',
+        'title', 'slug', 'route_name', 'tab_label', 'description', 'content',
         'image', 'bg_label', 'icon_class', 'whatsapp_number',
         'is_active', 'order',
     ];
@@ -49,5 +49,19 @@ class Service extends Model
             return asset('storage/' . $this->image);
         }
         return asset('images/' . ($this->image ?? 'placeholder.png'));
+    }
+
+    // ── Helper: URL halaman layanan ───────────────────────────────────
+    // Pakai route_name jika ada, fallback ke /layanan/{slug}
+    public function getUrlAttribute(): string
+    {
+        if ($this->route_name) {
+            try {
+                return route($this->route_name);
+            } catch (\Exception $e) {
+                // route tidak ada, fallback ke slug
+            }
+        }
+        return url('/layanan/' . $this->slug);
     }
 }

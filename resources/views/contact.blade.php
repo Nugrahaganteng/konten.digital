@@ -9,26 +9,36 @@
     $infoS = $sections->get('info');
     $ctaS  = $sections->get('cta_bottom');
 
-    $hv = fn($k, $d = '') => $heroS ? ($heroS->get($k) ?: $d) : $d;
-    $iv = fn($k, $d = '') => $infoS ? ($infoS->get($k) ?: $d) : $d;
-    $bv = fn($k, $d = '') => $ctaS  ? ($ctaS->get($k)  ?: $d) : $d;
+    // ── Helper: sama persis seperti di home ──────────────────────────────────
+    // null  = field HIDDEN  → jangan render elemen HTML-nya
+    // string = field aktif  → tampilkan nilainya (atau $default jika kosong)
+    $val = function(?\App\Models\PageSection $section, string $key, string $default = '') {
+        if (!$section) return $default;
+        if ($section->isFieldHidden($key)) return null;
+        $v = data_get($section->content, $key);
+        return ($v !== null && $v !== '') ? $v : $default;
+    };
+
+    $hv = fn(string $k, string $d = '') => $val($heroS, $k, $d);
+    $iv = fn(string $k, string $d = '') => $val($infoS, $k, $d);
+    $bv = fn(string $k, string $d = '') => $val($ctaS,  $k, $d);
 
     // ── FIX Maps: handle full <iframe> HTML, embed URL, atau URL biasa ──
     $mapsRaw = $iv('maps_embed', '');
 
-    if (str_contains($mapsRaw, '<iframe')) {
+    if ($mapsRaw !== null && str_contains($mapsRaw, '<iframe')) {
         preg_match('/src=["\']([^"\']+)["\']/', $mapsRaw, $m);
         $mapsEmbed = $m[1] ?? '';
-    } elseif (str_contains($mapsRaw, 'google.com/maps/embed')) {
+    } elseif ($mapsRaw !== null && str_contains($mapsRaw, 'google.com/maps/embed')) {
         $mapsEmbed = $mapsRaw;
-    } elseif (str_contains($mapsRaw, 'google.com/maps')) {
+    } elseif ($mapsRaw !== null && str_contains($mapsRaw, 'google.com/maps')) {
         $mapsEmbed = 'https://maps.google.com/maps?output=embed&' . parse_url($mapsRaw, PHP_URL_QUERY);
     } else {
         $mapsEmbed = '';
     }
 
     $mapsDefault = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3952.541432426!2d110.326699!3d-7.8710662!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7af9d7b99c960b%3A0x8b4b7b8be95d72f1!2sKontendigital.id!5e0!3m2!1sid!2sid!4v1714392000000!5m2!1sid!2sid';
-    $finalEmbed  = $mapsEmbed ?: $mapsDefault;
+    $finalEmbed  = (!empty($mapsEmbed)) ? $mapsEmbed : $mapsDefault;
 
     $mapsUrl = $iv('maps_url', 'https://www.google.com/maps/dir//Kontendigital.id');
 @endphp
@@ -40,32 +50,53 @@
 
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div class="max-w-3xl">
+
+            {{-- Badge --}}
+            @if($hv('badge_text') !== null)
             <div class="inline-block bg-[#3D0066] text-white font-black text-xs uppercase tracking-widest px-4 py-2 border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] mb-6 transform -rotate-1">
                 {{ $hv('badge_text', "✦ Let's Talk Business") }}
             </div>
+            @endif
+
+            {{-- Title --}}
+            @if($hv('title') !== null)
             <h1 class="font-black text-6xl md:text-8xl leading-[0.9] uppercase text-[#3D0066] mb-8 tracking-tighter">
                 {{ $hv('title', 'KONSULTASI') }}
                 <br><span class="bg-black text-[#FFD200] px-4 inline-block transform rotate-1">GRATIS!</span>
             </h1>
+            @endif
+
+            {{-- Subtitle --}}
+            @if($hv('subtitle') !== null)
             <div class="border-l-8 border-black pl-6 py-2 mb-8">
                 <p class="font-bold text-2xl text-black italic leading-tight">
                     "{{ $hv('subtitle', 'Ubah statement menjadi berita nasional dalam sekejap.') }}"
                 </p>
             </div>
+            @endif
+
+            {{-- Description --}}
+            @if($hv('description') !== null)
             <p class="font-bold text-lg text-black/80 max-w-xl leading-relaxed mb-10">
                 {{ $hv('description', 'Siap meledakkan brand Anda di media nasional? Ceritakan kebutuhan Anda dan biar tim ahli kami yang mengurus sisanya.') }}
             </p>
+            @endif
+
+            {{-- CTA --}}
+            @if($hv('cta_text') !== null || $hv('cta_url') !== null)
             <a href="#form-pesan"
                class="inline-block bg-black text-white px-10 py-5 font-black text-xl uppercase border-4 border-black shadow-[8px_8px_0px_0px_rgba(230,30,80,1)] hover:shadow-none hover:translate-x-2 hover:translate-y-2 transition-all">
                 {{ $hv('cta_text', 'Mulai Diskusi Sekarang →') }}
             </a>
+            @endif
         </div>
 
         <div class="relative flex justify-center items-center h-[500px]">
             <div class="absolute w-[400px] h-[400px] border-8 border-black rounded-[40px] translate-x-6 translate-y-6"></div>
             <div class="relative w-[380px] h-[380px] bg-[#E61E50] border-8 border-black rounded-full shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-hidden">
-                @if($heroS && $heroS->get('image'))
-                    <img src="{{ Storage::url($heroS->get('image')) }}" alt="Consultation"
+                @php $heroContactImage = ($heroS && !$heroS->isFieldHidden('image')) ? data_get($heroS->content, 'image') : null; @endphp
+                @if($heroContactImage)
+                    <img src="{{ Storage::url($heroContactImage) }}" alt="Consultation"
                          class="absolute w-[120%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform -translate-y-6">
                 @else
                     <img src="/images/kontak.png" alt="Consultation"
@@ -104,11 +135,6 @@
                     </div>
                 @endif
 
-                {{-- 
-                    PERBAIKAN UTAMA:
-                    Form sekarang submit ke server (POST) agar data tersimpan ke DB,
-                    kemudian controller akan redirect ke WhatsApp setelah disimpan.
-                --}}
                 <form action="{{ route('contact.send') }}" method="POST" id="contact-form">
                     @csrf
 
@@ -126,10 +152,6 @@
                             </div>
                             <div class="space-y-2">
                                 <label class="font-black uppercase text-xs tracking-widest text-[#3D0066]">No. WhatsApp</label>
-                                {{-- 
-                                    PERBAIKAN: type="tel" + inputmode="numeric" + pattern hanya angka dan +
-                                    JS di bawah akan memblokir huruf saat diketik
-                                --}}
                                 <input
                                     type="tel"
                                     name="phone"
@@ -193,27 +215,31 @@
                     @php
                         $contactItems = [
                             [
-                                'icon'  => 'M3 8L12 13L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z',
-                                'label' => 'Email Official',
-                                'value' => $iv('email', 'kontendigitalid10@gmail.com'),
-                                'bg'    => 'bg-[#FFD200]',
+                                'icon'    => 'M3 8L12 13L21 8M5 19H19C20.1046 19 21 18.1046 21 17V7C21 5.89543 20.1046 5 19 5H5C3.89543 5 3 5.89543 3 7V17C3 18.1046 3.89543 19 5 19Z',
+                                'label'   => 'Email Official',
+                                'value'   => $iv('email', 'kontendigitalid10@gmail.com'),
+                                'hidden'  => $iv('email') === null,
+                                'bg'      => 'bg-[#FFD200]',
                             ],
                             [
-                                'icon'  => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
-                                'label' => 'WhatsApp',
-                                'value' => $iv('whatsapp', '+62 877-8600-0919'),
-                                'bg'    => 'bg-[#E61E50] text-white',
+                                'icon'    => 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
+                                'label'   => 'WhatsApp',
+                                'value'   => $iv('whatsapp', '+62 877-8600-0919'),
+                                'hidden'  => $iv('whatsapp') === null,
+                                'bg'      => 'bg-[#E61E50] text-white',
                             ],
                             [
-                                'icon'  => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
-                                'label' => 'Head Office',
-                                'value' => $iv('address', 'Kaligawe, RT.02, Gandekan, Bantul, DIY 55711'),
-                                'bg'    => 'bg-[#3D0066] text-white',
+                                'icon'    => 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z',
+                                'label'   => 'Head Office',
+                                'value'   => $iv('address', 'Kaligawe, RT.02, Gandekan, Bantul, DIY 55711'),
+                                'hidden'  => $iv('address') === null,
+                                'bg'      => 'bg-[#3D0066] text-white',
                             ],
                         ];
                     @endphp
 
                     @foreach($contactItems as $item)
+                    @if(!$item['hidden'])
                     <div class="border-4 border-black p-6 flex items-center gap-6 group hover:translate-x-2 transition-transform bg-white shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]">
                         <div class="w-16 h-16 {{ $item['bg'] }} border-4 border-black flex items-center justify-center shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] shrink-0">
                             <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -225,6 +251,7 @@
                             <p class="font-black text-lg">{{ $item['value'] }}</p>
                         </div>
                     </div>
+                    @endif
                     @endforeach
                 </div>
 
@@ -233,16 +260,25 @@
                     <div class="absolute -right-6 -top-6 w-24 h-24 bg-[#FFD200] rotate-45 border-4 border-black flex items-end justify-center pb-2">
                         <span class="text-black font-black text-xs">READY</span>
                     </div>
+
+                    @if($bv('response_time') !== null)
                     <h3 class="font-black text-3xl uppercase mb-4 text-[#FFD200] italic">
                         {{ $bv('response_time', 'RESPON < 1 JAM') }}
                     </h3>
+                    @endif
+
+                    @if($bv('description') !== null)
                     <p class="font-bold text-gray-400 leading-relaxed mb-8">
                         {{ $bv('description', 'Tim admin kami standby di jam kerja (09:00 - 17:00 WIB) untuk memastikan setiap pertanyaan Anda terjawab dengan tuntas.') }}
                     </p>
+                    @endif
+
+                    @if($bv('cta_url') !== null || $bv('cta_text') !== null)
                     <a href="{{ $bv('cta_url', 'https://wa.me/6287786000919') }}"
                        class="block text-center bg-[#E61E50] text-white font-black uppercase py-4 border-4 border-black hover:bg-white hover:text-black transition-all">
                         {{ $bv('cta_text', 'Chat Via WhatsApp Sekarang →') }}
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -250,6 +286,7 @@
 </section>
 
 {{-- ── MAPS SECTION ──────────────────────────────────────────────────────────── --}}
+@if($iv('maps_embed') !== null || $iv('maps_url') !== null)
 <section class="bg-white pb-24 px-6">
     <div class="max-w-7xl mx-auto">
         <div class="relative">
@@ -268,6 +305,7 @@
                 </iframe>
             </div>
 
+            @if($mapsUrl !== null)
             <div class="mt-8 flex justify-end relative z-20">
                 <a href="{{ $mapsUrl }}"
                    target="_blank"
@@ -275,24 +313,11 @@
                     Buka Petunjuk Arah →
                 </a>
             </div>
+            @endif
         </div>
     </div>
 </section>
-
-{{-- ── SOCIAL FOOTER ─────────────────────────────────────────────────────────── --}}
-<!-- <section class="bg-[#3D0066] py-16 border-t-8 border-black">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h3 class="text-[#FFD200] font-black text-3xl uppercase italic mb-10 tracking-tighter">KONEKSIKAN BRAND ANDA</h3>
-        <div class="flex flex-wrap justify-center gap-6">
-            @foreach(['Instagram' => 'https://instagram.com/kontendigitalid/', 'Facebook' => 'https://facebook.com/people/Kontendigitalid/61564783021098/', 'TikTok' => 'https://tiktok.com/@kontendigitalid'] as $name => $link)
-                <a href="{{ $link }}" target="_blank"
-                   class="px-8 py-4 bg-white border-4 border-black font-black uppercase hover:bg-[#FFD200] hover:-translate-y-2 transition-all shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
-                    {{ $name }}
-                </a>
-            @endforeach
-        </div>
-    </div>
-</section> -->
+@endif
 
 {{-- ── SCRIPT ────────────────────────────────────────────────────────────────── --}}
 <script>
@@ -300,20 +325,15 @@
     const phoneInput = document.getElementById('wa_phone');
     if (phoneInput) {
         phoneInput.addEventListener('input', function () {
-            // Hanya izinkan angka (0-9) dan tanda + di depan
             const val = this.value;
             this.value = val.replace(/[^0-9+]/g, '');
         });
-
         phoneInput.addEventListener('keypress', function (e) {
-            // Blokir karakter non-angka saat diketik (kecuali + dan tombol kontrol)
             const allowed = /[0-9+]/;
             if (!allowed.test(e.key) && e.key.length === 1) {
                 e.preventDefault();
             }
         });
-
-        // Blokir paste yang mengandung huruf
         phoneInput.addEventListener('paste', function (e) {
             e.preventDefault();
             const pasted = (e.clipboardData || window.clipboardData).getData('text');
@@ -322,7 +342,7 @@
         });
     }
 
-    // ── Disable tombol saat form sedang disubmit (cegah double-submit) ────────
+    // ── Disable tombol saat form sedang disubmit ──────────────────────────────
     const contactForm = document.getElementById('contact-form');
     const submitBtn   = document.getElementById('submit-btn');
     if (contactForm && submitBtn) {

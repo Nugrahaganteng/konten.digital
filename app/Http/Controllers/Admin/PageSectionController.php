@@ -11,18 +11,10 @@ use Illuminate\Support\Facades\Storage;
 class PageSectionController extends Controller
 {
     private array $availablePages = [
-        'home',
-        'about',
-        'contact',
-        'cara-order',
-        'syarat-ketentuan',
-        'layanan-press-release',
-        'layanan-backlink',
-        'layanan-press-conference',
-        'layanan-penulisan-artikel',
-        'layanan-script-video',
-        'layanan-pelatihan-konten',
-        'footer',
+        'home', 'about', 'contact', 'cara-order', 'syarat-ketentuan',
+        'layanan-press-release', 'layanan-backlink', 'layanan-press-conference',
+        'layanan-penulisan-artikel', 'layanan-script-video',
+        'layanan-pelatihan-konten', 'footer',
     ];
 
     // ── Index ────────────────────────────────────────────────────────
@@ -56,10 +48,8 @@ class PageSectionController extends Controller
     {
         $fields    = $pageSection->getFields();
         $histories = PageSectionHistory::where('page_section_id', $pageSection->id)
-            ->orderByDesc('saved_at')
-            ->orderByDesc('id')
-            ->limit(5)
-            ->get();
+            ->orderByDesc('saved_at')->orderByDesc('id')
+            ->limit(5)->get();
 
         return view('admin.cms.page-sections.form', [
             'section'   => $pageSection,
@@ -72,7 +62,6 @@ class PageSectionController extends Controller
 
     public function update(Request $request, PageSection $pageSection)
     {
-        // Simpan snapshot SEBELUM update
         PageSectionHistory::snapshot($pageSection, 5);
 
         $fields  = $pageSection->getFields();
@@ -105,6 +94,42 @@ class PageSectionController extends Controller
             ->with('success', 'Section "' . $pageSection->label . '" berhasil diperbarui!');
     }
 
+    // ── Toggle Hidden Field ──────────────────────────────────────────
+    // Route: PATCH /cms/page-sections/section/{pageSection}/toggle-field
+
+    public function toggleField(Request $request, PageSection $pageSection)
+    {
+        $request->validate(['field_key' => 'required|string']);
+
+        $key    = $request->input('field_key');
+        $hidden = $pageSection->hidden_fields ?? [];
+
+        // Validasi field_key ada di schema
+        $validKeys = array_column($pageSection->getFields(), 'key');
+        if (!in_array($key, $validKeys)) {
+            return response()->json(['error' => 'Field tidak valid'], 422);
+        }
+
+        if (in_array($key, $hidden)) {
+            // Aktifkan kembali — hapus dari array hidden
+            $hidden = array_values(array_diff($hidden, [$key]));
+            $isHidden = false;
+        } else {
+            // Sembunyikan — tambah ke array hidden
+            $hidden[] = $key;
+            $isHidden = true;
+        }
+
+        $pageSection->update(['hidden_fields' => $hidden]);
+
+        return response()->json([
+            'success'   => true,
+            'is_hidden' => $isHidden,
+            'field_key' => $key,
+            'hidden_count' => count($hidden),
+        ]);
+    }
+
     // ── Restore ──────────────────────────────────────────────────────
 
     public function restore(PageSection $pageSection, PageSectionHistory $history)
@@ -131,10 +156,8 @@ class PageSectionController extends Controller
     {
         $fields    = $pageSection->getFields();
         $histories = PageSectionHistory::where('page_section_id', $pageSection->id)
-            ->orderByDesc('saved_at')
-            ->orderByDesc('id')
-            ->limit(5)
-            ->get();
+            ->orderByDesc('saved_at')->orderByDesc('id')
+            ->limit(5)->get();
 
         return response()->json([
             'section' => [
@@ -170,7 +193,6 @@ class PageSectionController extends Controller
     public function toggleActive(PageSection $pageSection)
     {
         $pageSection->update(['is_active' => !$pageSection->is_active]);
-
         return back()->with('success', 'Status section "' . $pageSection->label . '" berhasil diubah.');
     }
 
@@ -210,6 +232,7 @@ class PageSectionController extends Controller
                     'order'       => $order,
                     'is_active'   => true,
                     'content'     => [],
+                    'hidden_fields' => [],
                 ]);
             }
         }

@@ -16,27 +16,34 @@
     $fContact = $footerSections->get('contact');
     $fSocial  = $footerSections->get('social');
 
-    $get = fn($section, $key, $fallback = '') =>
-        optional($section)->get($key, '') ?: $fallback;
+    // ── Helper: sama persis seperti di home ──────────────────────────────────
+    // null  = field HIDDEN  → jangan render elemen HTML-nya
+    // string = field aktif  → tampilkan nilainya (atau $default jika kosong)
+    $fval = function(?\App\Models\PageSection $section, string $key, string $default = '') {
+        if (!$section) return $default;
+        if ($section->isFieldHidden($key)) return null;
+        $v = data_get($section->content, $key);
+        return ($v !== null && $v !== '') ? $v : $default;
+    };
 
     // ── MAIN ──────────────────────────────────────────────
-    $headline1  = $get($fMain, 'headline_1',  'Bersama Kami,');
-    $headline2  = $get($fMain, 'headline_2',  'Raih Kesuksesan');
-    $headline3  = $get($fMain, 'headline_3',  'di Era Digital');
-    $desc       = $get($fMain, 'description', 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.');
-    $copyright  = $get($fMain, 'copyright',   '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN');
+    $headline1  = $fval($fMain, 'headline_1',  'Bersama Kami,');
+    $headline2  = $fval($fMain, 'headline_2',  'Raih Kesuksesan');
+    $headline3  = $fval($fMain, 'headline_3',  'di Era Digital');
+    $desc       = $fval($fMain, 'description', 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.');
+    $copyright  = $fval($fMain, 'copyright',   '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN');
 
     // ── CONTACT ───────────────────────────────────────────
-    $wa1Number  = $get($fContact, 'wa1_number', '6287786000919');
-    $wa1Label   = $get($fContact, 'wa1_label',  '+62 877-8600-0919');
-    $wa2Number  = $get($fContact, 'wa2_number', '628121967610');
-    $wa2Label   = $get($fContact, 'wa2_label',  '+62 812-1967-610');
+    $wa1Number  = $fval($fContact, 'wa1_number', '6287786000919');
+    $wa1Label   = $fval($fContact, 'wa1_label',  '+62 877-8600-0919');
+    $wa2Number  = $fval($fContact, 'wa2_number', '628121967610');
+    $wa2Label   = $fval($fContact, 'wa2_label',  '+62 812-1967-610');
 
     // ── SOCIAL ────────────────────────────────────────────
-    $instagram  = $get($fSocial, 'instagram', '#');
-    $facebook   = $get($fSocial, 'facebook',  '#');
-    $youtube    = $get($fSocial, 'youtube',   '#');
-    $tiktok     = $get($fSocial, 'tiktok',    '#');
+    $instagram  = $fval($fSocial, 'instagram', '#');
+    $facebook   = $fval($fSocial, 'facebook',  '#');
+    $youtube    = $fval($fSocial, 'youtube',   '#');
+    $tiktok     = $fval($fSocial, 'tiktok',    '#');
 
     $services = [
         ['name' => 'Press Release',       'route' => 'layanan.press.release'],
@@ -74,18 +81,12 @@
             ════════════════════════════════════════ --}}
             <div class="lg:col-span-7 space-y-8">
 
-                {{-- ── LOGO PURE TAILWIND CSS (no icon) ── --}}
+                {{-- ── LOGO PURE TAILWIND CSS ── --}}
                 <div class="brand-wrapper flex items-center gap-3">
-
-                    {{-- Logo Mark: huruf HNP dalam kotak jajaran genjang kuning --}}
                     <div class="logo-mark-wrap relative flex-shrink-0">
-                        {{-- Kotak kuning miring (clip-path parallelogram) --}}
                         <div class="logo-bg-shape"></div>
-                        {{-- Teks "HNP" di atasnya --}}
                         <span class="logo-mark-text">HNP</span>
                     </div>
-
-                    {{-- Nama brand di sebelah kanan logo --}}
                     <div class="logo-brand-block">
                         <div class="logo-brand-main">Communications</div>
                         <div class="logo-brand-sub">
@@ -94,41 +95,54 @@
                         </div>
                     </div>
                 </div>
-                {{-- ── END LOGO ── --}}
 
+                {{-- Headlines --}}
+                @if($headline1 !== null || $headline2 !== null || $headline3 !== null)
                 <h2 class="text-4xl md:text-6xl font-black leading-[1.1] tracking-tighter uppercase" style="font-family:'Unbounded',sans-serif">
-                    {{ $headline1 }} <br>
-                    <span class="text-yellow-400">{{ $headline2 }}</span> <br>
-                    {{ $headline3 }}
+                    @if($headline1 !== null) {{ $headline1 }} <br> @endif
+                    @if($headline2 !== null) <span class="text-yellow-400">{{ $headline2 }}</span> <br> @endif
+                    @if($headline3 !== null) {{ $headline3 }} @endif
                 </h2>
+                @endif
 
+                {{-- Description --}}
+                @if($desc !== null)
                 <p class="text-slate-400 text-lg md:text-xl font-medium max-w-xl leading-relaxed font-plus">
                     {{ $desc }}
                 </p>
+                @endif
 
                 {{-- Social Media Icons --}}
+                @php
+                    $hasSocial = ($instagram !== null && $instagram !== '#')
+                              || ($facebook  !== null && $facebook  !== '#')
+                              || ($youtube   !== null && $youtube   !== '#')
+                              || ($tiktok    !== null && $tiktok    !== '#');
+                @endphp
+                @if($hasSocial)
                 <div class="flex items-center gap-5">
-                    @if($instagram && $instagram !== '#')
+                    @if($instagram !== null && $instagram !== '#')
                     <a href="{{ $instagram }}" target="_blank" rel="noopener" class="social-btn" aria-label="Instagram">
                         <i class="fab fa-instagram"></i>
                     </a>
                     @endif
-                    @if($facebook && $facebook !== '#')
+                    @if($facebook !== null && $facebook !== '#')
                     <a href="{{ $facebook }}" target="_blank" rel="noopener" class="social-btn" aria-label="Facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
                     @endif
-                    @if($youtube && $youtube !== '#')
+                    @if($youtube !== null && $youtube !== '#')
                     <a href="{{ $youtube }}" target="_blank" rel="noopener" class="social-btn" aria-label="YouTube">
                         <i class="fab fa-youtube"></i>
                     </a>
                     @endif
-                    @if($tiktok && $tiktok !== '#')
+                    @if($tiktok !== null && $tiktok !== '#')
                     <a href="{{ $tiktok }}" target="_blank" rel="noopener" class="social-btn" aria-label="TikTok">
                         <i class="fab fa-tiktok"></i>
                     </a>
                     @endif
                 </div>
+                @endif
             </div>
 
             {{-- ═══════════════════════════════════════
@@ -175,13 +189,15 @@
                 </div>
 
                 {{-- HUBUNGI KAMI --}}
+                @php $hasWa = ($wa1Number !== null) || ($wa2Number !== null); @endphp
+                @if($hasWa)
                 <div>
                     <div class="footer-col-label mb-3">
                         <span class="col-label-dot"></span> HUBUNGI KAMI
                     </div>
                     <div class="space-y-3">
 
-                        @if($wa1Number)
+                        @if($wa1Number !== null)
                         <a href="https://wa.me/{{ $wa1Number }}" target="_blank" rel="noopener" class="wa-card-modern p-4 rounded-xl flex items-center justify-between group">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 bg-green-500/10 rounded-full flex items-center justify-center text-green-400 group-hover:bg-green-500/20 transition-all flex-shrink-0">
@@ -189,14 +205,16 @@
                                 </div>
                                 <div>
                                     <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono">Whatsapp Hotline 1</p>
+                                    @if($wa1Label !== null)
                                     <p class="text-sm font-bold tracking-tight text-slate-200 group-hover:text-white transition-colors font-mono">{{ $wa1Label }}</p>
+                                    @endif
                                 </div>
                             </div>
                             <i class="fa-solid fa-arrow-right text-slate-600 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all text-xs"></i>
                         </a>
                         @endif
 
-                        @if($wa2Number)
+                        @if($wa2Number !== null)
                         <a href="https://wa.me/{{ $wa2Number }}" target="_blank" rel="noopener" class="wa-card-modern wa-card-alt p-4 rounded-xl flex items-center justify-between group">
                             <div class="flex items-center gap-3">
                                 <div class="w-9 h-9 bg-cyan-500/10 rounded-full flex items-center justify-center text-cyan-400 group-hover:bg-cyan-500/20 transition-all flex-shrink-0">
@@ -204,7 +222,9 @@
                                 </div>
                                 <div>
                                     <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest font-mono">Whatsapp Hotline 2</p>
+                                    @if($wa2Label !== null)
                                     <p class="text-sm font-bold tracking-tight text-slate-200 group-hover:text-white transition-colors font-mono">{{ $wa2Label }}</p>
+                                    @endif
                                 </div>
                             </div>
                             <i class="fa-solid fa-arrow-right text-slate-600 group-hover:translate-x-1 group-hover:text-cyan-400 transition-all text-xs"></i>
@@ -213,14 +233,17 @@
 
                     </div>
                 </div>
+                @endif
             </div>
         </div>
 
         {{-- Bottom Footer Bar --}}
         <div class="pt-8 border-t border-slate-800/60 flex flex-col md:flex-row justify-between items-center gap-6">
+            @if($copyright !== null)
             <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest text-center md:text-left font-mono">
                 {{ $copyright }}
             </p>
+            @endif
             <a href="#"
                class="w-10 h-10 border border-slate-800 bg-slate-900/40 rounded-full flex items-center justify-center hover:bg-yellow-400 hover:text-black hover:border-yellow-400 transition-all group"
                onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;"
@@ -274,7 +297,6 @@
     gap: 14px;
 }
 
-/* Wrapper posisi relative agar text bisa ditumpuk di atas shape */
 .logo-mark-wrap {
     position: relative;
     width: 62px;
@@ -285,7 +307,6 @@
     justify-content: center;
 }
 
-/* Kotak kuning berbentuk jajaran genjang (parallelogram) */
 .logo-bg-shape {
     position: absolute;
     inset: 0;
@@ -294,7 +315,6 @@
     border-radius: 2px;
 }
 
-/* Shadow/layer kedua di belakang untuk efek depth */
 .logo-bg-shape::after {
     content: '';
     position: absolute;
@@ -306,7 +326,6 @@
     border-radius: 2px;
 }
 
-/* Teks "HNP" di atas shape kuning */
 .logo-mark-text {
     position: relative;
     z-index: 2;
@@ -319,7 +338,6 @@
     user-select: none;
 }
 
-/* Nama brand di sebelah kanan */
 .logo-brand-block {
     display: flex;
     flex-direction: column;
