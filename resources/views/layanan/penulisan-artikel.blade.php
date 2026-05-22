@@ -1,137 +1,123 @@
 @extends('layouts.app')
 
-@section('title', 'Jasa Penulis Artikel SEO Terpercaya - Kontendigital.id')
+@section('title', 'Jasa Penulisan Artikel SEO - HNP Communications.id')
 
 @section('content')
 
 @php
-    $heroS     = $sections->get('hero');
-    $problemsS = $sections->get('problems');
-    $whyUsS    = $sections->get('why_us');
-    $topicsS   = $sections->get('topics');
+    $heroS    = $sections->get('hero');
+    $whyS     = $sections->get('why_artikel');
+    $pricingS = $sections->get('pricing');
+    $ctaS     = $sections->get('cta');
 
-    $hv = fn($k, $d = '') => $heroS     ? ($heroS->get($k)     ?: $d) : $d;
-    $pv = fn($k, $d = '') => $problemsS ? ($problemsS->get($k) ?: $d) : $d;
-    $wv = fn($k, $d = '') => $whyUsS    ? ($whyUsS->get($k)    ?: $d) : $d;
-    $tv = fn($k, $d = '') => $topicsS   ? ($topicsS->get($k)   ?: $d) : $d;
+    $hv = fn($k, $d = '') => $heroS    ? ($heroS->get($k)    ?: $d) : $d;
+    $wv = fn($k, $d = '') => $whyS     ? ($whyS->get($k)     ?: $d) : $d;
+    $pv = fn($k, $d = '') => $pricingS ? ($pricingS->get($k) ?: $d) : $d;
+    $cv = fn($k, $d = '') => $ctaS     ? ($ctaS->get($k)     ?: $d) : $d;
 @endphp
 
 {{-- ── HERO ──────────────────────────────────────────────────── --}}
-<section class="relative pt-32 pb-24 bg-[#FFD200] overflow-hidden border-b-8 border-black">
-    <div class="absolute bottom-10 right-10 opacity-40 animate-bounce hidden md:block">
-        <svg class="w-24 h-24 text-[#E61E50]" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M13.13 14.71L8.5 10.08L10 8.58L14.63 13.21L13.13 14.71M16 11L11.5 6.5L12.58 5.42C13.08 4.92 13.9 4.92 14.41 5.42L18.58 9.58C19.08 10.09 19.08 10.91 18.58 11.42L16 11M5.41 18.59L2 22L5.41 18.59C5.91 19.09 6.74 19.09 7.24 18.59L11.38 14.45L6.75 9.82L2.61 13.96C2.11 14.46 2.11 15.29 2.61 15.79L5.41 18.59Z"/>
-        </svg>
-    </div>
+<section class="relative pt-32 pb-24 overflow-hidden border-b-8 border-black bg-[#FFD200]">
+    <div class="absolute top-20 right-16 w-24 h-24 bg-[#430A5D] opacity-10 rounded-full animate-pulse hidden md:block"></div>
+    <div class="absolute bottom-16 left-16 w-16 h-16 border-4 border-[#430A5D] opacity-10 rotate-45 animate-bounce-slow hidden md:block"></div>
 
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-4 items-center relative z-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-center relative z-10">
         <div class="space-y-6">
             <div class="inline-block px-4 py-1 border-2 border-black bg-[#3D0066] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-1">
                 <span class="text-white font-black text-xs tracking-widest uppercase">
-                    {{ $hv('badge_text', '✦ JASA PENULIS ARTIKEL SEO') }}
+                    {{ $hv('badge_text', '✦ JASA PENULISAN ARTIKEL') }}
                 </span>
             </div>
 
-            <h1 class="text-6xl md:text-8xl font-black text-[#3D0066] leading-[0.9] uppercase tracking-tighter">
-                {{ $hv('title_line1', 'DAPATKAN') }}<br>
-                {{ $hv('title_line2', 'KONTEN') }}<br>
+            <h1 class="text-6xl md:text-7xl font-black text-[#3D0066] leading-[0.9] uppercase tracking-tighter">
+                {{ $hv('title_line1', 'KONTEN ARTIKEL') }}<br>
+                {{ $hv('title_line2', 'BERKUALITAS &') }}<br>
                 <span class="bg-black text-[#FFD200] px-2 italic">
-                    {{ $hv('title_highlight', 'BERKUALITAS') }}
+                    {{ $hv('title_line3', 'SEO FRIENDLY') }}
                 </span>
             </h1>
 
             <div class="border-l-4 border-black pl-4 py-2">
-                <p class="text-xl font-bold text-black italic">
-                    "{{ $hv('quote', 'Ubah ide Anda menjadi konten yang merajai Google.') }}"
+                <p class="text-lg font-bold text-black italic">
+                    "{{ $hv('quote', 'Artikel yang menarik pembaca sekaligus disukai Google.') }}"
                 </p>
             </div>
 
             <p class="text-lg font-bold text-black/80 max-w-md leading-tight">
-                {{ $hv('description', 'Jasa penulis artikel SEO, konten media, copywriter, dan script video YouTube/Social Media dengan riset keyword mendalam.') }}
+                {{ $hv('description', 'Tim penulis berpengalaman kami siap menghasilkan artikel informatif, engaging, dan teroptimasi untuk kebutuhan website, blog, maupun media Anda.') }}
             </p>
 
             <a href="{{ $hv('cta_url', 'https://wa.me/6287786000919') }}"
-               class="inline-block px-8 py-4 bg-black text-white font-black text-xl border-4 border-black hover:bg-[#3D0066] transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] uppercase tracking-tighter">
+               class="inline-block px-10 py-4 bg-black text-white font-black text-xl border-4 border-black hover:bg-[#3D0066] transition-all shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] uppercase tracking-tighter">
                 {{ $hv('cta_text', 'KONSULTASI SEKARANG →') }}
             </a>
         </div>
 
-        <div class="relative flex justify-center items-center h-[600px]">
-            <div class="absolute w-[450px] h-[450px] border-[6px] border-black rounded-[50px] -translate-x-4 -translate-y-4"></div>
-            <div class="relative w-[400px] h-[400px] bg-[#E61E50] border-[6px] border-black rounded-full shadow-[25px_25px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center">
+        <div class="relative flex justify-center items-center h-[480px]">
+            <div class="absolute w-[400px] h-[400px] border-[6px] border-black rounded-[40px] -translate-x-6 -translate-y-4"></div>
+            <div class="relative w-[380px] h-[380px] bg-[#14b8a6] border-[6px] border-black rounded-full shadow-[20px_20px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-visible">
                 @if($heroS && $heroS->get('image'))
                     <img src="{{ Storage::url($heroS->get('image')) }}" alt="Penulisan Artikel"
-                         class="absolute bottom-0 w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform translate-y-5">
+                         class="absolute bottom-0 w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform translate-y-6">
                 @else
-                    <img src="/images/tulis1.png" alt="Penulisan Artikel"
-                         class="absolute bottom-0 w-[110%] max-w-none grayscale hover:grayscale-0 transition-all duration-500 z-10 transform translate-y-5">
+                    <div class="flex flex-col items-center justify-center text-white">
+                        <svg class="w-24 h-24 mb-4" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"/>
+                        </svg>
+                        <span class="font-black text-xl uppercase">ARTIKEL</span>
+                    </div>
                 @endif
-                <div class="absolute top-20 -right-16 bg-white border-4 border-black rounded-full px-6 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-20">
-                    <span class="font-black text-sm text-black uppercase">GOOD NEWS!!!</span>
+                <div class="absolute top-10 -right-16 bg-white border-4 border-black rounded-full px-6 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] z-20">
+                    <span class="font-black text-sm text-black uppercase">SEO READY!</span>
                     <div class="absolute -bottom-2 left-4 w-4 h-4 bg-white border-b-4 border-r-4 border-black rotate-45"></div>
                 </div>
-                <div class="absolute top-5 -right-20 bg-[#3D0066] text-white border-4 border-black px-6 py-2 font-black text-sm uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-30">
-                    ✦ SEO FRIENDLY
+                <div class="absolute -top-12 -right-8 bg-[#3D0066] text-white border-4 border-black px-5 py-2 font-black text-xs uppercase shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-30">
+                    ✦ PENULISAN ARTIKEL
                 </div>
-                <div class="absolute -bottom-10 -left-24 bg-white text-black border-4 border-black px-6 py-3 font-black text-sm uppercase shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 z-30">
-                    ✦ GARANSI LOLOS COPYSKAPE
+                <div class="absolute -bottom-10 -left-12 bg-white text-black border-4 border-black px-5 py-2 font-black text-xs uppercase shadow-[5px_5px_0px_0px_rgba(0,0,0,1)] transform -rotate-2 z-30">
+                    ✦ ANTI PLAGIAT
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-{{-- ── MASALAH & SOLUSI ──────────────────────────────────────── --}}
-<section class="py-24 bg-white border-b-8 border-black">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center">
-        <div class="relative group">
-            <div class="absolute inset-0 bg-[#FFD200] border-4 border-black translate-x-4 translate-y-4 -z-10 group-hover:translate-x-2 group-hover:translate-y-2 transition-transform"></div>
-            @if($heroS && $heroS->get('image_2'))
-                <img src="{{ Storage::url($heroS->get('image_2')) }}" class="w-full grayscale border-4 border-black shadow-none">
-            @else
-                <img src="/images/tulis.png" class="w-full grayscale border-4 border-black shadow-none">
-            @endif
-        </div>
-        <div>
-            <h2 class="text-4xl font-black uppercase mb-10 leading-tight text-[#3D0066]">
-                {{ $pv('title', 'Apakah Anda Mengalami Hal Ini?') }}
+<style>
+    @keyframes bounce-slow { 0%,100%{transform:rotate(45deg) translateY(0)}50%{transform:rotate(45deg) translateY(-20px)} }
+    .animate-bounce-slow{animation:bounce-slow 5s ease-in-out infinite}
+</style>
+
+{{-- ── MENGAPA JASA PENULISAN ARTIKEL ───────────────────────── --}}
+<section class="py-24 bg-[#1a88d1] border-b-4 border-black text-white">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-4xl font-black uppercase italic mb-4">
+                {{ $wv('title', 'Mengapa Harus Jasa Penulisan Artikel?') }}
             </h2>
-            <div class="space-y-4">
-                @foreach([1,2,3,4,5] as $i)
-                @php $problem = $pv("problem_{$i}", ''); @endphp
-                @if($problem)
-                <div class="flex items-center gap-4 p-4 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:bg-red-50 transition-colors group">
-                    <div class="w-8 h-8 bg-black flex items-center justify-center border-2 border-white group-hover:bg-red-600">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </div>
-                    <span class="font-black uppercase text-sm">{{ $problem }}</span>
-                </div>
-                @endif
-                @endforeach
-            </div>
+            <p class="font-bold">{{ $wv('subtitle', 'Konten artikel yang baik adalah investasi jangka panjang untuk traffic organik.') }}</p>
         </div>
-    </div>
-</section>
 
-{{-- ── MENGAPA HARUS KAMI ────────────────────────────────────── --}}
-<section class="py-24 bg-[#3D0066] border-b-8 border-black">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-        <h2 class="text-4xl md:text-6xl font-black uppercase mb-16 italic text-[#FFD200]">
-            {{ $wv('title', 'Mengapa Harus Kami?') }}
-        </h2>
-        <div class="grid md:grid-cols-3 gap-8">
-            @foreach([1,2,3,4,5,6] as $i)
-            @php $trust = $wv("trust_{$i}", ''); @endphp
-            @if($trust)
-            <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_#FFD200] group hover:-translate-y-2 transition-transform">
-                <div class="w-14 h-14 bg-black border-4 border-[#FFD200] mx-auto mb-6 flex items-center justify-center transform group-hover:rotate-12 transition-transform">
-                    <svg class="w-8 h-8 text-[#FFD200]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M5 13l4 4L19 7"></path>
-                    </svg>
-                </div>
-                <h3 class="font-black text-xl uppercase leading-none">{{ $trust }}</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            @foreach([1,2,3] as $i)
+            <div class="bg-white text-black p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <h3 class="text-xl font-black mb-4 flex items-center gap-2">
+                    <span class="bg-blue-100 p-1 rounded-full text-blue-600">✓</span>
+                    {{ $wv("reason_{$i}_title", '') }}
+                </h3>
+                <p class="text-sm font-medium leading-relaxed">{{ $wv("reason_{$i}_desc", '') }}</p>
+            </div>
+            @endforeach
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            @foreach([4,5] as $i)
+            @if($wv("reason_{$i}_title", ''))
+            <div class="bg-white text-black p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                <h3 class="text-xl font-black mb-4 flex items-center gap-2">
+                    <span class="bg-blue-100 p-1 rounded-full text-blue-600">✓</span>
+                    {{ $wv("reason_{$i}_title", '') }}
+                </h3>
+                <p class="text-sm font-medium leading-relaxed">{{ $wv("reason_{$i}_desc", '') }}</p>
             </div>
             @endif
             @endforeach
@@ -139,35 +125,94 @@
     </div>
 </section>
 
-{{-- ── TOPIK PENULISAN ───────────────────────────────────────── --}}
-<section class="py-24 bg-[#FFD200] border-b-8 border-black">
-    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
-        <div>
-            <h2 class="text-5xl font-black uppercase mb-6 text-[#3D0066]">
-                {{ $tv('title', 'Topik Penulisan') }}
-            </h2>
-            <p class="font-bold mb-10 text-xl border-b-4 border-black pb-2 inline-block">Kami Menguasai Berbagai Niche Industri:</p>
-            <div class="grid grid-cols-2 gap-y-4">
-                @foreach([1,2,3,4,5,6,7,8] as $i)
-                @php $topic = $tv("topic_{$i}", ''); @endphp
-                @if($topic)
-                <div class="flex items-center gap-3 font-black uppercase group">
-                    <span class="w-3 h-3 bg-black group-hover:bg-[#E61E50] transition-colors"></span>
-                    <span class="border-b-2 border-transparent group-hover:border-black">{{ $topic }}</span>
-                </div>
+{{-- ── PAKET HARGA ───────────────────────────────────────────── --}}
+<section class="py-24 bg-[#1a88d1] border-y-4 border-black">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-4xl font-black uppercase mb-16 text-white italic">
+            {{ $pv('title', 'Paket Harga Jasa Penulisan Artikel') }}
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {{-- BASIC --}}
+            <div class="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full">
+                <h3 class="text-2xl font-black text-[#14b8a6] uppercase mb-2">BASIC</h3>
+                @if($pv('basic_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('basic_price_ori', 'Rp 100.000,-') }}</div>
                 @endif
-                @endforeach
+                <div class="text-3xl font-black mb-2">{{ $pv('basic_price', 'Rp 75.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('basic_words', '500') }} Kata</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Artikel original</li>
+                    <li>✔️ Anti plagiat</li>
+                    <li>✔️ Riset topik</li>
+                    <li>✔️ Revisi 1x</li>
+                    <li>✔️ Format Word/PDF</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-[#14b8a6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                    Pesan Sekarang
+                </a>
             </div>
-        </div>
-        <div class="relative">
-            <div class="absolute inset-0 border-4 border-black translate-x-4 translate-y-4"></div>
-            @if($heroS && $heroS->get('image_3'))
-                <img src="{{ Storage::url($heroS->get('image_3')) }}" class="relative w-full border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
-            @else
-                <img src="/images/tulis2.png" class="relative w-full border-4 border-black shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
-            @endif
+
+            {{-- STANDARD --}}
+            <div class="bg-[#FFD217] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-black px-4 py-1 uppercase">TERPOPULER</div>
+                <h3 class="text-2xl font-black text-[#430A5D] uppercase mb-2">STANDARD</h3>
+                @if($pv('standard_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('standard_price_ori', 'Rp 200.000,-') }}</div>
+                @endif
+                <div class="text-3xl font-black mb-2">{{ $pv('standard_price', 'Rp 150.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('standard_words', '1000') }} Kata</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Artikel original</li>
+                    <li>✔️ Anti plagiat</li>
+                    <li>✔️ Riset kata kunci SEO</li>
+                    <li>✔️ Revisi 2x</li>
+                    <li>✔️ Format Word/PDF</li>
+                    <li class="text-blue-600">✔️ Optimasi on-page SEO</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-black text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(67,10,93,1)] hover:shadow-none transition-all">
+                    Pesan Sekarang
+                </a>
+            </div>
+
+            {{-- PRO --}}
+            <div class="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full">
+                <h3 class="text-2xl font-black text-[#430A5D] uppercase mb-2">PRO</h3>
+                @if($pv('pro_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('pro_price_ori', 'Rp 350.000,-') }}</div>
+                @endif
+                <div class="text-3xl font-black mb-2">{{ $pv('pro_price', 'Rp 275.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('pro_words', '2000') }} Kata</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Artikel original</li>
+                    <li>✔️ Anti plagiat</li>
+                    <li>✔️ Riset kata kunci SEO</li>
+                    <li>✔️ Revisi unlimited</li>
+                    <li>✔️ Format Word/PDF</li>
+                    <li class="text-blue-600">✔️ Optimasi on-page SEO</li>
+                    <li class="text-blue-600">✔️ Internal & external linking</li>
+                    <li class="text-blue-600">✔️ Meta description</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-gradient-to-r from-[#430A5D] to-[#3B82F6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                    Pesan Sekarang
+                </a>
+            </div>
         </div>
     </div>
 </section>
+
+{{-- ── CTA FINAL ────────────────────────────────────────────── --}}
+<footer class="py-20 bg-black text-white text-center border-t-4 border-black">
+    <h2 class="text-5xl font-black uppercase mb-8 italic text-yellow-400">
+        {{ $cv('title', 'SIAP PUNYA KONTEN BERKUALITAS?') }}
+    </h2>
+    <a href="{{ $cv('cta_url', 'https://wa.me/6287786000919') }}"
+       class="inline-block bg-white text-black px-12 py-6 font-black text-2xl uppercase shadow-[8px_8px_0px_0px_rgba(250,204,21,1)]">
+        {{ $cv('cta_text', 'PESAN ARTIKEL SEKARANG →') }}
+    </a>
+</footer>
 
 @endsection

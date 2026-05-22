@@ -5,17 +5,15 @@
 @section('content')
 
 @php
-    $heroS     = $sections->get('hero');
-    $benefitsS = $sections->get('benefits');
-    $whatIsS   = $sections->get('what_is');
-    $whyUsS    = $sections->get('why_us');
-    $ctaS      = $sections->get('cta');
+    $heroS    = $sections->get('hero');
+    $whyS     = $sections->get('why_backlink');
+    $pricingS = $sections->get('pricing');
+    $ctaS     = $sections->get('cta');
 
-    $hv = fn($k, $d = '') => $heroS     ? ($heroS->get($k)     ?: $d) : $d;
-    $bv = fn($k, $d = '') => $benefitsS ? ($benefitsS->get($k) ?: $d) : $d;
-    $wv = fn($k, $d = '') => $whatIsS   ? ($whatIsS->get($k)   ?: $d) : $d;
-    $yv = fn($k, $d = '') => $whyUsS    ? ($whyUsS->get($k)    ?: $d) : $d;
-    $cv = fn($k, $d = '') => $ctaS      ? ($ctaS->get($k)      ?: $d) : $d;
+    $hv = fn($k, $d = '') => $heroS    ? ($heroS->get($k)    ?: $d) : $d;
+    $wv = fn($k, $d = '') => $whyS     ? ($whyS->get($k)     ?: $d) : $d;
+    $pv = fn($k, $d = '') => $pricingS ? ($pricingS->get($k) ?: $d) : $d;
+    $cv = fn($k, $d = '') => $ctaS     ? ($ctaS->get($k)     ?: $d) : $d;
 @endphp
 
 {{-- ── HERO ──────────────────────────────────────────────────── --}}
@@ -56,14 +54,14 @@
     .animate-bounce-slow{animation:bounce-slow 5s ease-in-out infinite}
 </style>
 
-{{-- ── MANFAAT ───────────────────────────────────────────────── --}}
+{{-- ── MENGAPA BACKLINK PENTING ──────────────────────────────── --}}
 <section class="py-24 bg-[#3B82F6] border-b-8 border-black">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
             <h2 class="text-4xl md:text-5xl font-black text-white uppercase italic mb-4">
-                {{ $bv('title', 'Manfaat Backlink Media Nasional') }}
+                {{ $wv('title', 'Mengapa Backlink Media Penting?') }}
             </h2>
-            <p class="text-white font-bold text-lg">{{ $bv('subtitle', 'Backlink media nasional memiliki beberapa manfaat sebagai berikut:') }}</p>
+            <p class="text-white font-bold text-lg">{{ $wv('subtitle', 'Backlink dari media terpercaya adalah sinyal kuat untuk Google.') }}</p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-8">
@@ -72,112 +70,21 @@
                     'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2 M22 21v-2a4 4 0 0 0-3-3.87 M16 3.13a4 4 0 0 1 0 7.75',
                     'M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z',
                     'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z',
+                    'M13 2L3 14h9l-1 8 10-12h-9l1-8z',
+                    'M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6',
                 ];
             @endphp
-            @foreach([1,2,3] as $i)
+            @foreach([1,2,3,4,5] as $i)
+            @php $title = $wv("reason_{$i}_title", ''); @endphp
+            @if($title)
             <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
                 <div class="w-16 h-16 bg-[#F2B038] border-4 border-black flex items-center justify-center mb-6">
                     <svg class="w-10 h-10 text-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="{{ $benefitIcons[$i-1] }}"/>
+                        <path d="{{ $benefitIcons[$i-1] ?? $benefitIcons[0] }}"/>
                     </svg>
                 </div>
-                <h3 class="text-xl font-black uppercase mb-4">{{ $bv("benefit_{$i}_title", '') }}</h3>
-                <p class="font-bold text-black/70 text-sm leading-relaxed">{{ $bv("benefit_{$i}_desc", '') }}</p>
-            </div>
-            @endforeach
-        </div>
-    </div>
-</section>
-
-{{-- ── APA ITU BACKLINK ──────────────────────────────────────── --}}
-<section class="py-24 bg-white border-b-8 border-black overflow-hidden relative">
-    <div class="absolute top-10 right-10 w-24 h-24 bg-[#F2B038] border-4 border-black rounded-full opacity-20 animate-bounce -z-0"></div>
-    <div class="absolute bottom-10 left-10 w-16 h-16 bg-[#3B82F6] border-4 border-black rotate-45 opacity-20 animate-pulse -z-0"></div>
-
-    <div class="max-w-7xl mx-auto px-6 relative z-10">
-        <div class="flex flex-col lg:flex-row items-center gap-20">
-            <div class="w-full lg:w-1/2 relative group">
-                <div class="absolute -inset-6 bg-black border-4 border-black -rotate-3 group-hover:rotate-0 transition-all duration-500 shadow-[15px_15px_0px_0px_rgba(242,176,56,1)]"></div>
-                <div class="absolute -inset-3 bg-[#3B82F6] border-4 border-black rotate-2 group-hover:-rotate-1 transition-all duration-500 delay-75"></div>
-                <div class="relative bg-white border-4 border-black overflow-hidden shadow-[20px_20px_0px_0px_rgba(0,0,0,1)]">
-                    @if($whatIsS && $whatIsS->get('image'))
-                        <img src="{{ Storage::url($whatIsS->get('image')) }}" alt="Backlink" class="w-full h-auto object-cover">
-                    @else
-                        <img src="{{ asset('images/leptop.png') }}" alt="Apa itu Backlink" class="w-full h-auto object-cover">
-                    @endif
-                </div>
-                <div class="absolute -bottom-10 -right-5 bg-black text-white px-6 py-3 font-black uppercase italic border-4 border-white shadow-[8px_8px_0px_0px_rgba(59,130,246,1)] animate-bounce-slow">
-                    #SEO_BOOSTER
-                </div>
-            </div>
-
-            <div class="w-full lg:w-1/2 space-y-8">
-                <div class="space-y-4">
-                    <h2 class="text-5xl md:text-7xl font-black text-black uppercase leading-[0.9] italic">
-                        {{ $wv('title', 'APA ITU') }}<br>
-                        <span class="relative inline-block mt-2">
-                            BACKLINK
-                            <div class="absolute -bottom-2 left-0 w-full h-6 bg-[#F2B038]/40 -z-10 skew-x-12"></div>
-                        </span>
-                    </h2>
-                    <p class="text-2xl font-black text-black/40 uppercase tracking-widest">{{ $wv('subtitle', 'Media Nasional Expertise') }}</p>
-                </div>
-
-                <div class="space-y-6">
-                    <div class="flex gap-4 group">
-                        <div class="flex-shrink-0 w-12 h-12 bg-black flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(59,130,246,1)] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all">
-                            <span class="text-white font-black">01</span>
-                        </div>
-                        <p class="text-xl font-bold text-black/80 leading-tight">
-                            {{ $wv('point_1', 'Tautan atau hyperlink strategis yang ditempatkan pada portal berita raksasa di Indonesia.') }}
-                        </p>
-                    </div>
-                    <div class="flex gap-4 group">
-                        <div class="flex-shrink-0 w-12 h-12 bg-[#F2B038] flex items-center justify-center border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] group-hover:translate-x-1 group-hover:translate-y-1 group-hover:shadow-none transition-all">
-                            <span class="text-black font-black">02</span>
-                        </div>
-                        <p class="text-xl font-bold text-black/80 leading-tight">
-                            {{ $wv('point_2', 'Senjata utama untuk memicu algoritma Google agar mengenali website Anda sebagai Otoritas Tinggi.') }}
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-{{-- ── MENGAPA MEMILIH KAMI ──────────────────────────────────── --}}
-<section class="py-24 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-        <h2 class="text-4xl md:text-5xl font-black text-black uppercase mb-16 leading-tight">
-            {{ $yv('title', 'Mengapa Klien Memilih Jasa HNP Communications.id?') }}
-        </h2>
-
-        @php
-            $icons = [
-                'M12 6V12L16 14M22 12A10 10 0 1 1 2 12A10 10 0 0 1 22 12Z',
-                'M22 12A10 10 0 1 1 2 12A10 10 0 0 1 22 12Z M9 12L11 14L15 10',
-                'M11 5H6C4.89 5 4 5.89 4 7V18C4 19.1 4.89 20 6 20H17C18.1 20 19 19.1 19 18V13M17.59 3.59A2 2 0 1 1 20.41 6.41L11.83 15H9V12.17L17.59 3.59Z',
-                'M12 1V23M17 5H9.5A3.5 3.5 0 0 0 9.5 12H14.5A3.5 3.5 0 0 1 14.5 19H6',
-                'M2 3H8C9.1 3 10 3.9 10 5V19C10 20.1 9.1 21 8 21H2V3Z M14 3H20C21.1 3 22 3.9 22 5V19C22 20.1 21.1 21 20 21H14V3Z',
-                'M14 2H6A2 2 0 0 0 4 4V20A2 2 0 0 0 6 22H18A2 2 0 0 0 20 20V8L14 2Z',
-            ];
-        @endphp
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-12">
-            @foreach([1,2,3,4,5,6] as $i)
-            @php $title = $yv("reason_{$i}", ''); @endphp
-            @if($title)
-            <div class="flex gap-6">
-                <div class="flex-shrink-0 w-12 h-12 bg-black flex items-center justify-center border-2 border-black shadow-[4px_4px_0px_0px_rgba(59,130,246,1)]">
-                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="{{ $icons[$i-1] }}"/>
-                    </svg>
-                </div>
-                <div>
-                    <h4 class="font-black uppercase text-lg mb-2">{{ $title }}</h4>
-                    <p class="font-bold text-black/60 text-sm">{{ $yv("reason_{$i}_desc", '') }}</p>
-                </div>
+                <h3 class="text-xl font-black uppercase mb-4">{{ $title }}</h3>
+                <p class="font-bold text-black/70 text-sm leading-relaxed">{{ $wv("reason_{$i}_desc", '') }}</p>
             </div>
             @endif
             @endforeach
@@ -185,10 +92,114 @@
     </div>
 </section>
 
+{{-- ── PAKET HARGA ───────────────────────────────────────────── --}}
+@if($pricingS && $pricingS->get('title'))
+<section class="py-24 bg-white border-b-8 border-black">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+        <h2 class="text-4xl md:text-5xl font-black uppercase mb-16 italic text-[#430A5D]">
+            {{ $pv('title', 'Paket Harga Jasa Backlink Media Nasional') }}
+        </h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            {{-- STARTER --}}
+            <div class="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full">
+                <h3 class="text-2xl font-black text-[#3B82F6] uppercase mb-2">STARTER</h3>
+                @if($pv('starter_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('starter_price_ori', 'Rp 500.000,-') }}</div>
+                @endif
+                <div class="text-3xl font-black mb-2">{{ $pv('starter_price', 'Rp 350.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('starter_count', '1') }} Link</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Backlink do-follow</li>
+                    <li>✔️ Dari media nasional</li>
+                    <li>✔️ Tayang permanen</li>
+                    <li>✔️ Garansi tayang</li>
+                    <li>✔️ Laporan URL</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-[#3B82F6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                    Konsultasi Sekarang
+                </a>
+            </div>
+
+            {{-- BASIC --}}
+            <div class="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full">
+                <h3 class="text-2xl font-black text-gray-500 uppercase mb-2">BASIC</h3>
+                @if($pv('basic_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('basic_price_ori', 'Rp 2.250.000,-') }}</div>
+                @endif
+                <div class="text-3xl font-black mb-2">{{ $pv('basic_price', 'Rp 1.750.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('basic_count', '5') }} Link</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Backlink do-follow</li>
+                    <li>✔️ Dari media nasional</li>
+                    <li>✔️ Tayang permanen</li>
+                    <li>✔️ Garansi tayang</li>
+                    <li>✔️ Laporan URL</li>
+                    <li class="text-blue-600">✔️ Bonus media dari kami</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-[#333] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                    Konsultasi Sekarang
+                </a>
+            </div>
+
+            {{-- PRO --}}
+            <div class="bg-[#FFD217] border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-black text-white text-xs font-black px-4 py-1 uppercase">TERPOPULER</div>
+                <h3 class="text-2xl font-black text-[#430A5D] uppercase mb-2">PRO</h3>
+                @if($pv('pro_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('pro_price_ori', 'Rp 4.000.000,-') }}</div>
+                @endif
+                <div class="text-3xl font-black mb-2">{{ $pv('pro_price', 'Rp 3.250.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('pro_count', '10') }} Link</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Backlink do-follow</li>
+                    <li>✔️ Dari media nasional</li>
+                    <li>✔️ Tayang permanen</li>
+                    <li>✔️ Garansi tayang</li>
+                    <li>✔️ Laporan URL</li>
+                    <li class="text-blue-600">✔️ Bonus media dari kami</li>
+                    <li class="text-blue-600">✔️ Prioritas pengerjaan</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-black text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(67,10,93,1)] hover:shadow-none transition-all">
+                    Konsultasi Sekarang
+                </a>
+            </div>
+
+            {{-- ENTERPRISE --}}
+            <div class="bg-white border-4 border-black p-8 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col h-full">
+                <h3 class="text-2xl font-black text-[#430A5D] uppercase mb-2">ENTERPRISE</h3>
+                @if($pv('enterprise_price_ori'))
+                <div class="text-sm line-through text-red-500 font-bold">{{ $pv('enterprise_price_ori', 'Rp 7.500.000,-') }}</div>
+                @endif
+                <div class="text-3xl font-black mb-2">{{ $pv('enterprise_price', 'Rp 6.000.000') }}</div>
+                <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('enterprise_count', '20') }} Link</div>
+                <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
+                    <li>✔️ Backlink do-follow</li>
+                    <li>✔️ Dari media nasional</li>
+                    <li>✔️ Tayang permanen</li>
+                    <li>✔️ Garansi tayang</li>
+                    <li>✔️ Laporan URL</li>
+                    <li class="text-blue-600">✔️ Bonus media dari kami</li>
+                    <li class="text-blue-600">✔️ Prioritas pengerjaan</li>
+                    <li class="text-blue-600">✔️ Dedicated account manager</li>
+                </ul>
+                <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
+                   class="mt-auto block w-full bg-gradient-to-r from-[#430A5D] to-[#3B82F6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                    Konsultasi Sekarang
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+
 {{-- ── CTA FINAL ────────────────────────────────────────────── --}}
 <section class="py-24 bg-black text-center">
     <h2 class="text-4xl md:text-6xl font-black text-[#F2B038] uppercase mb-10 leading-tight">
-        {{ $cv('title', 'SIAP UNTUK GO NATIONAL?') }}
+        {{ $cv('title', 'SIAP BOOST SEO WEBSITE KAMU?') }}
     </h2>
     <a href="{{ $cv('cta_url', 'https://wa.me/6287786000919') }}"
        class="inline-block px-12 py-6 bg-white text-black font-black text-2xl border-4 border-[#F2B038] hover:bg-[#F2B038] transition-all uppercase shadow-[8px_8px_0px_0px_rgba(242,176,56,1)]">

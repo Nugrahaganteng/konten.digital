@@ -13,12 +13,12 @@ class PageSection extends Model
         'order',
         'is_active',
         'content',
-        'hidden_fields',   // ← TAMBAHAN: array of field keys yg disembunyikan
+        'hidden_fields',
     ];
 
     protected $casts = [
         'content'       => 'array',
-        'hidden_fields' => 'array',   // ← TAMBAHAN
+        'hidden_fields' => 'array',
         'is_active'     => 'boolean',
         'order'         => 'integer',
     ];
@@ -54,18 +54,11 @@ class PageSection extends Model
         return data_get($this->content, $key, $default);
     }
 
-    /**
-     * Cek apakah sebuah field disembunyikan (untuk frontend).
-     */
     public function isFieldHidden(string $key): bool
     {
         return in_array($key, $this->hidden_fields ?? []);
     }
 
-    /**
-     * Ambil semua section aktif untuk page tertentu, key-by section_key.
-     * Dipakai di frontend blade: PageSection::ofPage('home')
-     */
     public static function ofPage(string $page): \Illuminate\Support\Collection
     {
         return static::forPage($page)
@@ -75,18 +68,6 @@ class PageSection extends Model
             ->keyBy('section_key');
     }
 
-    /**
-     * Ambil content section untuk frontend, dengan filter hidden_fields.
-     * Field yang disembunyikan akan dikembalikan sebagai null.
-     *
-     * Contoh pemakaian di blade:
-     *   $hero = PageSection::ofPage('home')['hero'] ?? null;
-     *   $title = $hero?->getField('title_line1');
-     *
-     * RENAMED: getVisible() → getField()
-     * Alasan: Model::getVisible() sudah dipakai Laravel (return array $visible),
-     * signature-nya tidak kompatibel dan PHP 8.4 throw Fatal Error.
-     */
     public function getField(string $key, mixed $default = null): mixed
     {
         if ($this->isFieldHidden($key)) {
@@ -244,8 +225,6 @@ class PageSection extends Model
                         ['key' => 'title_line1', 'label' => 'Judul Baris 1',       'type' => 'text',     'placeholder' => "Let's Build"],
                         ['key' => 'title_line2', 'label' => 'Judul Baris 2',       'type' => 'text',     'placeholder' => 'Something'],
                         ['key' => 'title_line3', 'label' => 'Judul Baris 3',       'type' => 'text',     'placeholder' => 'Different.'],
-                        // ['key' => 'badge_text',  'label' => 'Badge Text (Legacy)', 'type' => 'text',     'placeholder' => '✦ HUBUNGI KAMI'],
-                        // ['key' => 'title',       'label' => 'Judul Besar (Legacy)','type' => 'textarea', 'placeholder' => "Let's Build\nSomething\nDifferent."],
                         ['key' => 'description', 'label' => 'Paragraf Deskripsi',  'type' => 'textarea', 'placeholder' => 'Punya ide gila untuk brand kamu? Kami siap dengar dan wujudkan.'],
                         ['key' => 'cta_text',    'label' => 'Teks Tombol',         'type' => 'text',     'placeholder' => "LET'S CHAT →"],
                         ['key' => 'cta_url',     'label' => 'URL Tombol (WA)',     'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
@@ -485,6 +464,328 @@ class PageSection extends Model
                     'fields' => [
                         ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP UNTUK GO NATIONAL?'],
                         ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'Hubungi Kami Sekarang →'],
+                        ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+            ],
+
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: BACKLINK MEDIA  ← BARU
+            // ════════════════════════════════════════════════════════════
+            'layanan-backlink' => [
+                'hero' => [
+                    'label'  => 'Hero Section',
+                    'fields' => [
+                        ['key' => 'badge_text',  'label' => 'Badge Text',                'type' => 'text',     'placeholder' => '✦ JASA BACKLINK MEDIA'],
+                        ['key' => 'title_line1', 'label' => 'Judul Baris 1',             'type' => 'text',     'placeholder' => 'TINGKATKAN'],
+                        ['key' => 'title_line2', 'label' => 'Judul Baris 2',             'type' => 'text',     'placeholder' => 'OTORITAS DOMAIN'],
+                        ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)', 'type' => 'text',     'placeholder' => 'WEBSITE ANDA'],
+                        ['key' => 'quote',       'label' => 'Kutipan',                   'type' => 'text',     'placeholder' => 'Backlink berkualitas dari ratusan media nasional terpercaya.'],
+                        ['key' => 'description', 'label' => 'Deskripsi',                 'type' => 'textarea', 'placeholder' => 'Dapatkan backlink do-follow dari media nasional ternama untuk mendongkrak peringkat SEO website Anda secara signifikan.'],
+                        ['key' => 'cta_text',    'label' => 'Teks Tombol',               'type' => 'text',     'placeholder' => 'KONSULTASI SEKARANG →'],
+                        ['key' => 'cta_url',     'label' => 'URL Tombol',                'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+                        ['key' => 'image',       'label' => 'Gambar Hero',               'type' => 'image'],
+                    ],
+                ],
+                'why_backlink' => [
+                    'label'  => 'Mengapa Backlink Penting?',
+                    'fields' => [
+                        ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Backlink Media Penting?'],
+                        ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Backlink dari media terpercaya adalah sinyal kuat untuk Google.'],
+                        ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Tingkatkan Domain Authority'],
+                        ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Backlink dari media nasional ber-DA tinggi akan mendongkrak otoritas domain website Anda.'],
+                        ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Naikkan Peringkat Google'],
+                        ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Semakin banyak backlink berkualitas, semakin tinggi posisi website Anda di halaman hasil pencarian Google.'],
+                        ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Tambah Traffic Organik'],
+                        ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Pengunjung dari media besar yang mengklik backlink Anda adalah traffic organik berkualitas tinggi.'],
+                        ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Bangun Kepercayaan Brand'],
+                        ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Disebut dan di-link oleh media ternama secara otomatis meningkatkan kredibilitas dan kepercayaan brand Anda.'],
+                        ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Hasil Jangka Panjang'],
+                        ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Backlink dari media online bersifat permanen, memberikan manfaat SEO yang terus bekerja dalam jangka panjang.'],
+                    ],
+                ],
+                'pricing' => [
+                    'label'  => 'Paket Harga',
+                    'fields' => [
+                        ['key' => 'title',              'label' => 'Judul Section',         'type' => 'text', 'placeholder' => 'Paket Harga Jasa Backlink Media Nasional'],
+                        ['key' => 'starter_price_ori',  'label' => 'Starter — Harga Asli',  'type' => 'text', 'placeholder' => 'Rp 500.000,-'],
+                        ['key' => 'starter_price',      'label' => 'Starter — Harga Promo', 'type' => 'text', 'placeholder' => 'Rp 350.000'],
+                        ['key' => 'starter_count',      'label' => 'Starter — Jumlah Link', 'type' => 'text', 'placeholder' => '1'],
+                        ['key' => 'basic_price_ori',    'label' => 'Basic — Harga Asli',    'type' => 'text', 'placeholder' => 'Rp 2.250.000,-'],
+                        ['key' => 'basic_price',        'label' => 'Basic — Harga Promo',   'type' => 'text', 'placeholder' => 'Rp 1.750.000'],
+                        ['key' => 'basic_count',        'label' => 'Basic — Jumlah Link',   'type' => 'text', 'placeholder' => '5'],
+                        ['key' => 'pro_price_ori',      'label' => 'Pro — Harga Asli',      'type' => 'text', 'placeholder' => 'Rp 4.000.000,-'],
+                        ['key' => 'pro_price',          'label' => 'Pro — Harga Promo',     'type' => 'text', 'placeholder' => 'Rp 3.250.000'],
+                        ['key' => 'pro_count',          'label' => 'Pro — Jumlah Link',     'type' => 'text', 'placeholder' => '10'],
+                        ['key' => 'enterprise_price_ori','label'=> 'Enterprise — Harga Asli','type'=> 'text', 'placeholder' => 'Rp 7.500.000,-'],
+                        ['key' => 'enterprise_price',   'label' => 'Enterprise — Harga Promo','type'=> 'text','placeholder' => 'Rp 6.000.000'],
+                        ['key' => 'enterprise_count',   'label' => 'Enterprise — Jumlah Link','type'=> 'text','placeholder' => '20'],
+                        ['key' => 'cta_url',            'label' => 'URL Tombol Konsultasi', 'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+                'cta' => [
+                    'label'  => 'CTA Penutup',
+                    'fields' => [
+                        ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP BOOST SEO WEBSITE KAMU?'],
+                        ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'Hubungi Kami Sekarang →'],
+                        ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+            ],
+
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PRESS CONFERENCE  ← BARU
+            // ════════════════════════════════════════════════════════════
+            'layanan-press-conference' => [
+                'hero' => [
+                    'label'  => 'Hero Section',
+                    'fields' => [
+                        ['key' => 'badge_text',  'label' => 'Badge Text',                'type' => 'text',     'placeholder' => '✦ JASA PRESS CONFERENCE'],
+                        ['key' => 'title_line1', 'label' => 'Judul Baris 1',             'type' => 'text',     'placeholder' => 'KONFERENSI PERS'],
+                        ['key' => 'title_line2', 'label' => 'Judul Baris 2',             'type' => 'text',     'placeholder' => 'PROFESIONAL &'],
+                        ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)', 'type' => 'text',     'placeholder' => 'BERGARANSI MEDIA'],
+                        ['key' => 'quote',       'label' => 'Kutipan',                   'type' => 'text',     'placeholder' => 'Hadirkan wartawan media ternama ke acara brand Anda.'],
+                        ['key' => 'description', 'label' => 'Deskripsi',                 'type' => 'textarea', 'placeholder' => 'Kami mengelola seluruh proses konferensi pers Anda, mulai dari undangan media hingga distribusi siaran pers pasca acara.'],
+                        ['key' => 'cta_text',    'label' => 'Teks Tombol',               'type' => 'text',     'placeholder' => 'KONSULTASI SEKARANG →'],
+                        ['key' => 'cta_url',     'label' => 'URL Tombol',                'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+                        ['key' => 'image',       'label' => 'Gambar Hero',               'type' => 'image'],
+                    ],
+                ],
+                'why_pc' => [
+                    'label'  => 'Mengapa Butuh Press Conference?',
+                    'fields' => [
+                        ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Press Conference?'],
+                        ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Press conference adalah cara paling efektif menyampaikan pesan brand ke media sekaligus.'],
+                        ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Liputan Media Serentak'],
+                        ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Satu event, ratusan media meliput secara bersamaan. Efisiensi maksimal untuk jangkauan pemberitaan yang luas.'],
+                        ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Bangun Citra Brand yang Kuat'],
+                        ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Kehadiran media di event Anda memperkuat persepsi publik bahwa brand Anda terpercaya dan berpengaruh.'],
+                        ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Sampaikan Pesan Secara Langsung'],
+                        ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Narasumber Anda bisa menjawab pertanyaan media secara langsung, menghindari miskomunikasi dan kesalahan informasi.'],
+                        ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Cocok untuk Berbagai Momen'],
+                        ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Peluncuran produk, pencapaian perusahaan, klarifikasi isu, atau penandatanganan kerjasama — semua bisa dikemas dalam press conference.'],
+                        ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Kami Tangani dari A sampai Z'],
+                        ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Undangan media, siaran pers, distribusi berita pasca acara — semua kami kelola agar Anda fokus pada konten.'],
+                    ],
+                ],
+                'pricing' => [
+                    'label'  => 'Paket Harga',
+                    'fields' => [
+                        ['key' => 'title',             'label' => 'Judul Section',          'type' => 'text', 'placeholder' => 'Paket Harga Jasa Press Conference'],
+                        ['key' => 'basic_price_ori',   'label' => 'Basic — Harga Asli',     'type' => 'text', 'placeholder' => 'Rp 5.000.000,-'],
+                        ['key' => 'basic_price',       'label' => 'Basic — Harga Promo',    'type' => 'text', 'placeholder' => 'Rp 4.000.000'],
+                        ['key' => 'basic_media_count', 'label' => 'Basic — Jumlah Media',   'type' => 'text', 'placeholder' => '10'],
+                        ['key' => 'pro_price_ori',     'label' => 'Pro — Harga Asli',       'type' => 'text', 'placeholder' => 'Rp 10.000.000,-'],
+                        ['key' => 'pro_price',         'label' => 'Pro — Harga Promo',      'type' => 'text', 'placeholder' => 'Rp 8.500.000'],
+                        ['key' => 'pro_media_count',   'label' => 'Pro — Jumlah Media',     'type' => 'text', 'placeholder' => '25'],
+                        ['key' => 'vip_price_ori',     'label' => 'VIP — Harga Asli',       'type' => 'text', 'placeholder' => 'Rp 20.000.000,-'],
+                        ['key' => 'vip_price',         'label' => 'VIP — Harga Promo',      'type' => 'text', 'placeholder' => 'Rp 17.000.000'],
+                        ['key' => 'vip_media_count',   'label' => 'VIP — Jumlah Media',     'type' => 'text', 'placeholder' => '50'],
+                        ['key' => 'cta_url',           'label' => 'URL Tombol Konsultasi',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+                'cta' => [
+                    'label'  => 'CTA Penutup',
+                    'fields' => [
+                        ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP GELAR PRESS CONFERENCE?'],
+                        ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'Hubungi Kami Sekarang →'],
+                        ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+            ],
+
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PENULISAN ARTIKEL  ← BARU
+            // ════════════════════════════════════════════════════════════
+            'layanan-penulisan-artikel' => [
+                'hero' => [
+                    'label'  => 'Hero Section',
+                    'fields' => [
+                        ['key' => 'badge_text',  'label' => 'Badge Text',                'type' => 'text',     'placeholder' => '✦ JASA PENULISAN ARTIKEL'],
+                        ['key' => 'title_line1', 'label' => 'Judul Baris 1',             'type' => 'text',     'placeholder' => 'KONTEN ARTIKEL'],
+                        ['key' => 'title_line2', 'label' => 'Judul Baris 2',             'type' => 'text',     'placeholder' => 'BERKUALITAS &'],
+                        ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)', 'type' => 'text',     'placeholder' => 'SEO FRIENDLY'],
+                        ['key' => 'quote',       'label' => 'Kutipan',                   'type' => 'text',     'placeholder' => 'Artikel yang menarik pembaca sekaligus disukai Google.'],
+                        ['key' => 'description', 'label' => 'Deskripsi',                 'type' => 'textarea', 'placeholder' => 'Tim penulis berpengalaman kami siap menghasilkan artikel informatif, engaging, dan teroptimasi untuk kebutuhan website, blog, maupun media Anda.'],
+                        ['key' => 'cta_text',    'label' => 'Teks Tombol',               'type' => 'text',     'placeholder' => 'KONSULTASI SEKARANG →'],
+                        ['key' => 'cta_url',     'label' => 'URL Tombol',                'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+                        ['key' => 'image',       'label' => 'Gambar Hero',               'type' => 'image'],
+                    ],
+                ],
+                'why_artikel' => [
+                    'label'  => 'Mengapa Butuh Jasa Penulisan Artikel?',
+                    'fields' => [
+                        ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Jasa Penulisan Artikel?'],
+                        ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Konten artikel yang baik adalah investasi jangka panjang untuk traffic organik.'],
+                        ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Hemat Waktu & Tenaga'],
+                        ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Serahkan penulisan kepada ahlinya. Anda fokus mengelola bisnis, kami tangani kontennya.'],
+                        ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Artikel SEO Teroptimasi'],
+                        ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Setiap artikel ditulis dengan riset kata kunci yang tepat agar mudah ditemukan di mesin pencari.'],
+                        ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Gaya Penulisan Sesuai Brand'],
+                        ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami menyesuaikan tone of voice dan gaya penulisan dengan identitas brand Anda.'],
+                        ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Konten Orisinal & Anti Plagiat'],
+                        ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Setiap artikel ditulis dari nol, 100% original, dan melalui pengecekan plagiarisme sebelum diserahkan.'],
+                        ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Berbagai Jenis Artikel'],
+                        ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Artikel blog, advertorial, listicle, how-to, berita, ulasan produk — semua bisa kami kerjakan.'],
+                    ],
+                ],
+                'pricing' => [
+                    'label'  => 'Paket Harga',
+                    'fields' => [
+                        ['key' => 'title',            'label' => 'Judul Section',          'type' => 'text', 'placeholder' => 'Paket Harga Jasa Penulisan Artikel'],
+                        ['key' => 'basic_price_ori',  'label' => 'Basic — Harga Asli',     'type' => 'text', 'placeholder' => 'Rp 100.000,-'],
+                        ['key' => 'basic_price',      'label' => 'Basic — Harga Promo',    'type' => 'text', 'placeholder' => 'Rp 75.000'],
+                        ['key' => 'basic_words',      'label' => 'Basic — Jumlah Kata',    'type' => 'text', 'placeholder' => '500'],
+                        ['key' => 'standard_price_ori','label'=> 'Standard — Harga Asli',  'type' => 'text', 'placeholder' => 'Rp 200.000,-'],
+                        ['key' => 'standard_price',   'label' => 'Standard — Harga Promo', 'type' => 'text', 'placeholder' => 'Rp 150.000'],
+                        ['key' => 'standard_words',   'label' => 'Standard — Jumlah Kata', 'type' => 'text', 'placeholder' => '1000'],
+                        ['key' => 'pro_price_ori',    'label' => 'Pro — Harga Asli',       'type' => 'text', 'placeholder' => 'Rp 350.000,-'],
+                        ['key' => 'pro_price',        'label' => 'Pro — Harga Promo',      'type' => 'text', 'placeholder' => 'Rp 275.000'],
+                        ['key' => 'pro_words',        'label' => 'Pro — Jumlah Kata',      'type' => 'text', 'placeholder' => '2000'],
+                        ['key' => 'cta_url',          'label' => 'URL Tombol Konsultasi',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+                'cta' => [
+                    'label'  => 'CTA Penutup',
+                    'fields' => [
+                        ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP PUNYA KONTEN BERKUALITAS?'],
+                        ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'Pesan Artikel Sekarang →'],
+                        ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+            ],
+
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: SCRIPT VIDEO  ← BARU
+            // ════════════════════════════════════════════════════════════
+            'layanan-script-video' => [
+                'hero' => [
+                    'label'  => 'Hero Section',
+                    'fields' => [
+                        ['key' => 'badge_text',  'label' => 'Badge Text',                'type' => 'text',     'placeholder' => '✦ JASA PENULISAN SCRIPT VIDEO'],
+                        ['key' => 'title_line1', 'label' => 'Judul Baris 1',             'type' => 'text',     'placeholder' => 'SCRIPT VIDEO'],
+                        ['key' => 'title_line2', 'label' => 'Judul Baris 2',             'type' => 'text',     'placeholder' => 'YANG MEMIKAT &'],
+                        ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)', 'type' => 'text',     'placeholder' => 'KONVERSI TINGGI'],
+                        ['key' => 'quote',       'label' => 'Kutipan',                   'type' => 'text',     'placeholder' => 'Dari ide menjadi naskah yang siap produksi.'],
+                        ['key' => 'description', 'label' => 'Deskripsi',                 'type' => 'textarea', 'placeholder' => 'Kami merancang naskah video yang engaging, sesuai target audiens Anda, dan siap langsung digunakan untuk produksi iklan, konten sosial media, atau video korporat.'],
+                        ['key' => 'cta_text',    'label' => 'Teks Tombol',               'type' => 'text',     'placeholder' => 'KONSULTASI SEKARANG →'],
+                        ['key' => 'cta_url',     'label' => 'URL Tombol',                'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+                        ['key' => 'image',       'label' => 'Gambar Hero',               'type' => 'image'],
+                    ],
+                ],
+                'why_script' => [
+                    'label'  => 'Mengapa Butuh Jasa Script Video?',
+                    'fields' => [
+                        ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Jasa Script Video?'],
+                        ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Script yang baik adalah pondasi video yang sukses.'],
+                        ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Hemat Biaya Produksi'],
+                        ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Script yang matang mengurangi risiko reshooting dan revisi produksi yang memakan waktu dan biaya.'],
+                        ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Pesan Tersampaikan dengan Tepat'],
+                        ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami memastikan setiap kata dalam script membawa pesan brand Anda secara jelas dan persuasif.'],
+                        ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Sesuai Platform & Durasi'],
+                        ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Script disesuaikan untuk YouTube, Instagram Reels, TikTok, iklan TV, atau video korporat dengan durasi yang tepat.'],
+                        ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Storytelling yang Kuat'],
+                        ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami membangun narasi yang emosional dan relevan agar penonton terhubung dengan brand Anda.'],
+                        ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Revisi Hingga Puas'],
+                        ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami menyediakan revisi terbatas hingga script benar-benar sesuai dengan visi dan kebutuhan Anda.'],
+                    ],
+                ],
+                'pricing' => [
+                    'label'  => 'Paket Harga',
+                    'fields' => [
+                        ['key' => 'title',            'label' => 'Judul Section',          'type' => 'text', 'placeholder' => 'Paket Harga Jasa Penulisan Script Video'],
+                        ['key' => 'short_price_ori',  'label' => 'Short — Harga Asli',     'type' => 'text', 'placeholder' => 'Rp 300.000,-'],
+                        ['key' => 'short_price',      'label' => 'Short — Harga Promo',    'type' => 'text', 'placeholder' => 'Rp 250.000'],
+                        ['key' => 'short_duration',   'label' => 'Short — Durasi Video',   'type' => 'text', 'placeholder' => '< 1 Menit'],
+                        ['key' => 'medium_price_ori', 'label' => 'Medium — Harga Asli',    'type' => 'text', 'placeholder' => 'Rp 600.000,-'],
+                        ['key' => 'medium_price',     'label' => 'Medium — Harga Promo',   'type' => 'text', 'placeholder' => 'Rp 500.000'],
+                        ['key' => 'medium_duration',  'label' => 'Medium — Durasi Video',  'type' => 'text', 'placeholder' => '1 - 3 Menit'],
+                        ['key' => 'long_price_ori',   'label' => 'Long — Harga Asli',      'type' => 'text', 'placeholder' => 'Rp 1.200.000,-'],
+                        ['key' => 'long_price',       'label' => 'Long — Harga Promo',     'type' => 'text', 'placeholder' => 'Rp 1.000.000'],
+                        ['key' => 'long_duration',    'label' => 'Long — Durasi Video',    'type' => 'text', 'placeholder' => '3 - 10 Menit'],
+                        ['key' => 'cta_url',          'label' => 'URL Tombol Konsultasi',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+                'cta' => [
+                    'label'  => 'CTA Penutup',
+                    'fields' => [
+                        ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP BIKIN VIDEO YANG VIRAL?'],
+                        ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'Pesan Script Sekarang →'],
+                        ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+            ],
+
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PELATIHAN KONTEN  ← BARU
+            // ════════════════════════════════════════════════════════════
+            'layanan-pelatihan-konten' => [
+                'hero' => [
+                    'label'  => 'Hero Section',
+                    'fields' => [
+                        ['key' => 'badge_text',  'label' => 'Badge Text',                'type' => 'text',     'placeholder' => '✦ JASA PELATIHAN KONTEN KREATOR'],
+                        ['key' => 'title_line1', 'label' => 'Judul Baris 1',             'type' => 'text',     'placeholder' => 'JADILAH KONTEN'],
+                        ['key' => 'title_line2', 'label' => 'Judul Baris 2',             'type' => 'text',     'placeholder' => 'KREATOR YANG'],
+                        ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)', 'type' => 'text',     'placeholder' => 'BERDAMPAK'],
+                        ['key' => 'quote',       'label' => 'Kutipan',                   'type' => 'text',     'placeholder' => 'Kuasai skill konten digital dari praktisi berpengalaman.'],
+                        ['key' => 'description', 'label' => 'Deskripsi',                 'type' => 'textarea', 'placeholder' => 'Program pelatihan intensif yang dirancang untuk individu, tim, maupun korporat yang ingin menguasai dunia konten digital secara strategis dan terukur.'],
+                        ['key' => 'cta_text',    'label' => 'Teks Tombol',               'type' => 'text',     'placeholder' => 'DAFTAR SEKARANG →'],
+                        ['key' => 'cta_url',     'label' => 'URL Tombol',                'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+                        ['key' => 'image',       'label' => 'Gambar Hero',               'type' => 'image'],
+                    ],
+                ],
+                'why_pelatihan' => [
+                    'label'  => 'Mengapa Ikut Pelatihan Ini?',
+                    'fields' => [
+                        ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Ikut Pelatihan Konten?'],
+                        ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Di era digital, skill membuat konten yang baik adalah aset berharga.'],
+                        ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Kurikulum Berbasis Praktik'],
+                        ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Materi dirancang langsung oleh praktisi industri dengan pendekatan hands-on, bukan sekadar teori.'],
+                        ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Cocok untuk Semua Level'],
+                        ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Baik pemula yang baru mulai atau profesional yang ingin upgrade skill, program kami tersedia untuk semua tingkatan.'],
+                        ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Sertifikat Resmi'],
+                        ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Peserta mendapatkan sertifikat pelatihan yang dapat digunakan sebagai portofolio profesional.'],
+                        ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Online & Offline Tersedia'],
+                        ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Pilih format yang paling nyaman — pelatihan online via Zoom atau offline di lokasi yang bisa disesuaikan.'],
+                        ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Mentoring Pasca Pelatihan'],
+                        ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami tidak berhenti di kelas. Peserta mendapat akses mentoring lanjutan untuk membantu penerapan di lapangan.'],
+                    ],
+                ],
+                'materi' => [
+                    'label'  => 'Materi Pelatihan',
+                    'fields' => [
+                        ['key' => 'title',      'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Apa yang Akan Kamu Pelajari?'],
+                        ['key' => 'materi_1',   'label' => 'Materi 1',         'type' => 'text',     'placeholder' => 'Dasar-dasar Content Marketing'],
+                        ['key' => 'materi_2',   'label' => 'Materi 2',         'type' => 'text',     'placeholder' => 'Riset Keyword & SEO On-Page'],
+                        ['key' => 'materi_3',   'label' => 'Materi 3',         'type' => 'text',     'placeholder' => 'Strategi Konten Media Sosial'],
+                        ['key' => 'materi_4',   'label' => 'Materi 4',         'type' => 'text',     'placeholder' => 'Penulisan Copywriting yang Menjual'],
+                        ['key' => 'materi_5',   'label' => 'Materi 5',         'type' => 'text',     'placeholder' => 'Produksi Konten Video Pendek'],
+                        ['key' => 'materi_6',   'label' => 'Materi 6',         'type' => 'text',     'placeholder' => 'Analitik & Pengukuran Performa Konten'],
+                        ['key' => 'materi_7',   'label' => 'Materi 7',         'type' => 'text',     'placeholder' => 'Personal Branding untuk Kreator'],
+                        ['key' => 'materi_8',   'label' => 'Materi 8',         'type' => 'text',     'placeholder' => 'Monetisasi Konten Digital'],
+                    ],
+                ],
+                'pricing' => [
+                    'label'  => 'Paket Harga',
+                    'fields' => [
+                        ['key' => 'title',              'label' => 'Judul Section',            'type' => 'text',     'placeholder' => 'Paket Harga Pelatihan Konten Kreator'],
+                        ['key' => 'personal_price_ori', 'label' => 'Personal — Harga Asli',    'type' => 'text',     'placeholder' => 'Rp 1.500.000,-'],
+                        ['key' => 'personal_price',     'label' => 'Personal — Harga Promo',   'type' => 'text',     'placeholder' => 'Rp 1.200.000'],
+                        ['key' => 'personal_desc',      'label' => 'Personal — Deskripsi',     'type' => 'textarea', 'placeholder' => 'Untuk individu, 1 hari pelatihan online, sertifikat digital.'],
+                        ['key' => 'group_price_ori',    'label' => 'Group — Harga Asli',       'type' => 'text',     'placeholder' => 'Rp 800.000,-'],
+                        ['key' => 'group_price',        'label' => 'Group — Harga Promo',      'type' => 'text',     'placeholder' => 'Rp 650.000'],
+                        ['key' => 'group_desc',         'label' => 'Group — Deskripsi',        'type' => 'textarea', 'placeholder' => 'Per orang min. 5 peserta, 1 hari pelatihan online, sertifikat digital.'],
+                        ['key' => 'corporate_price_ori','label' => 'Corporate — Harga Asli',   'type' => 'text',     'placeholder' => 'Hubungi Kami'],
+                        ['key' => 'corporate_price',    'label' => 'Corporate — Harga Promo',  'type' => 'text',     'placeholder' => 'Custom'],
+                        ['key' => 'corporate_desc',     'label' => 'Corporate — Deskripsi',    'type' => 'textarea', 'placeholder' => 'Untuk perusahaan/instansi, kurikulum custom, offline/online, sertifikat resmi.'],
+                        ['key' => 'cta_url',            'label' => 'URL Tombol Konsultasi',    'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+                    ],
+                ],
+                'cta' => [
+                    'label'  => 'CTA Penutup',
+                    'fields' => [
+                        ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP JADI KONTEN KREATOR PROFESIONAL?'],
+                        ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'Daftar Pelatihan Sekarang →'],
                         ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
                     ],
                 ],
