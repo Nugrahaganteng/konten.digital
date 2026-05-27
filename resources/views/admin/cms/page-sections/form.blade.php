@@ -222,7 +222,6 @@ textarea.inp{min-height:90px;line-height:1.65}
 }
 
 @media(max-width:720px){
-    /* Mobile: sidebar naik ke atas, form di bawah */
     .form-layout{
         grid-template-columns:1fr;
         grid-template-areas:"side" "main";
@@ -465,7 +464,7 @@ textarea.inp{min-height:90px;line-height:1.65}
                     </div>
                     <div id="hidden-tags-list">
                         @foreach($hiddenFields as $hf)
-                        <span class="hidden-tag" onclick="revealField('{{ $hf }}')" title="Klik untuk tampilkan">
+                        <span class="hidden-tag" data-tag="{{ $hf }}" onclick="revealField('{{ $hf }}')" title="Klik untuk tampilkan">
                             {{ $hf }} <i class="fas fa-times" style="font-size:.4rem"></i>
                         </span>
                         @endforeach
@@ -552,7 +551,7 @@ textarea.inp{min-height:90px;line-height:1.65}
     </div>
 </div>
 
-{{-- Hidden restore forms --}}
+{{-- Hidden restore forms —one per history entry --}}
 @foreach($histories as $history)
 <form method="POST"
       action="{{ route('admin.cms.page-sections.restore', [$section, $history]) }}"
@@ -576,7 +575,11 @@ async function toggleFieldEye(fieldKey, sectionId, btn) {
     try {
         const res  = await fetch(`${TOGGLE_FIELD_URL}/${sectionId}/toggle-field`, {
             method: 'PATCH',
-            headers: { 'Content-Type':'application/json','X-CSRF-TOKEN':CSRF,'Accept':'application/json' },
+            headers: {
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : CSRF,
+                'Accept'       : 'application/json',
+            },
             body: JSON.stringify({ field_key: fieldKey }),
         });
         const data = await res.json();
@@ -589,8 +592,8 @@ async function toggleFieldEye(fieldKey, sectionId, btn) {
 
         group.classList.toggle('is-hidden', isHidden);
         btn.classList.toggle('is-hidden', isHidden);
-        icon.className     = `fas ${isHidden ? 'fa-eye-slash' : 'fa-eye'}`;
-        tooltip.textContent= isHidden ? 'TAMPILKAN' : 'SEMBUNYIKAN';
+        icon.className      = `fas ${isHidden ? 'fa-eye-slash' : 'fa-eye'}`;
+        tooltip.textContent = isHidden ? 'TAMPILKAN' : 'SEMBUNYIKAN';
 
         updateHiddenSummary(fieldKey, isHidden, data.hidden_count);
         showToast(isHidden ? `"${fieldKey}" disembunyikan` : `"${fieldKey}" ditampilkan`);
@@ -610,8 +613,10 @@ function updateHiddenSummary(fieldKey, isHidden, hiddenCount) {
     const countEl  = document.getElementById('hidden-count');
     const tagsList = document.getElementById('hidden-tags-list');
     if (!summary || !countEl || !tagsList) return;
+
     countEl.textContent = hiddenCount;
     summary.classList.toggle('has-hidden', hiddenCount > 0);
+
     const existing = tagsList.querySelector(`[data-tag="${fieldKey}"]`);
     if (isHidden && !existing) {
         const tag = document.createElement('span');
@@ -626,28 +631,37 @@ function updateHiddenSummary(fieldKey, isHidden, hiddenCount) {
     }
 }
 
-/* ── Image ── */
+/* ── Image handling ── */
 function handleImageChange(input, key) {
     const file = input.files[0];
     if (!file) return;
-    if (file.size > 2 * 1024 * 1024) { alert('File melebihi 2MB'); input.value = ''; return; }
+    if (file.size > 2 * 1024 * 1024) {
+        alert('File melebihi 2MB. Pilih file yang lebih kecil.');
+        input.value = '';
+        return;
+    }
     showImagePreview(key, file);
 }
+
 function handleFileDrop(e, key) {
     e.preventDefault();
     document.getElementById('drop_' + key).classList.remove('drag-over');
     const file = e.dataTransfer.files[0];
     if (!file || !file.type.startsWith('image/')) return;
     const input = document.getElementById('field_' + key);
-    const dt = new DataTransfer(); dt.items.add(file); input.files = dt.files;
+    const dt    = new DataTransfer();
+    dt.items.add(file);
+    input.files = dt.files;
     showImagePreview(key, file);
 }
+
 function handleDragOver(e, area)  { e.preventDefault(); area.classList.add('drag-over'); }
 function handleDragLeave(e, area) { if (!area.contains(e.relatedTarget)) area.classList.remove('drag-over'); }
+
 function showImagePreview(key, file) {
     const reader = new FileReader();
     reader.onload = ev => {
-        document.getElementById('preview_' + key).src = ev.target.result;
+        document.getElementById('preview_' + key).src         = ev.target.result;
         document.getElementById('filename_' + key).textContent = file.name;
         document.getElementById('preview_wrap_' + key).style.display = 'inline-block';
         const p = document.getElementById('upload_prompt_' + key);
@@ -655,16 +669,17 @@ function showImagePreview(key, file) {
     };
     reader.readAsDataURL(file);
 }
+
 function clearImage(key) {
-    document.getElementById('preview_' + key).src = '';
-    document.getElementById('filename_' + key).textContent = '';
-    document.getElementById('field_' + key).value = '';
+    document.getElementById('preview_' + key).src             = '';
+    document.getElementById('filename_' + key).textContent    = '';
+    document.getElementById('field_' + key).value             = '';
     document.getElementById('preview_wrap_' + key).style.display = 'none';
     const p = document.getElementById('upload_prompt_' + key);
     if (p) p.style.display = 'block';
 }
 
-/* ── Color ── */
+/* ── Color sync ── */
 function syncColorFromHex(hexInput, id) {
     const v = hexInput.value;
     if (/^#[0-9a-fA-F]{6}$/.test(v)) {
@@ -674,51 +689,73 @@ function syncColorFromHex(hexInput, id) {
     }
 }
 
-/* ── History ── */
+/* ── History panel ── */
 function toggleHistory() {
     document.getElementById('history-body').classList.toggle('open');
     document.getElementById('history-chevron').classList.toggle('open');
 }
+
 document.addEventListener('DOMContentLoaded', () => {
-    @if($histories->isNotEmpty()) toggleHistory(); @endif
+    @if($histories->isNotEmpty())
+    toggleHistory();
+    @endif
 });
 
-/* ── Restore Modal ── */
+/* ── Restore modal ── */
 let pendingRestoreId = null;
+
 function confirmRestore(id, abs, rel) {
     pendingRestoreId = id;
     document.getElementById('modal-time-display').textContent = abs + ' (' + rel + ')';
     document.getElementById('restore-modal').classList.add('open');
     document.body.style.overflow = 'hidden';
 }
+
 function closeRestoreModal() {
     document.getElementById('restore-modal').classList.remove('open');
     document.body.style.overflow = '';
     pendingRestoreId = null;
 }
+
 document.getElementById('btn-confirm-restore').addEventListener('click', () => {
     if (!pendingRestoreId) return;
-    document.getElementById('restore-form-' + pendingRestoreId)?.submit();
+    const form = document.getElementById('restore-form-' + pendingRestoreId);
+    if (form) form.submit();
 });
+
 document.getElementById('restore-modal').addEventListener('click', function(e) {
     if (e.target === this) closeRestoreModal();
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeRestoreModal(); });
 
-/* ── Unsaved Changes ── */
+document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeRestoreModal();
+});
+
+/* ── Unsaved changes warning ── */
 let formChanged = false;
 const form = document.getElementById('section-form');
 if (form) {
-    form.addEventListener('change', () => { formChanged = true; document.body.classList.add('has-changes'); });
-    form.addEventListener('submit', () => { formChanged = false; document.body.classList.remove('has-changes'); });
-    window.addEventListener('beforeunload', e => { if (formChanged) { e.preventDefault(); e.returnValue = ''; } });
+    form.addEventListener('change', () => {
+        formChanged = true;
+        document.body.classList.add('has-changes');
+    });
+    form.addEventListener('submit', () => {
+        formChanged = false;
+        document.body.classList.remove('has-changes');
+    });
+    window.addEventListener('beforeunload', e => {
+        if (formChanged) {
+            e.preventDefault();
+            e.returnValue = '';
+        }
+    });
 }
 
 /* ── Toast ── */
 let _tt;
 function showToast(msg, isError = false) {
     const t = document.getElementById('form-toast');
-    t.textContent = msg;
+    t.textContent       = msg;
     t.style.background  = isError ? '#FF5A36' : '#0D0D0D';
     t.style.color       = isError ? '#fff'    : '#F5C800';
     t.style.borderColor = isError ? '#FF5A36' : '#F5C800';
@@ -727,4 +764,4 @@ function showToast(msg, isError = false) {
     _tt = setTimeout(() => t.classList.remove('show'), 2800);
 }
 </script>
-@endpushz
+@endpush

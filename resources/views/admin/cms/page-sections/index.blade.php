@@ -324,16 +324,11 @@
     {{-- Grid --}}
     <div class="grid-area">
 
-        {{-- ══════════════════════════════════════════════════════════
-             SERVICES NAVBAR WIDGET
-             Toggle aktif/nonaktif per service → langsung efek ke navbar
-        ══════════════════════════════════════════════════════════ --}}
+        {{-- SERVICES NAVBAR WIDGET --}}
         @php $allServices = \App\Models\Service::ordered()->get(); @endphp
         @if($allServices->isNotEmpty())
         <div class="row-label">SERVICES — NAVBAR VISIBILITY</div>
         <div class="svc-widget">
-
-            {{-- Header --}}
             <div class="svc-widget-hd">
                 <div class="svc-widget-title">
                     <i class="fas fa-bars-staggered"></i>
@@ -343,58 +338,36 @@
                     {{ $allServices->where('is_active', true)->count() }}/{{ $allServices->count() }} AKTIF
                 </span>
             </div>
-
-            {{-- Rows --}}
             <div id="svc-list">
                 @foreach($allServices as $svc)
-                <div class="svc-row {{ !$svc->is_active ? 'is-inactive' : '' }}"
-                     id="svc-row-{{ $svc->id }}">
-
-                    {{-- Icon Box --}}
-                    <div class="svc-icon-box {{ $svc->is_active ? 'active-icon' : 'inactive-icon' }}"
-                         id="svc-icon-{{ $svc->id }}">
+                <div class="svc-row {{ !$svc->is_active ? 'is-inactive' : '' }}" id="svc-row-{{ $svc->id }}">
+                    <div class="svc-icon-box {{ $svc->is_active ? 'active-icon' : 'inactive-icon' }}" id="svc-icon-{{ $svc->id }}">
                         <i class="{{ $svc->icon_class ?: 'fa-solid fa-circle' }}"></i>
                     </div>
-
-                    {{-- Info --}}
                     <div class="svc-info">
-                        <div class="svc-name {{ $svc->is_active ? 'active-name' : 'inactive-name' }}"
-                             id="svc-name-{{ $svc->id }}">
+                        <div class="svc-name {{ $svc->is_active ? 'active-name' : 'inactive-name' }}" id="svc-name-{{ $svc->id }}">
                             {{ $svc->title }}
                         </div>
-                        <div class="svc-route">
-                            {{ $svc->route_name ?: '/layanan/'.$svc->slug }}
-                        </div>
+                        <div class="svc-route">{{ $svc->route_name ?: '/layanan/'.$svc->slug }}</div>
                     </div>
-
-                    {{-- Badge --}}
-                    <span class="svc-badge {{ $svc->is_active ? 'active-badge' : 'inactive-badge' }}"
-                          id="svc-badge-{{ $svc->id }}">
+                    <span class="svc-badge {{ $svc->is_active ? 'active-badge' : 'inactive-badge' }}" id="svc-badge-{{ $svc->id }}">
                         {{ $svc->is_active ? 'AKTIF' : 'NONAKTIF' }}
                     </span>
-
-                    {{-- Toggle --}}
-                    <label class="toggle" title="{{ $svc->is_active ? 'Nonaktifkan dari navbar' : 'Aktifkan di navbar' }}"
-                           style="flex-shrink:0;cursor:pointer">
-                        <input type="checkbox"
-                               {{ $svc->is_active ? 'checked' : '' }}
-                               onchange="toggleService({{ $svc->id }}, this)">
+                    <label class="toggle" title="{{ $svc->is_active ? 'Nonaktifkan dari navbar' : 'Aktifkan di navbar' }}" style="flex-shrink:0;cursor:pointer">
+                        <input type="checkbox" {{ $svc->is_active ? 'checked' : '' }} onchange="toggleService({{ $svc->id }}, this)">
                         <span class="toggle-track"></span>
                         <span class="toggle-thumb"></span>
                     </label>
                 </div>
                 @endforeach
             </div>
-
-            {{-- Footer hint --}}
             <div class="svc-widget-ft">
                 <i class="fas fa-info-circle"></i>
                 &nbsp;Toggle di atas langsung mempengaruhi tampilan Services di navbar publik.
-                Nonaktif = hilang dari navbar & tidak bisa diakses.
+                Nonaktif = hilang dari navbar &amp; tidak bisa diakses.
             </div>
         </div>
         @endif
-        {{-- ══ END SERVICES WIDGET ══════════════════════════════════ --}}
 
         @if($sections->isEmpty())
         <div class="empty-state">
@@ -409,9 +382,24 @@
                 $fields       = $section->getFields();
                 $content      = $section->content ?? [];
                 $hiddenFields = $section->hidden_fields ?? [];
-                $preview      = array_slice($fields, 0, 5);
-                $more         = count($fields) - count($preview);
-                $hiddenCount  = count($hiddenFields);
+
+                // FIX: Jika schema tidak punya fields (section legacy),
+                // bangun preview dari content keys yang ada di DB.
+                // Gunakan closure biasa (bukan arrow function) agar
+                // Blade compiler tidak salah parse karakter "=>".
+                if (empty($fields) && !empty($content)) {
+                    $fields = collect(array_keys($content))->map(function($k) {
+                        return [
+                            'key'   => $k,
+                            'label' => ucwords(str_replace('_', ' ', $k)),
+                            'type'  => 'text',
+                        ];
+                    })->values()->all();
+                }
+
+                $preview     = array_slice($fields, 0, 5);
+                $more        = count($fields) - count($preview);
+                $hiddenCount = count($hiddenFields);
             @endphp
             <div class="section-card {{ !$section->is_active ? 'inactive' : '' }}" data-id="{{ $section->id }}">
                 <div class="card-accent"></div>
@@ -451,10 +439,10 @@
                     <div class="field-rows" id="fields-{{ $section->id }}">
                         @foreach($preview as $field)
                         @php
-                            $key       = $field['key'];
-                            $val       = $content[$key] ?? null;
-                            $type      = $field['type'];
-                            $isHidden  = in_array($key, $hiddenFields);
+                            $key      = $field['key'];
+                            $val      = $content[$key] ?? null;
+                            $type     = $field['type'];
+                            $isHidden = in_array($key, $hiddenFields);
                         @endphp
                         <div class="field-row {{ $isHidden ? 'is-hidden-row' : '' }}"
                              data-field-key="{{ $key }}" data-section-id="{{ $section->id }}">
@@ -545,44 +533,29 @@ const TOGGLE_FIELD_URL = '{{ url('admin/cms/page-sections/section') }}';
 const TOGGLE_SVC_URL   = '{{ url('admin/cms/services') }}';
 
 /* ════════════════════════════════════════════════
-   TOGGLE SERVICE AKTIF/NONAKTIF (navbar widget)
+   TOGGLE SERVICE AKTIF/NONAKTIF
    ════════════════════════════════════════════ */
 async function toggleService(svcId, checkbox) {
     checkbox.disabled = true;
-
     try {
-        const res = await fetch(`${TOGGLE_SVC_URL}/${svcId}/toggle`, {
+        const res  = await fetch(`${TOGGLE_SVC_URL}/${svcId}/toggle`, {
             method: 'PATCH',
-            headers: {
-                'X-CSRF-TOKEN': CSRF,
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
+            headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json', 'Content-Type': 'application/json' },
         });
         const data = await res.json();
         if (!data.success) throw new Error();
 
         const active = data.is_active;
 
-        // Row background
         const row = document.getElementById(`svc-row-${svcId}`);
         if (row) row.classList.toggle('is-inactive', !active);
 
-        // Icon box
         const iconBox = document.getElementById(`svc-icon-${svcId}`);
-        if (iconBox) {
-            iconBox.classList.toggle('active-icon', active);
-            iconBox.classList.toggle('inactive-icon', !active);
-        }
+        if (iconBox) { iconBox.classList.toggle('active-icon', active); iconBox.classList.toggle('inactive-icon', !active); }
 
-        // Name style
         const name = document.getElementById(`svc-name-${svcId}`);
-        if (name) {
-            name.classList.toggle('active-name', active);
-            name.classList.toggle('inactive-name', !active);
-        }
+        if (name) { name.classList.toggle('active-name', active); name.classList.toggle('inactive-name', !active); }
 
-        // Badge
         const badge = document.getElementById(`svc-badge-${svcId}`);
         if (badge) {
             badge.textContent = active ? 'AKTIF' : 'NONAKTIF';
@@ -590,21 +563,16 @@ async function toggleService(svcId, checkbox) {
             badge.classList.toggle('inactive-badge', !active);
         }
 
-        // Update count label
         const countEl = document.getElementById('svc-active-count');
-        if (countEl && data.active_count !== undefined && data.total_count !== undefined) {
+        if (countEl && data.active_count !== undefined) {
             countEl.textContent = `${data.active_count}/${data.total_count} AKTIF`;
         }
 
-        showToast(active
-            ? `"${data.title}" aktif di navbar`
-            : `"${data.title}" disembunyikan dari navbar`
-        );
+        showToast(active ? `"${data.title}" aktif di navbar` : `"${data.title}" disembunyikan dari navbar`);
     } catch (e) {
-        checkbox.checked = !checkbox.checked; // rollback
+        checkbox.checked = !checkbox.checked;
         showToast('Gagal mengubah status service', true);
     }
-
     checkbox.disabled = false;
 }
 
@@ -620,16 +588,26 @@ async function toggleFieldVisibility(sectionId, fieldKey, btn) {
             headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': CSRF,
-                'Accept': 'application/json',
+                'Accept'      : 'application/json',
             },
             body: JSON.stringify({ field_key: fieldKey }),
         });
 
+        // Handle non-OK responses gracefully
+        if (!res.ok) {
+            let errMsg = `HTTP ${res.status}`;
+            try {
+                const errData = await res.json();
+                errMsg = errData.error || errMsg;
+            } catch(e) {}
+            throw new Error(errMsg);
+        }
+
         const data = await res.json();
-        if (!data.success) throw new Error();
+        if (!data.success) throw new Error(data.error || 'Gagal');
 
         const isHidden = data.is_hidden;
-        const row = btn.closest('.field-row');
+        const row      = btn.closest('.field-row');
 
         row.classList.toggle('is-hidden-row', isHidden);
         btn.classList.toggle('is-hidden', isHidden);
@@ -643,11 +621,11 @@ async function toggleFieldVisibility(sectionId, fieldKey, btn) {
         }
 
         showToast(isHidden
-            ? `Field "${fieldKey}" disembunyikan dari frontend`
+            ? `Field "${fieldKey}" disembunyikan`
             : `Field "${fieldKey}" ditampilkan kembali`
         );
     } catch (e) {
-        showToast('Gagal mengubah visibility field', true);
+        showToast('Gagal: ' + e.message, true);
     }
 
     btn.disabled = false;
@@ -657,7 +635,7 @@ async function toggleFieldVisibility(sectionId, fieldKey, btn) {
    EXPAND / COLLAPSE MORE FIELDS
    ════════════════════════════════════════════ */
 function toggleExpandFields(btn, sectionId) {
-    const area = document.getElementById(`extra-fields-${sectionId}`);
+    const area   = document.getElementById(`extra-fields-${sectionId}`);
     const isOpen = area.classList.toggle('open');
     btn.classList.toggle('expanded', isOpen);
 }
@@ -668,10 +646,10 @@ function toggleExpandFields(btn, sectionId) {
 let toastTimer;
 function showToast(msg, isError = false) {
     const t = document.getElementById('field-toast');
-    t.textContent      = msg;
-    t.style.background = isError ? '#FF5A36' : '#0D0D0D';
-    t.style.color      = isError ? '#fff'    : '#F5C800';
-    t.style.borderColor= isError ? '#FF5A36' : '#F5C800';
+    t.textContent       = msg;
+    t.style.background  = isError ? '#FF5A36' : '#0D0D0D';
+    t.style.color       = isError ? '#fff'    : '#F5C800';
+    t.style.borderColor = isError ? '#FF5A36' : '#F5C800';
     t.classList.add('show');
     clearTimeout(toastTimer);
     toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
@@ -712,9 +690,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabsScroll.scrollLeft = scrollStart - (e.pageX - tabsScroll.offsetLeft - startX) * 1.2;
     });
 
-    /* ════════════════════════════════════════════════
-       DRAG & DROP — SECTION CARDS
-       ════════════════════════════════════════════ */
+    /* DRAG & DROP */
     const grid    = document.getElementById('sortable-grid');
     const bar     = document.getElementById('reorder-bar');
     const btnSave = document.getElementById('btn-save-order');

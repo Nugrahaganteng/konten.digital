@@ -156,7 +156,9 @@ class CmsSeeder extends Seeder
         // ── 6. PAGE SECTIONS ───────────────────────────────────────────
         $pageSections = [
 
-            // ══ HOME ══════════════════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // HOME
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'home', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
@@ -240,7 +242,9 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
-            // ══ ABOUT ═════════════════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // ABOUT
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'about', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
@@ -253,9 +257,9 @@ class CmsSeeder extends Seeder
                 'page' => 'about', 'section_key' => 'tentang',
                 'label' => 'Tentang Kami', 'order' => 2,
                 'content' => [
-                    'title' => 'Mitra Digital Terpercaya',
+                    'title'       => 'Mitra Digital Terpercaya',
                     'description' => 'Kami adalah mitra terpercaya dalam komunikasi dan pemasaran digital.',
-                    'image' => null,
+                    'image'       => null,
                 ],
             ],
             [
@@ -272,13 +276,15 @@ class CmsSeeder extends Seeder
                 'page' => 'about', 'section_key' => 'cta',
                 'label' => 'CTA / Penutup', 'order' => 4,
                 'content' => [
-                    'title' => 'Siap Melejit Bersama Kami?',
+                    'title'    => 'Siap Melejit Bersama Kami?',
                     'cta_text' => 'WhatsApp Sekarang',
                     'cta_url'  => 'https://wa.me/6287786000919',
                 ],
             ],
 
-            // ══ CONTACT ═══════════════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // CONTACT
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'contact', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
@@ -313,7 +319,9 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
-            // ══ CARA ORDER ════════════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // CARA ORDER
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'cara-order', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
@@ -345,13 +353,15 @@ class CmsSeeder extends Seeder
                 'page' => 'cara-order', 'section_key' => 'cta',
                 'label' => 'CTA Penutup', 'order' => 3,
                 'content' => [
-                    'title' => 'SIAP UNTUK GO PUBLIC?',
+                    'title'    => 'SIAP UNTUK GO PUBLIC?',
                     'cta_text' => 'Order via WhatsApp →',
                     'cta_url'  => 'https://wa.me/6287786000919',
                 ],
             ],
 
-            // ══ SYARAT & KETENTUAN ════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // SYARAT & KETENTUAN
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'syarat-ketentuan', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
@@ -398,20 +408,22 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
-            // ══ LAYANAN: PRESS RELEASE ════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PRESS RELEASE
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'layanan-press-release', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
                 'content' => [
-                    'badge_text'   => '✦ JASA PRESS RELEASE',
-                    'title_line1'  => 'BERSAMA',
-                    'title_line2'  => 'WARTAWAN DARI',
-                    'title_line3'  => 'MEDIA TERNAMA',
-                    'quote'        => 'Ubah statement menjadi berita nasional dalam sekejap.',
-                    'description'  => 'Selain membantu mengundang wartawan/media untuk Anda, kami menangani pembuatan artikel press release, undangan media, distribusi berita, hingga monitoring pemuatan berita secara tuntas.',
-                    'cta_text'     => 'KONSULTASI SEKARANG →',
-                    'cta_url'      => 'https://wa.me/6287786000919',
-                    'image'        => null,
+                    'badge_text'  => '✦ JASA PRESS RELEASE',
+                    'title_line1' => 'BERSAMA',
+                    'title_line2' => 'WARTAWAN DARI',
+                    'title_line3' => 'MEDIA TERNAMA',
+                    'quote'       => 'Ubah statement menjadi berita nasional dalam sekejap.',
+                    'description' => 'Selain membantu mengundang wartawan/media untuk Anda, kami menangani pembuatan artikel press release, undangan media, distribusi berita, hingga monitoring pemuatan berita secara tuntas.',
+                    'cta_text'    => 'KONSULTASI SEKARANG →',
+                    'cta_url'     => 'https://wa.me/6287786000919',
+                    'image'       => null,
                 ],
             ],
             [
@@ -433,8 +445,65 @@ class CmsSeeder extends Seeder
                 ],
             ],
             [
+                'page' => 'layanan-press-release', 'section_key' => 'materi_publikasi',
+                'label' => 'Materi Publikasi — Checklist', 'order' => 3,
+                'content' => [
+                    'title'   => 'Pilih Materi Publikasi Sesuai Kebutuhan Anda!',
+                    'item_1'  => 'Promosi launching/peluncuran bisnis atau brand',
+                    'item_2'  => 'Kegiatan sosial atau kemasyarakatan',
+                    'item_3'  => 'Memperkenalkan produk atau jasa baru',
+                    'item_4'  => 'Promosi perusahaan, event, seminar, kegiatan kampus, dll',
+                    'item_5'  => 'Siaran pers perusahaan / korporat',
+                    'item_6'  => 'Peningkatan brand awareness & reputasi',
+                    'item_7'  => '',
+                    'item_8'  => '',
+                    'bg_image'=> null,
+                ],
+            ],
+            [
+                'page' => 'layanan-press-release', 'section_key' => 'target_audience',
+                'label' => 'Target Audience — Siapa Target Anda?', 'order' => 4,
+                'content' => [
+                    'title'          => 'SIAPA TARGET ANDA?',
+                    'subtitle'       => 'PILIH KATEGORI UNTUK MULAI EKSPANSI',
+                    'target_1_badge' => 'P01',
+                    'target_1_title' => 'Brand & UMKM',
+                    'target_1_desc'  => 'Tingkatkan konversi customer dengan validasi berita dari media terpercaya.',
+                    'target_1_color' => 'bg-cyan-300',
+                    'target_2_badge' => 'P02',
+                    'target_2_title' => 'Profesional',
+                    'target_2_desc'  => 'Bangun personal branding kuat dan tingkatkan elektabilitas di mata publik.',
+                    'target_2_color' => 'bg-yellow-300',
+                    'target_3_badge' => 'P03',
+                    'target_3_title' => 'Influencer',
+                    'target_3_desc'  => 'Naikkan kelas endorsement Anda dengan label "Diliput Media Nasional".',
+                    'target_3_color' => 'bg-rose-300',
+                    'target_4_badge' => 'P04',
+                    'target_4_title' => 'Komunitas',
+                    'target_4_desc'  => 'Dapatkan kepercayaan maksimal untuk menarik ribuan anggota baru ke institusi Anda.',
+                    'target_4_color' => 'bg-lime-300',
+                ],
+            ],
+            [
+                'page' => 'layanan-press-release', 'section_key' => 'keunggulan',
+                'label' => 'Keunggulan — Mengapa Klien Memilih Kami?', 'order' => 5,
+                'content' => [
+                    'title'        => 'MENGAPA KLIEN',
+                    'title_line2'  => 'MEMILIH KAMI?',
+                    'bg_color'     => '#22d3ee',
+                    'item_1_title' => 'Proses Cepat',       'item_1_desc' => 'Tim profesional kami memastikan rilis Anda diproses dalam hitungan jam, bukan hari.',    'item_1_color' => 'bg-white',
+                    'item_2_title' => 'Garansi 100%',       'item_2_desc' => 'Jaminan tayang atau uang kembali 100% jika rilis tidak lolos kebijakan redaksi.',         'item_2_color' => 'bg-yellow-400',
+                    'item_3_title' => 'Revisi Unlimited',   'item_3_desc' => 'Kepuasan Anda prioritas. Kami berikan revisi tanpa batas hingga narasi sempurna.',        'item_3_color' => 'bg-purple-500',
+                    'item_4_title' => 'Admin Responsif',    'item_4_desc' => 'Konsultasi gratis kapan saja. Admin kami stand-by untuk menjawab setiap pertanyaan.',     'item_4_color' => 'bg-rose-400',
+                    'item_5_title' => 'Biaya Kompetitif',   'item_5_desc' => 'Harga paling masuk akal di kelasnya tanpa menurunkan standar kualitas publikasi.',        'item_5_color' => 'bg-green-400',
+                    'item_6_title' => '200+ Media',         'item_6_desc' => 'Akses ke jaringan media nasional terbesar mulai dari portal berita hingga koran cetak.',  'item_6_color' => 'bg-orange-400',
+                    'item_7_title' => 'Gratis Penulisan',   'item_7_desc' => 'Belum ada draft? Tim editor kami buatkan artikel rilis profesional secara gratis.',       'item_7_color' => 'bg-indigo-400',
+                    'item_8_title' => 'Bonus Media',        'item_8_desc' => 'Setiap pembelian paket tertentu, dapatkan ekstra publikasi di media mitra kami.',         'item_8_color' => 'bg-white',
+                ],
+            ],
+            [
                 'page' => 'layanan-press-release', 'section_key' => 'pricing',
-                'label' => 'Paket Harga', 'order' => 3,
+                'label' => 'Paket Harga', 'order' => 6,
                 'content' => [
                     'title'                => 'Paket Harga Jasa Press Release Media Online',
                     'bronze_price_ori'     => 'Rp 3.750.000,-',
@@ -453,8 +522,19 @@ class CmsSeeder extends Seeder
                 ],
             ],
             [
+                'page' => 'layanan-press-release', 'section_key' => 'media_partner',
+                'label' => 'Media Partner — Strip Logo Mitra', 'order' => 7,
+                'content' => [
+                    'title'    => '100+ MITRA.',
+                    'subtitle' => 'Terpercaya di Seluruh Indonesia',
+                    'logo_1'   => null, 'logo_2'  => null, 'logo_3'  => null, 'logo_4'  => null,
+                    'logo_5'   => null, 'logo_6'  => null, 'logo_7'  => null, 'logo_8'  => null,
+                    'logo_9'   => null, 'logo_10' => null, 'logo_11' => null, 'logo_12' => null,
+                ],
+            ],
+            [
                 'page' => 'layanan-press-release', 'section_key' => 'cta',
-                'label' => 'CTA Penutup', 'order' => 4,
+                'label' => 'CTA Penutup', 'order' => 8,
                 'content' => [
                     'title'    => 'SIAP UNTUK GO NATIONAL?',
                     'cta_text' => 'Hubungi Kami Sekarang →',
@@ -462,73 +542,106 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
-            // ══ LAYANAN: BACKLINK ═════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: BACKLINK ← DATA LENGKAP (BUKAN PLACEHOLDER)
+            // ════════════════════════════════════════════════════════════
+
+            // ── 1. Hero ──────────────────────────────────────────────────
             [
-                'page' => 'layanan-backlink', 'section_key' => 'hero',
-                'label' => 'Hero Section', 'order' => 1,
-                'content' => [
+                'page'        => 'layanan-backlink',
+                'section_key' => 'hero',
+                'label'       => 'Hero Section',
+                'order'       => 1,
+                'content'     => [
                     'badge_text'  => '✦ JASA BACKLINK MEDIA NASIONAL',
-                    'title'       => 'KONTENDIGITAL.ID',
+                    'title'       => 'BACKLINK',
                     'description' => 'Mitra terpercaya dalam komunikasi dan pemasaran digital yang mudah, murah, cepat, dan terjamin kualitasnya.',
-                    'cta_text'    => 'Konsultasi Sekarang',
+                    'cta_text'    => 'KONSULTASI SEKARANG',
                     'cta_url'     => 'https://wa.me/6287786000919',
                 ],
             ],
+
+            // ── 2. Manfaat Backlink ──────────────────────────────────────
             [
-                'page' => 'layanan-backlink', 'section_key' => 'benefits',
-                'label' => 'Manfaat Backlink', 'order' => 2,
-                'content' => [
-                    'title'           => 'Manfaat Backlink Media Nasional',
+                'page'        => 'layanan-backlink',
+                'section_key' => 'benefits',
+                'label'       => 'Manfaat Backlink',
+                'order'       => 2,
+                'content'     => [
+                    'title'           => 'MANFAAT BACKLINK MEDIA NASIONAL',
                     'subtitle'        => 'Backlink media nasional memiliki beberapa manfaat sebagai berikut:',
+
                     'benefit_1_title' => 'Meningkatkan Jumlah Pengunjung (Visitor)',
-                    'benefit_1_desc'  => 'Backlink dapat meningkatkan visibilitas di kalangan audiens yang lebih luas.',
+                    'benefit_1_desc'  => 'Backlink dari media nasional dapat meningkatkan visibilitas website Anda di kalangan audiens yang lebih luas sehingga mendatangkan lebih banyak pengunjung organik.',
+
                     'benefit_2_title' => 'Memudahkan Google Menemukan Website Anda',
-                    'benefit_2_desc'  => 'Memudahkan mesin pencarian Google dalam menemukan website yang Anda miliki.',
+                    'benefit_2_desc'  => 'Backlink berkualitas membantu mesin pencari Google dalam menemukan dan mengindeks website Anda lebih cepat sehingga peringkat di SERP meningkat signifikan.',
+
                     'benefit_3_title' => 'Meningkatkan Authority Website',
-                    'benefit_3_desc'  => 'Meningkatkan reputasi yang tinggi dan dianggap sebagai sumber berita terpercaya.',
+                    'benefit_3_desc'  => 'Disebut oleh media ber-DA tinggi meningkatkan reputasi domain Anda dan menjadikannya dianggap sebagai sumber informasi yang terpercaya oleh Google.',
                 ],
             ],
+
+            // ── 3. Apa Itu Backlink ──────────────────────────────────────
             [
-                'page' => 'layanan-backlink', 'section_key' => 'what_is',
-                'label' => 'Apa Itu Backlink?', 'order' => 3,
-                'content' => [
-                    'title'    => 'APA ITU BACKLINK',
+                'page'        => 'layanan-backlink',
+                'section_key' => 'what_is',
+                'label'       => 'Apa Itu Backlink?',
+                'order'       => 3,
+                'content'     => [
+                    'title'    => 'APA ITU',
                     'subtitle' => 'Media Nasional Expertise',
-                    'point_1'  => 'Tautan atau hyperlink strategis yang ditempatkan pada portal berita raksasa di Indonesia.',
-                    'point_2'  => 'Senjata utama untuk memicu algoritma Google agar mengenali website Anda sebagai Otoritas Tinggi.',
+                    'point_1'  => 'Tautan atau hyperlink strategis yang ditempatkan pada portal berita raksasa di Indonesia untuk mengarahkan traffic ke website Anda.',
+                    'point_2'  => 'Senjata utama untuk memicu algoritma Google agar mengenali website Anda sebagai Otoritas Tinggi dan menaikkan posisinya di halaman pencarian.',
                     'image'    => null,
                 ],
             ],
+
+            // ── 4. Mengapa Memilih Kami ──────────────────────────────────
             [
-                'page' => 'layanan-backlink', 'section_key' => 'why_us',
-                'label' => 'Mengapa Klien Memilih Kami?', 'order' => 4,
-                'content' => [
-                    'title'         => 'Mengapa Klien Memilih Jasa Kontendigital.id?',
+                'page'        => 'layanan-backlink',
+                'section_key' => 'why_us',
+                'label'       => 'Mengapa Klien Memilih Kami?',
+                'order'       => 4,
+                'content'     => [
+                    'title'         => 'MENGAPA KLIEN MEMILIH JASA HNP COMMUNICATIONS.ID?',
+
                     'reason_1'      => 'Proses Cepat dan Mudah',
-                    'reason_1_desc' => 'Tim kami berpengalaman dan profesional sehingga prosesnya bisa dilakukan dengan cepat.',
+                    'reason_1_desc' => 'Tim kami yang berpengalaman dan profesional memastikan setiap pesanan backlink diproses dengan cepat, tepat, dan tanpa kerumitan di pihak Anda.',
+
                     'reason_2'      => 'Garansi 100% Tayang',
-                    'reason_2_desc' => 'Garansi tayang di media online, jika tidak bisa tayang kami berikan alternatif media atau full refund.',
+                    'reason_2_desc' => 'Kami memberikan garansi tayang di media online terpilih. Jika backlink tidak bisa tayang, kami siap memberikan alternatif media setara atau full refund.',
+
                     'reason_3'      => 'Revisi Sepuasnya',
-                    'reason_3_desc' => 'Kami memberikan garansi revisi sepuasnya, terutama dalam penulisan artikel jika ada kesalahan dari kami.',
-                    'reason_4'      => 'Biaya Murah',
-                    'reason_4_desc' => 'Memberikan harga yang super murah tanpa mengorbankan kualitas press release Anda.',
-                    'reason_5'      => 'Banyak Pilihan Media',
-                    'reason_5_desc' => 'Memiliki lebih dari 200 list media sehingga Anda bisa memilih media sesuai kebutuhan.',
-                    'reason_6'      => 'Gratis Penulisan Draft',
-                    'reason_6_desc' => 'Jika Anda belum memiliki artikel, kami akan membuatkan draft artikel tanpa biaya tambahan.',
+                    'reason_3_desc' => 'Kami memberikan garansi revisi sepuasnya, terutama dalam penulisan artikel pendukung backlink jika terdapat kesalahan dari pihak kami.',
+
+                    'reason_4'      => 'Biaya Murah & Kompetitif',
+                    'reason_4_desc' => 'Kami memberikan harga yang super kompetitif tanpa mengorbankan kualitas backlink dan media penempatan yang Anda dapatkan.',
+
+                    'reason_5'      => 'Banyak Pilihan Media (200+)',
+                    'reason_5_desc' => 'Kami memiliki jaringan lebih dari 200 media nasional dan regional sehingga Anda bisa memilih media penempatan backlink sesuai niche bisnis.',
+
+                    'reason_6'      => 'Gratis Penulisan Draft Artikel',
+                    'reason_6_desc' => 'Jika Anda belum memiliki artikel, tim penulis kami akan membuatkan draft artikel berkualitas tanpa biaya tambahan.',
                 ],
             ],
+
+            // ── 5. CTA Penutup ───────────────────────────────────────────
             [
-                'page' => 'layanan-backlink', 'section_key' => 'cta',
-                'label' => 'CTA Penutup', 'order' => 5,
-                'content' => [
+                'page'        => 'layanan-backlink',
+                'section_key' => 'cta',
+                'label'       => 'CTA Penutup',
+                'order'       => 5,
+                'content'     => [
                     'title'    => 'SIAP UNTUK GO NATIONAL?',
-                    'cta_text' => 'Hubungi Kami Sekarang →',
+                    'cta_text' => 'HUBUNGI KAMI SEKARANG →',
                     'cta_url'  => 'https://wa.me/6287786000919',
                 ],
             ],
 
-            // ══ LAYANAN: PRESS CONFERENCE ═════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PRESS CONFERENCE
+            // ════════════════════════════════════════════════════════════
             [
                 'page' => 'layanan-press-conference', 'section_key' => 'hero',
                 'label' => 'Hero Section', 'order' => 1,
@@ -599,155 +712,323 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
-            // ══ LAYANAN: PENULISAN ARTIKEL ════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PENULISAN ARTIKEL
+            // ════════════════════════════════════════════════════════════
             [
-                'page' => 'layanan-penulisan-artikel', 'section_key' => 'hero',
-                'label' => 'Hero Section', 'order' => 1,
-                'content' => [
-                    'badge_text'      => '✦ JASA PENULIS ARTIKEL SEO',
-                    'title_line1'     => 'DAPATKAN',
-                    'title_line2'     => 'KONTEN',
-                    'title_highlight' => 'BERKUALITAS',
-                    'quote'           => 'Ubah ide Anda menjadi konten yang merajai Google.',
-                    'description'     => 'Jasa penulis artikel SEO, konten media, copywriter, dan script video YouTube/Social Media dengan riset keyword mendalam.',
-                    'cta_text'        => 'KONSULTASI SEKARANG →',
-                    'cta_url'         => 'https://wa.me/6287786000919',
-                    'image'           => null,
+                'page'        => 'layanan-penulisan-artikel',
+                'section_key' => 'hero',
+                'label'       => 'Hero Section',
+                'order'       => 1,
+                'content'     => [
+                    'badge_text'  => '✦ JASA PENULISAN ARTIKEL',
+                    'title_line1' => 'KONTEN ARTIKEL',
+                    'title_line2' => 'BERKUALITAS &',
+                    'title_line3' => 'SEO FRIENDLY',
+                    'quote'       => 'Artikel yang menarik pembaca sekaligus disukai Google.',
+                    'description' => 'Tim penulis berpengalaman kami siap menghasilkan artikel informatif, engaging, dan teroptimasi untuk kebutuhan website, blog, maupun media Anda.',
+                    'cta_text'    => 'KONSULTASI SEKARANG →',
+                    'cta_url'     => 'https://wa.me/6287786000919',
+                    'image'       => null,
                 ],
             ],
             [
-                'page' => 'layanan-penulisan-artikel', 'section_key' => 'problems',
-                'label' => 'Masalah yang Kami Selesaikan', 'order' => 2,
-                'content' => [
+                'page'        => 'layanan-penulisan-artikel',
+                'section_key' => 'problems',
+                'label'       => 'Masalah yang Kami Selesaikan',
+                'order'       => 2,
+                'content'     => [
                     'title'     => 'Apakah Anda Mengalami Hal Ini?',
+                    'image'     => null,
                     'problem_1' => 'Tidak tahu cara riset kata kunci',
                     'problem_2' => 'Harga jasa penulisan artikel sangat mahal',
                     'problem_3' => 'Butuh banyak artikel dalam waktu cepat',
                     'problem_4' => 'Trauma dengan jasa penulis asal-asalan',
                     'problem_5' => 'Tidak punya waktu untuk konsisten posting',
+                    'problem_6' => '',
+                    'problem_7' => '',
+                    'problem_8' => '',
                 ],
             ],
             [
-                'page' => 'layanan-penulisan-artikel', 'section_key' => 'why_us',
-                'label' => 'Mengapa Harus Kami?', 'order' => 3,
-                'content' => [
-                    'title'   => 'Mengapa Harus Kami?',
-                    'trust_1' => 'Konsultasi Gratis',
-                    'trust_2' => 'Penulis Profesional',
-                    'trust_3' => 'Lolos Copyright',
-                    'trust_4' => 'Revisi Sepuasnya',
-                    'trust_5' => 'Harga Kompetitif',
-                    'trust_6' => 'Pengerjaan Cepat',
+                'page'        => 'layanan-penulisan-artikel',
+                'section_key' => 'why_artikel',
+                'label'       => 'Mengapa Butuh Jasa Penulisan Artikel?',
+                'order'       => 3,
+                'content'     => [
+                    'title'          => 'Mengapa Harus Jasa Penulisan Artikel?',
+                    'subtitle'       => 'Konten artikel yang baik adalah investasi jangka panjang untuk traffic organik.',
+                    'reason_1_title' => 'Hemat Waktu & Tenaga',
+                    'reason_1_desc'  => 'Serahkan penulisan kepada ahlinya. Anda fokus mengelola bisnis, kami tangani kontennya.',
+                    'reason_2_title' => 'Artikel SEO Teroptimasi',
+                    'reason_2_desc'  => 'Setiap artikel ditulis dengan riset kata kunci yang tepat agar mudah ditemukan di mesin pencari.',
+                    'reason_3_title' => 'Gaya Penulisan Sesuai Brand',
+                    'reason_3_desc'  => 'Kami menyesuaikan tone of voice dan gaya penulisan dengan identitas brand Anda.',
+                    'reason_4_title' => 'Konten Orisinal & Anti Plagiat',
+                    'reason_4_desc'  => 'Setiap artikel ditulis dari nol, 100% original, dan melalui pengecekan plagiarisme sebelum diserahkan.',
+                    'reason_5_title' => 'Berbagai Jenis Artikel',
+                    'reason_5_desc'  => 'Artikel blog, advertorial, listicle, how-to, berita, ulasan produk — semua bisa kami kerjakan.',
                 ],
             ],
             [
-                'page' => 'layanan-penulisan-artikel', 'section_key' => 'topics',
-                'label' => 'Topik Penulisan', 'order' => 4,
-                'content' => [
-                    'title'   => 'Topik Penulisan',
-                    'topic_1' => 'Teknologi',
-                    'topic_2' => 'Kesehatan',
-                    'topic_3' => 'Parenting',
-                    'topic_4' => 'Pendidikan',
-                    'topic_5' => 'Travel',
-                    'topic_6' => 'Otomotif',
-                    'topic_7' => 'Kuliner',
-                    'topic_8' => 'Lifestyle',
+                'page'        => 'layanan-penulisan-artikel',
+                'section_key' => 'topics',
+                'label'       => 'Topik Penulisan',
+                'order'       => 4,
+                'content'     => [
+                    'title'    => 'Topik Penulisan',
+                    'subtitle' => 'Kami Menguasai Berbagai Niche Industri:',
+                    'image'    => null,
+                    'topic_1'  => 'Teknologi',
+                    'topic_2'  => 'Kesehatan',
+                    'topic_3'  => 'Parenting',
+                    'topic_4'  => 'Pendidikan',
+                    'topic_5'  => 'Travel',
+                    'topic_6'  => 'Otomotif',
+                    'topic_7'  => 'Kuliner',
+                    'topic_8'  => 'Lifestyle',
+                ],
+            ],
+            [
+                'page'        => 'layanan-penulisan-artikel',
+                'section_key' => 'pricing',
+                'label'       => 'Paket Harga',
+                'order'       => 5,
+                'content'     => [
+                    'title'              => 'Paket Harga Jasa Penulisan Artikel',
+                    'basic_name'         => 'BASIC',
+                    'basic_price_ori'    => 'Rp 100.000,-',
+                    'basic_price'        => 'Rp 75.000',
+                    'basic_words'        => '500',
+                    'basic_feature_1'    => 'Artikel original',
+                    'basic_feature_2'    => 'Anti plagiat',
+                    'basic_feature_3'    => 'Riset topik',
+                    'basic_feature_4'    => 'Revisi 1x',
+                    'basic_feature_5'    => 'Format Word/PDF',
+                    'basic_feature_6'    => '',
+                    'standard_name'      => 'STANDARD',
+                    'standard_badge'     => 'TERPOPULER',
+                    'standard_price_ori' => 'Rp 200.000,-',
+                    'standard_price'     => 'Rp 150.000',
+                    'standard_words'     => '1000',
+                    'standard_feature_1' => 'Artikel original',
+                    'standard_feature_2' => 'Anti plagiat',
+                    'standard_feature_3' => 'Riset kata kunci SEO',
+                    'standard_feature_4' => 'Revisi 2x',
+                    'standard_feature_5' => 'Format Word/PDF',
+                    'standard_feature_6' => 'Optimasi on-page SEO',
+                    'standard_feature_7' => '',
+                    'standard_feature_8' => '',
+                    'pro_name'           => 'PRO',
+                    'pro_price_ori'      => 'Rp 350.000,-',
+                    'pro_price'          => 'Rp 275.000',
+                    'pro_words'          => '2000',
+                    'pro_feature_1'      => 'Artikel original',
+                    'pro_feature_2'      => 'Anti plagiat',
+                    'pro_feature_3'      => 'Riset kata kunci SEO',
+                    'pro_feature_4'      => 'Revisi unlimited',
+                    'pro_feature_5'      => 'Format Word/PDF',
+                    'pro_feature_6'      => 'Optimasi on-page SEO',
+                    'pro_feature_7'      => 'Internal & external linking',
+                    'pro_feature_8'      => 'Meta description',
+                    'pro_feature_9'      => '',
+                    'pro_feature_10'     => '',
+                    'cta_text'           => 'Pesan Sekarang',
+                    'cta_url'            => 'https://wa.me/6287786000919',
+                ],
+            ],
+            [
+                'page'        => 'layanan-penulisan-artikel',
+                'section_key' => 'cta',
+                'label'       => 'CTA Penutup',
+                'order'       => 6,
+                'content'     => [
+                    'tagline'  => 'Siap Punya Konten yang Merajai Google?',
+                    'title'    => 'SIAP PUNYA KONTEN BERKUALITAS?',
+                    'cta_text' => 'PESAN ARTIKEL SEKARANG',
+                    'cta_url'  => 'https://wa.me/6287786000919',
                 ],
             ],
 
-            // ══ LAYANAN: SCRIPT VIDEO ═════════════════════════════════
-            [
-                'page' => 'layanan-script-video', 'section_key' => 'hero',
-                'label' => 'Hero Section', 'order' => 1,
-                'content' => [
-                    'badge_text'      => '✦ JASA SCRIPT VIDEO PROFESIONAL',
-                    'title_line1'     => 'BUAT VIDEO',
-                    'title_line2'     => 'YANG LEBIH',
-                    'title_highlight' => 'BERPENGARUH',
-                    'quote'           => 'Ubah konsep Anda menjadi naskah yang menginspirasi audiens.',
-                    'description'     => 'Kontendigital.id menciptakan script video yang tidak hanya menarik perhatian, tetapi juga menceritakan kisah Anda dengan cara yang mempengaruhi dan menginspirasi audiens.',
-                    'cta_text'        => 'KONSULTASI SEKARANG →',
-                    'cta_url'         => 'https://wa.me/6287786000919',
-                    'image'           => null,
-                    'bubble_text'     => 'GREAT SCRIPT!!!',
-                ],
-            ],
-            [
-                'page' => 'layanan-script-video', 'section_key' => 'why_us',
-                'label' => 'Kenapa Memilih Kami?', 'order' => 2,
-                'content' => [
-                    'title'          => 'Kenapa Memilih Kami?',
-                    'reason_1_title' => 'Penulis Berpengalaman',
-                    'reason_1_desc'  => 'Tim kami terdiri dari penulis yang telah berpengalaman lebih dari 15 tahun.',
-                    'reason_2_title' => 'Tim Kreatif',
-                    'reason_2_desc'  => 'Kami mengerti betapa pentingnya ide-ide segar dan orisinal dalam dunia hiburan.',
-                    'reason_3_title' => 'Sesuai Kebutuhan',
-                    'reason_3_desc'  => 'Kami menyesuaikan penulisan sesuai dengan gaya Anda, baik iklan maupun YouTube.',
-                    'reason_4_title' => 'Kolaboratif',
-                    'reason_4_desc'  => 'Kami selalu terbuka untuk feedback dan revisi demi hasil yang sempurna.',
-                ],
-            ],
-            [
-                'page' => 'layanan-script-video', 'section_key' => 'services_list',
-                'label' => 'Daftar Layanan Script', 'order' => 3,
-                'content' => [
-                    'title'          => 'Layanan Kami',
-                    'service_1'      => 'Script Video Pendek',
-                    'service_1_desc' => 'Buat video pendek yang mengesankan dengan naskah yang kuat.',
-                    'service_2'      => 'Script Perusahaan',
-                    'service_2_desc' => 'Menciptakan script yang menggambarkan nilai dan visi perusahaan.',
-                    'service_3'      => 'Script Video Iklan',
-                    'service_3_desc' => 'Buat iklan yang mencuri perhatian dan meningkatkan konversi.',
-                    'service_4'      => 'Script YouTube',
-                    'service_4_desc' => 'Script yang tepat untuk vlog, tutorial, atau cerita konten Anda.',
-                    'service_5'      => 'Script Sosmed',
-                    'service_5_desc' => 'Script menarik yang mendukung video sosial media Anda viral.',
-                    'service_6'      => 'Script Dokumenter',
-                    'service_6_desc' => 'Penulisan naskah video dokumenter yang informatif.',
-                ],
-            ],
-            [
-                'page' => 'layanan-script-video', 'section_key' => 'process',
-                'label' => 'Proses Kerja', 'order' => 4,
-                'content' => [
-                    'title'        => 'Proses Kerja',
-                    'step_1_title' => 'KONSULTASI AWAL',
-                    'step_1_desc'  => 'Memahami visi, tujuan, dan target audiens Anda.',
-                    'step_2_title' => 'RANCANG KONSEP',
-                    'step_2_desc'  => 'Mengembangkan konsep cerita dan struktur naskah.',
-                    'step_3_title' => 'PENULISAN DRAFT',
-                    'step_3_desc'  => 'Menulis draft pertama naskah untuk review Anda.',
-                    'step_4_title' => 'REVISI & FINAL',
-                    'step_4_desc'  => 'Melakukan revisi hingga naskah siap untuk produksi.',
-                    'step_5_title' => 'DUKUNGAN PRODUKSI',
-                    'step_5_desc'  => 'Mendampingi proses produksi untuk hasil sempurna.',
-                ],
-            ],
+            // ════════════════════════════════════════════════════════════════════════════
+// LAYANAN: SCRIPT VIDEO
+// ════════════════════════════════════════════════════════════════════════════
+ 
+// ── 1. Hero ──────────────────────────────────────────────────────────────────
+[
+    'page'        => 'layanan-script-video',
+    'section_key' => 'hero',
+    'label'       => 'Hero Section',
+    'order'       => 1,
+    'content'     => [
+        'badge_text'  => '✦ JASA PENULISAN SCRIPT VIDEO',
+        'title_line1' => 'SCRIPT VIDEO',
+        'title_line2' => 'YANG MEMIKAT &',
+        'title_line3' => 'KONVERSI TINGGI',
+        'quote'       => 'Dari ide menjadi naskah yang siap produksi.',
+        'description' => 'Kami merancang naskah video yang engaging, sesuai target audiens Anda, dan siap langsung digunakan untuk produksi iklan, konten sosial media, atau video korporat.',
+        'cta_text'    => 'KONSULTASI SEKARANG',
+        'cta_url'     => 'https://wa.me/6287786000919',
+        'image'       => null,
+    ],
+],
+ 
+// ── 2. Mengapa Jasa Script Video ──────────────────────────────────────────────
+[
+    'page'        => 'layanan-script-video',
+    'section_key' => 'why_script',
+    'label'       => 'Mengapa Butuh Jasa Script Video?',
+    'order'       => 2,
+    'content'     => [
+        'title'          => 'Mengapa Harus Jasa Script Video?',
+        'subtitle'       => 'Script yang baik adalah pondasi utama dari video yang sukses menghasilkan konversi.',
+        'reason_1_title' => 'Hemat Biaya Produksi',
+        'reason_1_desc'  => 'Script yang matang mengurangi risiko reshooting dan revisi produksi yang memakan waktu dan biaya besar.',
+        'reason_2_title' => 'Pesan Tersampaikan dengan Tepat',
+        'reason_2_desc'  => 'Kami memastikan setiap kata dalam script membawa pesan brand Anda secara jelas, menarik, dan persuasif.',
+        'reason_3_title' => 'Sesuai Platform & Durasi',
+        'reason_3_desc'  => 'Script disesuaikan untuk YouTube, Instagram Reels, TikTok, iklan TV, atau video korporat sesuai platform target.',
+        'reason_4_title' => 'Storytelling yang Kuat',
+        'reason_4_desc'  => 'Kami membangun narasi yang emosional dan relevan agar penonton terhubung secara mendalam dengan brand Anda.',
+        'reason_5_title' => 'Revisi Hingga Puas',
+        'reason_5_desc'  => 'Kami menyediakan revisi terbatas hingga script benar-benar sesuai dengan visi dan kebutuhan Anda.',
+    ],
+],
+ 
+// ── 3. Daftar Layanan Script ───────────────────────────────────────────────────
+[
+    'page'        => 'layanan-script-video',
+    'section_key' => 'services_list',
+    'label'       => 'Daftar Layanan Script',
+    'order'       => 3,
+    'content'     => [
+        'title'           => 'LAYANAN KAMI',
+        'subtitle'        => 'Struktur naskah profesional yang dirancang khusus untuk mendominasi platform digital.',
+        'service_1_title' => 'Script Video Pendek',
+        'service_1_desc'  => 'Naskah tajam, fast-paced, dan hook memikat di 3 detik pertama untuk Reels, TikTok, dan Shorts.',
+        'service_2_title' => 'Script Perusahaan',
+        'service_2_desc'  => 'Penyampaian profil bisnis, nilai corporate, dan visi misi dengan alur formal namun tetap bernyawa.',
+        'service_3_title' => 'Script Video Iklan',
+        'service_3_desc'  => 'Menggunakan formula copywriting psikologis tinggi untuk memicu konversi pembelian seketika.',
+        'service_4_title' => 'Script YouTube',
+        'service_4_desc'  => 'Menjaga retention rate penonton tetap tinggi untuk video berdurasi panjang, tutorial, atau edukasi.',
+        'service_5_title' => 'Script Sosmed',
+        'service_5_desc'  => 'Konsep kreatif organik yang relevan dengan tren terkini demi memicu interaksi dan potensi viral.',
+        'service_6_title' => 'Script Dokumenter',
+        'service_6_desc'  => 'Alur storytelling sinematik mendalam yang informatif, berbasis riset data, serta menggugah emosi.',
+    ],
+],
+ 
+// ── 4. Proses Kerja ────────────────────────────────────────────────────────────
+[
+    'page'        => 'layanan-script-video',
+    'section_key' => 'process',
+    'label'       => 'Proses / Alur Kerja',
+    'order'       => 4,
+    'content'     => [
+        'title'        => 'Alur Kerja Pembuatan Naskah',
+        'step_1_title' => 'KONSULTASI AWAL',
+        'step_1_desc'  => 'Membedah visi produk, detail brief, serta segmentasi audiens yang disasar.',
+        'step_2_title' => 'RANCANG KONSEP',
+        'step_2_desc'  => 'Penyusunan premis cerita, angle penulisan, dan penentuan hook utama.',
+        'step_3_title' => 'PENULISAN DRAFT',
+        'step_3_desc'  => 'Eksekusi naskah baris per baris lengkap dengan instruksi visual/audio.',
+        'step_4_title' => 'REVISI & FINAL',
+        'step_4_desc'  => 'Penyelarasan feedback berkala hingga naskah dinilai solid & siap rekam.',
+        'step_5_title' => 'DUKUNGAN PRODUKSI',
+        'step_5_desc'  => 'Pendampingan interpretasi naskah agar proses syuting tidak melenceng dari konsep.',
+    ],
+],
+ 
+// ── 5. Paket Harga ─────────────────────────────────────────────────────────────
+[
+    'page'        => 'layanan-script-video',
+    'section_key' => 'pricing',
+    'label'       => 'Paket Harga',
+    'order'       => 5,
+    'content'     => [
+        'title'            => 'Paket Harga Jasa Penulisan Script Video',
+        // SHORT
+        'short_price_ori'  => 'Rp 300.000,-',
+        'short_price'      => 'Rp 250.000',
+        'short_duration'   => '< 1 Menit',
+        'short_feature_1'  => 'Naskah lengkap',
+        'short_feature_2'  => 'Sesuai brief khusus',
+        'short_feature_3'  => 'Format (.docx / .pdf)',
+        'short_feature_4'  => 'Revisi Maksimal 1x',
+        'short_feature_5'  => 'Cocok untuk Reels/TikTok',
+        // MEDIUM
+        'medium_price_ori' => 'Rp 600.000,-',
+        'medium_price'     => 'Rp 500.000',
+        'medium_duration'  => '1 - 3 Menit',
+        'medium_feature_1' => 'Naskah lengkap',
+        'medium_feature_2' => 'Sesuai brief khusus',
+        'medium_feature_3' => 'Format (.docx / .pdf)',
+        'medium_feature_4' => 'Revisi Maksimal 2x',
+        'medium_feature_5' => 'Cocok untuk YouTube/IG',
+        'medium_feature_6' => 'Scene breakdown visual',
+        // LONG
+        'long_price_ori'   => 'Rp 1.200.000,-',
+        'long_price'       => 'Rp 1.000.000',
+        'long_duration'    => '3 - 10 Menit',
+        'long_feature_1'   => 'Naskah lengkap',
+        'long_feature_2'   => 'Sesuai brief khusus',
+        'long_feature_3'   => 'Format (.docx / .pdf)',
+        'long_feature_4'   => 'REVISI SEPUASNYA',
+        'long_feature_5'   => 'Video korporat/Iklan TV',
+        'long_feature_6'   => 'Scene breakdown',
+        'long_feature_7'   => 'Voice over notes',
+        // CTA
+        'cta_text'         => 'Pesan Sekarang',
+        'cta_url'          => 'https://wa.me/6287786000919',
+    ],
+],
+ 
+// ── 6. CTA Penutup ─────────────────────────────────────────────────────────────
+[
+    'page'        => 'layanan-script-video',
+    'section_key' => 'cta',
+    'label'       => 'CTA Penutup',
+    'order'       => 6,
+    'content'     => [
+        'title'    => 'SIAP BIKIN VIDEO YANG VIRAL?',
+        'cta_text' => 'PESAN SCRIPT SEKARANG',
+        'cta_url'  => 'https://wa.me/6287786000919',
+    ],
+],
 
-            // ══ LAYANAN: PELATIHAN KONTEN ═════════════════════════════
+            // ════════════════════════════════════════════════════════════
+            // LAYANAN: PELATIHAN KONTEN
+            // ════════════════════════════════════════════════════════════
             [
-                'page' => 'layanan-pelatihan-konten', 'section_key' => 'hero',
-                'label' => 'Hero Section', 'order' => 1,
-                'content' => [
+                'page'        => 'layanan-pelatihan-konten',
+                'section_key' => 'hero',
+                'label'       => 'Hero Section',
+                'order'       => 1,
+                'content'     => [
                     'badge_text'      => '✦ UPGRADE SKILL KONTEN KREATORMU',
                     'title_line1'     => 'Ciptakan Konten',
                     'title_highlight' => 'Inovatif',
                     'title_line2'     => 'dengan Smartphone',
                     'quote'           => 'Ubah perangkat harian Anda menjadi mesin produksi konten profesional.',
-                    'description'     => 'Ikuti pelatihan konten kreator bersama Kontendigital.id. Materi komprehensif mulai dari pengambilan video, editing, hingga strategi publikasi.',
+                    'description'     => 'Ikuti pelatihan konten kreator bersama HNP Communications.id. Materi komprehensif mulai dari pengambilan video, editing, hingga strategi publikasi.',
                     'cta_text'        => 'KONSULTASI SEKARANG →',
                     'cta_url'         => 'https://wa.me/6287786000919',
                     'image'           => null,
-                    'badge_cert'      => 'Pengajar Bersertifikasi BNSP',
+                    'badge_cert'      => 'Sertifikasi BNSP',
                     'badge_live'      => '✦ LIVE WORKSHOP',
                 ],
             ],
+             
+            // ── 2. Mengapa Harus Ikut ─────────────────────────────────────────────────────
             [
-                'page' => 'layanan-pelatihan-konten', 'section_key' => 'why_join',
-                'label' => 'Mengapa Harus Ikut?', 'order' => 2,
-                'content' => [
+                'page'        => 'layanan-pelatihan-konten',
+                'section_key' => 'why_join',
+                'label'       => 'Mengapa Harus Ikut?',
+                'order'       => 2,
+                'content'     => [
                     'title'          => 'Mengapa Harus Ikut Pelatihan Kami?',
+                    'subtitle'       => '',
                     'reason_1_title' => 'Belajar Dari Ahlinya',
                     'reason_1_desc'  => 'Tim pengajar kami adalah mantan produser senior TV nasional dengan pengalaman lebih dari 20 tahun.',
                     'reason_2_title' => 'Pengajar BNSP',
@@ -756,13 +1037,22 @@ class CmsSeeder extends Seeder
                     'reason_3_desc'  => 'Mencakup seluruh aspek creation mulai dari teknik pengambilan gambar hingga strategi engagement.',
                     'reason_4_title' => 'Metode Fleksibel',
                     'reason_4_desc'  => 'Tersedia format kolektif maupun privat, cocok untuk perusahaan, instansi, maupun UMKM.',
+                    'reason_5_title' => '',
+                    'reason_5_desc'  => '',
+                    'reason_6_title' => '',
+                    'reason_6_desc'  => '',
                 ],
             ],
+             
+            // ── 3. Modul Materi ───────────────────────────────────────────────────────────
             [
-                'page' => 'layanan-pelatihan-konten', 'section_key' => 'modules',
-                'label' => 'Modul Materi Pelatihan', 'order' => 3,
-                'content' => [
+                'page'        => 'layanan-pelatihan-konten',
+                'section_key' => 'modules',
+                'label'       => 'Modul Materi Pelatihan',
+                'order'       => 3,
+                'content'     => [
                     'title'          => 'Apa Saja Materi Pelatihan Kami?',
+                    'subtitle'       => '',
                     'module_1_title' => 'Modul 1: Pengenalan Dunia Konten Kreator',
                     'module_1_desc'  => 'Niche content, personal branding, dan peran kreator di industri digital.',
                     'module_2_title' => 'Modul 2: Persiapan dan Perencanaan',
@@ -775,42 +1065,131 @@ class CmsSeeder extends Seeder
                     'module_5_desc'  => 'Optimasi video untuk platform YouTube, Instagram, TikTok, dan Facebook.',
                     'module_6_title' => 'Modul 6: Cuan dari Ngonten',
                     'module_6_desc'  => 'Strategi monetisasi, affiliate marketing, endorse, dan penjualan produk/jasa.',
+                    'module_7_title' => '',
+                    'module_7_desc'  => '',
+                    'module_8_title' => '',
+                    'module_8_desc'  => '',
                 ],
             ],
+             
+            // ── 4. Targets / Siapa yang Cocok ─────────────────────────────────────────────
             [
-                'page' => 'layanan-pelatihan-konten', 'section_key' => 'targets',
-                'label' => 'Siapa yang Cocok?', 'order' => 4,
-                'content' => [
+                'page'        => 'layanan-pelatihan-konten',
+                'section_key' => 'targets',
+                'label'       => 'Siapa yang Cocok?',
+                'order'       => 4,
+                'content'     => [
                     'title'        => 'Siapa Saja yang Cocok?',
-                    'target_1'      => 'Perusahaan Profesional',
-                    'target_1_desc' => 'Perusahaan yang concern terhadap konten (properti, travel, RS, dsb).',
-                    'target_2'      => 'Instansi & Lembaga',
-                    'target_2_desc' => 'Sekolah, ponpes, universitas, dan lembaga pemerintahan.',
-                    'target_3'      => 'Individu Kreator',
-                    'target_3_desc' => 'Individu yang ingin menjadi kreator profesional atau meningkatkan kompetensi.',
-                    'target_4'      => 'Business Owner & UMKM',
-                    'target_4_desc' => 'Pemilik bisnis yang ingin mempromosikan produk melalui konten kreatif.',
+                    'target_1'     => 'Perusahaan Profesional',
+                    'target_1_desc'=> 'Perusahaan yang concern terhadap konten (properti, travel, RS, dsb).',
+                    'target_2'     => 'Instansi & Lembaga',
+                    'target_2_desc'=> 'Sekolah, ponpes, universitas, dan lembaga pemerintahan.',
+                    'target_3'     => 'Individu Kreator',
+                    'target_3_desc'=> 'Individu yang ingin menjadi kreator profesional atau meningkatkan kompetensi.',
+                    'target_4'     => 'Business Owner & UMKM',
+                    'target_4_desc'=> 'Pemilik bisnis yang ingin mempromosikan produk melalui konten kreatif.',
+                    'target_5'     => '',
+                    'target_5_desc'=> '',
+                    'target_6'     => '',
+                    'target_6_desc'=> '',
                 ],
             ],
+             
+            // ── 5. Pricing / Paket Harga ──────────────────────────────────────────────────
             [
-                'page' => 'layanan-pelatihan-konten', 'section_key' => 'cta',
-                'label' => 'CTA Penutup', 'order' => 5,
-                'content' => [
-                    'title'    => 'SIAP JADI KREATOR?',
+                'page'        => 'layanan-pelatihan-konten',
+                'section_key' => 'pricing',
+                'label'       => 'Paket Harga',
+                'order'       => 5,
+                'content'     => [
+                    'title'    => 'Paket Harga Pelatihan Konten Kreator',
+                    'subtitle' => '',
+                    // Paket 1: KOLEKTIF
+                    'package_1_name'      => 'KOLEKTIF',
+                    'package_1_price_ori' => 'Rp 800.000,-',
+                    'package_1_price'     => 'Rp 650.000',
+                    'package_1_desc'      => 'Per orang, min. 5 peserta',
+                    'package_1_badge'     => '',
+                    'package_1_feature_1' => 'Pelatihan 1 hari',
+                    'package_1_feature_2' => 'Materi komprehensif',
+                    'package_1_feature_3' => 'Sertifikat digital',
+                    'package_1_feature_4' => 'Cocok untuk tim/instansi',
+                    'package_1_feature_5' => '',
+                    'package_1_feature_6' => '',
+                    'package_1_feature_7' => '',
+                    'package_1_feature_8' => '',
+                    // Paket 2: PRIVAT
+                    'package_2_name'      => 'PRIVAT',
+                    'package_2_price_ori' => 'Rp 1.500.000,-',
+                    'package_2_price'     => 'Rp 1.200.000',
+                    'package_2_desc'      => 'Untuk individu/1-2 orang',
+                    'package_2_badge'     => 'TERPOPULER',
+                    'package_2_feature_1' => 'Pelatihan 1 hari',
+                    'package_2_feature_2' => 'Materi komprehensif',
+                    'package_2_feature_3' => 'Sertifikat digital',
+                    'package_2_feature_4' => 'Sesi tanya jawab intensif',
+                    'package_2_feature_5' => 'Mentoring pasca pelatihan',
+                    'package_2_feature_6' => '',
+                    'package_2_feature_7' => '',
+                    'package_2_feature_8' => '',
+                    // Paket 3: KORPORAT
+                    'package_3_name'      => 'KORPORAT',
+                    'package_3_price_ori' => 'Custom',
+                    'package_3_price'     => 'Hubungi Kami',
+                    'package_3_desc'      => 'Untuk perusahaan/instansi besar',
+                    'package_3_badge'     => '',
+                    'package_3_feature_1' => 'Kurikulum custom',
+                    'package_3_feature_2' => 'Offline/Online',
+                    'package_3_feature_3' => 'Sertifikat resmi BNSP',
+                    'package_3_feature_4' => 'Minimal 10 peserta',
+                    'package_3_feature_5' => 'Laporan evaluasi peserta',
+                    'package_3_feature_6' => '',
+                    'package_3_feature_7' => '',
+                    'package_3_feature_8' => '',
+                    // Paket 4, 5, 6 (kosong, bisa diisi admin)
+                    'package_4_name'      => '',
+                    'package_4_price_ori' => '',
+                    'package_4_price'     => '',
+                    'package_4_desc'      => '',
+                    'package_4_badge'     => '',
+                    'package_4_feature_1' => '',
+                    'package_4_feature_2' => '',
+                    'package_4_feature_3' => '',
+                    'package_4_feature_4' => '',
+                    'package_4_feature_5' => '',
+                    'package_4_feature_6' => '',
+                    'package_4_feature_7' => '',
+                    'package_4_feature_8' => '',
+                    // CTA
+                    'cta_text' => 'Daftar Sekarang →',
+                    'cta_url'  => 'https://wa.me/6287786000919',
+                    'note'     => '',
+                ],
+            ],
+             
+            // ── 6. CTA Penutup ────────────────────────────────────────────────────────────
+            [
+                'page'        => 'layanan-pelatihan-konten',
+                'section_key' => 'cta',
+                'label'       => 'CTA Penutup',
+                'order'       => 6,
+                'content'     => [
+                    'title'    => "SIAP JADI\nKREATOR?",
+                    'subtitle' => 'Daftar sekarang dan mulai perjalanan kreatormu bersama HNP Communications.id.',
                     'cta_text' => 'HUBUNGI KAMI SEKARANG →',
                     'cta_url'  => 'https://wa.me/6287786000919',
                 ],
             ],
-        ];
 
         foreach ($pageSections as $data) {
             PageSection::updateOrCreate(
                 ['page' => $data['page'], 'section_key' => $data['section_key']],
                 [
-                    'label'     => $data['label'],
-                    'order'     => $data['order'],
-                    'is_active' => true,
-                    'content'   => $data['content'],
+                    'label'         => $data['label'],
+                    'order'         => $data['order'],
+                    'is_active'     => true,
+                    'content'       => $data['content'],
+                    'hidden_fields' => [],
                 ]
             );
         }

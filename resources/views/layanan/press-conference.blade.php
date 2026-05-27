@@ -7,30 +7,31 @@
 @php
     $heroS    = $sections->get('hero');
     $whyS     = $sections->get('why_pc');
+    $materiS  = $sections->get('materi_publikasi');
+    $targetS  = $sections->get('target_audience');
+    $keungS   = $sections->get('keunggulan');
     $pricingS = $sections->get('pricing');
+    $mediaS   = $sections->get('media_partner');
     $ctaS     = $sections->get('cta');
 
-    $hv = fn($k, $d = '') => $heroS    ? ($heroS->get($k)    ?: $d) : $d;
-    $wv = fn($k, $d = '') => $whyS     ? ($whyS->get($k)     ?: $d) : $d;
-    $pv = fn($k, $d = '') => $pricingS ? ($pricingS->get($k) ?: $d) : $d;
-    $cv = fn($k, $d = '') => $ctaS     ? ($ctaS->get($k)     ?: $d) : $d;
+    $hv  = fn($k, $d = '') => $heroS    ? ($heroS->getField($k)    ?: $d) : $d;
+    $wv  = fn($k, $d = '') => $whyS     ? ($whyS->getField($k)     ?: $d) : $d;
+    $mv  = fn($k, $d = '') => $materiS  ? ($materiS->getField($k)  ?: $d) : $d;
+    $tv  = fn($k, $d = '') => $targetS  ? ($targetS->getField($k)  ?: $d) : $d;
+    $kv  = fn($k, $d = '') => $keungS   ? ($keungS->getField($k)   ?: $d) : $d;
+    $pv  = fn($k, $d = '') => $pricingS ? ($pricingS->getField($k) ?: $d) : $d;
+    $mdv = fn($k, $d = '') => $mediaS   ? ($mediaS->getField($k)   ?: $d) : $d;
+    $cv  = fn($k, $d = '') => $ctaS     ? ($ctaS->getField($k)     ?: $d) : $d;
 @endphp
 
 {{-- ── HERO ──────────────────────────────────────────────────── --}}
 <section class="relative pt-24 pb-24 bg-[#FFD200] overflow-hidden border-b-8 border-black">
 
-    {{-- Dekoratif: star kiri atas --}}
     <div class="absolute top-10 left-10 opacity-20 animate-bounce hidden md:block text-[#3D0066]">
         <svg class="w-16 h-16" fill="currentColor" viewBox="0 0 24 24">
             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
         </svg>
     </div>
-    {{-- Dekoratif: megaphone kanan bawah --}}
-    <!-- <div class="absolute bottom-20 right-10 opacity-20 animate-pulse hidden md:block text-[#E61E50]">
-        <svg class="w-20 h-20" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M10.34 15.84c-.688-.06-1.386-.09-2.09-.09H7.5a4.5 4.5 0 110-9h.75c.704 0 1.402-.03 2.09-.09m0 9.18c.253.962.584 1.892.985 2.783.247.55.06 1.21-.463 1.511l-.657.38c-.551.318-1.26.117-1.527-.461a20.845 20.845 0 01-1.44-4.282m3.102.069a18.03 18.03 0 01-.59-4.59c0-1.586.205-3.124.59-4.59m0 9.18a23.848 23.848 0 018.835 2.535M10.34 6.66a23.847 23.847 0 008.835-2.535m0 0A23.74 23.74 0 0018.795 3m.38 1.125a23.91 23.91 0 011.014 5.395m-1.014 8.855c-.118.38-.245.754-.38 1.125m.38-1.125a23.91 23.91 0 001.014-5.395m0-3.46c.495.413.811 1.035.811 1.73 0 .695-.316 1.317-.811 1.73m0-3.46a24.347 24.347 0 010 3.46"/>
-        </svg>
-    </div> -->
 
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div class="reveal-text space-y-6">
@@ -68,13 +69,11 @@
         </div>
 
         <div class="relative group">
-            {{-- Lingkaran Dekoratif Belakang --}}
             <div class="absolute -z-10 top-10 right-10 w-full h-full bg-[#E61E50] border-4 border-black rounded-full shadow-[10px_10px_0px_0px_rgba(0,0,0,1)] group-hover:scale-105 transition-transform duration-500"></div>
 
-            {{-- Foto dari public/images --}}
             <div class="overflow-hidden border-4 border-black rounded-2xl shadow-[12px_12px_0px_0px_rgba(0,0,0,1)]">
-                @if($heroS && $heroS->get('image'))
-                    <img src="{{ Storage::url($heroS->get('image')) }}" alt="Press Conference"
+                @if($heroS && $heroS->getField('image'))
+                    <img src="{{ Storage::url($heroS->getField('image')) }}" alt="Press Conference"
                          class="w-full h-auto grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
                 @else
                     <img src="{{ asset('images/wartawan.png') }}" alt="Press Conference"
@@ -82,14 +81,12 @@
                 @endif
             </div>
 
-            {{-- Floating Badge Kiri Bawah --}}
             <div class="absolute -bottom-6 -left-6 bg-white border-4 border-black px-4 py-3 font-black transform rotate-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] uppercase text-sm animate-float flex items-center gap-2">
                 <svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 24 24">
                     <circle cx="12" cy="12" r="10"/>
                 </svg>
                 LIVE NOW!
             </div>
-            {{-- Floating Badge Kanan Atas --}}
             <div class="absolute -top-6 -right-6 bg-[#3D0066] text-white border-4 border-black px-4 py-3 font-black transform -rotate-3 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] uppercase text-sm animate-float-delayed flex items-center gap-2">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 006-6v-1.5m-6 7.5a6 6 0 01-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 01-3-3V4.5a3 3 0 116 0v8.25a3 3 0 01-3 3z"/>
@@ -123,6 +120,13 @@
     .animate-marquee {
         display: inline-flex;
         animation: marquee 30s linear infinite;
+    }
+    @keyframes ticker {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
+    }
+    .animate-ticker {
+        animation: ticker 25s linear infinite;
     }
 </style>
 
@@ -160,6 +164,7 @@
 </div>
 
 {{-- ── MENGAPA PRESS CONFERENCE ──────────────────────────────── --}}
+@if(!$whyS || $whyS->is_active)
 <section class="py-24 bg-[#3B82F6] border-b-8 border-black text-white">
     <div class="max-w-7xl mx-auto px-6">
         <div class="text-center mb-16">
@@ -198,6 +203,103 @@
         </div>
     </div>
 </section>
+@endif
+
+{{-- ── MATERI PUBLIKASI — CHECKLIST ─────────────────────────── --}}
+@if(!$materiS || $materiS->is_active)
+@php
+    $materiItems = [];
+    for ($i = 1; $i <= 8; $i++) {
+        $val = $mv("item_{$i}");
+        if ($val) $materiItems[] = $val;
+    }
+    $bgImage = $materiS ? $materiS->getField('bg_image') : null;
+@endphp
+@if(!empty($materiItems))
+<section class="py-20 bg-white border-b-4 border-black">
+    <div class="max-w-6xl mx-auto px-6">
+        <div class="relative border-4 border-black p-12 bg-cover bg-center overflow-hidden"
+             @if($bgImage) style="background-image:url('{{ Storage::url($bgImage) }}')" @else style="background-image:url('https://images.unsplash.com/photo-1495020689067-958852a7765e?q=80&w=2069&auto=format&fit=crop')" @endif>
+            <div class="absolute inset-0 bg-white/90"></div>
+            <div class="relative z-10 text-center">
+                <h2 class="text-3xl font-black uppercase mb-8">
+                    {{ $mv('title', 'Pilih Materi Press Conference Sesuai Kebutuhan Anda!') }}
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-4 text-left max-w-4xl mx-auto font-bold">
+                    @foreach($materiItems as $item)
+                    <div class="flex items-center gap-3">
+                        <span class="text-2xl text-[#3B82F6]">•</span> {{ $item }}
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+@endif
+@endif
+
+{{-- ── TARGET AUDIENCE ──────────────────────────────────────── --}}
+@if(!$targetS || $targetS->is_active)
+@php
+    $targetIcons = [
+        1 => 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+        2 => 'M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z',
+        3 => 'M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z',
+        4 => 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+    ];
+    $targetDefaultColors = [1=>'bg-cyan-300', 2=>'bg-yellow-300', 3=>'bg-rose-300', 4=>'bg-lime-300'];
+    $hasTargets = false;
+    for ($i=1;$i<=4;$i++) { if($tv("target_{$i}_title")) $hasTargets = true; }
+@endphp
+@if($hasTargets)
+<section class="py-24 bg-[#F0F0F0] border-y-8 border-black relative overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.03] pointer-events-none"
+         style="background-image:radial-gradient(#000 2px,transparent 2px);background-size:30px 30px;"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-16">
+            <h2 class="inline-block bg-white text-black text-3xl md:text-5xl font-black uppercase px-8 py-3 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-4">
+                {{ $tv('title', 'SIAPA TARGET ANDA?') }}
+            </h2>
+            @if($tv('subtitle'))
+            <p class="text-black font-black text-sm tracking-[0.2em] uppercase mt-4">
+                {{ $tv('subtitle') }}
+            </p>
+            @endif
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            @for($i = 1; $i <= 4; $i++)
+            @php
+                $tBadge = $tv("target_{$i}_badge", 'P0'.$i);
+                $tTitle = $tv("target_{$i}_title");
+                $tDesc  = $tv("target_{$i}_desc");
+                $tColor = $tv("target_{$i}_color") ?: ($targetDefaultColors[$i] ?? 'bg-cyan-300');
+            @endphp
+            @if($tTitle)
+            <div class="group relative bg-white border-4 border-black p-8 transition-all duration-200 hover:-translate-y-2 hover:-translate-x-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[10px_10px_0px_0px_rgba(0,0,0,1)]">
+                <div class="{{ $tColor }} border-2 border-black inline-block px-3 py-1 mb-6">
+                    <span class="text-xs font-black tracking-tighter">{{ $tBadge }} // SELECT</span>
+                </div>
+                <div class="w-16 h-16 {{ $tColor }} border-4 border-black rounded-full flex items-center justify-center mb-6 group-hover:rotate-12 transition-transform shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                    <svg class="w-8 h-8 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="{{ $targetIcons[$i] ?? $targetIcons[1] }}"></path>
+                    </svg>
+                </div>
+                <h4 class="text-black text-2xl font-black uppercase mb-3 tracking-tighter leading-none">{{ $tTitle }}</h4>
+                <p class="text-black/70 text-sm font-bold leading-relaxed mb-6">{{ $tDesc }}</p>
+                <div class="pt-4 border-t-2 border-dashed border-black/20 group-hover:border-black/100 transition-colors">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-black/40 group-hover:text-black">Insert Coin to Start →</span>
+                </div>
+            </div>
+            @endif
+            @endfor
+        </div>
+    </div>
+</section>
+@endif
+@endif
 
 {{-- ── SIAPA SAJA ────────────────────────────────────────────── --}}
 <section class="py-24 bg-white border-b-8 border-black">
@@ -237,6 +339,64 @@
         </div>
     </div>
 </section>
+
+{{-- ── KEUNGGULAN ────────────────────────────────────────────── --}}
+@if(!$keungS || $keungS->is_active)
+@php
+    $keungBg = $kv('bg_color', '#22d3ee');
+    $keungItems = [];
+    for ($i = 1; $i <= 8; $i++) {
+        $t = $kv("item_{$i}_title");
+        if ($t) $keungItems[] = [
+            'title' => $t,
+            'desc'  => $kv("item_{$i}_desc"),
+            'color' => $kv("item_{$i}_color") ?: 'bg-white',
+        ];
+    }
+    $keungIcons = [
+        'M13 10V3L4 14H11V21L20 10H13Z',
+        'M9 12L11 14L15 10M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z',
+        'M11 5H6C4.89543 5 4 5.89543 4 7V18C4 19.1046 4.89543 20 6 20H17C18.1046 20 19 19.1046 19 18V13M17.5858 3.58579C18.3668 2.80474 19.6332 2.80474 20.4142 3.58579C21.1953 4.36683 21.1953 5.63317 20.4142 6.41421L11.8284 15H9V12.1716L17.5858 3.58579Z',
+        'M3 5H11M3 10H11M3 15H11M13 5H21M13 10H21M13 15H21M3 20H21',
+        'M12 8V12M12 16H12.01M22 12C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12Z',
+        'M19 20H5C3.89543 20 3 19.1046 3 18V6C3 4.89543 3.89543 4 5 4H19C20.1046 4 21 4.89543 21 6V18C21 19.1046 20.1046 20 19 20ZM5 8H19M7 12H17M7 16H13',
+        'M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z',
+        'M12 8V12L15 15M21 12C21 17.1364 16.8636 21.2727 12 21.2727C7.13636 21.2727 3 17.1364 3 12C3 7.13636 7.13636 3 12 3C16.8636 3 21 7.13636 21 12Z',
+    ];
+@endphp
+@if(!empty($keungItems))
+<section class="py-24 border-b-4 border-black relative overflow-hidden"
+         style="background-color:{{ $keungBg }}">
+    <div class="absolute top-10 right-10 w-32 h-32 bg-yellow-400 border-4 border-black rounded-full mix-blend-multiply opacity-50 animate-pulse"></div>
+    <div class="absolute bottom-10 left-10 w-24 h-24 bg-purple-600 border-4 border-black rotate-12 opacity-30"></div>
+
+    <div class="max-w-7xl mx-auto px-6 relative z-10">
+        <div class="mb-16 max-w-3xl">
+            <h2 class="text-5xl md:text-6xl font-black uppercase leading-none tracking-tighter text-black">
+                {{ $kv('title', 'MENGAPA KLIEN') }}<br>
+                <span class="bg-white px-4 py-1 border-4 border-black inline-block mt-2 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+                    {{ $kv('title_line2', 'MEMILIH KAMI?') }}
+                </span>
+            </h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            @foreach($keungItems as $idx => $item)
+            <div class="{{ $item['color'] }} border-4 border-black p-6 group hover:-translate-y-2 hover:-translate-x-2 transition-all duration-200 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] hover:shadow-[15px_15px_0px_0px_rgba(0,0,0,1)]">
+                <div class="w-12 h-12 bg-black flex items-center justify-center mb-6 border-2 border-white shadow-[4px_4px_0px_0px_rgba(255,255,255,0.3)]">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="{{ $keungIcons[$idx] ?? $keungIcons[0] }}"></path>
+                    </svg>
+                </div>
+                <h4 class="font-black text-xl uppercase mb-3 leading-tight tracking-tighter">{{ $item['title'] }}</h4>
+                <p class="text-sm font-bold text-black/80 leading-snug">{{ $item['desc'] }}</p>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+@endif
+@endif
 
 {{-- ── APA YANG PERLU DISIAPKAN ─────────────────────────────── --}}
 <section class="py-24 bg-black text-white overflow-hidden border-b-8 border-black">
@@ -307,6 +467,7 @@
 </section>
 
 {{-- ── PAKET HARGA ───────────────────────────────────────────── --}}
+@if(!$pricingS || $pricingS->is_active)
 <section class="py-24 bg-[#1a88d1] border-y-4 border-black">
     <div class="max-w-7xl mx-auto px-6 text-center">
         <h2 class="text-4xl font-black uppercase mb-16 text-white italic">
@@ -322,8 +483,8 @@
                 @endif
                 <div class="text-3xl font-black mb-2">{{ $pv('basic_price', 'Rp 4.000.000') }}</div>
                 <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('basic_media_count', '10') }} Media</div>
+                @php $checkIcon = '<svg class="w-4 h-4 text-[#14b8a6] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>'; @endphp
                 <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
-                    @php $checkIcon = '<svg class="w-4 h-4 text-[#14b8a6] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>'; @endphp
                     <li class="flex items-start gap-2">{!! $checkIcon !!} Undangan wartawan</li>
                     <li class="flex items-start gap-2">{!! $checkIcon !!} Distribusi press release</li>
                     <li class="flex items-start gap-2">{!! $checkIcon !!} Liputan {{ $pv('basic_media_count', '10') }} media</li>
@@ -331,7 +492,7 @@
                     <li class="flex items-start gap-2">{!! $checkIcon !!} Laporan URL</li>
                 </ul>
                 <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
-                   class="mt-auto block w-full bg-[#14b8a6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                   class="mt-auto block w-full bg-[#14b8a6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all text-center">
                     Konsultasi Sekarang
                 </a>
             </div>
@@ -345,8 +506,10 @@
                 @endif
                 <div class="text-3xl font-black mb-2">{{ $pv('pro_price', 'Rp 8.500.000') }}</div>
                 <div class="text-sm font-bold text-black/60 mb-6">{{ $pv('pro_media_count', '25') }} Media</div>
-                @php $checkIconPro = '<svg class="w-4 h-4 text-[#430A5D] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>';
-                     $checkIconBlue = '<svg class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>'; @endphp
+                @php
+                    $checkIconPro  = '<svg class="w-4 h-4 text-[#430A5D] flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>';
+                    $checkIconBlue = '<svg class="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5"/></svg>';
+                @endphp
                 <ul class="text-[11px] font-bold space-y-2 mb-8 text-left uppercase flex-1">
                     <li class="flex items-start gap-2">{!! $checkIconPro !!} Undangan wartawan</li>
                     <li class="flex items-start gap-2">{!! $checkIconPro !!} Distribusi press release</li>
@@ -357,7 +520,7 @@
                     <li class="flex items-start gap-2 text-blue-600">{!! $checkIconBlue !!} Prioritas pengerjaan</li>
                 </ul>
                 <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
-                   class="mt-auto block w-full bg-black text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(67,10,93,1)] hover:shadow-none transition-all">
+                   class="mt-auto block w-full bg-black text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(67,10,93,1)] hover:shadow-none transition-all text-center">
                     Konsultasi Sekarang
                 </a>
             </div>
@@ -382,15 +545,97 @@
                     <li class="flex items-start gap-2 text-blue-600">{!! $checkIconBlue !!} Dedicated account manager</li>
                 </ul>
                 <a href="{{ $pv('cta_url', 'https://wa.me/6287786000919') }}"
-                   class="mt-auto block w-full bg-gradient-to-r from-[#430A5D] to-[#3B82F6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all">
+                   class="mt-auto block w-full bg-gradient-to-r from-[#430A5D] to-[#3B82F6] text-white py-3 font-black uppercase text-sm border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none transition-all text-center">
                     Konsultasi Sekarang
                 </a>
             </div>
         </div>
     </div>
 </section>
+@endif
+
+{{-- ── MEDIA PARTNER STRIP ──────────────────────────────────── --}}
+@if(!$mediaS || $mediaS->is_active)
+@php
+    $mediaLogos = [];
+    for ($i = 1; $i <= 12; $i++) {
+        $logo = $mediaS ? $mediaS->getField("logo_{$i}") : null;
+        if ($logo) $mediaLogos[] = $logo;
+    }
+    $mediaTitle    = $mdv('title', '100+ MITRA.');
+    $mediaSubtitle = $mdv('subtitle', 'Terpercaya di Seluruh Indonesia');
+@endphp
+<section class="bg-purple-950 border-b-4 border-black py-20 px-6 lg:px-16 relative overflow-hidden" id="clients">
+    <div class="max-w-7xl mx-auto relative z-10">
+
+        <div class="flex flex-col md:flex-row border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] mb-12">
+            <div class="bg-purple-950 text-yellow-400 px-8 py-6 border-b-4 md:border-b-0 md:border-r-4 border-black flex flex-col justify-center min-w-[300px]">
+                <h2 class="font-black text-2xl uppercase tracking-widest mb-1">{{ $mediaTitle }}</h2>
+                <p class="text-xs font-bold uppercase opacity-80 leading-tight">{{ $mediaSubtitle }}</p>
+            </div>
+
+            <div class="bg-yellow-400 flex-1 relative overflow-hidden flex items-center py-4 px-6">
+                <div class="absolute inset-0 flex items-center px-6">
+                    <div class="w-full border-t-[8px] border-dotted border-purple-950/40"></div>
+                </div>
+                <div class="relative w-full h-full flex items-center overflow-hidden">
+                    <div class="animate-ticker w-max flex items-center gap-12 text-purple-950">
+                        @for($i=0; $i<6; $i++)
+                            <div class="flex items-center gap-4">
+                                <svg class="w-8 h-8 animate-bounce" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14H11V21L20 10H13Z"/></svg>
+                                <span class="text-lg font-black uppercase tracking-tighter italic">FAST</span>
+                            </div>
+                            <span class="text-2xl opacity-30">✦✦✦</span>
+                            <div class="flex items-center gap-4">
+                                <svg class="w-8 h-8 animate-pulse" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L4.5 20.29L5.21 21L12 18L18.79 21L19.5 20.29L12 2Z"/></svg>
+                                <span class="text-lg font-black uppercase tracking-tighter italic">TRUSTED</span>
+                            </div>
+                            <span class="text-2xl opacity-30">✦✦✦</span>
+                            <div class="flex items-center gap-4">
+                                <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M21 16.5C21 16.88 20.79 17.21 20.47 17.38L12.57 21.82C12.41 21.94 12.21 22 12 22C11.79 22 11.59 21.94 11.43 21.82L3.53 17.38C3.21 17.21 3 16.88 3 16.5V7.5C3 7.12 3.21 6.79 3.53 6.62L11.43 2.18C11.59 2.06 11.79 2 12 2C12.21 2 12.41 2.06 12.57 2.18L20.47 6.62C20.79 6.79 21 7.12 21 7.5V16.5Z"/></svg>
+                                <span class="text-lg font-black uppercase tracking-tighter italic">PREMIUM</span>
+                            </div>
+                            <span class="text-2xl opacity-30">✦✦✦</span>
+                        @endfor
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="border-4 border-black bg-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-1">
+                @if(!empty($mediaLogos))
+                    @foreach($mediaLogos as $logo)
+                    <div class="bg-yellow-400 aspect-square flex items-center justify-center p-8 hover:bg-cyan-400 transition-all duration-500 group cursor-pointer relative overflow-hidden">
+                        <img src="{{ Storage::url($logo) }}" alt="Media Partner"
+                             class="w-full h-full object-contain opacity-60 group-hover:opacity-100 scale-90 group-hover:scale-110 transition-all duration-500">
+                        <div class="absolute inset-0 border-0 group-hover:border-[6px] border-black transition-all duration-200 pointer-events-none"></div>
+                    </div>
+                    @endforeach
+                @else
+                    @php
+                        $clientLogos = [
+                            'tugu.png','lunas.png','kuliner.png','dog.png',
+                            'hikmat.png','indo.png','kids.png','bio.png',
+                            'praja.png','price.png','volantis.png','gorem.png',
+                        ];
+                    @endphp
+                    @foreach($clientLogos as $logo)
+                    <div class="bg-yellow-400 aspect-square flex items-center justify-center p-8 hover:bg-cyan-400 transition-all duration-500 group cursor-pointer relative overflow-hidden">
+                        <img src="{{ asset('images/clients/' . $logo) }}" alt="Client Logo"
+                             class="w-full h-full object-contain opacity-60 group-hover:opacity-100 scale-90 group-hover:scale-110 transition-all duration-500">
+                        <div class="absolute inset-0 border-0 group-hover:border-[6px] border-black transition-all duration-200 pointer-events-none"></div>
+                    </div>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    </div>
+</section>
+@endif
 
 {{-- ── CTA FINAL ────────────────────────────────────────────── --}}
+@if(!$ctaS || $ctaS->is_active)
 <footer class="py-20 bg-black text-white text-center border-t-4 border-black">
     <div class="inline-block p-4 border-4 border-dashed border-[#FFD200] mb-8 animate-pulse">
         <span class="font-black text-xl uppercase italic text-[#FFD200]">Siap Menjadi Headline Besok Pagi?</span>
@@ -407,5 +652,6 @@
         </svg>
     </a>
 </footer>
+@endif
 
 @endsection

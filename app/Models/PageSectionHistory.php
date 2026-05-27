@@ -44,7 +44,6 @@ class PageSectionHistory extends Model
         ]);
 
         // Ambil $keep ID terbaru, lalu hapus sisanya
-        // Tidak pakai skip() karena SQLite tidak support OFFSET tanpa LIMIT
         $keepIds = static::where('page_section_id', $section->id)
             ->orderByDesc('saved_at')
             ->orderByDesc('id')

@@ -48,8 +48,10 @@ class PageSectionController extends Controller
     {
         $fields    = $pageSection->getFields();
         $histories = PageSectionHistory::where('page_section_id', $pageSection->id)
-            ->orderByDesc('saved_at')->orderByDesc('id')
-            ->limit(5)->get();
+            ->orderByDesc('saved_at')
+            ->orderByDesc('id')
+            ->limit(5)
+            ->get();
 
         return view('admin.cms.page-sections.form', [
             'section'   => $pageSection,
@@ -62,6 +64,7 @@ class PageSectionController extends Controller
 
     public function update(Request $request, PageSection $pageSection)
     {
+        // Simpan snapshot sebelum update
         PageSectionHistory::snapshot($pageSection, 5);
 
         $fields  = $pageSection->getFields();
@@ -73,12 +76,14 @@ class PageSectionController extends Controller
 
             if ($type === 'image') {
                 if ($request->hasFile($key) && $request->file($key)->isValid()) {
+                    // Hapus file lama jika ada
                     if (!empty($content[$key])) {
                         Storage::disk('public')->delete($content[$key]);
                     }
                     $content[$key] = $request->file($key)
                         ->store('sections/' . $pageSection->page, 'public');
                 }
+                // Jika tidak ada file baru, biarkan nilai lama
             } else {
                 $content[$key] = $request->input($key, '');
             }
@@ -104,15 +109,41 @@ class PageSectionController extends Controller
         $key    = $request->input('field_key');
         $hidden = $pageSection->hidden_fields ?? [];
 
-        // Validasi field_key ada di schema
-        $validKeys = array_column($pageSection->getFields(), 'key');
-        if (!in_array($key, $validKeys)) {
-            return response()->json(['error' => 'Field tidak valid'], 422);
+        // ── Validasi field_key ───────────────────────────────────────
+        // Prioritas 1: cek di schema (getFields)
+        // Prioritas 2: jika schema kosong/tidak ada, fallback ke keys yang
+        //              ada di content — ini menangani section lama / section
+        //              yang belum terdaftar di schema tapi sudah ada di DB.
+        $schemaFields = $pageSection->getFields();
+
+        if (!empty($schemaFields)) {
+            // Schema tersedia → validasi ketat dari schema
+            $validKeys = array_column($schemaFields, 'key');
+            if (!in_array($key, $validKeys)) {
+                return response()->json([
+                    'error'   => 'Field tidak valid: ' . $key,
+                    'success' => false,
+                ], 422);
+            }
+        } else {
+            // Schema kosong (section legacy / belum di-schema-kan)
+            // → validasi longgar: field harus ada di content ATAU string valid
+            $contentKeys = array_keys($pageSection->content ?? []);
+            // Izinkan toggle selama key adalah string non-empty yang valid
+            // (tidak mengandung karakter berbahaya)
+            if (empty($key) || !preg_match('/^[a-zA-Z0-9_\-]+$/', $key)) {
+                return response()->json([
+                    'error'   => 'Field key tidak valid',
+                    'success' => false,
+                ], 422);
+            }
+            // Jika key tidak ada di content sama sekali, tetap izinkan
+            // (admin mungkin ingin pre-hide field yang belum diisi)
         }
 
         if (in_array($key, $hidden)) {
             // Aktifkan kembali — hapus dari array hidden
-            $hidden = array_values(array_diff($hidden, [$key]));
+            $hidden   = array_values(array_diff($hidden, [$key]));
             $isHidden = false;
         } else {
             // Sembunyikan — tambah ke array hidden
@@ -123,9 +154,9 @@ class PageSectionController extends Controller
         $pageSection->update(['hidden_fields' => $hidden]);
 
         return response()->json([
-            'success'   => true,
-            'is_hidden' => $isHidden,
-            'field_key' => $key,
+            'success'      => true,
+            'is_hidden'    => $isHidden,
+            'field_key'    => $key,
             'hidden_count' => count($hidden),
         ]);
     }
@@ -138,6 +169,7 @@ class PageSectionController extends Controller
             abort(403, 'History tidak milik section ini.');
         }
 
+        // Snapshot versi saat ini sebelum di-restore
         PageSectionHistory::snapshot($pageSection, 5);
 
         $pageSection->update([
@@ -156,8 +188,10 @@ class PageSectionController extends Controller
     {
         $fields    = $pageSection->getFields();
         $histories = PageSectionHistory::where('page_section_id', $pageSection->id)
-            ->orderByDesc('saved_at')->orderByDesc('id')
-            ->limit(5)->get();
+            ->orderByDesc('saved_at')
+            ->orderByDesc('id')
+            ->limit(5)
+            ->get();
 
         return response()->json([
             'section' => [
@@ -226,12 +260,12 @@ class PageSectionController extends Controller
             if (!in_array($sectionKey, $existing)) {
                 $order++;
                 PageSection::create([
-                    'page'        => $page,
-                    'section_key' => $sectionKey,
-                    'label'       => $sectionDef['label'],
-                    'order'       => $order,
-                    'is_active'   => true,
-                    'content'     => [],
+                    'page'          => $page,
+                    'section_key'   => $sectionKey,
+                    'label'         => $sectionDef['label'],
+                    'order'         => $order,
+                    'is_active'     => true,
+                    'content'       => [],
                     'hidden_fields' => [],
                 ]);
             }

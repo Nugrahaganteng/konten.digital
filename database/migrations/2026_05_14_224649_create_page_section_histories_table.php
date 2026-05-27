@@ -10,15 +10,11 @@ return new class extends Migration
     {
         Schema::create('page_section_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_section_id')
-                  ->constrained('page_sections')
-                  ->cascadeOnDelete();
-            $table->json('content');
+            $table->foreignId('page_section_id')->constrained()->cascadeOnDelete();
+            $table->json('content')->nullable();
             $table->json('hidden_fields')->nullable();
             $table->boolean('is_active')->default(true);
-            $table->timestamp('saved_at')->useCurrent();
-
-            $table->index(['page_section_id', 'saved_at']);
+            $table->timestamp('saved_at');
         });
     }
 
