@@ -734,11 +734,7 @@ body::before {
                         </div>
                     </div>
                 </div>
-                <div class="hnp-deco">
-                    <div class="hnp-db bk">200+ Media Partner</div>
-                    <div class="hnp-db r">Strategic PR</div>
-                    <div class="hnp-db">1K+ Klien Puas</div>
-                </div>
+              
             </div>
         </div>
         <div class="hnp-stripe"></div>

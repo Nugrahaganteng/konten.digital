@@ -187,7 +187,7 @@
     </div>
 </section>
 
-{{-- ══ WE ARE DIFFERENT ════════════════════════════════════ --}}
+<!-- {{-- ══ WE ARE DIFFERENT ════════════════════════════════════ --}}
 <section class="bg-red-500 border-b-4 border-black py-24 px-6 lg:px-16">
     <div class="max-w-7xl mx-auto flex flex-col lg:flex-row items-center justify-between gap-12">
         <h2 class="font-black text-white text-5xl" style="font-family:'Unbounded',sans-serif">
@@ -198,7 +198,7 @@
             HUBUNGI KAMI →
         </a>
     </div>
-</section>
+</section> -->
 
 {{-- ══ CTA ════════════════════════════════════════════════ --}}
 <section class="bg-white py-24 px-6 text-center">
