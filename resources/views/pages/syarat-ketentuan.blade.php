@@ -171,7 +171,7 @@
 </section>
 @endif
 
-{{-- ── SECTION 4: FAQ ──────────────────────────────────────── --}}
+<!-- {{-- ── SECTION 4: FAQ ──────────────────────────────────────── --}}
 <section class="bg-[#1A1A1A] border-b-8 border-black py-24 relative" x-data>
     <div class="max-w-5xl mx-auto px-6 relative z-10">
         <div class="text-center mb-16">
@@ -207,7 +207,7 @@
             @endforeach
         </div>
     </div>
-</section>
+</section> -->
 
 {{-- ── SECTION 5: CTA ──────────────────────────────────────── --}}
 <section class="bg-[#FFD200] border-b-8 border-black py-24 text-center relative overflow-hidden">
