@@ -47,6 +47,9 @@
 .page-tab{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.35rem .8rem;border:2px solid var(--blk);background:var(--w);color:var(--blk);text-decoration:none;transition:all .14s;box-shadow:2px 2px 0 var(--blk);flex-shrink:0;white-space:nowrap;display:inline-block;-webkit-tap-highlight-color:transparent}
 .page-tab:hover{background:var(--blk);color:var(--w)}
 .page-tab.active{background:var(--blk);color:var(--yel);box-shadow:2px 2px 0 #555}
+.page-tab.tab-special{border-color:var(--blu);color:var(--blu);box-shadow:2px 2px 0 var(--blu)}
+.page-tab.tab-special:hover{background:var(--blu);color:var(--w);border-color:var(--blu)}
+.page-tab.tab-special.active{background:var(--blu);color:var(--yel);border-color:var(--blu);box-shadow:2px 2px 0 #0a2fa0}
 .tabs-fade-right{position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,var(--w));pointer-events:none;transition:opacity .25s}
 .tabs-fade-left{position:absolute;left:0;top:0;bottom:0;width:32px;background:linear-gradient(to left,transparent,var(--w));pointer-events:none;opacity:0;transition:opacity .25s}
 
@@ -246,6 +249,11 @@
     color:var(--blu);text-transform:uppercase;letter-spacing:.08em;
 }
 
+/* Services page empty state */
+.svc-empty{text-align:center;padding:4rem 2rem;color:var(--mu);font-family:'JetBrains Mono',monospace}
+.svc-empty i{font-size:2rem;display:block;margin-bottom:.8rem;opacity:.2}
+.svc-empty p{font-size:.7rem}
+
 /* Responsive */
 @media(max-width:700px){
     .masthead{padding:.8rem 1rem}
@@ -284,14 +292,34 @@
     <div class="masthead">
         <div class="masthead-inner">
             <div class="cms-title">
-                <div class="title-icon-box"><i class="fas fa-layer-group"></i></div>
+                <div class="title-icon-box">
+                    @if($page === 'services-navbar')
+                        <i class="fas fa-bars-staggered"></i>
+                    @else
+                        <i class="fas fa-layer-group"></i>
+                    @endif
+                </div>
                 <div class="title-text">
-                    <div class="title-main">CMS SECTIONS</div>
+                    <div class="title-main">
+                        @if($page === 'services-navbar')
+                            SERVICES NAVBAR
+                        @else
+                            CMS SECTIONS
+                        @endif
+                    </div>
                     <div class="title-page-tag">{{ $page }}</div>
-                    <div class="title-sub">{{ $sections->count() }} SECTION DITEMUKAN</div>
+                    <div class="title-sub">
+                        @if($page === 'services-navbar')
+                            KELOLA VISIBILITAS SERVICES DI NAVBAR
+                        @else
+                            {{ $sections->count() }} SECTION DITEMUKAN
+                        @endif
+                    </div>
                 </div>
             </div>
+            @if($page !== 'services-navbar')
             <div class="hint-chip"><i class="fas fa-eye-slash"></i> KLIK 👁 SEMBUNYIKAN FIELD</div>
+            @endif
         </div>
     </div>
 
@@ -314,8 +342,13 @@
             <span class="tabs-label">PAGE&nbsp;/</span>
             @foreach($availablePages as $p)
             <a href="{{ route('admin.cms.page-sections.index', ['page' => $p]) }}"
-               class="page-tab {{ $p === $page ? 'active' : '' }}"
-               data-page="{{ $p }}">{{ $p }}</a>
+               class="page-tab {{ $p === $page ? 'active' : '' }} {{ $p === 'services-navbar' ? 'tab-special' : '' }}"
+               data-page="{{ $p }}">
+                @if($p === 'services-navbar')
+                    <i class="fas fa-bars-staggered" style="margin-right:.3rem;font-size:.55rem"></i>
+                @endif
+                {{ $p }}
+            </a>
             @endforeach
         </div>
         <div class="tabs-fade-right" id="tabs-fade-right"></div>
@@ -324,157 +357,133 @@
     {{-- Grid --}}
     <div class="grid-area">
 
-        {{-- SERVICES NAVBAR WIDGET --}}
-        @php $allServices = \App\Models\Service::ordered()->get(); @endphp
-        @if($allServices->isNotEmpty())
-        <div class="row-label">SERVICES — NAVBAR VISIBILITY</div>
-        <div class="svc-widget">
-            <div class="svc-widget-hd">
-                <div class="svc-widget-title">
-                    <i class="fas fa-bars-staggered"></i>
-                    <span>SERVICES DI NAVBAR</span>
-                </div>
-                <span class="svc-widget-count" id="svc-active-count">
-                    {{ $allServices->where('is_active', true)->count() }}/{{ $allServices->count() }} AKTIF
-                </span>
-            </div>
-            <div id="svc-list">
-                @foreach($allServices as $svc)
-                <div class="svc-row {{ !$svc->is_active ? 'is-inactive' : '' }}" id="svc-row-{{ $svc->id }}">
-                    <div class="svc-icon-box {{ $svc->is_active ? 'active-icon' : 'inactive-icon' }}" id="svc-icon-{{ $svc->id }}">
-                        <i class="{{ $svc->icon_class ?: 'fa-solid fa-circle' }}"></i>
+        {{-- ══════════════════════════════════════════════════════════
+             HALAMAN SERVICES-NAVBAR: hanya tampilkan widget services
+        ══════════════════════════════════════════════════════════ --}}
+        @if($page === 'services-navbar')
+
+            @php $allServices = \App\Models\Service::ordered()->get(); @endphp
+
+            @if($allServices->isNotEmpty())
+            <div class="row-label">SERVICES — NAVBAR VISIBILITY</div>
+            <div class="svc-widget">
+                <div class="svc-widget-hd">
+                    <div class="svc-widget-title">
+                        <i class="fas fa-bars-staggered"></i>
+                        <span>SERVICES DI NAVBAR</span>
                     </div>
-                    <div class="svc-info">
-                        <div class="svc-name {{ $svc->is_active ? 'active-name' : 'inactive-name' }}" id="svc-name-{{ $svc->id }}">
-                            {{ $svc->title }}
-                        </div>
-                        <div class="svc-route">{{ $svc->route_name ?: '/layanan/'.$svc->slug }}</div>
-                    </div>
-                    <span class="svc-badge {{ $svc->is_active ? 'active-badge' : 'inactive-badge' }}" id="svc-badge-{{ $svc->id }}">
-                        {{ $svc->is_active ? 'AKTIF' : 'NONAKTIF' }}
+                    <span class="svc-widget-count" id="svc-active-count">
+                        {{ $allServices->where('is_active', true)->count() }}/{{ $allServices->count() }} AKTIF
                     </span>
-                    <label class="toggle" title="{{ $svc->is_active ? 'Nonaktifkan dari navbar' : 'Aktifkan di navbar' }}" style="flex-shrink:0;cursor:pointer">
-                        <input type="checkbox" {{ $svc->is_active ? 'checked' : '' }} onchange="toggleService({{ $svc->id }}, this)">
-                        <span class="toggle-track"></span>
-                        <span class="toggle-thumb"></span>
-                    </label>
                 </div>
-                @endforeach
-            </div>
-            <div class="svc-widget-ft">
-                <i class="fas fa-info-circle"></i>
-                &nbsp;Toggle di atas langsung mempengaruhi tampilan Services di navbar publik.
-                Nonaktif = hilang dari navbar &amp; tidak bisa diakses.
-            </div>
-        </div>
-        @endif
-
-        @if($sections->isEmpty())
-        <div class="empty-state">
-            <span class="empty-icon"><i class="fas fa-inbox"></i></span>
-            <p>BELUM ADA SECTION UNTUK HALAMAN <strong>{{ strtoupper($page) }}</strong></p>
-        </div>
-        @else
-        <div class="row-label">SECTION LIST — {{ strtoupper($page) }}</div>
-        <div class="sections-grid" id="sortable-grid">
-            @foreach($sections as $section)
-            @php
-                $fields       = $section->getFields();
-                $content      = $section->content ?? [];
-                $hiddenFields = $section->hidden_fields ?? [];
-
-                // FIX: Jika schema tidak punya fields (section legacy),
-                // bangun preview dari content keys yang ada di DB.
-                // Gunakan closure biasa (bukan arrow function) agar
-                // Blade compiler tidak salah parse karakter "=>".
-                if (empty($fields) && !empty($content)) {
-                    $fields = collect(array_keys($content))->map(function($k) {
-                        return [
-                            'key'   => $k,
-                            'label' => ucwords(str_replace('_', ' ', $k)),
-                            'type'  => 'text',
-                        ];
-                    })->values()->all();
-                }
-
-                $preview     = array_slice($fields, 0, 5);
-                $more        = count($fields) - count($preview);
-                $hiddenCount = count($hiddenFields);
-            @endphp
-            <div class="section-card {{ !$section->is_active ? 'inactive' : '' }}" data-id="{{ $section->id }}">
-                <div class="card-accent"></div>
-                <div class="card-hd">
-                    <div class="card-hd-left">
-                        <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
-                        <span class="order-num">{{ str_pad($section->order, 2, '0', STR_PAD_LEFT) }}</span>
-                        <div class="card-meta">
-                            <div class="card-label">{{ $section->label }}</div>
-                            <div class="card-key">
-                                {{ $section->section_key }}
-                                <span class="hidden-badge {{ $hiddenCount > 0 ? 'has-hidden' : '' }}"
-                                      data-hidden-badge="{{ $section->id }}">
-                                    {{ $hiddenCount }}H
-                                </span>
+                <div id="svc-list">
+                    @foreach($allServices as $svc)
+                    <div class="svc-row {{ !$svc->is_active ? 'is-inactive' : '' }}" id="svc-row-{{ $svc->id }}">
+                        <div class="svc-icon-box {{ $svc->is_active ? 'active-icon' : 'inactive-icon' }}" id="svc-icon-{{ $svc->id }}">
+                            <i class="{{ $svc->icon_class ?: 'fa-solid fa-circle' }}"></i>
+                        </div>
+                        <div class="svc-info">
+                            <div class="svc-name {{ $svc->is_active ? 'active-name' : 'inactive-name' }}" id="svc-name-{{ $svc->id }}">
+                                {{ $svc->title }}
                             </div>
+                            <div class="svc-route">{{ $svc->route_name ?: '/layanan/'.$svc->slug }}</div>
                         </div>
-                        <div class="status-pip {{ !$section->is_active ? 'off' : '' }}"></div>
+                        <span class="svc-badge {{ $svc->is_active ? 'active-badge' : 'inactive-badge' }}" id="svc-badge-{{ $svc->id }}">
+                            {{ $svc->is_active ? 'AKTIF' : 'NONAKTIF' }}
+                        </span>
+                        <label class="toggle" title="{{ $svc->is_active ? 'Nonaktifkan dari navbar' : 'Aktifkan di navbar' }}" style="flex-shrink:0;cursor:pointer">
+                            <input type="checkbox" {{ $svc->is_active ? 'checked' : '' }} onchange="toggleService({{ $svc->id }}, this)">
+                            <span class="toggle-track"></span>
+                            <span class="toggle-thumb"></span>
+                        </label>
                     </div>
-                    <div class="card-actions">
-                        <form method="POST" action="{{ route('admin.cms.page-sections.toggle', $section) }}" class="toggle-form">
-                            @csrf @method('PATCH')
-                            <label class="toggle" title="{{ $section->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                <input type="checkbox" {{ $section->is_active ? 'checked' : '' }} onchange="this.closest('form').submit()">
-                                <span class="toggle-track"></span>
-                                <span class="toggle-thumb"></span>
-                            </label>
-                        </form>
-                        <a href="{{ route('admin.cms.page-sections.edit', $section) }}" class="btn-edit">
-                            <i class="fas fa-pen"></i> EDIT
-                        </a>
-                    </div>
+                    @endforeach
                 </div>
+                <div class="svc-widget-ft">
+                    <i class="fas fa-info-circle"></i>
+                    &nbsp;Toggle di atas langsung mempengaruhi tampilan Services di navbar publik.
+                    Nonaktif = hilang dari navbar &amp; tidak bisa diakses.
+                </div>
+            </div>
+            @else
+            <div class="svc-empty">
+                <i class="fas fa-bars-staggered"></i>
+                <p>BELUM ADA SERVICE YANG TERDAFTAR.</p>
+            </div>
+            @endif
 
-                {{-- Card Body --}}
-                <div class="card-body">
-                    <div class="field-rows" id="fields-{{ $section->id }}">
-                        @foreach($preview as $field)
-                        @php
-                            $key      = $field['key'];
-                            $val      = $content[$key] ?? null;
-                            $type     = $field['type'];
-                            $isHidden = in_array($key, $hiddenFields);
-                        @endphp
-                        <div class="field-row {{ $isHidden ? 'is-hidden-row' : '' }}"
-                             data-field-key="{{ $key }}" data-section-id="{{ $section->id }}">
-                            <button class="field-eye-btn {{ $isHidden ? 'is-hidden' : '' }}"
-                                    title="{{ $isHidden ? 'Tampilkan field ini' : 'Sembunyikan field ini' }}"
-                                    onclick="toggleFieldVisibility({{ $section->id }}, '{{ $key }}', this)"
-                                    type="button">
-                                <i class="fas {{ $isHidden ? 'fa-eye-slash' : 'fa-eye' }}"></i>
-                            </button>
-                            <span class="f-label">{{ Str::limit($field['label'], 11) }}</span>
-                            @if($type === 'image')
-                                @if($val) <img src="{{ Storage::url($val) }}" alt="" class="f-img">
-                                @else <span class="f-val empty">— no image</span> @endif
-                            @elseif($type === 'color')
-                                @if($val)
-                                    <span class="f-color-dot" style="background:{{ $val }}"></span>
-                                    <span class="f-val" style="font-family:'JetBrains Mono',monospace;font-size:.54rem">{{ $val }}</span>
-                                @else <span class="f-val empty">—</span> @endif
-                            @else
-                                <span class="f-val {{ !$val ? 'empty' : '' }}">{{ $val ? Str::limit(strip_tags($val), 38) : '—' }}</span>
-                            @endif
+        {{-- ══════════════════════════════════════════════════════════
+             HALAMAN BIASA: tampilkan section grid seperti biasa
+        ══════════════════════════════════════════════════════════ --}}
+        @else
+
+            @if($sections->isEmpty())
+            <div class="empty-state">
+                <span class="empty-icon"><i class="fas fa-inbox"></i></span>
+                <p>BELUM ADA SECTION UNTUK HALAMAN <strong>{{ strtoupper($page) }}</strong></p>
+            </div>
+            @else
+            <div class="row-label">SECTION LIST — {{ strtoupper($page) }}</div>
+            <div class="sections-grid" id="sortable-grid">
+                @foreach($sections as $section)
+                @php
+                    $fields       = $section->getFields();
+                    $content      = $section->content ?? [];
+                    $hiddenFields = $section->hidden_fields ?? [];
+
+                    // FIX: Jika schema tidak punya fields (section legacy),
+                    // bangun preview dari content keys yang ada di DB.
+                    if (empty($fields) && !empty($content)) {
+                        $fields = collect(array_keys($content))->map(function($k) {
+                            return [
+                                'key'   => $k,
+                                'label' => ucwords(str_replace('_', ' ', $k)),
+                                'type'  => 'text',
+                            ];
+                        })->values()->all();
+                    }
+
+                    $preview     = array_slice($fields, 0, 5);
+                    $more        = count($fields) - count($preview);
+                    $hiddenCount = count($hiddenFields);
+                @endphp
+                <div class="section-card {{ !$section->is_active ? 'inactive' : '' }}" data-id="{{ $section->id }}">
+                    <div class="card-accent"></div>
+                    <div class="card-hd">
+                        <div class="card-hd-left">
+                            <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
+                            <span class="order-num">{{ str_pad($section->order, 2, '0', STR_PAD_LEFT) }}</span>
+                            <div class="card-meta">
+                                <div class="card-label">{{ $section->label }}</div>
+                                <div class="card-key">
+                                    {{ $section->section_key }}
+                                    <span class="hidden-badge {{ $hiddenCount > 0 ? 'has-hidden' : '' }}"
+                                          data-hidden-badge="{{ $section->id }}">
+                                        {{ $hiddenCount }}H
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="status-pip {{ !$section->is_active ? 'off' : '' }}"></div>
                         </div>
-                        @endforeach
+                        <div class="card-actions">
+                            <form method="POST" action="{{ route('admin.cms.page-sections.toggle', $section) }}" class="toggle-form">
+                                @csrf @method('PATCH')
+                                <label class="toggle" title="{{ $section->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
+                                    <input type="checkbox" {{ $section->is_active ? 'checked' : '' }} onchange="this.closest('form').submit()">
+                                    <span class="toggle-track"></span>
+                                    <span class="toggle-thumb"></span>
+                                </label>
+                            </form>
+                            <a href="{{ route('admin.cms.page-sections.edit', $section) }}" class="btn-edit">
+                                <i class="fas fa-pen"></i> EDIT
+                            </a>
+                        </div>
+                    </div>
 
-                        @if($more > 0)
-                        <button class="btn-expand-fields" onclick="toggleExpandFields(this, {{ $section->id }})" type="button">
-                            <i class="fas fa-chevron-down"></i>
-                            +{{ $more }} MORE FIELDS (klik untuk lihat semua)
-                        </button>
-                        <div class="hidden-fields-area" id="extra-fields-{{ $section->id }}">
-                            <div class="hidden-area-label"><i class="fas fa-layer-group"></i> SEMUA FIELD</div>
-                            @foreach(array_slice($fields, 5) as $field)
+                    {{-- Card Body --}}
+                    <div class="card-body">
+                        <div class="field-rows" id="fields-{{ $section->id }}">
+                            @foreach($preview as $field)
                             @php
                                 $key      = $field['key'];
                                 $val      = $content[$key] ?? null;
@@ -484,7 +493,7 @@
                             <div class="field-row {{ $isHidden ? 'is-hidden-row' : '' }}"
                                  data-field-key="{{ $key }}" data-section-id="{{ $section->id }}">
                                 <button class="field-eye-btn {{ $isHidden ? 'is-hidden' : '' }}"
-                                        title="{{ $isHidden ? 'Tampilkan' : 'Sembunyikan' }}"
+                                        title="{{ $isHidden ? 'Tampilkan field ini' : 'Sembunyikan field ini' }}"
                                         onclick="toggleFieldVisibility({{ $section->id }}, '{{ $key }}', this)"
                                         type="button">
                                     <i class="fas {{ $isHidden ? 'fa-eye-slash' : 'fa-eye' }}"></i>
@@ -492,7 +501,7 @@
                                 <span class="f-label">{{ Str::limit($field['label'], 11) }}</span>
                                 @if($type === 'image')
                                     @if($val) <img src="{{ Storage::url($val) }}" alt="" class="f-img">
-                                    @else <span class="f-val empty">— no img</span> @endif
+                                    @else <span class="f-val empty">— no image</span> @endif
                                 @elseif($type === 'color')
                                     @if($val)
                                         <span class="f-color-dot" style="background:{{ $val }}"></span>
@@ -503,23 +512,66 @@
                                 @endif
                             </div>
                             @endforeach
+
+                            @if($more > 0)
+                            <button class="btn-expand-fields" onclick="toggleExpandFields(this, {{ $section->id }})" type="button">
+                                <i class="fas fa-chevron-down"></i>
+                                +{{ $more }} MORE FIELDS (klik untuk lihat semua)
+                            </button>
+                            <div class="hidden-fields-area" id="extra-fields-{{ $section->id }}">
+                                <div class="hidden-area-label"><i class="fas fa-layer-group"></i> SEMUA FIELD</div>
+                                @foreach(array_slice($fields, 5) as $field)
+                                @php
+                                    $key      = $field['key'];
+                                    $val      = $content[$key] ?? null;
+                                    $type     = $field['type'];
+                                    $isHidden = in_array($key, $hiddenFields);
+                                @endphp
+                                <div class="field-row {{ $isHidden ? 'is-hidden-row' : '' }}"
+                                     data-field-key="{{ $key }}" data-section-id="{{ $section->id }}">
+                                    <button class="field-eye-btn {{ $isHidden ? 'is-hidden' : '' }}"
+                                            title="{{ $isHidden ? 'Tampilkan' : 'Sembunyikan' }}"
+                                            onclick="toggleFieldVisibility({{ $section->id }}, '{{ $key }}', this)"
+                                            type="button">
+                                        <i class="fas {{ $isHidden ? 'fa-eye-slash' : 'fa-eye' }}"></i>
+                                    </button>
+                                    <span class="f-label">{{ Str::limit($field['label'], 11) }}</span>
+                                    @if($type === 'image')
+                                        @if($val) <img src="{{ Storage::url($val) }}" alt="" class="f-img">
+                                        @else <span class="f-val empty">— no img</span> @endif
+                                    @elseif($type === 'color')
+                                        @if($val)
+                                            <span class="f-color-dot" style="background:{{ $val }}"></span>
+                                            <span class="f-val" style="font-family:'JetBrains Mono',monospace;font-size:.54rem">{{ $val }}</span>
+                                        @else <span class="f-val empty">—</span> @endif
+                                    @else
+                                        <span class="f-val {{ !$val ? 'empty' : '' }}">{{ $val ? Str::limit(strip_tags($val), 38) : '—' }}</span>
+                                    @endif
+                                </div>
+                                @endforeach
+                            </div>
+                            @endif
                         </div>
-                        @endif
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
-        </div>
+            @endif
+
         @endif
+        {{-- END page condition --}}
+
     </div>
 
-    {{-- Reorder Bar --}}
+    {{-- Reorder Bar (hanya untuk halaman biasa, bukan services-navbar) --}}
+    @if($page !== 'services-navbar')
     <div class="reorder-bar" id="reorder-bar">
         <div class="blink-dot"></div>
         <span class="bar-text">URUTAN BERUBAH</span>
         <button class="btn-save-order" id="btn-save-order">SIMPAN</button>
         <span id="reorder-status"></span>
     </div>
+    @endif
 
     {{-- Toast --}}
     <div class="field-toast" id="field-toast"></div>
@@ -593,7 +645,6 @@ async function toggleFieldVisibility(sectionId, fieldKey, btn) {
             body: JSON.stringify({ field_key: fieldKey }),
         });
 
-        // Handle non-OK responses gracefully
         if (!res.ok) {
             let errMsg = `HTTP ${res.status}`;
             try {
@@ -690,7 +741,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tabsScroll.scrollLeft = scrollStart - (e.pageX - tabsScroll.offsetLeft - startX) * 1.2;
     });
 
-    /* DRAG & DROP */
+    /* ── DRAG & DROP (hanya untuk halaman non services-navbar) ── */
     const grid    = document.getElementById('sortable-grid');
     const bar     = document.getElementById('reorder-bar');
     const btnSave = document.getElementById('btn-save-order');

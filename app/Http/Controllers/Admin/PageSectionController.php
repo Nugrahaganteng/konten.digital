@@ -15,6 +15,7 @@ class PageSectionController extends Controller
         'layanan-press-release', 'layanan-backlink', 'layanan-press-conference',
         'layanan-penulisan-artikel', 'layanan-script-video',
         'layanan-pelatihan-konten', 'footer',
+        'services-navbar',
     ];
 
     // ── Index ────────────────────────────────────────────────────────
