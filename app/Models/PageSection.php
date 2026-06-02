@@ -938,28 +938,44 @@ class PageSection extends Model
                 ],
             ],
 
-            // ════════════════════════════════════════════════════════════════
-// LAYANAN: BUZZER (sebelumnya layanan-script-video)
-// ════════════════════════════════════════════════════════════════
+            /// ════════════════════════════════════════════════════════════
+// LAYANAN: BUZZER
+// ════════════════════════════════════════════════════════════
 'layanan-buzzer' => [
  
     // ── 1. Hero ─────────────────────────────────────────────────────────────
     'hero' => [
         'label'  => 'Hero Section',
         'fields' => [
-            ['key' => 'badge_text',  'label' => 'Badge Text',                 'type' => 'text',     'placeholder' => '✦ JASA BUZZER MEDIA SOSIAL'],
-            ['key' => 'title_line1', 'label' => 'Judul Baris 1',              'type' => 'text',     'placeholder' => 'BUZZER'],
-            ['key' => 'title_line2', 'label' => 'Judul Baris 2',              'type' => 'text',     'placeholder' => 'VIRAL &'],
-            ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)',  'type' => 'text',     'placeholder' => 'ENGAGEMENT TINGGI'],
-            ['key' => 'quote',       'label' => 'Kutipan',                    'type' => 'text',     'placeholder' => 'Dari brand menjadi trending topic.'],
-            ['key' => 'description', 'label' => 'Deskripsi',                  'type' => 'textarea', 'placeholder' => 'Kami menyebarkan pesan brand Anda secara masif, organik, dan terkoordinasi di seluruh platform media sosial.'],
-            ['key' => 'cta_text',    'label' => 'Teks Tombol',                'type' => 'text',     'placeholder' => 'KONSULTASI SEKARANG'],
-            ['key' => 'cta_url',     'label' => 'URL Tombol',                 'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
-            ['key' => 'image',       'label' => 'Gambar Hero',                'type' => 'image'],
+            ['key' => 'badge_text',  'label' => 'Badge Text',                'type' => 'text',     'placeholder' => '✦ JASA BUZZER MEDIA SOSIAL'],
+            ['key' => 'title_line1', 'label' => 'Judul Baris 1',             'type' => 'text',     'placeholder' => 'JASA BUZZER'],
+            ['key' => 'title_line2', 'label' => 'Judul Baris 2',             'type' => 'text',     'placeholder' => 'INDONESIA'],
+            ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight – kotak kuning)', 'type' => 'text', 'placeholder' => '+20.000 MEMBER'],
+            ['key' => 'tagline',     'label' => 'Tagline Bold (di bawah judul)', 'type' => 'text', 'placeholder' => 'Bantu Branding Bisnis & Naikkan Interaksi'],
+            ['key' => 'description', 'label' => 'Deskripsi Paragraf',        'type' => 'textarea', 'placeholder' => 'Ingin memperkuat citra dan promosi brand Anda? Jasa Buzzer Indonesia dengan lebih dari 20.000 member siap bantu branding bisnis agar lebih dikenal luas.'],
+            ['key' => 'cta_text',    'label' => 'Teks Tombol CTA',           'type' => 'text',     'placeholder' => 'Hubungi Tim'],
+            ['key' => 'cta_url',     'label' => 'URL Tombol CTA',            'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
+            ['key' => 'image',       'label' => 'Gambar Hero',               'type' => 'image'],
         ],
     ],
  
-    // ── 2. Mengapa Jasa Buzzer ───────────────────────────────────────────────
+    // ── 2. Problem Section (BARU) ────────────────────────────────────────────
+    'problems' => [
+        'label'  => 'Problem Section — "Apakah Anda Pernah Merasakan?"',
+        'fields' => [
+            ['key' => 'title',       'label' => 'Judul Section',    'type' => 'text',  'placeholder' => 'Apakah Anda pernah merasakan hal ini?'],
+            ['key' => 'description', 'label' => 'Paragraf Intro',   'type' => 'textarea', 'placeholder' => 'Branding sosial media hingga marketplace tidak kunjung berhasil dan tidak kunjung membuat perkembangan yang signifikan.'],
+            ['key' => 'problem_1',   'label' => 'Problem 1 — Judul', 'type' => 'text', 'placeholder' => 'Sulit branding marketplace dan konversi pelanggan'],
+            ['key' => 'problem_2',   'label' => 'Problem 2 — Judul', 'type' => 'text', 'placeholder' => 'Konten tidak bisa naik dan mendatangkan analitik yang rendah'],
+            ['key' => 'problem_3',   'label' => 'Problem 3 — Judul', 'type' => 'text', 'placeholder' => 'Pengikut sedikit dan membuat sosial media Anda tidak menarik'],
+            ['key' => 'problem_4',   'label' => 'Problem 4 — Judul', 'type' => 'text', 'placeholder' => 'Campaign atau iklan tidak berhasil mendatangkan views, like, hingga komentar'],
+            ['key' => 'problem_5',   'label' => 'Problem 5 (opsional)', 'type' => 'text', 'placeholder' => ''],
+            ['key' => 'problem_6',   'label' => 'Problem 6 (opsional)', 'type' => 'text', 'placeholder' => ''],
+            ['key' => 'image',       'label' => 'Gambar Ilustrasi (Sad Persona)', 'type' => 'image'],
+        ],
+    ],
+ 
+    // ── 3. Mengapa Jasa Buzzer ───────────────────────────────────────────────
     'why_buzzer' => [
         'label'  => 'Mengapa Butuh Jasa Buzzer?',
         'fields' => [
@@ -978,52 +994,53 @@ class PageSection extends Model
         ],
     ],
  
-    // ── 3. Daftar Layanan Buzzer ─────────────────────────────────────────────
+    // ── 4. Daftar Layanan Buzzer ─────────────────────────────────────────────
+    // Konten default disesuaikan dengan 6 jenis layanan yang ditampilkan blade
     'services_list' => [
-        'label'  => 'Daftar Layanan Buzzer',
+        'label'  => 'Daftar Layanan / Manfaat Buzzer',
         'fields' => [
-            ['key' => 'title',            'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'LAYANAN KAMI'],
-            ['key' => 'subtitle',         'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Strategi buzzer profesional yang dirancang khusus untuk mendominasi platform digital.'],
-            ['key' => 'service_1_title',  'label' => 'Layanan 1 — Judul','type' => 'text',     'placeholder' => 'Buzzer Twitter/X'],
-            ['key' => 'service_1_desc',   'label' => 'Layanan 1 — Desc', 'type' => 'textarea', 'placeholder' => 'Sebarkan narasi brand secara masif di Twitter/X dengan ribuan akun aktif terkoordinasi.'],
-            ['key' => 'service_2_title',  'label' => 'Layanan 2 — Judul','type' => 'text',     'placeholder' => 'Buzzer Instagram'],
-            ['key' => 'service_2_desc',   'label' => 'Layanan 2 — Desc', 'type' => 'textarea', 'placeholder' => 'Tingkatkan engagement, komentar, dan jangkauan konten Instagram Anda secara organik.'],
-            ['key' => 'service_3_title',  'label' => 'Layanan 3 — Judul','type' => 'text',     'placeholder' => 'Buzzer TikTok'],
-            ['key' => 'service_3_desc',   'label' => 'Layanan 3 — Desc', 'type' => 'textarea', 'placeholder' => 'Dorong konten TikTok Anda ke FYP dengan interaksi nyata dari akun-akun aktif.'],
-            ['key' => 'service_4_title',  'label' => 'Layanan 4 — Judul','type' => 'text',     'placeholder' => 'Buzzer Facebook'],
-            ['key' => 'service_4_desc',   'label' => 'Layanan 4 — Desc', 'type' => 'textarea', 'placeholder' => 'Viralkan postingan dan halaman Facebook Anda dengan share, like, dan komentar masif.'],
-            ['key' => 'service_5_title',  'label' => 'Layanan 5 — Judul','type' => 'text',     'placeholder' => 'Buzzer YouTube'],
-            ['key' => 'service_5_desc',   'label' => 'Layanan 5 — Desc', 'type' => 'textarea', 'placeholder' => 'Tingkatkan views, subscriber, dan komentar video YouTube Anda secara cepat.'],
-            ['key' => 'service_6_title',  'label' => 'Layanan 6 — Judul','type' => 'text',     'placeholder' => 'Buzzer Multi-Platform'],
-            ['key' => 'service_6_desc',   'label' => 'Layanan 6 — Desc', 'type' => 'textarea', 'placeholder' => 'Kampanye buzzer terpadu di semua platform sekaligus untuk dampak maksimal.'],
+            ['key' => 'title',            'label' => 'Judul Section',     'type' => 'text',     'placeholder' => 'Manfaat Menggunakan Jasa Buzzer HNP Communications.id?'],
+            ['key' => 'subtitle',         'label' => 'Subjudul',          'type' => 'text',     'placeholder' => 'Strategi buzzer profesional yang dirancang khusus untuk mendominasi platform digital.'],
+            ['key' => 'service_1_title',  'label' => 'Layanan 1 — Judul', 'type' => 'text',     'placeholder' => 'BUZZER CAMPAIGN'],
+            ['key' => 'service_1_desc',   'label' => 'Layanan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Buzzer kami siap membantu sukseskan campaign Anda, interaksi yang tinggi pada campaign membantu perluas jangkauan sehingga campaign dapat dilihat banyak orang.'],
+            ['key' => 'service_2_title',  'label' => 'Layanan 2 — Judul', 'type' => 'text',     'placeholder' => 'BUZZER TRENDING TOPIK'],
+            ['key' => 'service_2_desc',   'label' => 'Layanan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Naiknya hashtag dan keyword di trending topik twitter dengan bantuan buzzer membantu campaign bisnis viral bahkan dilirik media nasional.'],
+            ['key' => 'service_3_title',  'label' => 'Layanan 3 — Judul', 'type' => 'text',     'placeholder' => 'BUZZER FYP'],
+            ['key' => 'service_3_desc',   'label' => 'Layanan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Ribuan akun buzzer aktif dapat menghasilkan konten tiktok Anda mudah masuk FYP dan hasilkan interaksi yang tinggi.'],
+            ['key' => 'service_4_title',  'label' => 'Layanan 4 — Judul', 'type' => 'text',     'placeholder' => 'BUZZER REVIEW & RATING'],
+            ['key' => 'service_4_desc',   'label' => 'Layanan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Tempat bisnis Anda di google maps bisa menghasilkan ribuan review dan rating bintang 5 dengan buzzer kami.'],
+            ['key' => 'service_5_title',  'label' => 'Layanan 5 — Judul', 'type' => 'text',     'placeholder' => 'BUZZER CLIPPER'],
+            ['key' => 'service_5_desc',   'label' => 'Layanan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Konten original Anda dapat menghasilkan ribuan clip dan posting yang dilakukan oleh buzzer clipper video dari kami.'],
+            ['key' => 'service_6_title',  'label' => 'Layanan 6 — Judul', 'type' => 'text',     'placeholder' => 'BUZZER TERJUAL & ULASAN'],
+            ['key' => 'service_6_desc',   'label' => 'Layanan 6 — Desc',  'type' => 'textarea', 'placeholder' => 'Ribuan buzzer kami mampu menghasilkan ribuan bahkan puluhan ribu jumlah terjual serta ulasan pada produk Anda di marketplace.'],
         ],
     ],
  
-    // ── 4. Proses Kerja ──────────────────────────────────────────────────────
+    // ── 5. Proses / Alur Kerja ───────────────────────────────────────────────
     'process' => [
         'label'  => 'Proses / Alur Kerja',
         'fields' => [
-            ['key' => 'title',        'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Alur Kerja Kampanye Buzzer'],
-            ['key' => 'step_1_title', 'label' => 'Step 1 — Judul',   'type' => 'text',     'placeholder' => 'KONSULTASI AWAL'],
-            ['key' => 'step_1_desc',  'label' => 'Step 1 — Desc',    'type' => 'textarea', 'placeholder' => 'Membedah tujuan kampanye, target audiens, dan platform yang disasar.'],
-            ['key' => 'step_2_title', 'label' => 'Step 2 — Judul',   'type' => 'text',     'placeholder' => 'RANCANG STRATEGI'],
-            ['key' => 'step_2_desc',  'label' => 'Step 2 — Desc',    'type' => 'textarea', 'placeholder' => 'Penyusunan narasi, hashtag, dan jadwal penyebaran yang optimal.'],
-            ['key' => 'step_3_title', 'label' => 'Step 3 — Judul',   'type' => 'text',     'placeholder' => 'EKSEKUSI KAMPANYE'],
-            ['key' => 'step_3_desc',  'label' => 'Step 3 — Desc',    'type' => 'textarea', 'placeholder' => 'Penyebaran konten secara masif dan terkoordinasi di semua platform.'],
-            ['key' => 'step_4_title', 'label' => 'Step 4 — Judul',   'type' => 'text',     'placeholder' => 'MONITORING REAL-TIME'],
-            ['key' => 'step_4_desc',  'label' => 'Step 4 — Desc',    'type' => 'textarea', 'placeholder' => 'Pemantauan engagement, reach, dan respons audiens secara langsung.'],
-            ['key' => 'step_5_title', 'label' => 'Step 5 — Judul',   'type' => 'text',     'placeholder' => 'LAPORAN & ANALISIS'],
-            ['key' => 'step_5_desc',  'label' => 'Step 5 — Desc',    'type' => 'textarea', 'placeholder' => 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.'],
+            ['key' => 'title',        'label' => 'Judul Section',  'type' => 'text',     'placeholder' => 'Alur Kerja Kampanye Buzzer'],
+            ['key' => 'step_1_title', 'label' => 'Step 1 — Judul', 'type' => 'text',     'placeholder' => 'KONSULTASI AWAL'],
+            ['key' => 'step_1_desc',  'label' => 'Step 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Membedah tujuan kampanye, target audiens, dan platform yang disasar.'],
+            ['key' => 'step_2_title', 'label' => 'Step 2 — Judul', 'type' => 'text',     'placeholder' => 'RANCANG STRATEGI'],
+            ['key' => 'step_2_desc',  'label' => 'Step 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Penyusunan narasi, hashtag, dan jadwal penyebaran yang optimal.'],
+            ['key' => 'step_3_title', 'label' => 'Step 3 — Judul', 'type' => 'text',     'placeholder' => 'EKSEKUSI KAMPANYE'],
+            ['key' => 'step_3_desc',  'label' => 'Step 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Penyebaran konten secara masif dan terkoordinasi di semua platform.'],
+            ['key' => 'step_4_title', 'label' => 'Step 4 — Judul', 'type' => 'text',     'placeholder' => 'MONITORING REAL-TIME'],
+            ['key' => 'step_4_desc',  'label' => 'Step 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Pemantauan engagement, reach, dan respons audiens secara langsung.'],
+            ['key' => 'step_5_title', 'label' => 'Step 5 — Judul', 'type' => 'text',     'placeholder' => 'LAPORAN & ANALISIS'],
+            ['key' => 'step_5_desc',  'label' => 'Step 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.'],
         ],
     ],
  
-    // ── 5. Paket Harga ───────────────────────────────────────────────────────
+    // ── 6. Paket Harga ───────────────────────────────────────────────────────
     'pricing' => [
         'label'  => 'Paket Harga',
         'fields' => [
             ['key' => 'title',                 'label' => 'Judul Section',               'type' => 'text', 'placeholder' => 'Paket Harga Jasa Buzzer Media Sosial'],
             // BASIC
-            ['key' => 'basic_price_ori',       'label' => 'Basic — Harga Asli',          'type' => 'text', 'placeholder' => 'Rp 600.000,-'],
+            ['key' => 'basic_price_ori',       'label' => 'Basic — Harga Asli (coret)',  'type' => 'text', 'placeholder' => 'Rp 600.000,-'],
             ['key' => 'basic_price',           'label' => 'Basic — Harga Promo',         'type' => 'text', 'placeholder' => 'Rp 500.000'],
             ['key' => 'basic_duration',        'label' => 'Basic — Durasi Kampanye',     'type' => 'text', 'placeholder' => '7 Hari'],
             ['key' => 'basic_feature_1',       'label' => 'Basic — Fitur 1',             'type' => 'text', 'placeholder' => '1 Platform'],
@@ -1048,22 +1065,22 @@ class PageSection extends Model
             ['key' => 'premium_feature_1',     'label' => 'Premium — Fitur 1',           'type' => 'text', 'placeholder' => 'Semua Platform'],
             ['key' => 'premium_feature_2',     'label' => 'Premium — Fitur 2',           'type' => 'text', 'placeholder' => '5.000 Interaksi/hari'],
             ['key' => 'premium_feature_3',     'label' => 'Premium — Fitur 3',           'type' => 'text', 'placeholder' => 'Laporan harian'],
-            ['key' => 'premium_feature_4',     'label' => 'Premium — Fitur 4 (highlight)','type' => 'text', 'placeholder' => 'GARANSI VIRAL'],
+            ['key' => 'premium_feature_4',     'label' => 'Premium — Fitur 4 (highlight GARANSI VIRAL)', 'type' => 'text', 'placeholder' => 'GARANSI VIRAL'],
             ['key' => 'premium_feature_5',     'label' => 'Premium — Fitur 5',           'type' => 'text', 'placeholder' => 'Dedicated account manager'],
             ['key' => 'premium_feature_6',     'label' => 'Premium — Fitur 6',           'type' => 'text', 'placeholder' => 'Strategi konten lengkap'],
             ['key' => 'premium_feature_7',     'label' => 'Premium — Fitur 7',           'type' => 'text', 'placeholder' => 'Crisis management'],
-            // CTA
+            // CTA (dipakai ketiga paket)
             ['key' => 'cta_text',              'label' => 'Teks Tombol Pesan',            'type' => 'text', 'placeholder' => 'Pesan Sekarang'],
-            ['key' => 'cta_url',               'label' => 'URL Tombol Konsultasi',        'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+            ['key' => 'cta_url',               'label' => 'URL Tombol (WA)',              'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
         ],
     ],
  
-    // ── 6. CTA Penutup ───────────────────────────────────────────────────────
+    // ── 7. CTA Penutup ───────────────────────────────────────────────────────
     'cta' => [
         'label'  => 'CTA Penutup',
         'fields' => [
-            ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP BIKIN BRAND KAMU VIRAL?'],
-            ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'PESAN BUZZER SEKARANG'],
+            ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP BUAT BRAND ANDA VIRAL SEKARANG?'],
+            ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'KONSULTASI BERSAMA TIM'],
             ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
         ],
     ],

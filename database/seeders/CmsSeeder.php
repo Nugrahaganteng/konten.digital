@@ -863,6 +863,10 @@ class CmsSeeder extends Seeder
             ],
 
             
+// ════════════════════════════════════════════════════════════
+// LAYANAN: BUZZER — SEMUA SECTION DENGAN ORDER BENAR
+// ════════════════════════════════════════════════════════════
+
 [
     'page'        => 'layanan-buzzer',
     'section_key' => 'hero',
@@ -870,23 +874,40 @@ class CmsSeeder extends Seeder
     'order'       => 1,
     'content'     => [
         'badge_text'  => '✦ JASA BUZZER MEDIA SOSIAL',
-        'title_line1' => 'BUZZER',
-        'title_line2' => 'VIRAL &',
-        'title_line3' => 'ENGAGEMENT TINGGI',
-        'quote'       => 'Dari brand menjadi trending topic.',
-        'description' => 'Kami menyebarkan pesan brand Anda secara masif, organik, dan terkoordinasi di seluruh platform media sosial untuk menciptakan buzz yang nyata.',
-        'cta_text'    => 'KONSULTASI SEKARANG',
+        'title_line1' => 'JASA BUZZER',
+        'title_line2' => 'INDONESIA',
+        'title_line3' => '+20.000 MEMBER',
+        'tagline'     => 'Bantu Branding Bisnis & Naikkan Interaksi',
+        'description' => 'Ingin memperkuat citra dan promosi brand Anda? Jasa Buzzer Indonesia dengan lebih dari 20.000 member siap bantu branding bisnis agar lebih dikenal luas.',
+        'cta_text'    => 'Hubungi Tim',
         'cta_url'     => 'https://wa.me/6287786000919',
         'image'       => null,
     ],
 ],
- 
-// ── 2. Mengapa Jasa Buzzer ────────────────────────────────────────────────────
+
+[
+    'page'        => 'layanan-buzzer',
+    'section_key' => 'problems',
+    'label'       => 'Problem Section — "Apakah Anda Pernah Merasakan?"',
+    'order'       => 2,
+    'content'     => [
+        'title'       => 'Apakah Anda pernah merasakan hal ini?',
+        'description' => 'Branding sosial media hingga marketplace tidak kunjung berhasil dan tidak kunjung membuat perkembangan yang signifikan.',
+        'problem_1'   => 'Sulit branding marketplace dan konversi pelanggan',
+        'problem_2'   => 'Konten tidak bisa naik dan mendatangkan analitik yang rendah',
+        'problem_3'   => 'Pengikut sedikit dan membuat sosial media Anda tidak menarik',
+        'problem_4'   => 'Campaign atau iklan tidak berhasil mendatangkan views, like, hingga komentar',
+        'problem_5'   => '',
+        'problem_6'   => '',
+        'image'       => null,
+    ],
+],
+
 [
     'page'        => 'layanan-buzzer',
     'section_key' => 'why_buzzer',
     'label'       => 'Mengapa Butuh Jasa Buzzer?',
-    'order'       => 2,
+    'order'       => 3,
     'content'     => [
         'title'          => 'Mengapa Harus Jasa Buzzer?',
         'subtitle'       => 'Buzzer yang terkoordinasi adalah kunci viral marketing yang efektif dan terukur.',
@@ -902,37 +923,35 @@ class CmsSeeder extends Seeder
         'reason_5_desc'  => 'Satu kampanye menyentuh Twitter/X, Instagram, TikTok, Facebook, dan YouTube secara bersamaan.',
     ],
 ],
- 
-// ── 3. Daftar Layanan Buzzer ──────────────────────────────────────────────────
+
 [
     'page'        => 'layanan-buzzer',
     'section_key' => 'services_list',
-    'label'       => 'Daftar Layanan Buzzer',
-    'order'       => 3,
+    'label'       => 'Daftar Layanan / Manfaat Buzzer',
+    'order'       => 4,
     'content'     => [
         'title'           => 'LAYANAN KAMI',
         'subtitle'        => 'Strategi buzzer profesional yang dirancang khusus untuk mendominasi platform digital.',
-        'service_1_title' => 'Buzzer Twitter/X',
-        'service_1_desc'  => 'Sebarkan narasi brand secara masif di Twitter/X dengan ribuan akun aktif terkoordinasi.',
-        'service_2_title' => 'Buzzer Instagram',
-        'service_2_desc'  => 'Tingkatkan engagement, komentar, dan jangkauan konten Instagram Anda secara organik.',
-        'service_3_title' => 'Buzzer TikTok',
-        'service_3_desc'  => 'Dorong konten TikTok Anda ke FYP dengan interaksi nyata dari akun-akun aktif.',
-        'service_4_title' => 'Buzzer Facebook',
-        'service_4_desc'  => 'Viralkan postingan dan halaman Facebook Anda dengan share, like, dan komentar masif.',
-        'service_5_title' => 'Buzzer YouTube',
-        'service_5_desc'  => 'Tingkatkan views, subscriber, dan komentar video YouTube Anda secara cepat.',
-        'service_6_title' => 'Buzzer Multi-Platform',
-        'service_6_desc'  => 'Kampanye buzzer terpadu di semua platform sekaligus untuk dampak maksimal.',
+        'service_1_title' => 'BUZZER CAMPAIGN',
+        'service_1_desc'  => 'Buzzer kami siap membantu sukseskan campaign Anda, interaksi yang tinggi pada campaign membantu perluas jangkauan sehingga campaign dapat dilihat banyak orang.',
+        'service_2_title' => 'BUZZER TRENDING TOPIK',
+        'service_2_desc'  => 'Naiknya hashtag dan keyword di trending topik twitter dengan bantuan buzzer membantu campaign bisnis viral bahkan dilirik media nasional.',
+        'service_3_title' => 'BUZZER FYP',
+        'service_3_desc'  => 'Ribuan akun buzzer aktif dapat menghasilkan konten tiktok Anda mudah masuk FYP dan hasilkan interaksi yang tinggi.',
+        'service_4_title' => 'BUZZER REVIEW & RATING',
+        'service_4_desc'  => 'Tempat bisnis Anda di google maps bisa menghasilkan ribuan review dan rating bintang 5 dengan buzzer kami.',
+        'service_5_title' => 'BUZZER CLIPPER',
+        'service_5_desc'  => 'Konten original Anda dapat menghasilkan ribuan clip dan posting yang dilakukan oleh buzzer clipper video dari kami.',
+        'service_6_title' => 'BUZZER TERJUAL & ULASAN',
+        'service_6_desc'  => 'Ribuan buzzer kami mampu menghasilkan ribuan bahkan puluhan ribu jumlah terjual serta ulasan pada produk Anda di marketplace.',
     ],
 ],
- 
-// ── 4. Proses Kerja ───────────────────────────────────────────────────────────
+
 [
     'page'        => 'layanan-buzzer',
     'section_key' => 'process',
     'label'       => 'Proses / Alur Kerja',
-    'order'       => 4,
+    'order'       => 5,
     'content'     => [
         'title'        => 'Alur Kerja Kampanye Buzzer',
         'step_1_title' => 'KONSULTASI AWAL',
@@ -947,16 +966,14 @@ class CmsSeeder extends Seeder
         'step_5_desc'  => 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.',
     ],
 ],
- 
-// ── 5. Paket Harga ────────────────────────────────────────────────────────────
+
 [
     'page'        => 'layanan-buzzer',
     'section_key' => 'pricing',
     'label'       => 'Paket Harga',
-    'order'       => 5,
+    'order'       => 6,
     'content'     => [
         'title'              => 'Paket Harga Jasa Buzzer Media Sosial',
-        // BASIC
         'basic_price_ori'    => 'Rp 600.000,-',
         'basic_price'        => 'Rp 500.000',
         'basic_duration'     => '7 Hari',
@@ -965,7 +982,6 @@ class CmsSeeder extends Seeder
         'basic_feature_3'    => 'Laporan mingguan',
         'basic_feature_4'    => 'Konsultasi via WA',
         'basic_feature_5'    => 'Cocok untuk UMKM',
-        // STANDARD
         'standard_price_ori' => 'Rp 1.200.000,-',
         'standard_price'     => 'Rp 1.000.000',
         'standard_duration'  => '14 Hari',
@@ -975,7 +991,6 @@ class CmsSeeder extends Seeder
         'standard_feature_4' => 'Strategi hashtag',
         'standard_feature_5' => 'Monitoring real-time',
         'standard_feature_6' => 'Content calendar',
-        // PREMIUM
         'premium_price_ori'  => 'Rp 2.400.000,-',
         'premium_price'      => 'Rp 2.000.000',
         'premium_duration'   => '30 Hari',
@@ -986,21 +1001,19 @@ class CmsSeeder extends Seeder
         'premium_feature_5'  => 'Dedicated account manager',
         'premium_feature_6'  => 'Strategi konten lengkap',
         'premium_feature_7'  => 'Crisis management',
-        // CTA
         'cta_text'           => 'Pesan Sekarang',
         'cta_url'            => 'https://wa.me/6287786000919',
     ],
 ],
- 
-// ── 6. CTA Penutup ────────────────────────────────────────────────────────────
+
 [
     'page'        => 'layanan-buzzer',
     'section_key' => 'cta',
     'label'       => 'CTA Penutup',
-    'order'       => 6,
+    'order'       => 7,
     'content'     => [
-        'title'    => 'SIAP BIKIN BRAND KAMU VIRAL?',
-        'cta_text' => 'PESAN BUZZER SEKARANG',
+        'title'    => 'SIAP BUAT BRAND ANDA VIRAL SEKARANG?',
+        'cta_text' => 'KONSULTASI BERSAMA TIM',
         'cta_url'  => 'https://wa.me/6287786000919',
     ],
 ],

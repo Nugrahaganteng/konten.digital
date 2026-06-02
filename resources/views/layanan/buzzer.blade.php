@@ -6,15 +6,13 @@
 
 @php
     $heroS     = $sections->get('hero');
+    $problemsS = $sections->get('problems');
     $whyS      = $sections->get('why_buzzer');
     $servicesS = $sections->get('services_list');
     $processS  = $sections->get('process');
     $pricingS  = $sections->get('pricing');
     $ctaS      = $sections->get('cta');
 
-    /**
-     * Helper: ambil field dari section dengan FULL hidden support.
-     */
     $field = function($section, string $key, mixed $default = '') {
         if (!$section) return $default;
         $val = $section->getField($key);
@@ -22,8 +20,8 @@
         return $val ?: $default;
     };
 
-    // Shorthand per-section
     $hv  = fn($k, $d = '') => $field($heroS,     $k, $d);
+    $pbv = fn($k, $d = '') => $field($problemsS, $k, $d);
     $wv  = fn($k, $d = '') => $field($whyS,      $k, $d);
     $sv  = fn($k, $d = '') => $field($servicesS, $k, $d);
     $prv = fn($k, $d = '') => $field($processS,  $k, $d);
@@ -60,9 +58,11 @@
                 @endif
             </h1>
 
+            @if($hv('tagline') !== null)
             <p class="text-xl sm:text-2xl font-black text-[#FFD217] tracking-tight uppercase">
-                Bantu Branding Bisnis & Naikkan Interaksi
+                {{ $hv('tagline', 'Bantu Branding Bisnis & Naikkan Interaksi') }}
             </p>
+            @endif
 
             @if($hv('description') !== null)
             <p class="text-base sm:text-lg font-bold text-white/90 leading-relaxed max-w-xl">
@@ -132,16 +132,23 @@
 </style>
 
 
-{{-- ── SECTION 2: PROBLEM IDENTIFICATION ────────────────────────────────────── --}}
+{{-- ── SECTION 2: PROBLEM IDENTIFICATION (CMS-CONNECTED) ─────────────────────── --}}
+@if($problemsS && $problemsS->is_active)
 <section class="py-24 bg-white border-b-8 border-black">
     <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
 
-        {{-- Left Side: Sad Persona Image --}}
+        {{-- Left Side: Image --}}
         <div class="relative flex justify-center items-center min-h-[350px] sm:min-h-[400px]">
             <div class="absolute w-[260px] h-[260px] sm:w-[340px] sm:h-[340px] border-4 border-black bg-[#3D0066] rounded-full"></div>
             <div class="relative w-[240px] h-[240px] sm:w-[320px] sm:h-[320px] bg-stone-100 border-4 border-black rounded-full shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex items-center justify-center overflow-visible">
 
-                <img src="{{ asset('images/sad-persona.png') }}" alt="Masalah Bisnis"
+                @php
+                    $problemImg = $problemsS ? $problemsS->getField('image') : null;
+                    $problemImgUrl = ($problemImg && !\App\Models\PageSection::isHiddenValue($problemImg))
+                        ? Storage::url($problemImg)
+                        : asset('images/sad-persona.png');
+                @endphp
+                <img src="{{ $problemImgUrl }}" alt="Masalah Bisnis"
                      class="absolute w-[105%] max-w-none z-10 transform -translate-y-4 drop-shadow-[6px_6px_0px_rgba(0,0,0,0.15)] grayscale">
 
                 <div class="absolute top-4 left-0 bg-black text-white border-2 border-white px-3 py-1 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-6 z-20">
@@ -159,66 +166,56 @@
             </div>
         </div>
 
-        {{-- Right Side: Problem Points --}}
+        {{-- Right Side: Problem Points dari CMS --}}
         <div class="space-y-6">
+            @if($pbv('title') !== null)
             <div class="inline-block border-4 border-black bg-[#E61E50] p-4 transform -rotate-1 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
                 <h2 class="text-2xl sm:text-4xl font-black uppercase text-white tracking-tighter">
-                    Apakah Anda pernah merasakan hal ini?
+                    {{ $pbv('title', 'Apakah Anda pernah merasakan hal ini?') }}
                 </h2>
             </div>
+            @endif
+
+            @if($pbv('description') !== null)
             <p class="text-base sm:text-lg font-bold text-black/80 leading-snug">
-                Branding sosial media hingga marketplace tidak kunjung berhasil dan tidak kunjung membuat perkembangan yang signifikan.
+                {{ $pbv('description', 'Branding sosial media hingga marketplace tidak kunjung berhasil dan tidak kunjung membuat perkembangan yang signifikan.') }}
             </p>
+            @endif
+
+            @php
+            $problemIcons = [
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>',
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"/><path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>',
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0zM7 10a2 2 0 11-4 0 2 2 0z"/>',
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>',
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"/>',
+                '<path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>',
+            ];
+            $problemBgColors   = ['bg-[#3D0066]','bg-[#1a88d1]','bg-[#FFD217]','bg-[#E61E50]','bg-black','bg-[#3D0066]'];
+            $problemIconColors = ['text-white','text-white','text-black','text-white','text-white','text-white'];
+            @endphp
 
             <div class="space-y-4 pt-2">
+                @for($i = 1; $i <= 6; $i++)
+                @php $problemText = $pbv("problem_{$i}"); @endphp
+                @if($problemText !== null && $problemText !== '')
                 <div class="flex items-start gap-4 p-4 border-4 border-black bg-stone-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <div class="p-2 bg-[#3D0066] border-2 border-black text-white flex-shrink-0">
+                    <div class="p-2 {{ $problemBgColors[$i-1] }} border-2 border-black {{ $problemIconColors[$i-1] }} flex-shrink-0">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            {!! $problemIcons[$i-1] !!}
                         </svg>
                     </div>
                     <div>
-                        <h4 class="font-black text-base uppercase text-black">Sulit branding marketplace dan konversi pelanggan</h4>
+                        <h4 class="font-black text-base uppercase text-black">{{ $problemText }}</h4>
                     </div>
                 </div>
-
-                <div class="flex items-start gap-4 p-4 border-4 border-black bg-stone-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <div class="p-2 bg-[#1a88d1] border-2 border-black text-white flex-shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 3.055A9.003 9.003 0 1020.945 13H11V3.055z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-black text-base uppercase text-black">Konten tidak bisa naik dan mendatangkan <span class="text-[#E61E50]">analitik yang rendah</span></h4>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4 p-4 border-4 border-black bg-stone-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <div class="p-2 bg-[#FFD217] border-2 border-black text-black flex-shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0zM7 10a2 2 0 11-4 0 2 2 0z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-black text-base uppercase text-black"><span class="text-[#3D0066]">Pengikut sedikit</span> dan membuat sosial media Anda tidak menarik</h4>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-4 p-4 border-4 border-black bg-stone-50 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
-                    <div class="p-2 bg-[#E61E50] border-2 border-black text-white flex-shrink-0">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
-                        </svg>
-                    </div>
-                    <div>
-                        <h4 class="font-black text-base uppercase text-black">Campaign atau iklan tidak berhasil mendatangkan <span class="text-[#1a88d1]">views, like, hingga komentar</span></h4>
-                    </div>
-                </div>
+                @endif
+                @endfor
             </div>
         </div>
     </div>
 </section>
+@endif
 
 
 {{-- ── SECTION 3: MANFAAT / SERVICES LIST ────────────────────────────────────── --}}
@@ -234,13 +231,6 @@
                     HNP Communications.id
                 </span>
             </h2>
-            @else
-            <h2 class="text-3xl sm:text-5xl font-black text-black uppercase tracking-tighter leading-tight">
-                Manfaat Menggunakan Jasa Buzzer<br>
-                <span class="bg-black text-white px-4 py-1 inline-block border-4 border-white shadow-[6px_6px_0px_0px_#E61E50] transform -rotate-1 mt-2">
-                    HNP Communications.id?
-                </span>
-            </h2>
             @endif
             @if($sv('subtitle') !== null)
             <p class="font-bold text-black/80 text-base sm:text-lg max-w-xl mx-auto">
@@ -250,20 +240,23 @@
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
             @php
             $serviceCards = [
-                ['title' => $sv('service_1_title', 'BUZZER CAMPAIGN'),        'desc' => $sv('service_1_desc', 'Buzzer kami siap membantu sukseskan campaign Anda, interaksi yang tinggi pada campaign membantu perluas jangkauan sehingga campaign dapat dilihat banyak orang.'), 'icon_color' => 'bg-[#E61E50]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#E61E50]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>', 'icon_text' => 'text-white'],
-                ['title' => $sv('service_2_title', 'BUZZER TRENDING TOPIK'),  'desc' => $sv('service_2_desc', 'Naiknya hashtag dan keyword di trending topik twitter dengan bantuan buzzer membantu campaign bisnis viral bahkan dilirik media nasional.'), 'icon_color' => 'bg-[#1a88d1]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#3D0066]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>', 'icon_text' => 'text-white'],
-                ['title' => $sv('service_3_title', 'BUZZER FYP'),             'desc' => $sv('service_3_desc', 'Ribuan akun buzzer aktif dapat menghasilkan konten tiktok Anda mudah masuk FYP dan hasilkan interaksi yang tinggi.'), 'icon_color' => 'bg-[#3D0066]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#E61E50]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>', 'icon_text' => 'text-white'],
-                ['title' => $sv('service_4_title', 'BUZZER REVIEW & RATING'), 'desc' => $sv('service_4_desc', 'Tempat bisnis Anda di google maps bisa menghasilkan ribuan review dan rating bintang 5 dengan buzzer kami.'), 'icon_color' => 'bg-[#FFD217]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#1a88d1]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>', 'icon_text' => 'text-black'],
-                ['title' => $sv('service_5_title', 'BUZZER CLIPPER'),         'desc' => $sv('service_5_desc', 'Konten original Anda dapat menghasilkan ribuan clip dan posting yang dilakukan oleh buzzer clipper video dari kami.'), 'icon_color' => 'bg-[#3D0066]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#E61E50]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>', 'icon_text' => 'text-white'],
-                ['title' => $sv('service_6_title', 'BUZZER TERJUAL & ULASAN'),'desc' => $sv('service_6_desc', 'Ribuan buzzer kami mampu menghasilkan ribuan bahkan puluhan ribu jumlah terjual serta ulasan pada produk Anda di marketplace.'), 'icon_color' => 'bg-[#E61E50]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#1a88d1]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>', 'icon_text' => 'text-white'],
+                ['key_t' => 'service_1_title', 'key_d' => 'service_1_desc', 'default_t' => 'BUZZER CAMPAIGN',        'default_d' => 'Buzzer kami siap membantu sukseskan campaign Anda, interaksi yang tinggi pada campaign membantu perluas jangkauan sehingga campaign dapat dilihat banyak orang.', 'icon_color' => 'bg-[#E61E50]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#E61E50]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>', 'icon_text' => 'text-white'],
+                ['key_t' => 'service_2_title', 'key_d' => 'service_2_desc', 'default_t' => 'BUZZER TRENDING TOPIK',  'default_d' => 'Naiknya hashtag dan keyword di trending topik twitter dengan bantuan buzzer membantu campaign bisnis viral bahkan dilirik media nasional.', 'icon_color' => 'bg-[#1a88d1]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#3D0066]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M7 20l4-16m2 16l4-16M6 9h14M4 15h14"/>', 'icon_text' => 'text-white'],
+                ['key_t' => 'service_3_title', 'key_d' => 'service_3_desc', 'default_t' => 'BUZZER FYP',             'default_d' => 'Ribuan akun buzzer aktif dapat menghasilkan konten tiktok Anda mudah masuk FYP dan hasilkan interaksi yang tinggi.', 'icon_color' => 'bg-[#3D0066]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#E61E50]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>', 'icon_text' => 'text-white'],
+                ['key_t' => 'service_4_title', 'key_d' => 'service_4_desc', 'default_t' => 'BUZZER REVIEW & RATING', 'default_d' => 'Tempat bisnis Anda di google maps bisa menghasilkan ribuan review dan rating bintang 5 dengan buzzer kami.', 'icon_color' => 'bg-[#FFD217]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#1a88d1]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/>', 'icon_text' => 'text-black'],
+                ['key_t' => 'service_5_title', 'key_d' => 'service_5_desc', 'default_t' => 'BUZZER CLIPPER',         'default_d' => 'Konten original Anda dapat menghasilkan ribuan clip dan posting yang dilakukan oleh buzzer clipper video dari kami.', 'icon_color' => 'bg-[#3D0066]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#E61E50]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>', 'icon_text' => 'text-white'],
+                ['key_t' => 'service_6_title', 'key_d' => 'service_6_desc', 'default_t' => 'BUZZER TERJUAL & ULASAN','default_d' => 'Ribuan buzzer kami mampu menghasilkan ribuan bahkan puluhan ribu jumlah terjual serta ulasan pada produk Anda di marketplace.', 'icon_color' => 'bg-[#E61E50]', 'hover' => 'hover:shadow-[12px_12px_0px_0px_#1a88d1]', 'icon' => '<path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>', 'icon_text' => 'text-white'],
             ];
             @endphp
 
             @foreach($serviceCards as $card)
-            @if($card['title'] !== null)
+            @php
+                $cardTitle = $sv($card['key_t'], $card['default_t']);
+                $cardDesc  = $sv($card['key_d'],  $card['default_d']);
+            @endphp
+            @if($cardTitle !== null)
             <div class="bg-white p-8 border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] {{ $card['hover'] }} hover:-translate-y-2 transition-all group">
                 <div class="w-12 h-12 {{ $card['icon_color'] }} border-4 border-black {{ $card['icon_text'] }} flex items-center justify-center mb-6 shadow-[2px_2px_0px_0px_rgba(0,0,0,1)]">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
@@ -271,15 +264,16 @@
                     </svg>
                 </div>
                 <h3 class="font-black text-xl uppercase mb-3 text-black tracking-tight">
-                    {{ $card['title'] }}
+                    {{ $cardTitle }}
                 </h3>
+                @if($cardDesc !== null)
                 <p class="font-bold text-black/70 text-sm leading-relaxed">
-                    {{ $card['desc'] }}
+                    {{ $cardDesc }}
                 </p>
+                @endif
             </div>
             @endif
             @endforeach
-
         </div>
     </div>
 </section>
@@ -300,20 +294,26 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
             @php
             $steps = [
-                ['title' => $prv('step_1_title', 'KONSULTASI AWAL'),    'desc' => $prv('step_1_desc', 'Membedah tujuan kampanye, target audiens, dan platform yang disasar.'), 'num' => '01', 'color' => 'bg-[#FFD217] text-black'],
-                ['title' => $prv('step_2_title', 'RANCANG STRATEGI'),   'desc' => $prv('step_2_desc', 'Penyusunan narasi, hashtag, dan jadwal penyebaran yang optimal.'), 'num' => '02', 'color' => 'bg-[#E61E50] text-white'],
-                ['title' => $prv('step_3_title', 'EKSEKUSI KAMPANYE'),  'desc' => $prv('step_3_desc', 'Penyebaran konten secara masif dan terkoordinasi di semua platform.'), 'num' => '03', 'color' => 'bg-white text-black'],
-                ['title' => $prv('step_4_title', 'MONITORING'),         'desc' => $prv('step_4_desc', 'Pemantauan engagement, reach, dan respons audiens secara langsung.'), 'num' => '04', 'color' => 'bg-[#1a88d1] text-white'],
-                ['title' => $prv('step_5_title', 'LAPORAN & ANALISIS'), 'desc' => $prv('step_5_desc', 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.'), 'num' => '05', 'color' => 'bg-[#FFD217] text-black'],
+                ['key_t' => 'step_1_title', 'key_d' => 'step_1_desc', 'default_t' => 'KONSULTASI AWAL',    'default_d' => 'Membedah tujuan kampanye, target audiens, dan platform yang disasar.', 'num' => '01', 'color' => 'bg-[#FFD217] text-black'],
+                ['key_t' => 'step_2_title', 'key_d' => 'step_2_desc', 'default_t' => 'RANCANG STRATEGI',   'default_d' => 'Penyusunan narasi, hashtag, dan jadwal penyebaran yang optimal.', 'num' => '02', 'color' => 'bg-[#E61E50] text-white'],
+                ['key_t' => 'step_3_title', 'key_d' => 'step_3_desc', 'default_t' => 'EKSEKUSI KAMPANYE',  'default_d' => 'Penyebaran konten secara masif dan terkoordinasi di semua platform.', 'num' => '03', 'color' => 'bg-white text-black'],
+                ['key_t' => 'step_4_title', 'key_d' => 'step_4_desc', 'default_t' => 'MONITORING',         'default_d' => 'Pemantauan engagement, reach, dan respons audiens secara langsung.', 'num' => '04', 'color' => 'bg-[#1a88d1] text-white'],
+                ['key_t' => 'step_5_title', 'key_d' => 'step_5_desc', 'default_t' => 'LAPORAN & ANALISIS', 'default_d' => 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.', 'num' => '05', 'color' => 'bg-[#FFD217] text-black'],
             ];
             @endphp
 
             @foreach($steps as $step)
-            @if($step['title'] !== null)
+            @php
+                $stepTitle = $prv($step['key_t'], $step['default_t']);
+                $stepDesc  = $prv($step['key_d'],  $step['default_d']);
+            @endphp
+            @if($stepTitle !== null)
             <div class="border-4 border-black shadow-[6px_6px_0px_0px_rgba(255,210,23,1)] p-6 {{ $step['color'] }}">
                 <div class="text-5xl font-black opacity-20 mb-3">{{ $step['num'] }}</div>
-                <h4 class="font-black text-sm uppercase tracking-tight mb-2">{{ $step['title'] }}</h4>
-                <p class="text-xs font-bold opacity-80 leading-relaxed">{{ $step['desc'] }}</p>
+                <h4 class="font-black text-sm uppercase tracking-tight mb-2">{{ $stepTitle }}</h4>
+                @if($stepDesc !== null)
+                <p class="text-xs font-bold opacity-80 leading-relaxed">{{ $stepDesc }}</p>
+                @endif
             </div>
             @endif
             @endforeach
