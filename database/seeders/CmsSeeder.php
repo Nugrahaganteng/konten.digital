@@ -56,11 +56,23 @@ class CmsSeeder extends Seeder
             ['key' => 'cta_button_text',     'value' => "LET'S CHAT →",                 'type' => 'text',    'group' => 'contact', 'label' => 'CTA Teks Tombol'],
 
             // ── Footer ──
-            ['key' => 'footer_headline_1',   'value' => 'Bersama Kami,',                'type' => 'text',    'group' => 'footer',  'label' => 'Footer Headline Baris 1'],
-            ['key' => 'footer_headline_2',   'value' => 'Raih Kesuksesan',              'type' => 'text',    'group' => 'footer',  'label' => 'Footer Headline Baris 2 (kuning)'],
-            ['key' => 'footer_headline_3',   'value' => 'di Era Digital',               'type' => 'text',    'group' => 'footer',  'label' => 'Footer Headline Baris 3'],
-            ['key' => 'footer_description',  'value' => 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.', 'type' => 'textarea', 'group' => 'footer', 'label' => 'Footer Deskripsi'],
-            ['key' => 'footer_copyright',    'value' => '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN', 'type' => 'text', 'group' => 'footer', 'label' => 'Teks Copyright'],
+            [
+                'page'        => 'footer',
+                'section_key' => 'main',
+                'label'       => 'Footer — Konten Utama',
+                'order'       => 1,
+                'content'     => [
+                    // ✅ BARU: logo — null artinya belum diisi, fallback ke CSS logo
+                    'logo'        => null,
+                    'logo_alt'    => 'HNP Communications.id',
+                    // Teks (tidak berubah)
+                    'headline_1'  => 'Bersama Kami,',
+                    'headline_2'  => 'Raih Kesuksesan',
+                    'headline_3'  => 'di Era Digital',
+                    'description' => 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.',
+                    'copyright'   => '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN',
+                ],
+            ],
 
             // ── Kontak / WhatsApp ──
             ['key' => 'whatsapp_1',          'value' => '6287786000919',                'type' => 'text',    'group' => 'contact', 'label' => 'WhatsApp Hotline 1'],
@@ -850,149 +862,145 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
-            // ════════════════════════════════════════════════════════════════════════════
-// LAYANAN: SCRIPT VIDEO
-// ════════════════════════════════════════════════════════════════════════════
- 
-// ── 1. Hero ──────────────────────────────────────────────────────────────────
+            
 [
-    'page'        => 'layanan-script-video',
+    'page'        => 'layanan-buzzer',
     'section_key' => 'hero',
     'label'       => 'Hero Section',
     'order'       => 1,
     'content'     => [
-        'badge_text'  => '✦ JASA PENULISAN SCRIPT VIDEO',
-        'title_line1' => 'SCRIPT VIDEO',
-        'title_line2' => 'YANG MEMIKAT &',
-        'title_line3' => 'KONVERSI TINGGI',
-        'quote'       => 'Dari ide menjadi naskah yang siap produksi.',
-        'description' => 'Kami merancang naskah video yang engaging, sesuai target audiens Anda, dan siap langsung digunakan untuk produksi iklan, konten sosial media, atau video korporat.',
+        'badge_text'  => '✦ JASA BUZZER MEDIA SOSIAL',
+        'title_line1' => 'BUZZER',
+        'title_line2' => 'VIRAL &',
+        'title_line3' => 'ENGAGEMENT TINGGI',
+        'quote'       => 'Dari brand menjadi trending topic.',
+        'description' => 'Kami menyebarkan pesan brand Anda secara masif, organik, dan terkoordinasi di seluruh platform media sosial untuk menciptakan buzz yang nyata.',
         'cta_text'    => 'KONSULTASI SEKARANG',
         'cta_url'     => 'https://wa.me/6287786000919',
         'image'       => null,
     ],
 ],
  
-// ── 2. Mengapa Jasa Script Video ──────────────────────────────────────────────
+// ── 2. Mengapa Jasa Buzzer ────────────────────────────────────────────────────
 [
-    'page'        => 'layanan-script-video',
-    'section_key' => 'why_script',
-    'label'       => 'Mengapa Butuh Jasa Script Video?',
+    'page'        => 'layanan-buzzer',
+    'section_key' => 'why_buzzer',
+    'label'       => 'Mengapa Butuh Jasa Buzzer?',
     'order'       => 2,
     'content'     => [
-        'title'          => 'Mengapa Harus Jasa Script Video?',
-        'subtitle'       => 'Script yang baik adalah pondasi utama dari video yang sukses menghasilkan konversi.',
-        'reason_1_title' => 'Hemat Biaya Produksi',
-        'reason_1_desc'  => 'Script yang matang mengurangi risiko reshooting dan revisi produksi yang memakan waktu dan biaya besar.',
-        'reason_2_title' => 'Pesan Tersampaikan dengan Tepat',
-        'reason_2_desc'  => 'Kami memastikan setiap kata dalam script membawa pesan brand Anda secara jelas, menarik, dan persuasif.',
-        'reason_3_title' => 'Sesuai Platform & Durasi',
-        'reason_3_desc'  => 'Script disesuaikan untuk YouTube, Instagram Reels, TikTok, iklan TV, atau video korporat sesuai platform target.',
-        'reason_4_title' => 'Storytelling yang Kuat',
-        'reason_4_desc'  => 'Kami membangun narasi yang emosional dan relevan agar penonton terhubung secara mendalam dengan brand Anda.',
-        'reason_5_title' => 'Revisi Hingga Puas',
-        'reason_5_desc'  => 'Kami menyediakan revisi terbatas hingga script benar-benar sesuai dengan visi dan kebutuhan Anda.',
+        'title'          => 'Mengapa Harus Jasa Buzzer?',
+        'subtitle'       => 'Buzzer yang terkoordinasi adalah kunci viral marketing yang efektif dan terukur.',
+        'reason_1_title' => 'Jangkauan Masif & Cepat',
+        'reason_1_desc'  => 'Ribuan akun aktif menyebarkan pesan brand Anda dalam waktu singkat ke seluruh platform media sosial.',
+        'reason_2_title' => 'Engagement Organik Nyata',
+        'reason_2_desc'  => 'Interaksi dari akun-akun aktif yang membuat konten Anda terlihat natural dan terpercaya di mata algoritma.',
+        'reason_3_title' => 'Sesuai Target Audiens',
+        'reason_3_desc'  => 'Kampanye diarahkan ke segmen audiens yang paling relevan dengan brand dan tujuan bisnis Anda.',
+        'reason_4_title' => 'Monitoring & Laporan Lengkap',
+        'reason_4_desc'  => 'Setiap kampanye dipantau real-time dan dilaporkan secara detail sehingga ROI dapat diukur dengan jelas.',
+        'reason_5_title' => 'Multi-Platform Sekaligus',
+        'reason_5_desc'  => 'Satu kampanye menyentuh Twitter/X, Instagram, TikTok, Facebook, dan YouTube secara bersamaan.',
     ],
 ],
  
-// ── 3. Daftar Layanan Script ───────────────────────────────────────────────────
+// ── 3. Daftar Layanan Buzzer ──────────────────────────────────────────────────
 [
-    'page'        => 'layanan-script-video',
+    'page'        => 'layanan-buzzer',
     'section_key' => 'services_list',
-    'label'       => 'Daftar Layanan Script',
+    'label'       => 'Daftar Layanan Buzzer',
     'order'       => 3,
     'content'     => [
         'title'           => 'LAYANAN KAMI',
-        'subtitle'        => 'Struktur naskah profesional yang dirancang khusus untuk mendominasi platform digital.',
-        'service_1_title' => 'Script Video Pendek',
-        'service_1_desc'  => 'Naskah tajam, fast-paced, dan hook memikat di 3 detik pertama untuk Reels, TikTok, dan Shorts.',
-        'service_2_title' => 'Script Perusahaan',
-        'service_2_desc'  => 'Penyampaian profil bisnis, nilai corporate, dan visi misi dengan alur formal namun tetap bernyawa.',
-        'service_3_title' => 'Script Video Iklan',
-        'service_3_desc'  => 'Menggunakan formula copywriting psikologis tinggi untuk memicu konversi pembelian seketika.',
-        'service_4_title' => 'Script YouTube',
-        'service_4_desc'  => 'Menjaga retention rate penonton tetap tinggi untuk video berdurasi panjang, tutorial, atau edukasi.',
-        'service_5_title' => 'Script Sosmed',
-        'service_5_desc'  => 'Konsep kreatif organik yang relevan dengan tren terkini demi memicu interaksi dan potensi viral.',
-        'service_6_title' => 'Script Dokumenter',
-        'service_6_desc'  => 'Alur storytelling sinematik mendalam yang informatif, berbasis riset data, serta menggugah emosi.',
+        'subtitle'        => 'Strategi buzzer profesional yang dirancang khusus untuk mendominasi platform digital.',
+        'service_1_title' => 'Buzzer Twitter/X',
+        'service_1_desc'  => 'Sebarkan narasi brand secara masif di Twitter/X dengan ribuan akun aktif terkoordinasi.',
+        'service_2_title' => 'Buzzer Instagram',
+        'service_2_desc'  => 'Tingkatkan engagement, komentar, dan jangkauan konten Instagram Anda secara organik.',
+        'service_3_title' => 'Buzzer TikTok',
+        'service_3_desc'  => 'Dorong konten TikTok Anda ke FYP dengan interaksi nyata dari akun-akun aktif.',
+        'service_4_title' => 'Buzzer Facebook',
+        'service_4_desc'  => 'Viralkan postingan dan halaman Facebook Anda dengan share, like, dan komentar masif.',
+        'service_5_title' => 'Buzzer YouTube',
+        'service_5_desc'  => 'Tingkatkan views, subscriber, dan komentar video YouTube Anda secara cepat.',
+        'service_6_title' => 'Buzzer Multi-Platform',
+        'service_6_desc'  => 'Kampanye buzzer terpadu di semua platform sekaligus untuk dampak maksimal.',
     ],
 ],
  
-// ── 4. Proses Kerja ────────────────────────────────────────────────────────────
+// ── 4. Proses Kerja ───────────────────────────────────────────────────────────
 [
-    'page'        => 'layanan-script-video',
+    'page'        => 'layanan-buzzer',
     'section_key' => 'process',
     'label'       => 'Proses / Alur Kerja',
     'order'       => 4,
     'content'     => [
-        'title'        => 'Alur Kerja Pembuatan Naskah',
+        'title'        => 'Alur Kerja Kampanye Buzzer',
         'step_1_title' => 'KONSULTASI AWAL',
-        'step_1_desc'  => 'Membedah visi produk, detail brief, serta segmentasi audiens yang disasar.',
-        'step_2_title' => 'RANCANG KONSEP',
-        'step_2_desc'  => 'Penyusunan premis cerita, angle penulisan, dan penentuan hook utama.',
-        'step_3_title' => 'PENULISAN DRAFT',
-        'step_3_desc'  => 'Eksekusi naskah baris per baris lengkap dengan instruksi visual/audio.',
-        'step_4_title' => 'REVISI & FINAL',
-        'step_4_desc'  => 'Penyelarasan feedback berkala hingga naskah dinilai solid & siap rekam.',
-        'step_5_title' => 'DUKUNGAN PRODUKSI',
-        'step_5_desc'  => 'Pendampingan interpretasi naskah agar proses syuting tidak melenceng dari konsep.',
+        'step_1_desc'  => 'Membedah tujuan kampanye, target audiens, dan platform yang disasar.',
+        'step_2_title' => 'RANCANG STRATEGI',
+        'step_2_desc'  => 'Penyusunan narasi, hashtag, dan jadwal penyebaran yang optimal.',
+        'step_3_title' => 'EKSEKUSI KAMPANYE',
+        'step_3_desc'  => 'Penyebaran konten secara masif dan terkoordinasi di semua platform.',
+        'step_4_title' => 'MONITORING REAL-TIME',
+        'step_4_desc'  => 'Pemantauan engagement, reach, dan respons audiens secara langsung.',
+        'step_5_title' => 'LAPORAN & ANALISIS',
+        'step_5_desc'  => 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.',
     ],
 ],
  
-// ── 5. Paket Harga ─────────────────────────────────────────────────────────────
+// ── 5. Paket Harga ────────────────────────────────────────────────────────────
 [
-    'page'        => 'layanan-script-video',
+    'page'        => 'layanan-buzzer',
     'section_key' => 'pricing',
     'label'       => 'Paket Harga',
     'order'       => 5,
     'content'     => [
-        'title'            => 'Paket Harga Jasa Penulisan Script Video',
-        // SHORT
-        'short_price_ori'  => 'Rp 300.000,-',
-        'short_price'      => 'Rp 250.000',
-        'short_duration'   => '< 1 Menit',
-        'short_feature_1'  => 'Naskah lengkap',
-        'short_feature_2'  => 'Sesuai brief khusus',
-        'short_feature_3'  => 'Format (.docx / .pdf)',
-        'short_feature_4'  => 'Revisi Maksimal 1x',
-        'short_feature_5'  => 'Cocok untuk Reels/TikTok',
-        // MEDIUM
-        'medium_price_ori' => 'Rp 600.000,-',
-        'medium_price'     => 'Rp 500.000',
-        'medium_duration'  => '1 - 3 Menit',
-        'medium_feature_1' => 'Naskah lengkap',
-        'medium_feature_2' => 'Sesuai brief khusus',
-        'medium_feature_3' => 'Format (.docx / .pdf)',
-        'medium_feature_4' => 'Revisi Maksimal 2x',
-        'medium_feature_5' => 'Cocok untuk YouTube/IG',
-        'medium_feature_6' => 'Scene breakdown visual',
-        // LONG
-        'long_price_ori'   => 'Rp 1.200.000,-',
-        'long_price'       => 'Rp 1.000.000',
-        'long_duration'    => '3 - 10 Menit',
-        'long_feature_1'   => 'Naskah lengkap',
-        'long_feature_2'   => 'Sesuai brief khusus',
-        'long_feature_3'   => 'Format (.docx / .pdf)',
-        'long_feature_4'   => 'REVISI SEPUASNYA',
-        'long_feature_5'   => 'Video korporat/Iklan TV',
-        'long_feature_6'   => 'Scene breakdown',
-        'long_feature_7'   => 'Voice over notes',
+        'title'              => 'Paket Harga Jasa Buzzer Media Sosial',
+        // BASIC
+        'basic_price_ori'    => 'Rp 600.000,-',
+        'basic_price'        => 'Rp 500.000',
+        'basic_duration'     => '7 Hari',
+        'basic_feature_1'    => '1 Platform',
+        'basic_feature_2'    => '500 Interaksi/hari',
+        'basic_feature_3'    => 'Laporan mingguan',
+        'basic_feature_4'    => 'Konsultasi via WA',
+        'basic_feature_5'    => 'Cocok untuk UMKM',
+        // STANDARD
+        'standard_price_ori' => 'Rp 1.200.000,-',
+        'standard_price'     => 'Rp 1.000.000',
+        'standard_duration'  => '14 Hari',
+        'standard_feature_1' => '3 Platform',
+        'standard_feature_2' => '1.500 Interaksi/hari',
+        'standard_feature_3' => 'Laporan mingguan',
+        'standard_feature_4' => 'Strategi hashtag',
+        'standard_feature_5' => 'Monitoring real-time',
+        'standard_feature_6' => 'Content calendar',
+        // PREMIUM
+        'premium_price_ori'  => 'Rp 2.400.000,-',
+        'premium_price'      => 'Rp 2.000.000',
+        'premium_duration'   => '30 Hari',
+        'premium_feature_1'  => 'Semua Platform',
+        'premium_feature_2'  => '5.000 Interaksi/hari',
+        'premium_feature_3'  => 'Laporan harian',
+        'premium_feature_4'  => 'GARANSI VIRAL',
+        'premium_feature_5'  => 'Dedicated account manager',
+        'premium_feature_6'  => 'Strategi konten lengkap',
+        'premium_feature_7'  => 'Crisis management',
         // CTA
-        'cta_text'         => 'Pesan Sekarang',
-        'cta_url'          => 'https://wa.me/6287786000919',
+        'cta_text'           => 'Pesan Sekarang',
+        'cta_url'            => 'https://wa.me/6287786000919',
     ],
 ],
  
-// ── 6. CTA Penutup ─────────────────────────────────────────────────────────────
+// ── 6. CTA Penutup ────────────────────────────────────────────────────────────
 [
-    'page'        => 'layanan-script-video',
+    'page'        => 'layanan-buzzer',
     'section_key' => 'cta',
     'label'       => 'CTA Penutup',
     'order'       => 6,
     'content'     => [
-        'title'    => 'SIAP BIKIN VIDEO YANG VIRAL?',
-        'cta_text' => 'PESAN SCRIPT SEKARANG',
+        'title'    => 'SIAP BIKIN BRAND KAMU VIRAL?',
+        'cta_text' => 'PESAN BUZZER SEKARANG',
         'cta_url'  => 'https://wa.me/6287786000919',
     ],
 ],
@@ -1181,6 +1189,71 @@ class CmsSeeder extends Seeder
                 ],
             ],
 
+            // ════════════════════════════════════════════════════════════
+            // FOOTER
+            // ════════════════════════════════════════════════════════════
+            [
+                'page'        => 'footer',
+                'section_key' => 'main',
+                'label'       => 'Footer — Konten Utama',
+                'order'       => 1,
+                'content'     => [
+                    'logo'        => null,
+                    'logo_alt'    => 'HNP Communications.id',
+                    'headline_1'  => 'Bersama Kami,',
+                    'headline_2'  => 'Raih Kesuksesan',
+                    'headline_3'  => 'di Era Digital',
+                    'description' => 'Bergabunglah dengan ratusan klien yang puas dan rasakan perbedaan dengan konten berkualitas dari HNP Communications. Mulailah sekarang dan bawa bisnis Anda ke level berikutnya.',
+                    'copyright'   => '© ' . date('Y') . ' HNP Communications.id — ALL RIGHTS RESERVED NUGRAHA & WILDAN',
+                ],
+            ],
+            [
+                'page'        => 'footer',
+                'section_key' => 'contact',
+                'label'       => 'Footer — Kontak & WhatsApp',
+                'order'       => 2,
+                'content'     => [
+                    'wa1_number' => '6287786000919',
+                    'wa1_label'  => '+62 877-8600-0919',
+                    'wa2_number' => '628121967610',
+                    'wa2_label'  => '+62 812-1967-610',
+                ],
+            ],
+            [
+                'page'        => 'footer',
+                'section_key' => 'social',
+                'label'       => 'Footer — Social Media',
+                'order'       => 3,
+                'content'     => [
+                    'instagram' => '#',
+                    'facebook'  => '#',
+                    'youtube'   => '#',
+                    'tiktok'    => '#',
+                ],
+            ],
+ 
+            // ════════════════════════════════════════════════════════════
+            // SERVICES-NAVBAR ← INI YANG PALING PENTING
+            // ════════════════════════════════════════════════════════════
+            // ════════════════════════════════════════════════════════════
+// SERVICES-NAVBAR
+// ════════════════════════════════════════════════════════════
+[
+    'page'        => 'services-navbar',
+    'section_key' => 'main',
+    'label'       => 'Navbar — Identitas Brand',
+    'order'       => 1,
+    'content'     => [
+        'logo'            => null,
+        'logo_alt'        => 'HNP Communications.id',
+        'brand_name'      => 'HNP Communications',
+        'brand_tagline'   => 'Your Strategic PR and Digital Partner',
+        'navbar_bg_color' => '#facc15',
+        'navbar_border'   => '#000000',
+    ],
+],
+        ];
+
         foreach ($pageSections as $data) {
             PageSection::updateOrCreate(
                 ['page' => $data['page'], 'section_key' => $data['section_key']],
@@ -1192,6 +1265,8 @@ class CmsSeeder extends Seeder
                     'hidden_fields' => [],
                 ]
             );
+
+            
         }
 
         $this->command->info('✅ CMS Seeder selesai! Semua data awal berhasil dimasukkan.');

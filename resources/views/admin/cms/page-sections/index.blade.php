@@ -16,12 +16,12 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 .cms-wrap{overflow-x:clip;max-width:100%;min-height:100vh}
 
-/* Ticker */
+/* ── Ticker ── */
 .ticker-bar{background:var(--blk);padding:5px 0;overflow:hidden;white-space:nowrap;border-bottom:var(--bd);width:100%}
 .ticker-inner{display:inline-block;animation:ticker 22s linear infinite;font-family:'JetBrains Mono',monospace;font-size:.56rem;font-weight:700;color:var(--yel);letter-spacing:.13em;text-transform:uppercase;padding-left:100%}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* Masthead */
+/* ── Masthead ── */
 .masthead{background:var(--yel);border-bottom:var(--bd);padding:1rem 1.25rem;width:100%;overflow:clip}
 .masthead-inner{display:flex;align-items:center;justify-content:space-between;gap:.85rem}
 .cms-title{display:flex;align-items:center;gap:.85rem;min-width:0;flex:1;overflow:hidden}
@@ -32,14 +32,14 @@
 .title-sub{font-family:'JetBrains Mono',monospace;font-size:.54rem;color:var(--txt2);margin-top:2px;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hint-chip{font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:600;color:var(--blk);display:flex;align-items:center;gap:.35rem;background:var(--w);border:var(--bd);box-shadow:var(--sh);padding:.38rem .7rem;white-space:nowrap;flex-shrink:0}
 
-/* Alerts */
+/* ── Alerts ── */
 .alerts-outer{padding:.6rem 1.25rem 0}
 .alert{display:flex;align-items:center;gap:.5rem;padding:.6rem .85rem;border:var(--bd);margin-bottom:.45rem;font-family:'JetBrains Mono',monospace;font-size:.65rem;font-weight:600;box-shadow:var(--sh);animation:slideDown .2s ease}
 .alert-success{background:#D4F5E4;color:#005C33}
 .alert-error{background:#FFE0D9;color:#8B1A00}
 @keyframes slideDown{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
 
-/* Tabs */
+/* ── Tabs ── */
 .tabs-outer{background:var(--w);border-bottom:var(--bd);position:relative}
 .tabs-scroll{display:flex;align-items:center;gap:.45rem;padding:.75rem 1.25rem .85rem;overflow-x:auto;overflow-y:visible;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none;white-space:nowrap}
 .tabs-scroll::-webkit-scrollbar{display:none}
@@ -53,13 +53,13 @@
 .tabs-fade-right{position:absolute;right:0;top:0;bottom:0;width:48px;background:linear-gradient(to right,transparent,var(--w));pointer-events:none;transition:opacity .25s}
 .tabs-fade-left{position:absolute;left:0;top:0;bottom:0;width:32px;background:linear-gradient(to left,transparent,var(--w));pointer-events:none;opacity:0;transition:opacity .25s}
 
-/* Grid */
+/* ── Grid ── */
 .grid-area{padding:1.1rem 1.25rem 5.5rem;overflow-x:clip;width:100%}
 .row-label{font-family:'JetBrains Mono',monospace;font-size:.57rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.12em;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem;overflow:hidden}
 .row-label::after{content:'';flex:1;height:2px;background:var(--blk);min-width:0}
 .sections-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:.9rem;width:100%}
 
-/* Card */
+/* ── Card ── */
 .section-card{background:var(--w);border:var(--bd);box-shadow:var(--sh);cursor:grab;position:relative;transition:transform .12s,box-shadow .12s;animation:cardReveal .32s ease both;width:100%;overflow:hidden}
 .section-card:nth-child(1){animation-delay:.03s}.section-card:nth-child(2){animation-delay:.06s}.section-card:nth-child(3){animation-delay:.09s}.section-card:nth-child(4){animation-delay:.12s}.section-card:nth-child(5){animation-delay:.15s}.section-card:nth-child(6){animation-delay:.17s}
 @keyframes cardReveal{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -68,8 +68,6 @@
 .section-card.dragging{opacity:.3;transform:rotate(-1deg) scale(.97)}
 .section-card.drag-over{outline:3px dashed var(--cor);outline-offset:-3px}
 .section-card.inactive{opacity:.55}
-
-/* Card accent color */
 .section-card:nth-child(4n+1) .card-accent{background:var(--yel)}
 .section-card:nth-child(4n+2) .card-accent{background:var(--cor)}
 .section-card:nth-child(4n+3) .card-accent{background:var(--mnt)}
@@ -104,47 +102,37 @@
 /* Card Body */
 .card-body{padding:.65rem .8rem;overflow:hidden}
 .field-rows{display:flex;flex-direction:column}
-
-/* Field Row */
 .field-row{display:flex;align-items:flex-start;gap:.4rem;padding:.26rem 0;border-bottom:1px solid rgba(0,0,0,.06);min-width:0;overflow:hidden;transition:opacity .2s,background .2s;border-radius:2px}
 .field-row:last-child{border-bottom:none}
 .field-row.is-hidden-row{opacity:.4}
 .field-row.is-hidden-row .f-val{text-decoration:line-through;color:var(--mu)!important}
-
 .f-label{font-family:'JetBrains Mono',monospace;font-size:.54rem;font-weight:600;color:var(--mu);min-width:70px;max-width:70px;flex-shrink:0;padding-top:2px;text-transform:uppercase;letter-spacing:.03em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .f-val{color:var(--txt2);word-break:break-word;overflow:hidden;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;font-weight:500;font-size:.68rem;flex:1;min-width:0}
 .f-val.empty{color:#bbb;font-style:italic}
 .f-img{width:32px;height:22px;object-fit:cover;border:2px solid var(--blk);flex-shrink:0}
 .f-color-dot{width:12px;height:12px;border:2px solid var(--blk);flex-shrink:0;margin-top:2px}
 .more-label{font-family:'JetBrains Mono',monospace;font-size:.54rem;font-weight:700;color:var(--mu);padding:.28rem 0 0;border-top:2px dashed rgba(0,0,0,.12);margin-top:.22rem;text-transform:uppercase;letter-spacing:.06em}
-
-/* Mini Field Toggle */
 .field-eye-btn{flex-shrink:0;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border:1.5px solid transparent;border-radius:3px;cursor:pointer;background:transparent;transition:all .15s;color:#bbb;font-size:.6rem;padding:0;-webkit-tap-highlight-color:transparent;opacity:.35}
 .field-eye-btn:hover{opacity:1;border-color:var(--cor);background:rgba(255,90,54,.08);color:var(--cor)}
 .field-eye-btn.is-hidden{opacity:1;color:var(--cor);border-color:var(--cor);background:rgba(255,90,54,.12)}
 @media(max-width:700px){.field-eye-btn{opacity:.6}}
 .field-row:hover .field-eye-btn{opacity:.7}
-
-/* Hidden count badge */
 .hidden-badge{font-family:'JetBrains Mono',monospace;font-size:.44rem;font-weight:700;background:var(--cor);color:var(--w);padding:1px 5px;border-radius:2px;letter-spacing:.04em;display:none}
 .hidden-badge.has-hidden{display:inline-block}
-
-/* Expand All Fields */
 .btn-expand-fields{font-family:'JetBrains Mono',monospace;font-size:.5rem;font-weight:700;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;background:none;border:none;cursor:pointer;padding:.22rem 0 0;text-align:left;width:100%;display:flex;align-items:center;gap:.3rem;transition:color .14s}
 .btn-expand-fields:hover{color:var(--blk)}
 .btn-expand-fields i{transition:transform .2s}
 .btn-expand-fields.expanded i{transform:rotate(180deg)}
-
 .hidden-fields-area{display:none;margin-top:.4rem;padding:.4rem .5rem;background:rgba(255,90,54,.04);border:1.5px dashed rgba(255,90,54,.25);border-radius:2px}
 .hidden-fields-area.open{display:block}
 .hidden-area-label{font-family:'JetBrains Mono',monospace;font-size:.48rem;font-weight:700;color:var(--cor);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.3rem}
 
-/* Empty State */
+/* ── Empty State ── */
 .empty-state{text-align:center;padding:4rem 2rem;color:var(--mu);font-family:'JetBrains Mono',monospace}
 .empty-icon{font-size:2rem;margin-bottom:.8rem;display:block;opacity:.2}
 .empty-state p{font-size:.7rem}
 
-/* Reorder Bar */
+/* ── Reorder Bar ── */
 .reorder-bar{position:fixed;bottom:1.25rem;left:50%;transform:translateX(-50%) translateY(120px);background:var(--blk);border:var(--bd);box-shadow:var(--shlg);padding:.6rem 1rem;display:flex;align-items:center;gap:.7rem;z-index:999;font-family:'JetBrains Mono',monospace;font-size:.65rem;color:var(--yel);opacity:0;pointer-events:none;transition:transform .35s cubic-bezier(.34,1.56,.64,1),opacity .25s;white-space:nowrap;max-width:calc(100vw - 2.5rem)}
 .reorder-bar.visible{transform:translateX(-50%) translateY(0);opacity:1;pointer-events:auto}
 .blink-dot{width:7px;height:7px;border-radius:50%;background:var(--cor);animation:blink .8s step-end infinite;flex-shrink:0}
@@ -155,46 +143,61 @@
 .btn-save-order:disabled{opacity:.4;cursor:not-allowed}
 #reorder-status{font-size:.6rem;min-width:50px;text-align:right;flex-shrink:0}
 
-/* Toast */
+/* ── Toast ── */
 .field-toast{position:fixed;bottom:5rem;right:1.25rem;background:var(--blk);color:var(--yel);font-family:'JetBrains Mono',monospace;font-size:.6rem;font-weight:700;padding:.45rem .9rem;border:2px solid var(--yel);box-shadow:var(--sh);z-index:1000;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;letter-spacing:.06em;text-transform:uppercase}
 .field-toast.show{opacity:1;transform:translateY(0)}
 
-/* ══ SERVICES WIDGET ══════════════════════════════════════════ */
-.svc-widget{
+/* ══════════════════════════════════════════════
+   SERVICES NAVBAR PAGE — DUAL PANEL LAYOUT
+══════════════════════════════════════════════ */
+.navbar-page-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1.25rem;
+    align-items:start;
+}
+@media(max-width:860px){
+    .navbar-page-grid{grid-template-columns:1fr}
+}
+
+/* ── Widget shared ── */
+.nb-widget{
     border:var(--bd);
     box-shadow:var(--sh);
-    margin-bottom:1.5rem;
     background:var(--w);
     overflow:hidden;
-    animation:cardReveal .3s ease both;
+    animation:cardReveal .32s ease both;
 }
-.svc-widget-hd{
-    background:var(--blu);
+.nb-widget-hd{
     border-bottom:var(--bd);
-    padding:.55rem .9rem;
+    padding:.6rem .9rem;
     display:flex;
     align-items:center;
     justify-content:space-between;
     gap:.5rem;
 }
-.svc-widget-title{
+.nb-widget-title{
     display:flex;align-items:center;gap:.55rem;
 }
-.svc-widget-title i{color:var(--yel);font-size:.75rem}
-.svc-widget-title span{
+.nb-widget-title i{font-size:.75rem}
+.nb-widget-title span{
     font-family:'Syne',sans-serif;
-    font-size:.75rem;font-weight:800;
-    color:var(--w);
-    letter-spacing:.04em;text-transform:uppercase;
+    font-size:.78rem;font-weight:800;
+    letter-spacing:.03em;text-transform:uppercase;
 }
-.svc-widget-count{
+.nb-widget-badge{
     font-family:'JetBrains Mono',monospace;
     font-size:.5rem;font-weight:700;
-    color:var(--yel);text-transform:uppercase;
-    letter-spacing:.1em;opacity:.9;
-    background:rgba(0,0,0,.25);
+    text-transform:uppercase;letter-spacing:.1em;
     padding:2px 8px;
+    background:rgba(0,0,0,.15);
 }
+
+/* ── Left panel: Services toggle ── */
+.nb-widget.svc-panel .nb-widget-hd{background:var(--blu)}
+.nb-widget.svc-panel .nb-widget-hd *{color:var(--w)!important}
+.nb-widget.svc-panel .nb-widget-badge{color:var(--yel)!important}
+
 .svc-row{
     display:flex;align-items:center;gap:.75rem;
     padding:.6rem .9rem;
@@ -207,8 +210,8 @@
     width:30px;height:30px;flex-shrink:0;
     display:flex;align-items:center;justify-content:center;
     font-size:.7rem;
-    transition:background .2s;
     border:2px solid var(--blk);
+    transition:background .2s;
 }
 .svc-icon-box.active-icon{background:var(--blk)}
 .svc-icon-box.inactive-icon{background:#ddd;border-color:#ccc}
@@ -219,42 +222,77 @@
     font-family:'Syne',sans-serif;
     font-size:.78rem;font-weight:700;
     white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    transition:color .15s,text-decoration .15s;
+    transition:color .15s;
 }
-.svc-name.active-name{color:var(--blk);text-decoration:none}
+.svc-name.active-name{color:var(--blk)}
 .svc-name.inactive-name{color:#bbb;text-decoration:line-through}
 .svc-route{
     font-family:'JetBrains Mono',monospace;
     font-size:.5rem;color:#aaa;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    margin-top:1px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;
 }
 .svc-badge{
     font-family:'JetBrains Mono',monospace;
     font-size:.45rem;font-weight:700;
     text-transform:uppercase;letter-spacing:.08em;
-    padding:2px 7px;
-    border:2px solid;
-    flex-shrink:0;
-    transition:color .15s,border-color .15s;
+    padding:2px 7px;border:2px solid;flex-shrink:0;
 }
 .svc-badge.active-badge{color:var(--mnt);border-color:var(--mnt)}
 .svc-badge.inactive-badge{color:#ccc;border-color:#ccc}
-.svc-widget-ft{
+.nb-widget-ft{
     padding:.45rem .9rem;
-    background:rgba(26,86,255,.06);
-    border-top:2px dashed rgba(26,86,255,.2);
+    border-top:2px dashed rgba(0,0,0,.15);
     font-family:'JetBrains Mono',monospace;
     font-size:.5rem;font-weight:700;
-    color:var(--blu);text-transform:uppercase;letter-spacing:.08em;
+    color:var(--mu);text-transform:uppercase;letter-spacing:.08em;
 }
 
-/* Services page empty state */
-.svc-empty{text-align:center;padding:4rem 2rem;color:var(--mu);font-family:'JetBrains Mono',monospace}
+/* ── Right panel: CMS Sections edit ── */
+.nb-widget.cms-panel .nb-widget-hd{background:var(--blk)}
+.nb-widget.cms-panel .nb-widget-hd *{color:var(--w)!important}
+.nb-widget.cms-panel .nb-widget-badge{color:var(--yel)!important}
+
+.cms-section-row{
+    display:flex;align-items:center;justify-content:space-between;gap:.6rem;
+    padding:.6rem .9rem;
+    border-bottom:2px solid rgba(0,0,0,.07);
+    transition:background .15s;
+}
+.cms-section-row:last-child{border-bottom:none}
+.cms-section-row:hover{background:#ECEAE0}
+.cms-section-info{flex:1;min-width:0}
+.cms-section-label{
+    font-family:'Syne',sans-serif;
+    font-size:.78rem;font-weight:700;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+    color:var(--blk);
+}
+.cms-section-key{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.5rem;color:#888;margin-top:1px;
+}
+.cms-section-row .toggle-form{flex-shrink:0}
+.btn-edit-sm{
+    font-family:'JetBrains Mono',monospace;
+    font-size:.55rem;font-weight:700;letter-spacing:.04em;
+    padding:.28rem .62rem;
+    background:var(--yel);border:2px solid var(--blk);color:var(--blk);
+    text-decoration:none;display:inline-flex;align-items:center;gap:.25rem;
+    transition:all .14s;white-space:nowrap;text-transform:uppercase;
+    box-shadow:2px 2px 0 var(--blk);flex-shrink:0;
+    -webkit-tap-highlight-color:transparent;
+    min-height:28px;
+}
+.btn-edit-sm:hover{background:var(--blk);color:var(--yel)}
+
+.cms-section-row.cms-section-inactive{opacity:.55}
+
+/* Empty svc */
+.svc-empty{text-align:center;padding:3rem 2rem;color:var(--mu);font-family:'JetBrains Mono',monospace}
 .svc-empty i{font-size:2rem;display:block;margin-bottom:.8rem;opacity:.2}
 .svc-empty p{font-size:.7rem}
 
-/* Responsive */
+/* ── Responsive ── */
 @media(max-width:700px){
     .masthead{padding:.8rem 1rem}
     .title-icon-box{width:38px;height:38px;min-width:38px;font-size:.95rem}
@@ -301,16 +339,13 @@
                 </div>
                 <div class="title-text">
                     <div class="title-main">
-                        @if($page === 'services-navbar')
-                            SERVICES NAVBAR
-                        @else
-                            CMS SECTIONS
-                        @endif
+                        @if($page === 'services-navbar') SERVICES NAVBAR
+                        @else CMS SECTIONS @endif
                     </div>
                     <div class="title-page-tag">{{ $page }}</div>
                     <div class="title-sub">
                         @if($page === 'services-navbar')
-                            KELOLA VISIBILITAS SERVICES DI NAVBAR
+                            KELOLA DROPDOWN NAVBAR — SERVICES &amp; PENGATURAN
                         @else
                             {{ $sections->count() }} SECTION DITEMUKAN
                         @endif
@@ -354,68 +389,149 @@
         <div class="tabs-fade-right" id="tabs-fade-right"></div>
     </div>
 
-    {{-- Grid --}}
+    {{-- ═════════════════════════════════════════════════════════
+         CONTENT AREA
+    ═════════════════════════════════════════════════════════ --}}
     <div class="grid-area">
 
-        {{-- ══════════════════════════════════════════════════════════
-             HALAMAN SERVICES-NAVBAR: hanya tampilkan widget services
-        ══════════════════════════════════════════════════════════ --}}
         @if($page === 'services-navbar')
+        {{-- ══════════════════════════════════════════════════════
+             SERVICES-NAVBAR — Dual Panel:
+             KIRI  = Toggle aktif/nonaktif services (dari Service model)
+             KANAN = Edit CMS sections navbar (dari PageSection)
+        ══════════════════════════════════════════════════════ --}}
 
-            @php $allServices = \App\Models\Service::ordered()->get(); @endphp
+        <div class="row-label" style="margin-bottom:1rem">NAVBAR MANAGEMENT</div>
 
-            @if($allServices->isNotEmpty())
-            <div class="row-label">SERVICES — NAVBAR VISIBILITY</div>
-            <div class="svc-widget">
-                <div class="svc-widget-hd">
-                    <div class="svc-widget-title">
-                        <i class="fas fa-bars-staggered"></i>
-                        <span>SERVICES DI NAVBAR</span>
-                    </div>
-                    <span class="svc-widget-count" id="svc-active-count">
-                        {{ $allServices->where('is_active', true)->count() }}/{{ $allServices->count() }} AKTIF
-                    </span>
+        <div class="navbar-page-grid">
+
+            {{-- ── PANEL KIRI: Services Toggle ── --}}
+            <div>
+                <div class="row-label" style="margin-bottom:.65rem">
+                    <i class="fas fa-eye" style="font-size:.6rem;color:var(--blu)"></i>
+                    VISIBILITAS SERVICES DI NAVBAR
                 </div>
-                <div id="svc-list">
-                    @foreach($allServices as $svc)
-                    <div class="svc-row {{ !$svc->is_active ? 'is-inactive' : '' }}" id="svc-row-{{ $svc->id }}">
-                        <div class="svc-icon-box {{ $svc->is_active ? 'active-icon' : 'inactive-icon' }}" id="svc-icon-{{ $svc->id }}">
-                            <i class="{{ $svc->icon_class ?: 'fa-solid fa-circle' }}"></i>
+
+                @php $allServices = \App\Models\Service::orderBy('order')->get(); @endphp
+
+                @if($allServices->isNotEmpty())
+                <div class="nb-widget svc-panel">
+                    <div class="nb-widget-hd">
+                        <div class="nb-widget-title">
+                            <i class="fas fa-bars-staggered"></i>
+                            <span>SERVICES AKTIF</span>
                         </div>
-                        <div class="svc-info">
-                            <div class="svc-name {{ $svc->is_active ? 'active-name' : 'inactive-name' }}" id="svc-name-{{ $svc->id }}">
-                                {{ $svc->title }}
-                            </div>
-                            <div class="svc-route">{{ $svc->route_name ?: '/layanan/'.$svc->slug }}</div>
-                        </div>
-                        <span class="svc-badge {{ $svc->is_active ? 'active-badge' : 'inactive-badge' }}" id="svc-badge-{{ $svc->id }}">
-                            {{ $svc->is_active ? 'AKTIF' : 'NONAKTIF' }}
+                        <span class="nb-widget-badge" id="svc-active-count">
+                            {{ $allServices->where('is_active',true)->count() }}/{{ $allServices->count() }} AKTIF
                         </span>
-                        <label class="toggle" title="{{ $svc->is_active ? 'Nonaktifkan dari navbar' : 'Aktifkan di navbar' }}" style="flex-shrink:0;cursor:pointer">
-                            <input type="checkbox" {{ $svc->is_active ? 'checked' : '' }} onchange="toggleService({{ $svc->id }}, this)">
-                            <span class="toggle-track"></span>
-                            <span class="toggle-thumb"></span>
-                        </label>
+                    </div>
+
+                    <div id="svc-list">
+                        @foreach($allServices as $svc)
+                        <div class="svc-row {{ !$svc->is_active ? 'is-inactive' : '' }}" id="svc-row-{{ $svc->id }}">
+                            <div class="svc-icon-box {{ $svc->is_active ? 'active-icon' : 'inactive-icon' }}" id="svc-icon-{{ $svc->id }}">
+                                <i class="{{ $svc->icon_class ?? 'fa-solid fa-circle' }}"></i>
+                            </div>
+                            <div class="svc-info">
+                                <div class="svc-name {{ $svc->is_active ? 'active-name' : 'inactive-name' }}" id="svc-name-{{ $svc->id }}">
+                                    {{ $svc->title }}
+                                </div>
+                                <div class="svc-route">/layanan/{{ $svc->slug }}</div>
+                            </div>
+                            <span class="svc-badge {{ $svc->is_active ? 'active-badge' : 'inactive-badge' }}" id="svc-badge-{{ $svc->id }}">
+                                {{ $svc->is_active ? 'AKTIF' : 'OFF' }}
+                            </span>
+                            <label class="toggle" title="{{ $svc->is_active ? 'Nonaktifkan dari navbar' : 'Aktifkan di navbar' }}" style="flex-shrink:0;cursor:pointer">
+                                <input type="checkbox" {{ $svc->is_active ? 'checked' : '' }}
+                                       onchange="toggleService({{ $svc->id }}, this)">
+                                <span class="toggle-track"></span>
+                                <span class="toggle-thumb"></span>
+                            </label>
+                        </div>
+                        @endforeach
+                    </div>
+
+                    <div class="nb-widget-ft">
+                        <i class="fas fa-info-circle"></i>&nbsp;
+                        Toggle langsung mempengaruhi dropdown Services di navbar publik.
+                    </div>
+                </div>
+                @else
+                <div class="svc-empty">
+                    <i class="fas fa-bars-staggered"></i>
+                    <p>BELUM ADA SERVICE TERDAFTAR.</p>
+                </div>
+                @endif
+            </div>
+
+            {{-- ── PANEL KANAN: CMS Sections Edit ── --}}
+            <div>
+                <div class="row-label" style="margin-bottom:.65rem">
+                    <i class="fas fa-sliders" style="font-size:.6rem;color:var(--yel)"></i>
+                    PENGATURAN CMS NAVBAR
+                </div>
+
+                @if($sections->isEmpty())
+                <div class="svc-empty">
+                    <i class="fas fa-sliders"></i>
+                    <p>BELUM ADA CMS SECTION UNTUK NAVBAR.<br>
+                       <span style="opacity:.6">Jalankan <code>php artisan db:seed --class=CmsSeeder</code></span>
+                    </p>
+                </div>
+                @else
+                <div class="nb-widget cms-panel">
+                    <div class="nb-widget-hd">
+                        <div class="nb-widget-title">
+                            <i class="fas fa-sliders"></i>
+                            <span>CMS SECTIONS</span>
+                        </div>
+                        <span class="nb-widget-badge">{{ $sections->count() }} SECTION</span>
+                    </div>
+
+                    @foreach($sections as $section)
+                    <div class="cms-section-row {{ !$section->is_active ? 'cms-section-inactive' : '' }}">
+                        <div class="cms-section-info">
+                            <div class="cms-section-label">{{ $section->label }}</div>
+                            <div class="cms-section-key">
+                                key: <strong style="color:var(--yel);background:var(--blk);padding:0 4px;font-family:'JetBrains Mono',monospace">{{ $section->section_key }}</strong>
+                            </div>
+                        </div>
+
+                        {{-- Toggle aktif --}}
+                        <form method="POST"
+                              action="{{ route('admin.cms.page-sections.toggle-active', $section) }}"
+                              class="toggle-form">
+                            @csrf @method('PATCH')
+                            <label class="toggle" title="{{ $section->is_active ? 'Nonaktifkan' : 'Aktifkan' }}" style="cursor:pointer">
+                                <input type="checkbox" {{ $section->is_active ? 'checked' : '' }}
+                                       onchange="this.closest('form').submit()">
+                                <span class="toggle-track"></span>
+                                <span class="toggle-thumb"></span>
+                            </label>
+                        </form>
+
+                        {{-- Edit button ── INI YANG PENTING ── --}}
+                        <a href="{{ route('admin.cms.page-sections.edit', $section) }}"
+                           class="btn-edit-sm">
+                            <i class="fas fa-pen"></i> EDIT
+                        </a>
                     </div>
                     @endforeach
-                </div>
-                <div class="svc-widget-ft">
-                    <i class="fas fa-info-circle"></i>
-                    &nbsp;Toggle di atas langsung mempengaruhi tampilan Services di navbar publik.
-                    Nonaktif = hilang dari navbar &amp; tidak bisa diakses.
-                </div>
-            </div>
-            @else
-            <div class="svc-empty">
-                <i class="fas fa-bars-staggered"></i>
-                <p>BELUM ADA SERVICE YANG TERDAFTAR.</p>
-            </div>
-            @endif
 
-        {{-- ══════════════════════════════════════════════════════════
-             HALAMAN BIASA: tampilkan section grid seperti biasa
-        ══════════════════════════════════════════════════════════ --}}
+                    <div class="nb-widget-ft">
+                        <i class="fas fa-info-circle"></i>&nbsp;
+                        Edit setiap section untuk ubah logo, menu link, dropdown, dan warna navbar.
+                    </div>
+                </div>
+                @endif
+            </div>
+
+        </div>{{-- end navbar-page-grid --}}
+
         @else
+        {{-- ══════════════════════════════════════════════════════
+             HALAMAN BIASA — Section Grid
+        ══════════════════════════════════════════════════════ --}}
 
             @if($sections->isEmpty())
             <div class="empty-state">
@@ -425,30 +541,31 @@
             @else
             <div class="row-label">SECTION LIST — {{ strtoupper($page) }}</div>
             <div class="sections-grid" id="sortable-grid">
+
                 @foreach($sections as $section)
                 @php
                     $fields       = $section->getFields();
                     $content      = $section->content ?? [];
                     $hiddenFields = $section->hidden_fields ?? [];
 
-                    // FIX: Jika schema tidak punya fields (section legacy),
-                    // bangun preview dari content keys yang ada di DB.
+                    // Fallback: jika schema tidak ada, bangun dari content keys
                     if (empty($fields) && !empty($content)) {
                         $fields = collect(array_keys($content))->map(function($k) {
-                            return [
-                                'key'   => $k,
-                                'label' => ucwords(str_replace('_', ' ', $k)),
-                                'type'  => 'text',
-                            ];
+                            return ['key' => $k, 'label' => ucwords(str_replace('_',' ',$k)), 'type' => 'text'];
                         })->values()->all();
                     }
 
                     $preview     = array_slice($fields, 0, 5);
                     $more        = count($fields) - count($preview);
                     $hiddenCount = count($hiddenFields);
+                    $histCount   = $historyCounts[$section->id] ?? 0;
                 @endphp
-                <div class="section-card {{ !$section->is_active ? 'inactive' : '' }}" data-id="{{ $section->id }}">
+
+                <div class="section-card {{ !$section->is_active ? 'inactive' : '' }}"
+                     data-id="{{ $section->id }}">
+
                     <div class="card-accent"></div>
+
                     <div class="card-hd">
                         <div class="card-hd-left">
                             <span class="drag-handle"><i class="fas fa-grip-vertical"></i></span>
@@ -457,19 +574,26 @@
                                 <div class="card-label">{{ $section->label }}</div>
                                 <div class="card-key">
                                     {{ $section->section_key }}
-                                    <span class="hidden-badge {{ $hiddenCount > 0 ? 'has-hidden' : '' }}"
-                                          data-hidden-badge="{{ $section->id }}">
-                                        {{ $hiddenCount }}H
+                                    @if($histCount > 0)
+                                    <span style="font-family:'JetBrains Mono',monospace;font-size:.42rem;background:#333;color:var(--yel);padding:0 4px;margin-left:3px">
+                                        <i class="fas fa-clock-rotate-left" style="font-size:.4rem"></i> {{ $histCount }}
                                     </span>
+                                    @endif
+                                    <span class="hidden-badge {{ $hiddenCount > 0 ? 'has-hidden' : '' }}"
+                                          data-hidden-badge="{{ $section->id }}">{{ $hiddenCount }}H</span>
                                 </div>
                             </div>
                             <div class="status-pip {{ !$section->is_active ? 'off' : '' }}"></div>
                         </div>
                         <div class="card-actions">
-                            <form method="POST" action="{{ route('admin.cms.page-sections.toggle', $section) }}" class="toggle-form">
+                            {{-- Toggle active --}}
+                            <form method="POST"
+                                  action="{{ route('admin.cms.page-sections.toggle-active', $section) }}"
+                                  class="toggle-form">
                                 @csrf @method('PATCH')
-                                <label class="toggle" title="{{ $section->is_active ? 'Nonaktifkan' : 'Aktifkan' }}">
-                                    <input type="checkbox" {{ $section->is_active ? 'checked' : '' }} onchange="this.closest('form').submit()">
+                                <label class="toggle" title="{{ $section->is_active ? 'Nonaktifkan' : 'Aktifkan' }}" style="cursor:pointer">
+                                    <input type="checkbox" {{ $section->is_active ? 'checked' : '' }}
+                                           onchange="this.closest('form').submit()">
                                     <span class="toggle-track"></span>
                                     <span class="toggle-thumb"></span>
                                 </label>
@@ -483,6 +607,7 @@
                     {{-- Card Body --}}
                     <div class="card-body">
                         <div class="field-rows" id="fields-{{ $section->id }}">
+
                             @foreach($preview as $field)
                             @php
                                 $key      = $field['key'];
@@ -491,7 +616,8 @@
                                 $isHidden = in_array($key, $hiddenFields);
                             @endphp
                             <div class="field-row {{ $isHidden ? 'is-hidden-row' : '' }}"
-                                 data-field-key="{{ $key }}" data-section-id="{{ $section->id }}">
+                                 data-field-key="{{ $key }}"
+                                 data-section-id="{{ $section->id }}">
                                 <button class="field-eye-btn {{ $isHidden ? 'is-hidden' : '' }}"
                                         title="{{ $isHidden ? 'Tampilkan field ini' : 'Sembunyikan field ini' }}"
                                         onclick="toggleFieldVisibility({{ $section->id }}, '{{ $key }}', this)"
@@ -500,26 +626,37 @@
                                 </button>
                                 <span class="f-label">{{ Str::limit($field['label'], 11) }}</span>
                                 @if($type === 'image')
-                                    @if($val) <img src="{{ Storage::url($val) }}" alt="" class="f-img">
-                                    @else <span class="f-val empty">— no image</span> @endif
+                                    @if($val)
+                                        <img src="{{ Storage::url($val) }}" alt="" class="f-img">
+                                    @else
+                                        <span class="f-val empty">— no image</span>
+                                    @endif
                                 @elseif($type === 'color')
                                     @if($val)
                                         <span class="f-color-dot" style="background:{{ $val }}"></span>
                                         <span class="f-val" style="font-family:'JetBrains Mono',monospace;font-size:.54rem">{{ $val }}</span>
-                                    @else <span class="f-val empty">—</span> @endif
+                                    @else
+                                        <span class="f-val empty">—</span>
+                                    @endif
                                 @else
-                                    <span class="f-val {{ !$val ? 'empty' : '' }}">{{ $val ? Str::limit(strip_tags($val), 38) : '—' }}</span>
+                                    <span class="f-val {{ !$val ? 'empty' : '' }}">
+                                        {{ $val ? Str::limit(strip_tags((string)$val), 38) : '—' }}
+                                    </span>
                                 @endif
                             </div>
                             @endforeach
 
                             @if($more > 0)
-                            <button class="btn-expand-fields" onclick="toggleExpandFields(this, {{ $section->id }})" type="button">
+                            <button class="btn-expand-fields"
+                                    onclick="toggleExpandFields(this, {{ $section->id }})"
+                                    type="button">
                                 <i class="fas fa-chevron-down"></i>
                                 +{{ $more }} MORE FIELDS (klik untuk lihat semua)
                             </button>
                             <div class="hidden-fields-area" id="extra-fields-{{ $section->id }}">
-                                <div class="hidden-area-label"><i class="fas fa-layer-group"></i> SEMUA FIELD</div>
+                                <div class="hidden-area-label">
+                                    <i class="fas fa-layer-group"></i> SEMUA FIELD
+                                </div>
                                 @foreach(array_slice($fields, 5) as $field)
                                 @php
                                     $key      = $field['key'];
@@ -528,7 +665,8 @@
                                     $isHidden = in_array($key, $hiddenFields);
                                 @endphp
                                 <div class="field-row {{ $isHidden ? 'is-hidden-row' : '' }}"
-                                     data-field-key="{{ $key }}" data-section-id="{{ $section->id }}">
+                                     data-field-key="{{ $key }}"
+                                     data-section-id="{{ $section->id }}">
                                     <button class="field-eye-btn {{ $isHidden ? 'is-hidden' : '' }}"
                                             title="{{ $isHidden ? 'Tampilkan' : 'Sembunyikan' }}"
                                             onclick="toggleFieldVisibility({{ $section->id }}, '{{ $key }}', this)"
@@ -537,44 +675,55 @@
                                     </button>
                                     <span class="f-label">{{ Str::limit($field['label'], 11) }}</span>
                                     @if($type === 'image')
-                                        @if($val) <img src="{{ Storage::url($val) }}" alt="" class="f-img">
-                                        @else <span class="f-val empty">— no img</span> @endif
+                                        @if($val)
+                                            <img src="{{ Storage::url($val) }}" alt="" class="f-img">
+                                        @else
+                                            <span class="f-val empty">— no img</span>
+                                        @endif
                                     @elseif($type === 'color')
                                         @if($val)
                                             <span class="f-color-dot" style="background:{{ $val }}"></span>
                                             <span class="f-val" style="font-family:'JetBrains Mono',monospace;font-size:.54rem">{{ $val }}</span>
-                                        @else <span class="f-val empty">—</span> @endif
+                                        @else
+                                            <span class="f-val empty">—</span>
+                                        @endif
                                     @else
-                                        <span class="f-val {{ !$val ? 'empty' : '' }}">{{ $val ? Str::limit(strip_tags($val), 38) : '—' }}</span>
+                                        <span class="f-val {{ !$val ? 'empty' : '' }}">
+                                            {{ $val ? Str::limit(strip_tags((string)$val), 38) : '—' }}
+                                        </span>
                                     @endif
                                 </div>
                                 @endforeach
                             </div>
                             @endif
+
                         </div>
                     </div>
+
                 </div>
                 @endforeach
+
             </div>
             @endif
 
         @endif
-        {{-- END page condition --}}
+        {{-- end page condition --}}
 
     </div>
 
-    {{-- Reorder Bar (hanya untuk halaman biasa, bukan services-navbar) --}}
+    {{-- Reorder Bar (hanya untuk halaman non services-navbar) --}}
     @if($page !== 'services-navbar')
     <div class="reorder-bar" id="reorder-bar">
         <div class="blink-dot"></div>
-        <span class="bar-text">URUTAN BERUBAH</span>
-        <button class="btn-save-order" id="btn-save-order">SIMPAN</button>
+        <span class="bar-text">URUTAN BERUBAH — BELUM TERSIMPAN</span>
+        <button class="btn-save-order" id="btn-save-order">SIMPAN URUTAN</button>
         <span id="reorder-status"></span>
     </div>
     @endif
 
     {{-- Toast --}}
     <div class="field-toast" id="field-toast"></div>
+
 </div>
 @endsection
 
@@ -585,33 +734,44 @@ const TOGGLE_FIELD_URL = '{{ url('admin/cms/page-sections/section') }}';
 const TOGGLE_SVC_URL   = '{{ url('admin/cms/services') }}';
 
 /* ════════════════════════════════════════════════
-   TOGGLE SERVICE AKTIF/NONAKTIF
+   TOGGLE SERVICE AKTIF / NONAKTIF
    ════════════════════════════════════════════ */
 async function toggleService(svcId, checkbox) {
     checkbox.disabled = true;
     try {
-        const res  = await fetch(`${TOGGLE_SVC_URL}/${svcId}/toggle`, {
-            method: 'PATCH',
-            headers: { 'X-CSRF-TOKEN': CSRF, 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        const res = await fetch(`${TOGGLE_SVC_URL}/${svcId}/toggle`, {
+            method : 'PATCH',
+            headers: {
+                'X-CSRF-TOKEN' : CSRF,
+                'Accept'       : 'application/json',
+                'Content-Type' : 'application/json',
+            },
         });
+
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const data = await res.json();
-        if (!data.success) throw new Error();
+        if (!data.success) throw new Error(data.message || 'Gagal');
 
         const active = data.is_active;
 
-        const row = document.getElementById(`svc-row-${svcId}`);
-        if (row) row.classList.toggle('is-inactive', !active);
+        document.getElementById(`svc-row-${svcId}`)?.classList.toggle('is-inactive', !active);
 
         const iconBox = document.getElementById(`svc-icon-${svcId}`);
-        if (iconBox) { iconBox.classList.toggle('active-icon', active); iconBox.classList.toggle('inactive-icon', !active); }
+        if (iconBox) {
+            iconBox.classList.toggle('active-icon',   active);
+            iconBox.classList.toggle('inactive-icon', !active);
+        }
 
         const name = document.getElementById(`svc-name-${svcId}`);
-        if (name) { name.classList.toggle('active-name', active); name.classList.toggle('inactive-name', !active); }
+        if (name) {
+            name.classList.toggle('active-name',   active);
+            name.classList.toggle('inactive-name', !active);
+        }
 
         const badge = document.getElementById(`svc-badge-${svcId}`);
         if (badge) {
-            badge.textContent = active ? 'AKTIF' : 'NONAKTIF';
-            badge.classList.toggle('active-badge', active);
+            badge.textContent = active ? 'AKTIF' : 'OFF';
+            badge.classList.toggle('active-badge',   active);
             badge.classList.toggle('inactive-badge', !active);
         }
 
@@ -620,38 +780,37 @@ async function toggleService(svcId, checkbox) {
             countEl.textContent = `${data.active_count}/${data.total_count} AKTIF`;
         }
 
-        showToast(active ? `"${data.title}" aktif di navbar` : `"${data.title}" disembunyikan dari navbar`);
+        showToast(active
+            ? `"${data.title}" aktif di navbar`
+            : `"${data.title}" disembunyikan dari navbar`
+        );
     } catch (e) {
         checkbox.checked = !checkbox.checked;
-        showToast('Gagal mengubah status service', true);
+        showToast('Gagal: ' + e.message, true);
     }
     checkbox.disabled = false;
 }
 
 /* ════════════════════════════════════════════════
-   TOGGLE FIELD VISIBILITY (eye button)
+   TOGGLE FIELD VISIBILITY (eye icon di card)
    ════════════════════════════════════════════ */
 async function toggleFieldVisibility(sectionId, fieldKey, btn) {
     btn.disabled = true;
-
     try {
         const res = await fetch(`${TOGGLE_FIELD_URL}/${sectionId}/toggle-field`, {
-            method: 'PATCH',
+            method : 'PATCH',
             headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': CSRF,
-                'Accept'      : 'application/json',
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : CSRF,
+                'Accept'       : 'application/json',
             },
             body: JSON.stringify({ field_key: fieldKey }),
         });
 
         if (!res.ok) {
-            let errMsg = `HTTP ${res.status}`;
-            try {
-                const errData = await res.json();
-                errMsg = errData.error || errMsg;
-            } catch(e) {}
-            throw new Error(errMsg);
+            let msg = `HTTP ${res.status}`;
+            try { const d = await res.json(); msg = d.error || msg; } catch(_){}
+            throw new Error(msg);
         }
 
         const data = await res.json();
@@ -678,7 +837,6 @@ async function toggleFieldVisibility(sectionId, fieldKey, btn) {
     } catch (e) {
         showToast('Gagal: ' + e.message, true);
     }
-
     btn.disabled = false;
 }
 
@@ -694,20 +852,21 @@ function toggleExpandFields(btn, sectionId) {
 /* ════════════════════════════════════════════════
    TOAST
    ════════════════════════════════════════════ */
-let toastTimer;
+let _toastTimer;
 function showToast(msg, isError = false) {
     const t = document.getElementById('field-toast');
+    if (!t) return;
     t.textContent       = msg;
     t.style.background  = isError ? '#FF5A36' : '#0D0D0D';
     t.style.color       = isError ? '#fff'    : '#F5C800';
     t.style.borderColor = isError ? '#FF5A36' : '#F5C800';
     t.classList.add('show');
-    clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+    clearTimeout(_toastTimer);
+    _toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
 }
 
 /* ════════════════════════════════════════════════
-   TABS SCROLL
+   TABS SCROLL BEHAVIOUR
    ════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
     const tabsScroll = document.getElementById('tabs-scroll');
@@ -723,13 +882,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (activeTab && tabsScroll) {
-        const targetScroll = activeTab.offsetLeft - (tabsScroll.clientWidth / 2) + (activeTab.offsetWidth / 2);
-        tabsScroll.scrollTo({ left: Math.max(0, targetScroll), behavior: 'instant' });
+        const target = activeTab.offsetLeft - tabsScroll.clientWidth / 2 + activeTab.offsetWidth / 2;
+        tabsScroll.scrollTo({ left: Math.max(0, target), behavior: 'instant' });
     }
 
     tabsScroll?.addEventListener('scroll', updateTabsFade, { passive: true });
     updateTabsFade();
 
+    // Mouse drag scroll on tabs
     let isDown = false, startX = 0, scrollStart = 0;
     tabsScroll?.addEventListener('mousedown', e => {
         isDown = true; startX = e.pageX - tabsScroll.offsetLeft; scrollStart = tabsScroll.scrollLeft;
@@ -741,12 +901,12 @@ document.addEventListener('DOMContentLoaded', () => {
         tabsScroll.scrollLeft = scrollStart - (e.pageX - tabsScroll.offsetLeft - startX) * 1.2;
     });
 
-    /* ── DRAG & DROP (hanya untuk halaman non services-navbar) ── */
-    const grid    = document.getElementById('sortable-grid');
-    const bar     = document.getElementById('reorder-bar');
-    const btnSave = document.getElementById('btn-save-order');
-    const statusEl= document.getElementById('reorder-status');
-    if (!grid) return;
+    /* ── DRAG & DROP REORDER (hanya untuk halaman non services-navbar) ── */
+    const grid     = document.getElementById('sortable-grid');
+    const bar      = document.getElementById('reorder-bar');
+    const btnSave  = document.getElementById('btn-save-order');
+    const statusEl = document.getElementById('reorder-status');
+    if (!grid || !bar) return;
 
     let dragged = null, touchDragged = null, touchClone = null;
     let touchStartX = 0, touchStartY = 0, touchCardRect = null;
@@ -775,10 +935,14 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             if (!dragged || dragged === card) return;
             const cards = [...grid.querySelectorAll('.section-card')];
-            grid.insertBefore(dragged, cards.indexOf(dragged) < cards.indexOf(card) ? card.nextSibling : card);
-            updateBadges(); bar.classList.add('visible');
+            grid.insertBefore(dragged,
+                cards.indexOf(dragged) < cards.indexOf(card) ? card.nextSibling : card
+            );
+            updateBadges();
+            bar.classList.add('visible');
         });
 
+        // Touch drag
         card.addEventListener('touchstart', e => {
             touchDragged  = card;
             const t = e.touches[0];
@@ -786,9 +950,11 @@ document.addEventListener('DOMContentLoaded', () => {
             touchCardRect = card.getBoundingClientRect();
             touchClone = card.cloneNode(true);
             Object.assign(touchClone.style, {
-                position:'fixed',zIndex:'9999',opacity:'.72',pointerEvents:'none',
-                width:touchCardRect.width+'px',transform:'rotate(-1deg) scale(.97)',
-                boxShadow:'6px 6px 0 #0D0D0D',left:touchCardRect.left+'px',top:touchCardRect.top+'px',transition:'none',
+                position:'fixed', zIndex:'9999', opacity:'.72', pointerEvents:'none',
+                width: touchCardRect.width + 'px', transform:'rotate(-1deg) scale(.97)',
+                boxShadow:'6px 6px 0 #0D0D0D',
+                left: touchCardRect.left + 'px', top: touchCardRect.top + 'px',
+                transition:'none',
             });
             document.body.appendChild(touchClone);
             card.classList.add('dragging');
@@ -813,8 +979,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const tgt = el?.closest('.section-card');
             if (tgt && tgt !== touchDragged) {
                 const cards = [...grid.querySelectorAll('.section-card')];
-                grid.insertBefore(touchDragged, cards.indexOf(touchDragged) < cards.indexOf(tgt) ? tgt.nextSibling : tgt);
-                updateBadges(); bar.classList.add('visible');
+                grid.insertBefore(touchDragged,
+                    cards.indexOf(touchDragged) < cards.indexOf(tgt) ? tgt.nextSibling : tgt
+                );
+                updateBadges();
+                bar.classList.add('visible');
             }
             touchDragged.classList.remove('dragging');
             grid.querySelectorAll('.section-card').forEach(c => c.classList.remove('drag-over'));
@@ -834,17 +1003,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnSave?.addEventListener('click', () => {
         const ids = [...grid.querySelectorAll('.section-card')].map(c => c.dataset.id);
-        statusEl.textContent = 'SAVING...'; btnSave.disabled = true;
+        if (statusEl) statusEl.textContent = 'SAVING...';
+        if (btnSave)  btnSave.disabled = true;
         fetch('{{ route('admin.cms.page-sections.reorder') }}', {
-            method: 'POST',
-            headers: {'Content-Type':'application/json','X-CSRF-TOKEN':CSRF,'Accept':'application/json'},
+            method  : 'POST',
+            headers : {
+                'Content-Type' : 'application/json',
+                'X-CSRF-TOKEN' : CSRF,
+                'Accept'       : 'application/json',
+            },
             body: JSON.stringify({ order: ids }),
-        }).then(r => r.json()).then(data => {
+        })
+        .then(r => r.json())
+        .then(data => {
             if (data.success) {
-                statusEl.textContent = '✓ OK';
-                setTimeout(() => { bar.classList.remove('visible'); statusEl.textContent = ''; btnSave.disabled = false; }, 2000);
+                if (statusEl) statusEl.textContent = '✓ TERSIMPAN';
+                setTimeout(() => {
+                    bar.classList.remove('visible');
+                    if (statusEl) statusEl.textContent = '';
+                    if (btnSave)  btnSave.disabled = false;
+                }, 2200);
             } else throw new Error();
-        }).catch(() => { statusEl.textContent = '✗ ERROR'; btnSave.disabled = false; });
+        })
+        .catch(() => {
+            if (statusEl) statusEl.textContent = '✗ ERROR';
+            if (btnSave)  btnSave.disabled = false;
+        });
     });
 });
 </script>

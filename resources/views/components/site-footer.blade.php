@@ -16,9 +16,6 @@
     $fContact = $footerSections->get('contact');
     $fSocial  = $footerSections->get('social');
 
-    // ── Helper: sama persis seperti di home ──────────────────────────────────
-    // null  = field HIDDEN  → jangan render elemen HTML-nya
-    // string = field aktif  → tampilkan nilainya (atau $default jika kosong)
     $fval = function(?\App\Models\PageSection $section, string $key, string $default = '') {
         if (!$section) return $default;
         if ($section->isFieldHidden($key)) return null;
@@ -27,6 +24,9 @@
     };
 
     // ── MAIN ──────────────────────────────────────────────
+    $logo       = $fval($fMain, 'logo',       '');
+    $logoAlt    = $fval($fMain, 'logo_alt',   'HNP Communications.id');
+
     $headline1  = $fval($fMain, 'headline_1',  'Bersama Kami,');
     $headline2  = $fval($fMain, 'headline_2',  'Raih Kesuksesan');
     $headline3  = $fval($fMain, 'headline_3',  'di Era Digital');
@@ -50,7 +50,7 @@
         ['name' => 'Backlink Media',       'route' => 'layanan.backlink'],
         ['name' => 'Press Conference',     'route' => 'layanan.press.conference'],
         ['name' => 'Penulisan Artikel',    'route' => 'layanan.penulisan.artikel'],
-        ['name' => 'Script Video',         'route' => 'layanan.script.video'],
+        ['name' => 'Buzzer',               'route' => 'layanan.buzzer'],
         ['name' => 'Pelatihan Konten',     'route' => 'layanan.pelatihan.konten'],
     ];
 
@@ -81,20 +81,32 @@
             ════════════════════════════════════════ --}}
             <div class="lg:col-span-7 space-y-8">
 
-                {{-- ── LOGO PURE TAILWIND CSS ── --}}
-                <div class="brand-wrapper flex items-center gap-3">
-                    <div class="logo-mark-wrap relative flex-shrink-0">
-                        <div class="logo-bg-shape"></div>
-                        <span class="logo-mark-text">HNP</span>
+                {{-- LOGO — CMS dulu, fallback CSS logo --}}
+                @if($logo !== null && $logo !== '')
+                    {{-- Logo dari CMS (upload gambar) --}}
+                    <div class="brand-wrapper">
+                        <a href="{{ url('/') }}">
+                            <img src="{{ Storage::url($logo) }}"
+                                 alt="{{ $logoAlt ?? 'HNP Communications.id' }}"
+                                 class="footer-logo-img">
+                        </a>
                     </div>
-                    <div class="logo-brand-block">
-                        <div class="logo-brand-main">Communications</div>
-                        <div class="logo-brand-sub">
-                            <span class="logo-brand-dot"></span>
-                            <span>Media &amp; Content Agency</span>
+                @else
+                    {{-- Fallback: CSS logo asli --}}
+                    <div class="brand-wrapper flex items-center gap-3">
+                        <div class="logo-mark-wrap relative flex-shrink-0">
+                            <div class="logo-bg-shape"></div>
+                            <span class="logo-mark-text">HNP</span>
+                        </div>
+                        <div class="logo-brand-block">
+                            <div class="logo-brand-main">Communications</div>
+                            <div class="logo-brand-sub">
+                                <span class="logo-brand-dot"></span>
+                                <span>Media &amp; Content Agency</span>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
 
                 {{-- Headlines --}}
                 @if($headline1 !== null || $headline2 !== null || $headline3 !== null)
@@ -288,7 +300,22 @@
 }
 
 /* ─────────────────────────────────────────
-   LOGO — Pure CSS, no icon dependency
+   LOGO dari CMS (gambar upload)
+   ───────────────────────────────────────── */
+.footer-logo-img {
+    max-height: 56px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    transition: opacity 0.2s;
+}
+
+.footer-logo-img:hover {
+    opacity: 0.85;
+}
+
+/* ─────────────────────────────────────────
+   LOGO — Pure CSS fallback (tidak berubah)
    ───────────────────────────────────────── */
 
 .brand-wrapper {

@@ -938,138 +938,137 @@ class PageSection extends Model
                 ],
             ],
 
-            // ════════════════════════════════════════════════════════════
-            // LAYANAN: SCRIPT VIDEO
-            // ════════════════════════════════════════════════════════════
-            'layanan-script-video' => [
+            // ════════════════════════════════════════════════════════════════
+// LAYANAN: BUZZER (sebelumnya layanan-script-video)
+// ════════════════════════════════════════════════════════════════
+'layanan-buzzer' => [
  
     // ── 1. Hero ─────────────────────────────────────────────────────────────
     'hero' => [
         'label'  => 'Hero Section',
         'fields' => [
-            ['key' => 'badge_text',  'label' => 'Badge Text',                 'type' => 'text',     'placeholder' => '✦ JASA PENULISAN SCRIPT VIDEO'],
-            ['key' => 'title_line1', 'label' => 'Judul Baris 1',              'type' => 'text',     'placeholder' => 'SCRIPT VIDEO'],
-            ['key' => 'title_line2', 'label' => 'Judul Baris 2',              'type' => 'text',     'placeholder' => 'YANG MEMIKAT &'],
-            ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)',  'type' => 'text',     'placeholder' => 'KONVERSI TINGGI'],
-            ['key' => 'quote',       'label' => 'Kutipan',                    'type' => 'text',     'placeholder' => 'Dari ide menjadi naskah yang siap produksi.'],
-            ['key' => 'description', 'label' => 'Deskripsi',                  'type' => 'textarea', 'placeholder' => 'Kami merancang naskah video yang engaging, sesuai target audiens Anda.'],
+            ['key' => 'badge_text',  'label' => 'Badge Text',                 'type' => 'text',     'placeholder' => '✦ JASA BUZZER MEDIA SOSIAL'],
+            ['key' => 'title_line1', 'label' => 'Judul Baris 1',              'type' => 'text',     'placeholder' => 'BUZZER'],
+            ['key' => 'title_line2', 'label' => 'Judul Baris 2',              'type' => 'text',     'placeholder' => 'VIRAL &'],
+            ['key' => 'title_line3', 'label' => 'Judul Baris 3 (highlight)',  'type' => 'text',     'placeholder' => 'ENGAGEMENT TINGGI'],
+            ['key' => 'quote',       'label' => 'Kutipan',                    'type' => 'text',     'placeholder' => 'Dari brand menjadi trending topic.'],
+            ['key' => 'description', 'label' => 'Deskripsi',                  'type' => 'textarea', 'placeholder' => 'Kami menyebarkan pesan brand Anda secara masif, organik, dan terkoordinasi di seluruh platform media sosial.'],
             ['key' => 'cta_text',    'label' => 'Teks Tombol',                'type' => 'text',     'placeholder' => 'KONSULTASI SEKARANG'],
             ['key' => 'cta_url',     'label' => 'URL Tombol',                 'type' => 'text',     'placeholder' => 'https://wa.me/6287786000919'],
             ['key' => 'image',       'label' => 'Gambar Hero',                'type' => 'image'],
         ],
     ],
  
-    // ── 2. Mengapa Jasa Script Video ─────────────────────────────────────────
-    'why_script' => [
-        'label'  => 'Mengapa Butuh Jasa Script Video?',
+    // ── 2. Mengapa Jasa Buzzer ───────────────────────────────────────────────
+    'why_buzzer' => [
+        'label'  => 'Mengapa Butuh Jasa Buzzer?',
         'fields' => [
-            ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Jasa Script Video?'],
-            ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Script yang baik adalah pondasi video yang sukses.'],
-            ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Hemat Biaya Produksi'],
-            ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Script yang matang mengurangi risiko reshooting.'],
-            ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Pesan Tersampaikan dengan Tepat'],
-            ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami memastikan setiap kata membawa pesan brand Anda secara jelas dan persuasif.'],
-            ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Sesuai Platform & Durasi'],
-            ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Script disesuaikan untuk YouTube, Instagram Reels, TikTok, iklan TV, atau video korporat.'],
-            ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Storytelling yang Kuat'],
-            ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami membangun narasi yang emosional agar penonton terhubung dengan brand Anda.'],
-            ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Revisi Hingga Puas'],
-            ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Kami menyediakan revisi hingga script benar-benar sesuai visi Anda.'],
+            ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Jasa Buzzer?'],
+            ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Buzzer terkoordinasi adalah kunci viral marketing yang efektif.'],
+            ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Jangkauan Masif & Cepat'],
+            ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Ribuan akun aktif menyebarkan pesan brand Anda dalam waktu singkat ke seluruh platform.'],
+            ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Engagement Organik Nyata'],
+            ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Interaksi dari akun-akun aktif yang membuat konten Anda terlihat natural dan terpercaya.'],
+            ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Sesuai Target Audiens'],
+            ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Kampanye diarahkan ke segmen audiens yang paling relevan dengan brand Anda.'],
+            ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Monitoring & Laporan Lengkap'],
+            ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Setiap kampanye dipantau real-time dan dilaporkan secara detail untuk mengukur ROI Anda.'],
+            ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Multi-Platform Sekaligus'],
+            ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Satu kampanye menyentuh Twitter/X, Instagram, TikTok, Facebook, dan YouTube secara bersamaan.'],
         ],
     ],
  
-    // ── 3. Daftar Layanan Script ──────────────────────────────────────────────
+    // ── 3. Daftar Layanan Buzzer ─────────────────────────────────────────────
     'services_list' => [
-        'label'  => 'Daftar Layanan Script',
+        'label'  => 'Daftar Layanan Buzzer',
         'fields' => [
             ['key' => 'title',            'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'LAYANAN KAMI'],
-            ['key' => 'subtitle',         'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Struktur naskah profesional yang dirancang khusus untuk mendominasi platform digital.'],
-            ['key' => 'service_1_title',  'label' => 'Layanan 1 — Judul','type' => 'text',     'placeholder' => 'Script Video Pendek'],
-            ['key' => 'service_1_desc',   'label' => 'Layanan 1 — Desc', 'type' => 'textarea', 'placeholder' => 'Naskah tajam, fast-paced, dan hook memikat di 3 detik pertama.'],
-            ['key' => 'service_2_title',  'label' => 'Layanan 2 — Judul','type' => 'text',     'placeholder' => 'Script Perusahaan'],
-            ['key' => 'service_2_desc',   'label' => 'Layanan 2 — Desc', 'type' => 'textarea', 'placeholder' => 'Penyampaian profil bisnis, nilai corporate, dan visi misi dengan alur formal namun tetap bernyawa.'],
-            ['key' => 'service_3_title',  'label' => 'Layanan 3 — Judul','type' => 'text',     'placeholder' => 'Script Video Iklan'],
-            ['key' => 'service_3_desc',   'label' => 'Layanan 3 — Desc', 'type' => 'textarea', 'placeholder' => 'Formula copywriting psikologis tinggi untuk memicu konversi pembelian.'],
-            ['key' => 'service_4_title',  'label' => 'Layanan 4 — Judul','type' => 'text',     'placeholder' => 'Script YouTube'],
-            ['key' => 'service_4_desc',   'label' => 'Layanan 4 — Desc', 'type' => 'textarea', 'placeholder' => 'Menjaga retention rate penonton tetap tinggi untuk video berdurasi panjang.'],
-            ['key' => 'service_5_title',  'label' => 'Layanan 5 — Judul','type' => 'text',     'placeholder' => 'Script Sosmed'],
-            ['key' => 'service_5_desc',   'label' => 'Layanan 5 — Desc', 'type' => 'textarea', 'placeholder' => 'Konsep kreatif organik yang relevan dengan tren terkini.'],
-            ['key' => 'service_6_title',  'label' => 'Layanan 6 — Judul','type' => 'text',     'placeholder' => 'Script Dokumenter'],
-            ['key' => 'service_6_desc',   'label' => 'Layanan 6 — Desc', 'type' => 'textarea', 'placeholder' => 'Alur storytelling sinematik mendalam yang informatif dan menggugah emosi.'],
+            ['key' => 'subtitle',         'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Strategi buzzer profesional yang dirancang khusus untuk mendominasi platform digital.'],
+            ['key' => 'service_1_title',  'label' => 'Layanan 1 — Judul','type' => 'text',     'placeholder' => 'Buzzer Twitter/X'],
+            ['key' => 'service_1_desc',   'label' => 'Layanan 1 — Desc', 'type' => 'textarea', 'placeholder' => 'Sebarkan narasi brand secara masif di Twitter/X dengan ribuan akun aktif terkoordinasi.'],
+            ['key' => 'service_2_title',  'label' => 'Layanan 2 — Judul','type' => 'text',     'placeholder' => 'Buzzer Instagram'],
+            ['key' => 'service_2_desc',   'label' => 'Layanan 2 — Desc', 'type' => 'textarea', 'placeholder' => 'Tingkatkan engagement, komentar, dan jangkauan konten Instagram Anda secara organik.'],
+            ['key' => 'service_3_title',  'label' => 'Layanan 3 — Judul','type' => 'text',     'placeholder' => 'Buzzer TikTok'],
+            ['key' => 'service_3_desc',   'label' => 'Layanan 3 — Desc', 'type' => 'textarea', 'placeholder' => 'Dorong konten TikTok Anda ke FYP dengan interaksi nyata dari akun-akun aktif.'],
+            ['key' => 'service_4_title',  'label' => 'Layanan 4 — Judul','type' => 'text',     'placeholder' => 'Buzzer Facebook'],
+            ['key' => 'service_4_desc',   'label' => 'Layanan 4 — Desc', 'type' => 'textarea', 'placeholder' => 'Viralkan postingan dan halaman Facebook Anda dengan share, like, dan komentar masif.'],
+            ['key' => 'service_5_title',  'label' => 'Layanan 5 — Judul','type' => 'text',     'placeholder' => 'Buzzer YouTube'],
+            ['key' => 'service_5_desc',   'label' => 'Layanan 5 — Desc', 'type' => 'textarea', 'placeholder' => 'Tingkatkan views, subscriber, dan komentar video YouTube Anda secara cepat.'],
+            ['key' => 'service_6_title',  'label' => 'Layanan 6 — Judul','type' => 'text',     'placeholder' => 'Buzzer Multi-Platform'],
+            ['key' => 'service_6_desc',   'label' => 'Layanan 6 — Desc', 'type' => 'textarea', 'placeholder' => 'Kampanye buzzer terpadu di semua platform sekaligus untuk dampak maksimal.'],
         ],
     ],
  
-    // ── 4. Proses Kerja ───────────────────────────────────────────────────────
+    // ── 4. Proses Kerja ──────────────────────────────────────────────────────
     'process' => [
         'label'  => 'Proses / Alur Kerja',
         'fields' => [
-            ['key' => 'title',        'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Alur Kerja Pembuatan Naskah'],
+            ['key' => 'title',        'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Alur Kerja Kampanye Buzzer'],
             ['key' => 'step_1_title', 'label' => 'Step 1 — Judul',   'type' => 'text',     'placeholder' => 'KONSULTASI AWAL'],
-            ['key' => 'step_1_desc',  'label' => 'Step 1 — Desc',    'type' => 'textarea', 'placeholder' => 'Membedah visi produk, detail brief, serta segmentasi audiens yang disasar.'],
-            ['key' => 'step_2_title', 'label' => 'Step 2 — Judul',   'type' => 'text',     'placeholder' => 'RANCANG KONSEP'],
-            ['key' => 'step_2_desc',  'label' => 'Step 2 — Desc',    'type' => 'textarea', 'placeholder' => 'Penyusunan premis cerita, angle penulisan, dan penentuan hook utama.'],
-            ['key' => 'step_3_title', 'label' => 'Step 3 — Judul',   'type' => 'text',     'placeholder' => 'PENULISAN DRAFT'],
-            ['key' => 'step_3_desc',  'label' => 'Step 3 — Desc',    'type' => 'textarea', 'placeholder' => 'Eksekusi naskah baris per baris lengkap dengan instruksi visual/audio.'],
-            ['key' => 'step_4_title', 'label' => 'Step 4 — Judul',   'type' => 'text',     'placeholder' => 'REVISI & FINAL'],
-            ['key' => 'step_4_desc',  'label' => 'Step 4 — Desc',    'type' => 'textarea', 'placeholder' => 'Penyelarasan feedback berkala hingga naskah dinilai solid & siap rekam.'],
-            ['key' => 'step_5_title', 'label' => 'Step 5 — Judul',   'type' => 'text',     'placeholder' => 'DUKUNGAN PRODUKSI'],
-            ['key' => 'step_5_desc',  'label' => 'Step 5 — Desc',    'type' => 'textarea', 'placeholder' => 'Pendampingan interpretasi naskah agar proses syuting tidak melenceng dari konsep.'],
+            ['key' => 'step_1_desc',  'label' => 'Step 1 — Desc',    'type' => 'textarea', 'placeholder' => 'Membedah tujuan kampanye, target audiens, dan platform yang disasar.'],
+            ['key' => 'step_2_title', 'label' => 'Step 2 — Judul',   'type' => 'text',     'placeholder' => 'RANCANG STRATEGI'],
+            ['key' => 'step_2_desc',  'label' => 'Step 2 — Desc',    'type' => 'textarea', 'placeholder' => 'Penyusunan narasi, hashtag, dan jadwal penyebaran yang optimal.'],
+            ['key' => 'step_3_title', 'label' => 'Step 3 — Judul',   'type' => 'text',     'placeholder' => 'EKSEKUSI KAMPANYE'],
+            ['key' => 'step_3_desc',  'label' => 'Step 3 — Desc',    'type' => 'textarea', 'placeholder' => 'Penyebaran konten secara masif dan terkoordinasi di semua platform.'],
+            ['key' => 'step_4_title', 'label' => 'Step 4 — Judul',   'type' => 'text',     'placeholder' => 'MONITORING REAL-TIME'],
+            ['key' => 'step_4_desc',  'label' => 'Step 4 — Desc',    'type' => 'textarea', 'placeholder' => 'Pemantauan engagement, reach, dan respons audiens secara langsung.'],
+            ['key' => 'step_5_title', 'label' => 'Step 5 — Judul',   'type' => 'text',     'placeholder' => 'LAPORAN & ANALISIS'],
+            ['key' => 'step_5_desc',  'label' => 'Step 5 — Desc',    'type' => 'textarea', 'placeholder' => 'Laporan lengkap performa kampanye beserta rekomendasi lanjutan.'],
         ],
     ],
  
-    // ── 5. Paket Harga ────────────────────────────────────────────────────────
+    // ── 5. Paket Harga ───────────────────────────────────────────────────────
     'pricing' => [
         'label'  => 'Paket Harga',
         'fields' => [
-            ['key' => 'title',              'label' => 'Judul Section',            'type' => 'text', 'placeholder' => 'Paket Harga Jasa Penulisan Script Video'],
-            // SHORT
-            ['key' => 'short_price_ori',    'label' => 'Short — Harga Asli',       'type' => 'text', 'placeholder' => 'Rp 300.000,-'],
-            ['key' => 'short_price',        'label' => 'Short — Harga Promo',      'type' => 'text', 'placeholder' => 'Rp 250.000'],
-            ['key' => 'short_duration',     'label' => 'Short — Durasi Video',     'type' => 'text', 'placeholder' => '< 1 Menit'],
-            ['key' => 'short_feature_1',    'label' => 'Short — Fitur 1',          'type' => 'text', 'placeholder' => 'Naskah lengkap'],
-            ['key' => 'short_feature_2',    'label' => 'Short — Fitur 2',          'type' => 'text', 'placeholder' => 'Sesuai brief khusus'],
-            ['key' => 'short_feature_3',    'label' => 'Short — Fitur 3',          'type' => 'text', 'placeholder' => 'Format (.docx / .pdf)'],
-            ['key' => 'short_feature_4',    'label' => 'Short — Fitur 4',          'type' => 'text', 'placeholder' => 'Revisi Maksimal 1x'],
-            ['key' => 'short_feature_5',    'label' => 'Short — Fitur 5',          'type' => 'text', 'placeholder' => 'Cocok untuk Reels/TikTok'],
-            // MEDIUM
-            ['key' => 'medium_price_ori',   'label' => 'Medium — Harga Asli',      'type' => 'text', 'placeholder' => 'Rp 600.000,-'],
-            ['key' => 'medium_price',       'label' => 'Medium — Harga Promo',     'type' => 'text', 'placeholder' => 'Rp 500.000'],
-            ['key' => 'medium_duration',    'label' => 'Medium — Durasi Video',    'type' => 'text', 'placeholder' => '1 - 3 Menit'],
-            ['key' => 'medium_feature_1',   'label' => 'Medium — Fitur 1',         'type' => 'text', 'placeholder' => 'Naskah lengkap'],
-            ['key' => 'medium_feature_2',   'label' => 'Medium — Fitur 2',         'type' => 'text', 'placeholder' => 'Sesuai brief khusus'],
-            ['key' => 'medium_feature_3',   'label' => 'Medium — Fitur 3',         'type' => 'text', 'placeholder' => 'Format (.docx / .pdf)'],
-            ['key' => 'medium_feature_4',   'label' => 'Medium — Fitur 4',         'type' => 'text', 'placeholder' => 'Revisi Maksimal 2x'],
-            ['key' => 'medium_feature_5',   'label' => 'Medium — Fitur 5',         'type' => 'text', 'placeholder' => 'Cocok untuk YouTube/IG'],
-            ['key' => 'medium_feature_6',   'label' => 'Medium — Fitur 6',         'type' => 'text', 'placeholder' => 'Scene breakdown visual'],
-            // LONG
-            ['key' => 'long_price_ori',     'label' => 'Long — Harga Asli',        'type' => 'text', 'placeholder' => 'Rp 1.200.000,-'],
-            ['key' => 'long_price',         'label' => 'Long — Harga Promo',       'type' => 'text', 'placeholder' => 'Rp 1.000.000'],
-            ['key' => 'long_duration',      'label' => 'Long — Durasi Video',      'type' => 'text', 'placeholder' => '3 - 10 Menit'],
-            ['key' => 'long_feature_1',     'label' => 'Long — Fitur 1',           'type' => 'text', 'placeholder' => 'Naskah lengkap'],
-            ['key' => 'long_feature_2',     'label' => 'Long — Fitur 2',           'type' => 'text', 'placeholder' => 'Sesuai brief khusus'],
-            ['key' => 'long_feature_3',     'label' => 'Long — Fitur 3',           'type' => 'text', 'placeholder' => 'Format (.docx / .pdf)'],
-            ['key' => 'long_feature_4',     'label' => 'Long — Fitur 4 (highlight)','type' => 'text', 'placeholder' => 'REVISI SEPUASNYA'],
-            ['key' => 'long_feature_5',     'label' => 'Long — Fitur 5',           'type' => 'text', 'placeholder' => 'Video korporat/Iklan TV'],
-            ['key' => 'long_feature_6',     'label' => 'Long — Fitur 6',           'type' => 'text', 'placeholder' => 'Scene breakdown'],
-            ['key' => 'long_feature_7',     'label' => 'Long — Fitur 7',           'type' => 'text', 'placeholder' => 'Voice over notes'],
+            ['key' => 'title',                 'label' => 'Judul Section',               'type' => 'text', 'placeholder' => 'Paket Harga Jasa Buzzer Media Sosial'],
+            // BASIC
+            ['key' => 'basic_price_ori',       'label' => 'Basic — Harga Asli',          'type' => 'text', 'placeholder' => 'Rp 600.000,-'],
+            ['key' => 'basic_price',           'label' => 'Basic — Harga Promo',         'type' => 'text', 'placeholder' => 'Rp 500.000'],
+            ['key' => 'basic_duration',        'label' => 'Basic — Durasi Kampanye',     'type' => 'text', 'placeholder' => '7 Hari'],
+            ['key' => 'basic_feature_1',       'label' => 'Basic — Fitur 1',             'type' => 'text', 'placeholder' => '1 Platform'],
+            ['key' => 'basic_feature_2',       'label' => 'Basic — Fitur 2',             'type' => 'text', 'placeholder' => '500 Interaksi/hari'],
+            ['key' => 'basic_feature_3',       'label' => 'Basic — Fitur 3',             'type' => 'text', 'placeholder' => 'Laporan mingguan'],
+            ['key' => 'basic_feature_4',       'label' => 'Basic — Fitur 4',             'type' => 'text', 'placeholder' => 'Konsultasi via WA'],
+            ['key' => 'basic_feature_5',       'label' => 'Basic — Fitur 5',             'type' => 'text', 'placeholder' => 'Cocok untuk UMKM'],
+            // STANDARD
+            ['key' => 'standard_price_ori',    'label' => 'Standard — Harga Asli',       'type' => 'text', 'placeholder' => 'Rp 1.200.000,-'],
+            ['key' => 'standard_price',        'label' => 'Standard — Harga Promo',      'type' => 'text', 'placeholder' => 'Rp 1.000.000'],
+            ['key' => 'standard_duration',     'label' => 'Standard — Durasi Kampanye',  'type' => 'text', 'placeholder' => '14 Hari'],
+            ['key' => 'standard_feature_1',    'label' => 'Standard — Fitur 1',          'type' => 'text', 'placeholder' => '3 Platform'],
+            ['key' => 'standard_feature_2',    'label' => 'Standard — Fitur 2',          'type' => 'text', 'placeholder' => '1.500 Interaksi/hari'],
+            ['key' => 'standard_feature_3',    'label' => 'Standard — Fitur 3',          'type' => 'text', 'placeholder' => 'Laporan mingguan'],
+            ['key' => 'standard_feature_4',    'label' => 'Standard — Fitur 4',          'type' => 'text', 'placeholder' => 'Strategi hashtag'],
+            ['key' => 'standard_feature_5',    'label' => 'Standard — Fitur 5',          'type' => 'text', 'placeholder' => 'Monitoring real-time'],
+            ['key' => 'standard_feature_6',    'label' => 'Standard — Fitur 6',          'type' => 'text', 'placeholder' => 'Content calendar'],
+            // PREMIUM
+            ['key' => 'premium_price_ori',     'label' => 'Premium — Harga Asli',        'type' => 'text', 'placeholder' => 'Rp 2.400.000,-'],
+            ['key' => 'premium_price',         'label' => 'Premium — Harga Promo',       'type' => 'text', 'placeholder' => 'Rp 2.000.000'],
+            ['key' => 'premium_duration',      'label' => 'Premium — Durasi Kampanye',   'type' => 'text', 'placeholder' => '30 Hari'],
+            ['key' => 'premium_feature_1',     'label' => 'Premium — Fitur 1',           'type' => 'text', 'placeholder' => 'Semua Platform'],
+            ['key' => 'premium_feature_2',     'label' => 'Premium — Fitur 2',           'type' => 'text', 'placeholder' => '5.000 Interaksi/hari'],
+            ['key' => 'premium_feature_3',     'label' => 'Premium — Fitur 3',           'type' => 'text', 'placeholder' => 'Laporan harian'],
+            ['key' => 'premium_feature_4',     'label' => 'Premium — Fitur 4 (highlight)','type' => 'text', 'placeholder' => 'GARANSI VIRAL'],
+            ['key' => 'premium_feature_5',     'label' => 'Premium — Fitur 5',           'type' => 'text', 'placeholder' => 'Dedicated account manager'],
+            ['key' => 'premium_feature_6',     'label' => 'Premium — Fitur 6',           'type' => 'text', 'placeholder' => 'Strategi konten lengkap'],
+            ['key' => 'premium_feature_7',     'label' => 'Premium — Fitur 7',           'type' => 'text', 'placeholder' => 'Crisis management'],
             // CTA
-            ['key' => 'cta_text',           'label' => 'Teks Tombol Pesan',        'type' => 'text', 'placeholder' => 'Pesan Sekarang'],
-            ['key' => 'cta_url',            'label' => 'URL Tombol Konsultasi',    'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
+            ['key' => 'cta_text',              'label' => 'Teks Tombol Pesan',            'type' => 'text', 'placeholder' => 'Pesan Sekarang'],
+            ['key' => 'cta_url',               'label' => 'URL Tombol Konsultasi',        'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
         ],
     ],
  
-    // ── 6. CTA Penutup ────────────────────────────────────────────────────────
+    // ── 6. CTA Penutup ───────────────────────────────────────────────────────
     'cta' => [
         'label'  => 'CTA Penutup',
         'fields' => [
-            ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP BIKIN VIDEO YANG VIRAL?'],
-            ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'PESAN SCRIPT SEKARANG'],
+            ['key' => 'title',    'label' => 'Judul CTA',   'type' => 'text', 'placeholder' => 'SIAP BIKIN BRAND KAMU VIRAL?'],
+            ['key' => 'cta_text', 'label' => 'Teks Tombol', 'type' => 'text', 'placeholder' => 'PESAN BUZZER SEKARANG'],
             ['key' => 'cta_url',  'label' => 'URL Tombol',  'type' => 'text', 'placeholder' => 'https://wa.me/6287786000919'],
         ],
     ],
  
-], // end layanan-script-video
-
+], // end layanan-buzzer
             // ════════════════════════════════════════════════════════════
             // LAYANAN: PELATIHAN KONTEN
             // ════════════════════════════════════════════════════════════
@@ -1245,36 +1244,63 @@ class PageSection extends Model
             // FOOTER
             // ════════════════════════════════════════════════════════════
             'footer' => [
-                'main' => [
-                    'label'  => 'Footer — Konten Utama',
-                    'fields' => [
-                        ['key' => 'headline_1',  'label' => 'Headline Baris 1',          'type' => 'text',     'placeholder' => 'Bersama Kami,'],
-                        ['key' => 'headline_2',  'label' => 'Headline Baris 2 (kuning)', 'type' => 'text',     'placeholder' => 'Raih Kesuksesan'],
-                        ['key' => 'headline_3',  'label' => 'Headline Baris 3',          'type' => 'text',     'placeholder' => 'di Era Digital'],
-                        ['key' => 'description', 'label' => 'Paragraf Deskripsi',        'type' => 'textarea', 'placeholder' => 'Bergabunglah dengan ratusan klien yang puas...'],
-                        ['key' => 'copyright',   'label' => 'Teks Copyright',            'type' => 'text',     'placeholder' => '© 2025 HNP Communications.id — ALL RIGHTS RESERVED'],
-                    ],
-                ],
-                'contact' => [
-                    'label'  => 'Footer — Kontak & WhatsApp',
-                    'fields' => [
-                        ['key' => 'wa1_number', 'label' => 'WA Hotline 1 — Nomor',  'type' => 'text', 'placeholder' => '6287786000919'],
-                        ['key' => 'wa1_label',  'label' => 'WA Hotline 1 — Tampil', 'type' => 'text', 'placeholder' => '+62 877-8600-0919'],
-                        ['key' => 'wa2_number', 'label' => 'WA Hotline 2 — Nomor',  'type' => 'text', 'placeholder' => '628121967610'],
-                        ['key' => 'wa2_label',  'label' => 'WA Hotline 2 — Tampil', 'type' => 'text', 'placeholder' => '+62 812-1967-610'],
-                    ],
-                ],
-                'social' => [
-                    'label'  => 'Footer — Social Media',
-                    'fields' => [
-                        ['key' => 'instagram', 'label' => 'Link Instagram', 'type' => 'text', 'placeholder' => 'https://instagram.com/hnpcommunications'],
-                        ['key' => 'facebook',  'label' => 'Link Facebook',  'type' => 'text', 'placeholder' => 'https://facebook.com/hnpcommunications'],
-                        ['key' => 'youtube',   'label' => 'Link YouTube',   'type' => 'text', 'placeholder' => 'https://youtube.com/@hnpcommunications'],
-                        ['key' => 'tiktok',    'label' => 'Link TikTok',    'type' => 'text', 'placeholder' => 'https://tiktok.com/@hnpcommunications'],
-                    ],
-                ],
-            ],
+    // ✅ MAIN — tambah field logo & logo_alt di paling atas
+    'main' => [
+        'label'  => 'Footer — Konten Utama',
+        'fields' => [
+            // ── ✅ BARU: Logo ─────────────────────────────────────────────
+            ['key' => 'logo',        'label' => 'Logo Footer (upload gambar logo)', 'type' => 'image'],
+            ['key' => 'logo_alt',    'label' => 'Alt Text Logo',                    'type' => 'text',     'placeholder' => 'HNP Communications.id'],
+            // ── Teks (tidak berubah) ──────────────────────────────────────
+            ['key' => 'headline_1',  'label' => 'Headline Baris 1',                 'type' => 'text',     'placeholder' => 'Bersama Kami,'],
+            ['key' => 'headline_2',  'label' => 'Headline Baris 2 (kuning)',        'type' => 'text',     'placeholder' => 'Raih Kesuksesan'],
+            ['key' => 'headline_3',  'label' => 'Headline Baris 3',                 'type' => 'text',     'placeholder' => 'di Era Digital'],
+            ['key' => 'description', 'label' => 'Paragraf Deskripsi',               'type' => 'textarea', 'placeholder' => 'Bergabunglah dengan ratusan klien yang puas...'],
+            ['key' => 'copyright',   'label' => 'Teks Copyright',                   'type' => 'text',     'placeholder' => '© 2025 HNP Communications.id — ALL RIGHTS RESERVED'],
+        ],
+    ],
+ 
+    // ── contact & social TIDAK DIUBAH, tetap sama seperti aslinya ──
+    'contact' => [
+        'label'  => 'Footer — Kontak & WhatsApp',
+        'fields' => [
+            ['key' => 'wa1_number', 'label' => 'WA Hotline 1 — Nomor',  'type' => 'text', 'placeholder' => '6287786000919'],
+            ['key' => 'wa1_label',  'label' => 'WA Hotline 1 — Tampil', 'type' => 'text', 'placeholder' => '+62 877-8600-0919'],
+            ['key' => 'wa2_number', 'label' => 'WA Hotline 2 — Nomor',  'type' => 'text', 'placeholder' => '628121967610'],
+            ['key' => 'wa2_label',  'label' => 'WA Hotline 2 — Tampil', 'type' => 'text', 'placeholder' => '+62 812-1967-610'],
+        ],
+    ],
+    'social' => [
+        'label'  => 'Footer — Social Media',
+        'fields' => [
+            ['key' => 'instagram', 'label' => 'Link Instagram', 'type' => 'text', 'placeholder' => 'https://instagram.com/hnpcommunications'],
+            ['key' => 'facebook',  'label' => 'Link Facebook',  'type' => 'text', 'placeholder' => 'https://facebook.com/hnpcommunications'],
+            ['key' => 'youtube',   'label' => 'Link YouTube',   'type' => 'text', 'placeholder' => 'https://youtube.com/@hnpcommunications'],
+            ['key' => 'tiktok',    'label' => 'Link TikTok',    'type' => 'text', 'placeholder' => 'https://tiktok.com/@hnpcommunications'],
+        ],
+    ],
+],
 
+// ════════════════════════════════════════════════════════════
+            // SERVICES NAVBAR — CMS untuk navigasi header
+            // ════════════════════════════════════════════════════════════
+            'services-navbar' => [
+
+    // ── Pengaturan Utama Navbar ───────────────────────────
+    'main' => [
+        'label'  => 'Navbar — Identitas Brand',
+        'fields' => [
+            ['key' => 'logo',             'label' => 'Logo Navbar (upload gambar)',    'type' => 'image'],
+            ['key' => 'logo_alt',         'label' => 'Alt Text Logo',                  'type' => 'text',  'placeholder' => 'HNP Communications.id'],
+            ['key' => 'brand_name',       'label' => 'Nama Brand (baris atas)',        'type' => 'text',  'placeholder' => 'HNP Communications'],
+            ['key' => 'brand_tagline',    'label' => 'Tagline Brand (baris bawah)',    'type' => 'text',  'placeholder' => 'Your Strategic PR and Digital Partner'],
+            ['key' => 'navbar_bg_color',  'label' => 'Warna Background Navbar',        'type' => 'color', 'placeholder' => '#facc15'],
+            ['key' => 'navbar_border',    'label' => 'Warna Border Bawah Navbar',      'type' => 'color', 'placeholder' => '#000000'],
+        ],
+    ],
+
+], // end services-navbar
+ 
         ];
     }
 }

@@ -28,7 +28,7 @@ Route::get('/layanan/press-release',     [HomeController::class, 'pressRelease']
 Route::get('/layanan/backlink',          [HomeController::class, 'backlink'])->name('layanan.backlink');
 Route::get('/layanan/press-conference',  [HomeController::class, 'pressConference'])->name('layanan.press.conference');
 Route::get('/layanan/penulisan-artikel', [HomeController::class, 'penulisanArtikel'])->name('layanan.penulisan.artikel');
-Route::get('/layanan/script-video',      [HomeController::class, 'scriptVideo'])->name('layanan.script.video');
+Route::get('/layanan/buzzer',            [HomeController::class, 'buzzer'])->name('layanan.buzzer');
 Route::get('/layanan/pelatihan-konten',  [HomeController::class, 'pelatihanKonten'])->name('layanan.pelatihan.konten');
 
 // ── AUTH (Laravel Breeze) ─────────────────────────────────────
@@ -68,7 +68,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         [PageSectionController::class, 'toggleField'])->name('cms.page-sections.toggle-field');
 
     // ── Layanan / Services ────────────────────────────────────────────
-    // PENTING: route statis (reorder, create) harus SEBELUM route {service}
     Route::post('cms/services/reorder',         [ServiceController::class, 'reorder'])->name('cms.services.reorder');
     Route::get('cms/services',                  [ServiceController::class, 'index'])->name('cms.services.index');
     Route::get('cms/services/create',           [ServiceController::class, 'create'])->name('cms.services.create');
@@ -76,7 +75,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('cms/services/{service}/edit',   [ServiceController::class, 'edit'])->name('cms.services.edit');
     Route::put('cms/services/{service}',        [ServiceController::class, 'update'])->name('cms.services.update');
     Route::delete('cms/services/{service}',     [ServiceController::class, 'destroy'])->name('cms.services.destroy');
-    // ↓ Route toggle — dipakai oleh widget navbar di Page Sections
     Route::patch('cms/services/{service}/toggle', [ServiceController::class, 'toggle'])->name('cms.services.toggle');
 
     // ── Testimoni ─────────────────────────────────────────────────────
@@ -102,7 +100,6 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::patch('cms/clients/{client}/toggle',          [ClientLogoController::class, 'toggleActive'])->name('cms.clients.toggle');
 
     // ── Page Sections CMS ─────────────────────────────────────────────
-    // PENTING: route statis harus SEBELUM route dengan {pageSection}
     Route::post('cms/page-sections/reorder',
         [PageSectionController::class, 'reorder'])->name('cms.page-sections.reorder');
 
@@ -117,7 +114,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
         [PageSectionController::class, 'update'])->name('cms.page-sections.update');
 
     Route::patch('cms/page-sections/section/{pageSection}/toggle',
-        [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle');
+        [PageSectionController::class, 'toggleActive'])->name('cms.page-sections.toggle-active');
 
     Route::get('cms/page-sections/section/{pageSection}/histories',
         [PageSectionController::class, 'histories'])->name('cms.page-sections.histories');

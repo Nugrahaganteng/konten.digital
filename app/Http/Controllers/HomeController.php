@@ -74,7 +74,6 @@ class HomeController extends Controller
         ]);
 
         // ── 2. Simpan ke database ─────────────────────────────────────────────
-        // Data ini yang akan muncul di admin panel /admin/contacts
         \App\Models\ContactSubmission::create([
             'name'     => $validated['name'],
             'email'    => $validated['email'],
@@ -87,7 +86,6 @@ class HomeController extends Controller
         $this->sendWhatsAppNotification($validated);
 
         // ── 4. Redirect user ke WhatsApp dengan pesan terisi otomatis ────────
-        // Nomor WhatsApp tujuan (admin/CS)
         $adminWaNumber = '6283871325422';
 
         $text = "Halo HNP Communications.id!\n\n"
@@ -101,22 +99,11 @@ class HomeController extends Controller
 
         $waUrl = "https://wa.me/{$adminWaNumber}?text=" . urlencode($text);
 
-        // Redirect ke WhatsApp (tab baru tidak bisa via redirect, maka gunakan
-        // session flag lalu buka via JS di halaman, atau langsung redirect)
         return redirect($waUrl);
-
-        /*
-         * ── ALTERNATIF: Jika ingin tetap di halaman (tidak redirect ke WA) ──
-         * Uncomment baris di bawah dan comment return redirect() di atas.
-         * Gunakan ini jika Anda ingin user membuka WA sendiri via tombol.
-         *
-         * return back()->with('success', 'Pesan Anda berhasil dikirim! Tim kami akan segera menghubungi Anda.');
-         */
     }
 
     /**
      * Kirim notifikasi WhatsApp ke nomor admin via Fonnte API.
-     * Daftar & ambil token gratis di https://fonnte.com
      */
     private function sendWhatsAppNotification(array $data): void
     {
@@ -146,9 +133,9 @@ class HomeController extends Controller
                     "Authorization: {$token}",
                 ],
                 CURLOPT_POSTFIELDS => [
-                    'target'      => '083871325422', // nomor HP admin
+                    'target'      => '083871325422',
                     'message'     => $message,
-                    'countryCode' => '62',           // kode negara Indonesia
+                    'countryCode' => '62',
                 ],
             ]);
 
@@ -166,7 +153,6 @@ class HomeController extends Controller
             }
 
         } catch (\Exception $e) {
-            // Jangan sampai error WA mengganggu user experience
             Log::error('Fonnte exception: ' . $e->getMessage());
         }
     }
@@ -213,10 +199,11 @@ class HomeController extends Controller
         return view('layanan.penulisan-artikel', compact('sections'));
     }
 
-    public function scriptVideo()
+    // ── BUZZER (menggantikan scriptVideo) ─────────────────────────────────────
+    public function buzzer()
     {
-        $sections = $this->sections('layanan-script-video');
-        return view('layanan.script-video', compact('sections'));
+        $sections = $this->sections('layanan-buzzer');
+        return view('layanan.buzzer', compact('sections'));
     }
 
     public function pelatihanKonten()

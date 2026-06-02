@@ -17,7 +17,7 @@ class ServiceController extends Controller
         'layanan.backlink'          => 'Backlink Media',
         'layanan.press.conference'  => 'Press Conference',
         'layanan.penulisan.artikel' => 'Penulisan Artikel',
-        'layanan.script.video'      => 'Script Video',
+        'layanan.buzzer'            => 'Buzzer',               // ← DIUBAH dari layanan.script.video => Script Video
         'layanan.pelatihan.konten'  => 'Pelatihan Konten',
     ];
 
@@ -115,8 +115,6 @@ class ServiceController extends Controller
     }
 
     // ── AJAX: toggle aktif/nonaktif ───────────────────────────────────
-    // Route: PATCH /admin/cms/services/{service}/toggle
-    // Dipanggil dari widget navbar di halaman Page Sections (index.blade.php)
     public function toggle(Service $service)
     {
         $service->update(['is_active' => !$service->is_active]);

@@ -13,7 +13,7 @@ class PageSectionController extends Controller
     private array $availablePages = [
         'home', 'about', 'contact', 'cara-order', 'syarat-ketentuan',
         'layanan-press-release', 'layanan-backlink', 'layanan-press-conference',
-        'layanan-penulisan-artikel', 'layanan-script-video',
+        'layanan-penulisan-artikel', 'layanan-buzzer',
         'layanan-pelatihan-konten', 'footer',
         'services-navbar',
     ];
@@ -101,7 +101,6 @@ class PageSectionController extends Controller
     }
 
     // ── Toggle Hidden Field ──────────────────────────────────────────
-    // Route: PATCH /cms/page-sections/section/{pageSection}/toggle-field
 
     public function toggleField(Request $request, PageSection $pageSection)
     {
@@ -110,15 +109,9 @@ class PageSectionController extends Controller
         $key    = $request->input('field_key');
         $hidden = $pageSection->hidden_fields ?? [];
 
-        // ── Validasi field_key ───────────────────────────────────────
-        // Prioritas 1: cek di schema (getFields)
-        // Prioritas 2: jika schema kosong/tidak ada, fallback ke keys yang
-        //              ada di content — ini menangani section lama / section
-        //              yang belum terdaftar di schema tapi sudah ada di DB.
         $schemaFields = $pageSection->getFields();
 
         if (!empty($schemaFields)) {
-            // Schema tersedia → validasi ketat dari schema
             $validKeys = array_column($schemaFields, 'key');
             if (!in_array($key, $validKeys)) {
                 return response()->json([
@@ -127,27 +120,18 @@ class PageSectionController extends Controller
                 ], 422);
             }
         } else {
-            // Schema kosong (section legacy / belum di-schema-kan)
-            // → validasi longgar: field harus ada di content ATAU string valid
-            $contentKeys = array_keys($pageSection->content ?? []);
-            // Izinkan toggle selama key adalah string non-empty yang valid
-            // (tidak mengandung karakter berbahaya)
             if (empty($key) || !preg_match('/^[a-zA-Z0-9_\-]+$/', $key)) {
                 return response()->json([
                     'error'   => 'Field key tidak valid',
                     'success' => false,
                 ], 422);
             }
-            // Jika key tidak ada di content sama sekali, tetap izinkan
-            // (admin mungkin ingin pre-hide field yang belum diisi)
         }
 
         if (in_array($key, $hidden)) {
-            // Aktifkan kembali — hapus dari array hidden
             $hidden   = array_values(array_diff($hidden, [$key]));
             $isHidden = false;
         } else {
-            // Sembunyikan — tambah ke array hidden
             $hidden[] = $key;
             $isHidden = true;
         }
@@ -170,7 +154,6 @@ class PageSectionController extends Controller
             abort(403, 'History tidak milik section ini.');
         }
 
-        // Snapshot versi saat ini sebelum di-restore
         PageSectionHistory::snapshot($pageSection, 5);
 
         $pageSection->update([

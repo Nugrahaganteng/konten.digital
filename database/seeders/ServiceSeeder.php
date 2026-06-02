@@ -51,13 +51,14 @@ class ServiceSeeder extends Seeder
                 'order'       => 4,
                 'is_active'   => true,
             ],
+            // ── DIUBAH: Script Video → Buzzer ──────────────────────────
             [
-                'title'       => 'Script Video',
-                'tab_label'   => 'Script Video',
-                'slug'        => 'script-video',
-                'route_name'  => 'layanan.script.video',
-                'icon_class'  => 'fa-solid fa-clapperboard',
-                'description' => 'Layanan Script Video',
+                'title'       => 'Buzzer',
+                'tab_label'   => 'Buzzer',
+                'slug'        => 'buzzer',
+                'route_name'  => 'layanan.buzzer',
+                'icon_class'  => 'fa-solid fa-bullhorn',
+                'description' => 'Layanan Buzzer Media Sosial',
                 'order'       => 5,
                 'is_active'   => true,
             ],
@@ -74,7 +75,7 @@ class ServiceSeeder extends Seeder
         ];
 
         foreach ($services as $data) {
-            Service::firstOrCreate(['slug' => $data['slug']], $data);
+            Service::updateOrCreate(['slug' => $data['slug']], $data);
         }
     }
 }

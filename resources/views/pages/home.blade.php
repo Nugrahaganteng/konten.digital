@@ -310,7 +310,7 @@
             ['tab'=>'Backlink Media',    'title'=>"Jasa Backlink\nMedia Nasional", 'body'=>'Tingkatkan otoritas domain dan peringkat SEO website Anda.',                   'bg'=>'NEWS',   'img'=>'i.png', 'route'=>'layanan.backlink'],
             ['tab'=>'Press Conference',  'title'=>"Jasa Press\nConference / Pers", 'body'=>'Pengorganisasian konferensi pers profesional untuk komunikasi pesan penting.', 'bg'=>'ART',    'img'=>'k.png', 'route'=>'layanan.press.conference'],
             ['tab'=>'Penulisan Artikel', 'title'=>"Jasa Penulisan\nArtikel",       'body'=>'Pembuatan konten artikel yang menarik, informatif, dan dioptimasi.',           'bg'=>'GROW',   'img'=>'c.png', 'route'=>'layanan.penulisan.artikel'],
-            ['tab'=>'Script Video',      'title'=>"Jasa Penulisan\nScript Video",  'body'=>'Penyusunan naskah kreatif untuk produksi video komersial.',                    'bg'=>'NEWS',   'img'=>'u.png', 'route'=>'layanan.script.video'],
+            ['tab'=>'Buzzer',            'title'=>"Jasa\nBuzzer",                  'body'=>'Tingkatkan eksposur brand Anda melalui jaringan buzzer digital yang luas dan terpercaya.', 'bg'=>'NEWS', 'img'=>'u.png', 'route'=>'layanan.buzzer'],
             ['tab'=>'Pelatihan Kreator', 'title'=>"Jasa Pelatihan\nKonten Kreator",'body'=>'Program pelatihan intensif menciptakan konten digital yang berdampak.',        'bg'=>'ART',    'img'=>'p.png', 'route'=>'layanan.pelatihan.konten'],
         ];
 
