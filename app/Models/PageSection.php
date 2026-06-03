@@ -975,24 +975,7 @@ class PageSection extends Model
         ],
     ],
  
-    // ── 3. Mengapa Jasa Buzzer ───────────────────────────────────────────────
-    'why_buzzer' => [
-        'label'  => 'Mengapa Butuh Jasa Buzzer?',
-        'fields' => [
-            ['key' => 'title',          'label' => 'Judul Section',    'type' => 'text',     'placeholder' => 'Mengapa Harus Jasa Buzzer?'],
-            ['key' => 'subtitle',       'label' => 'Subjudul',         'type' => 'text',     'placeholder' => 'Buzzer terkoordinasi adalah kunci viral marketing yang efektif.'],
-            ['key' => 'reason_1_title', 'label' => 'Alasan 1 — Judul', 'type' => 'text',     'placeholder' => 'Jangkauan Masif & Cepat'],
-            ['key' => 'reason_1_desc',  'label' => 'Alasan 1 — Desc',  'type' => 'textarea', 'placeholder' => 'Ribuan akun aktif menyebarkan pesan brand Anda dalam waktu singkat ke seluruh platform.'],
-            ['key' => 'reason_2_title', 'label' => 'Alasan 2 — Judul', 'type' => 'text',     'placeholder' => 'Engagement Organik Nyata'],
-            ['key' => 'reason_2_desc',  'label' => 'Alasan 2 — Desc',  'type' => 'textarea', 'placeholder' => 'Interaksi dari akun-akun aktif yang membuat konten Anda terlihat natural dan terpercaya.'],
-            ['key' => 'reason_3_title', 'label' => 'Alasan 3 — Judul', 'type' => 'text',     'placeholder' => 'Sesuai Target Audiens'],
-            ['key' => 'reason_3_desc',  'label' => 'Alasan 3 — Desc',  'type' => 'textarea', 'placeholder' => 'Kampanye diarahkan ke segmen audiens yang paling relevan dengan brand Anda.'],
-            ['key' => 'reason_4_title', 'label' => 'Alasan 4 — Judul', 'type' => 'text',     'placeholder' => 'Monitoring & Laporan Lengkap'],
-            ['key' => 'reason_4_desc',  'label' => 'Alasan 4 — Desc',  'type' => 'textarea', 'placeholder' => 'Setiap kampanye dipantau real-time dan dilaporkan secara detail untuk mengukur ROI Anda.'],
-            ['key' => 'reason_5_title', 'label' => 'Alasan 5 — Judul', 'type' => 'text',     'placeholder' => 'Multi-Platform Sekaligus'],
-            ['key' => 'reason_5_desc',  'label' => 'Alasan 5 — Desc',  'type' => 'textarea', 'placeholder' => 'Satu kampanye menyentuh Twitter/X, Instagram, TikTok, Facebook, dan YouTube secara bersamaan.'],
-        ],
-    ],
+  
  
     // ── 4. Daftar Layanan Buzzer ─────────────────────────────────────────────
     // Konten default disesuaikan dengan 6 jenis layanan yang ditampilkan blade
