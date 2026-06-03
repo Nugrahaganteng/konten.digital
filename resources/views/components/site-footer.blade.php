@@ -45,23 +45,7 @@
     $youtube    = $fval($fSocial, 'youtube',   '#');
     $tiktok     = $fval($fSocial, 'tiktok',    '#');
 
-    $services = [
-        ['name' => 'Press Release',       'route' => 'layanan.press.release'],
-        ['name' => 'Backlink Media',       'route' => 'layanan.backlink'],
-        ['name' => 'Press Conference',     'route' => 'layanan.press.conference'],
-        ['name' => 'Penulisan Artikel',    'route' => 'layanan.penulisan.artikel'],
-        ['name' => 'Buzzer',               'route' => 'layanan.buzzer'],
-        ['name' => 'Pelatihan Konten',     'route' => 'layanan.pelatihan.konten'],
-    ];
-
-    $navLinks = [
-        ['name' => 'Beranda',          'route' => 'home'],
-        ['name' => 'Tentang Kami',     'route' => 'about'],
-        ['name' => 'Cara Order',       'route' => 'cara-order'],
-        ['name' => 'Syarat Ketentuan', 'route' => 'syarat-ketentuan'],
-        ['name' => 'Blog / Artikel',   'route' => 'articles.index'],
-        ['name' => 'Kontak',           'route' => 'contact'],
-    ];
+   
 @endphp
 
 <footer class="hnp-footer-modern text-white overflow-hidden relative">
@@ -163,42 +147,7 @@
             <div class="lg:col-span-5 flex flex-col gap-8 font-plus">
 
                 {{-- Quick Links: Layanan & Navigasi berdampingan --}}
-                <div class="grid grid-cols-2 gap-6">
-
-                    {{-- LAYANAN --}}
-                    <div>
-                        <div class="footer-col-label mb-3">
-                            <span class="col-label-dot"></span> LAYANAN
-                        </div>
-                        <ul class="footer-nav-list">
-                            @foreach($services as $i => $svc)
-                            <li>
-                                <a href="{{ route($svc['route']) }}" class="footer-nav-link group">
-                                    <span class="footer-nav-num">{{ str_pad($i + 1, 2, '0', STR_PAD_LEFT) }}</span>
-                                    <span class="footer-nav-text">{{ $svc['name'] }}</span>
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-
-                    {{-- NAVIGASI --}}
-                    <div>
-                        <div class="footer-col-label mb-3">
-                            <span class="col-label-dot"></span> NAVIGASI
-                        </div>
-                        <ul class="footer-nav-list">
-                            @foreach($navLinks as $nl)
-                            <li>
-                                <a href="{{ route($nl['route']) }}" class="footer-nav-link group">
-                                    <span class="footer-nav-dash">—</span>
-                                    <span class="footer-nav-text">{{ $nl['name'] }}</span>
-                                </a>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                </div>
+       
 
                 {{-- HUBUNGI KAMI --}}
                 @php $hasWa = ($wa1Number !== null) || ($wa2Number !== null); @endphp

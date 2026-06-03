@@ -97,27 +97,8 @@
                      alt="Jasa Buzzer Indonesia"
                      class="absolute w-[110%] max-w-none transition-all duration-500 z-10 transform -translate-y-6 drop-shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:scale-105">
 
-                <div class="absolute -top-4 -left-6 bg-white border-4 border-black rounded-xl px-4 py-2 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-6 z-20 flex items-center gap-2">
-                    <span class="flex h-3 w-3 relative">
-                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
-                        <span class="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
-                    </span>
-                    <span class="font-black text-xs uppercase tracking-wider text-black">CAMPAIGN BOOSTER</span>
-                </div>
+            
 
-                <div class="absolute top-1/3 -right-10 bg-[#FFD217] text-black border-4 border-black px-4 py-2 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-30 flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M7 11.5V14m0-2.5v-6a1.5 1.5 0 113 0m-3 6a1.5 1.5 0 00-3 0v2a7.5 7.5 0 0015 0v-5a1.5 1.5 0 00-3 0m-6-3V11m0-5.5v-1a1.5 1.5 0 013 0v1"/>
-                    </svg>
-                    SOSIAL MEDIA BOOSTER
-                </div>
-
-                <div class="absolute bottom-6 -left-10 bg-black text-white border-4 border-white px-4 py-2 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(230,30,80,1)] transform rotate-3 z-30 flex items-center gap-1.5">
-                    <svg class="w-4 h-4 text-[#FFD217]" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
-                    </svg>
-                    SOSIAL MEDIA ENGAGEMENT
-                </div>
             </div>
         </div>
     </div>
@@ -151,18 +132,7 @@
                 <img src="{{ $problemImgUrl }}" alt="Masalah Bisnis"
                      class="absolute w-[105%] max-w-none z-10 transform -translate-y-4 drop-shadow-[6px_6px_0px_rgba(0,0,0,0.15)] grayscale">
 
-                <div class="absolute top-4 left-0 bg-black text-white border-2 border-white px-3 py-1 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-6 z-20">
-                    Jualan sepi
-                </div>
-                <div class="absolute top-12 -right-4 bg-[#E61E50] text-white border-2 border-black px-3 py-1 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-6 z-20">
-                    Views sedikit
-                </div>
-                <div class="absolute bottom-20 -left-6 bg-white text-black border-2 border-black px-3 py-1 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform rotate-2 z-20">
-                    Analitik rendah
-                </div>
-                <div class="absolute bottom-4 right-0 bg-[#FFD217] text-black border-2 border-black px-3 py-1 font-black text-xs uppercase shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] transform -rotate-3 z-20">
-                    Followers sedikit
-                </div>
+                
             </div>
         </div>
 
