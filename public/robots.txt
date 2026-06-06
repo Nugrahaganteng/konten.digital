@@ -1,2 +1,33 @@
+# ============================================================
+# robots.txt — HNP Communications
+# Letakkan di: public/robots.txt
+# ============================================================
+
 User-agent: *
-Disallow:
+
+# Izinkan semua halaman publik
+Allow: /
+Allow: /about
+Allow: /kontak
+Allow: /cara-order
+Allow: /syarat-ketentuan
+Allow: /artikel
+Allow: /layanan/
+
+# Blokir halaman admin & sistem
+Disallow: /admin/
+Disallow: /dashboard
+Disallow: /profile
+Disallow: /login
+Disallow: /register
+Disallow: /password/
+Disallow: /email/
+Disallow: /_ignition/
+Disallow: /telescope/
+Disallow: /horizon/
+
+# Sitemap
+Sitemap: https://konten.hostspot.my.id/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1
