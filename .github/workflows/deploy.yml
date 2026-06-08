@@ -29,6 +29,7 @@ jobs:
             set -e
 
             PHP="/opt/php84/bin/php"
+            COMPOSER=$(which composer)
             DEPLOY_PATH="/var/www/hnpcomms_com_usr/data/www/hnpcomms.com"
             cd "$DEPLOY_PATH"
 
@@ -49,7 +50,7 @@ jobs:
 
             # Install PHP dependencies (production)
             echo "📦 Installing Composer dependencies..."
-            composer install --no-dev --no-interaction --prefer-dist --optimize-autoloader
+            $PHP $COMPOSER install --no-dev --no-interaction --prefer-dist --optimize-autoloader
 
             # Install Node dependencies & build assets
             echo "🔨 Building frontend assets..."
