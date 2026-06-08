@@ -142,3 +142,25 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('cms/page-sections/section/{pageSection}/restore/{history}',
         [PageSectionController::class, 'restore'])->name('cms.page-sections.restore');
 });
+
+// ══════════════════════════════════════════════════════════════
+// ── SYSTEM AUTOMATION (Triggered via email/webhook)
+// ══════════════════════════════════════════════════════════════
+
+Route::get('/system-deploy/run-seeder', function (\Illuminate\Http\Request $request) {
+    if (!$request->has('token') || $request->token !== env('DEPLOY_SECRET_TOKEN')) {
+        abort(403, 'Unauthorized');
+    }
+    
+    $seederClass = $request->seeder ?? 'DatabaseSeeder';
+    
+    try {
+        \Illuminate\Support\Facades\Artisan::call('db:seed', [
+            '--class' => $seederClass,
+            '--force' => true
+        ]);
+        return "✅ Seeder {$seederClass} berhasil dijalankan!";
+    } catch (\Exception $e) {
+        return "❌ Gagal: " . $e->getMessage();
+    }
+});

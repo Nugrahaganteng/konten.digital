@@ -137,20 +137,38 @@ jobs:
           server_address: mail.hnpcomms.com
           server_port: 465
           secure: true
+          ignore_cert: true
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: "✅ Deployment Successful: konten.digital"
           to: ${{ secrets.MAIL_TO_ADDRESS }}
           from: "GitHub Actions <${{ secrets.MAIL_USERNAME }}>"
-          body: |
-            Deployment to Production completed successfully!
-            
-            Repository: ${{ github.repository }}
-            Branch: ${{ github.ref_name }}
-            Commit Message: ${{ github.event.head_commit.message }}
-            Deployed By: ${{ github.actor }}
-            
-            View Workflow Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          html_body: |
+            <div style="font-family: sans-serif; line-height: 1.6;">
+                <h2 style="color: #2e7d32;">✅ Deployment to Production completed successfully!</h2>
+                <p>
+                    <strong>Repository:</strong> ${{ github.repository }}<br>
+                    <strong>Branch:</strong> ${{ github.ref_name }}<br>
+                    <strong>Commit:</strong> ${{ github.event.head_commit.message }}<br>
+                    <strong>Deployed By:</strong> ${{ github.actor }}
+                </p>
+                <hr style="border: 1px solid #eee;">
+                <h3>Tindakan Tambahan</h3>
+                <p>Jika kamu memiliki Seeder baru yang perlu dijalankan, klik tombol di bawah ini:</p>
+                <a href="https://hnpcomms.com/system-deploy/run-seeder?token=${{ secrets.DEPLOY_SECRET_TOKEN }}&seeder=DatabaseSeeder" 
+                   style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                   🚀 Jalankan DatabaseSeeder
+                </a>
+                <p style="font-size: 12px; color: #666; margin-top: 15px;">
+                    *Kamu bisa mengganti parameter <code>seeder=DatabaseSeeder</code> di URL secara manual jika ingin menjalankan class seeder spesifik.
+                </p>
+                <hr style="border: 1px solid #eee;">
+                <p>
+                    <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #1976d2;">
+                        🔍 View Workflow Run Log
+                    </a>
+                </p>
+            </div>
 
       - name: Notify on failure
         if: failure()
