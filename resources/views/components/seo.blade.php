@@ -17,7 +17,7 @@
     $fullTitle = ($title && $title !== $siteName)
                     ? $title . ' — ' . $siteName
                     : $siteName . ' | Jasa PR & Digital Marketing Indonesia';
-    $ogImage   = $image ?? asset('images/og-default.jpg');
+    $ogImage   = $image ?? asset('images/hikeandpeak.png');
     $canonical = url()->current();
 
     $jsonLd = json_encode([
