@@ -144,30 +144,74 @@ jobs:
           to: ${{ secrets.MAIL_TO_ADDRESS }}
           from: "GitHub Actions <${{ secrets.MAIL_USERNAME }}>"
           html_body: |
-            <div style="font-family: sans-serif; line-height: 1.6;">
-                <h2 style="color: #2e7d32;">✅ Deployment to Production completed successfully!</h2>
-                <p>
-                    <strong>Repository:</strong> ${{ github.repository }}<br>
-                    <strong>Branch:</strong> ${{ github.ref_name }}<br>
-                    <strong>Commit:</strong> ${{ github.event.head_commit.message }}<br>
-                    <strong>Deployed By:</strong> ${{ github.actor }}
-                </p>
-                <hr style="border: 1px solid #eee;">
-                <h3>Tindakan Tambahan</h3>
-                <p>Jika kamu memiliki Seeder baru yang perlu dijalankan, klik tombol di bawah ini:</p>
-                <a href="https://hnpcomms.com/system-deploy/run-seeder?token=${{ secrets.DEPLOY_SECRET_TOKEN }}&seeder=DatabaseSeeder" 
-                   style="background-color: #4CAF50; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block;">
-                   🚀 Jalankan DatabaseSeeder
-                </a>
-                <p style="font-size: 12px; color: #666; margin-top: 15px;">
-                    *Kamu bisa mengganti parameter <code>seeder=DatabaseSeeder</code> di URL secara manual jika ingin menjalankan class seeder spesifik.
-                </p>
-                <hr style="border: 1px solid #eee;">
-                <p>
-                    <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="color: #1976d2;">
-                        🔍 View Workflow Run Log
-                    </a>
-                </p>
+            <div style="background-color: #fafafa; padding: 40px 20px; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+                <div style="max-width: 560px; margin: 0 auto; background-color: #ffffff; border: 1px solid #eaeaea; border-radius: 6px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.03);">
+                    
+                    <!-- Header -->
+                    <div style="padding: 32px 32px 0 32px;">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #888888; margin-bottom: 8px; display: flex; align-items: center;">
+                            <span style="display: inline-block; width: 8px; height: 8px; background-color: #10b981; border-radius: 50%; margin-right: 8px;"></span> System Notification
+                        </div>
+                        <h1 style="font-size: 24px; font-weight: 600; color: #111111; margin: 0; letter-spacing: -0.5px;">Deployment Successful</h1>
+                        <p style="font-size: 14px; color: #555555; margin-top: 8px; line-height: 1.5;"><strong>konten.digital</strong> has been successfully updated and is now live on production.</p>
+                    </div>
+
+                    <!-- Metadata -->
+                    <div style="padding: 32px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" style="border-top: 1px solid #eaeaea; border-bottom: 1px solid #eaeaea; font-size: 13px; text-align: left;">
+                            <tr>
+                                <td style="padding: 12px 0; color: #888888; width: 100px;">Repository</td>
+                                <td style="padding: 12px 0; color: #111111; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">${{ github.repository }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #888888;">Branch</td>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #111111; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">${{ github.ref_name }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #888888;">Commit</td>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #111111;">
+                                    <a href="https://github.com/${{ github.repository }}/commit/${{ github.sha }}" style="color: #000000; text-decoration: underline; text-decoration-color: #cccccc; text-underline-offset: 3px; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">${{ github.sha }}</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #888888;">Message</td>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #111111;">${{ github.event.head_commit.message }}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #888888;">Author</td>
+                                <td style="padding: 12px 0; border-top: 1px solid #f5f5f5; color: #111111;">${{ github.actor }}</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Actions -->
+                    <div style="padding: 0 32px 32px 32px;">
+                        <table width="100%" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td width="50%" style="padding-right: 6px;">
+                                    <a href="https://hnpcomms.com" style="display: block; width: 100%; text-align: center; background-color: #000000; color: #ffffff; padding: 12px 0; font-size: 13px; font-weight: 500; text-decoration: none; border-radius: 4px; border: 1px solid #000000;">View Website</a>
+                                </td>
+                                <td width="50%" style="padding-left: 6px;">
+                                    <a href="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" style="display: block; width: 100%; text-align: center; background-color: #ffffff; color: #000000; padding: 12px 0; font-size: 13px; font-weight: 500; text-decoration: none; border-radius: 4px; border: 1px solid #e0e0e0;">Workflow Logs</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Advanced Action (Seeder) -->
+                    <div style="background-color: #fcfcfc; padding: 32px; border-top: 1px solid #eaeaea;">
+                        <div style="font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; color: #888888; margin-bottom: 12px;">Advanced Operations</div>
+                        <p style="font-size: 13px; color: #666666; margin: 0 0 16px 0; line-height: 1.5;">Execute database seeders manually via the secure token endpoint.</p>
+                        <a href="https://hnpcomms.com/system-deploy/run-seeder?token=${{ secrets.DEPLOY_SECRET_TOKEN }}&seeder=DatabaseSeeder" style="display: inline-block; background-color: #ffffff; color: #000000; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace; font-size: 12px; padding: 10px 16px; text-decoration: none; border: 1px solid #d1d5db; border-radius: 4px; box-shadow: 0 1px 2px rgba(0,0,0,0.05);">
+                            <span style="color: #9ca3af;">$</span> artisan db:seed
+                        </a>
+                    </div>
+
+                </div>
+                
+                <div style="text-align: center; padding-top: 24px; font-size: 12px; color: #aaaaaa; font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;">
+                    automated_deploy // konten.digital
+                </div>
             </div>
 
       - name: Notify on failure
