@@ -113,6 +113,7 @@
 </style>
 
 
+
 {{-- ── SECTION 2: PROBLEM IDENTIFICATION (CMS-CONNECTED) ─────────────────────── --}}
 @if($problemsS && $problemsS->is_active)
 <section class="py-24 bg-white border-b-8 border-black">
@@ -130,7 +131,7 @@
                         : asset('images/sad-persona.png');
                 @endphp
                 <img src="{{ $problemImgUrl }}" alt="Masalah Bisnis"
-                     class="absolute w-[105%] max-w-none z-10 transform -translate-y-4 drop-shadow-[6px_6px_0px_rgba(0,0,0,0.15)] grayscale">
+                     class="absolute w-[105%] max-w-none z-10 transform -translate-y-4 drop-shadow-[6px_6px_0px_rgba(0,0,0,0.15)]">
 
                 
             </div>
