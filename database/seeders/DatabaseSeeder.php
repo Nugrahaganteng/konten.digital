@@ -13,7 +13,7 @@ class DatabaseSeeder extends Seeder
     {
         // Buat akun admin default
         User::firstOrCreate(
-            ['email' => 'admin@hnp.id'],
+            ['email' => 'hello@hnpcomms.com'],
             [
                 'name'     => 'Admin HNP',
                 'password' => Hash::make('admin123456'),
