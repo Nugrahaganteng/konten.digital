@@ -130,6 +130,28 @@ jobs:
             echo "✅ Deployment completed successfully!"
             echo "========================================="
 
+      - name: Send Notification Email
+        if: success()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: mail.hnpcomms.com
+          server_port: 465
+          secure: true
+          username: ${{ secrets.MAIL_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD }}
+          subject: "✅ Deployment Successful: konten.digital"
+          to: ${{ secrets.MAIL_TO_ADDRESS }}
+          from: "GitHub Actions <${{ secrets.MAIL_USERNAME }}>"
+          body: |
+            Deployment to Production completed successfully!
+            
+            Repository: ${{ github.repository }}
+            Branch: ${{ github.ref_name }}
+            Commit Message: ${{ github.event.head_commit.message }}
+            Deployed By: ${{ github.actor }}
+            
+            View Workflow Run: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
       - name: Notify on failure
         if: failure()
         run: |
