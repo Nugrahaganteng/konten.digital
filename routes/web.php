@@ -148,7 +148,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 // ══════════════════════════════════════════════════════════════
 
 Route::get('/system-deploy/run-seeder', function (\Illuminate\Http\Request $request) {
-    if (!$request->has('token') || $request->token !== env('DEPLOY_SECRET_TOKEN')) {
+    if (!$request->has('token') || $request->token !== config('app.deploy_secret_token')) {
         abort(403, 'Unauthorized');
     }
     
