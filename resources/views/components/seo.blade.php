@@ -9,6 +9,8 @@
     'image'       => null,
     'type'        => 'website',
     'noindex'     => false,
+    'breadcrumbs' => null,
+    'faqs'        => null,
 ])
 
 @php
@@ -84,6 +86,23 @@
 <meta name="geo.region"    content="ID">
 <meta name="geo.placename" content="Indonesia">
 <meta name="language"      content="Indonesian">
+
+{{-- FAVICONS — All platforms --}}
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+<link rel="icon" type="image/png" sizes="16x16"   href="{{ asset('favicons/favicon-16x16.png') }}">
+<link rel="icon" type="image/png" sizes="32x32"   href="{{ asset('favicons/favicon-32x32.png') }}">
+<link rel="icon" type="image/png" sizes="96x96"   href="{{ asset('favicons/favicon-96x96.png') }}">
+<link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicons/android-chrome-192x192.png') }}">
+<link rel="apple-touch-icon" sizes="180x180"       href="{{ asset('favicons/apple-touch-icon.png') }}">
+<link rel="manifest"                                href="{{ asset('site.webmanifest') }}">
+<meta name="msapplication-TileColor"  content="#2d0a4e">
+<meta name="msapplication-TileImage"  content="{{ asset('favicons/mstile-150x150.png') }}">
+<meta name="msapplication-config"     content="{{ asset('browserconfig.xml') }}">
+<meta name="apple-mobile-web-app-title"   content="{{ $siteName }}">
+<meta name="application-name"             content="{{ $siteName }}">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
 <link rel="canonical"      href="{{ $canonical }}">
 
 {{-- OPEN GRAPH --}}
@@ -106,3 +125,84 @@
 
 {{-- SCHEMA.ORG JSON-LD --}}
 <script type="application/ld+json">{!! $jsonLd !!}</script>
+
+{{-- BREADCRUMB JSON-LD (auto-generated from URL path) --}}
+@php
+    $breadcrumbItems = [];
+    if ($breadcrumbs) {
+        $breadcrumbItems = $breadcrumbs;
+    } else {
+        // Auto-generate breadcrumbs from URL segments
+        $segments = array_filter(explode('/', trim(parse_url($canonical, PHP_URL_PATH), '/')));
+        $breadcrumbItems[] = ['name' => 'Home', 'url' => $siteUrl];
+        $buildUrl = $siteUrl;
+        $segmentLabels = [
+            'layanan' => 'Layanan',
+            'artikel' => 'Blog',
+            'about' => 'Tentang Kami',
+            'kontak' => 'Hubungi Kami',
+            'cara-order' => 'Cara Order',
+            'syarat-ketentuan' => 'Syarat & Ketentuan',
+            'press-release' => 'Press Release',
+            'backlink' => 'Backlink',
+            'press-conference' => 'Press Conference',
+            'penulisan-artikel' => 'Penulisan Artikel',
+            'buzzer' => 'Buzzer',
+            'pelatihan-konten' => 'Pelatihan Konten',
+        ];
+        foreach ($segments as $segment) {
+            $buildUrl .= '/' . $segment;
+            $breadcrumbItems[] = [
+                'name' => $segmentLabels[$segment] ?? ucwords(str_replace('-', ' ', $segment)),
+                'url'  => $buildUrl,
+            ];
+        }
+    }
+
+    if (count($breadcrumbItems) > 1) {
+        $bcList = [];
+        foreach ($breadcrumbItems as $i => $bc) {
+            $bcList[] = [
+                '@type'    => 'ListItem',
+                'position' => $i + 1,
+                'name'     => $bc['name'],
+                'item'     => $bc['url'],
+            ];
+        }
+        $breadcrumbJsonLd = json_encode([
+            '@context'        => 'https://schema.org',
+            '@type'           => 'BreadcrumbList',
+            'itemListElement' => $bcList,
+        ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+    }
+@endphp
+@if(isset($breadcrumbJsonLd))
+<script type="application/ld+json">{!! $breadcrumbJsonLd !!}</script>
+@endif
+
+{{-- FAQ PAGE JSON-LD (rendered when $faqs is passed) --}}
+@if($faqs && count($faqs) > 0)
+@php
+    $faqEntries = [];
+    foreach ($faqs as $faq) {
+        $q = is_object($faq) ? $faq->question : ($faq['question'] ?? $faq['q'] ?? '');
+        $a = is_object($faq) ? $faq->answer   : ($faq['answer']   ?? $faq['a'] ?? '');
+        if ($q && $a) {
+            $faqEntries[] = [
+                '@type'          => 'Question',
+                'name'           => $q,
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text'  => strip_tags($a),
+                ],
+            ];
+        }
+    }
+    $faqJsonLd = json_encode([
+        '@context'   => 'https://schema.org',
+        '@type'      => 'FAQPage',
+        'mainEntity' => $faqEntries,
+    ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+@endphp
+<script type="application/ld+json">{!! $faqJsonLd !!}</script>
+@endif

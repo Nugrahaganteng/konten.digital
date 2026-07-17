@@ -6,6 +6,21 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Admin — @yield('title', 'Dashboard') | HNP Communications.id</title>
 
+    {{-- Favicons — All platforms --}}
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="16x16"   href="{{ asset('favicons/favicon-16x16.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32"   href="{{ asset('favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="96x96"   href="{{ asset('favicons/favicon-96x96.png') }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ asset('favicons/android-chrome-192x192.png') }}">
+    <link rel="apple-touch-icon" sizes="180x180"       href="{{ asset('favicons/apple-touch-icon.png') }}">
+    <link rel="manifest"                                href="{{ asset('site.webmanifest') }}">
+    <meta name="msapplication-TileColor"  content="#2d0a4e">
+    <meta name="msapplication-TileImage"  content="{{ asset('favicons/mstile-150x150.png') }}">
+    <meta name="msapplication-config"     content="{{ asset('browserconfig.xml') }}">
+    <meta name="theme-color"              content="#facc15">
+    <meta name="apple-mobile-web-app-title"   content="HNP Communications">
+    <meta name="application-name"             content="HNP Communications">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700;900&family=Unbounded:wght@400;900&display=swap" rel="stylesheet">

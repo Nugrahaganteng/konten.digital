@@ -6,9 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-
-    {{-- Favicon --}}
-<link rel="icon" type="image/png" href="{{ asset('images/hikeandpeak.png') }}">
     {{-- ══════════════════════════════════════════════════════════
          SEO COMPONENT
          Data dikirim dari controller: $seoTitle, $seoDescription,
@@ -21,6 +18,7 @@
         :image="$seoImage ?? null"
         :type="$seoType ?? 'website'"
         :noindex="$seoNoindex ?? false"
+        :faqs="$faqs ?? null"
     />
 
     {{-- Fonts --}}

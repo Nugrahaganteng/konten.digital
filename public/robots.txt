@@ -27,7 +27,7 @@ Disallow: /telescope/
 Disallow: /horizon/
 
 # Sitemap
-Sitemap: https://konten.hostspot.my.id/sitemap.xml
+Sitemap: https://www.hnpcomms.com/sitemap.xml
 
 # Crawl delay
 Crawl-delay: 1

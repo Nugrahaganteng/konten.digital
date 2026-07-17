@@ -967,4 +967,65 @@
 
 </article>
 
+{{-- ── Article Structured Data (JSON-LD) ────────────────────── --}}
+@push('scripts')
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BlogPosting',
+    'headline' => $article->title,
+    'description' => $seoDescription,
+    'image' => $article->thumbnail ? asset('storage/' . $article->thumbnail) : asset('images/og-blog.jpg'),
+    'author' => [
+        '@type' => 'Person',
+        'name' => $article->user->name ?? 'HNP Team',
+    ],
+    'publisher' => [
+        '@type' => 'Organization',
+        'name' => 'HNP Communications',
+        'logo' => [
+            '@type' => 'ImageObject',
+            'url' => asset('favicons/android-chrome-512x512.png'),
+            'width' => 512,
+            'height' => 512,
+        ],
+    ],
+    'datePublished' => ($article->published_at ?? $article->created_at)->toIso8601String(),
+    'dateModified' => $article->updated_at->toIso8601String(),
+    'mainEntityOfPage' => [
+        '@type' => 'WebPage',
+        '@id' => url()->current(),
+    ],
+    'articleSection' => $article->category,
+    'inLanguage' => 'id-ID',
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+<script type="application/ld+json">
+{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'BreadcrumbList',
+    'itemListElement' => [
+        [
+            '@type' => 'ListItem',
+            'position' => 1,
+            'name' => 'Home',
+            'item' => url('/'),
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 2,
+            'name' => 'Blog',
+            'item' => route('articles.index'),
+        ],
+        [
+            '@type' => 'ListItem',
+            'position' => 3,
+            'name' => $article->title,
+            'item' => url()->current(),
+        ],
+    ],
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE) !!}
+</script>
+@endpush
+
 @endsection

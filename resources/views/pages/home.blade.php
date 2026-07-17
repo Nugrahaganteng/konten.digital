@@ -78,24 +78,24 @@
 
         {{-- Tengah --}}
         <div class="flex flex-col items-center reveal relative">
-            <div class="font-black leading-none text-center text-purple-950 text-glitch-heavy"
+            <h1 class="font-black leading-none text-center text-purple-950 text-glitch-heavy"
                  style="font-family:'Unbounded',sans-serif; font-size:clamp(4rem,10vw,8rem);">
                 @if($h('title_line1') !== null)
-                <div>{{ $h('title_line1', 'KONTEN') }}</div>
+                <span class="block">{{ $h('title_line1', 'KONTEN') }}</span>
                 @endif
                 @if($h('title_line2') !== null)
-                <div class="text-transparent" style="-webkit-text-stroke:3px #2d1b4e">
+                <span class="block text-transparent" style="-webkit-text-stroke:3px #2d1b4e">
                     {{ $h('title_line2', 'DIGITAL') }}
-                </div>
+                </span>
                 @endif
-            </div>
+            </h1>
 
             {{-- Maskot --}}
             @php $heroImage = ($hero && !$hero->isFieldHidden('image')) ? data_get($hero->content, 'image') : null; @endphp
             <div class="animate-ufo">
                 @if($heroImage)
                     <img src="{{ Storage::url($heroImage) }}"
-                         alt="Maskot"
+                         alt="HNP Communications — Jasa PR dan Digital Marketing Indonesia"
                          class="w-56 mt-4"
                          style="filter:drop-shadow(8px 8px 0 #000)">
                 @else
@@ -217,8 +217,9 @@
                 @php $aboutImage = ($about && !$about->isFieldHidden('image')) ? data_get($about->content, 'image') : null; @endphp
                 @if($aboutImage)
                     <img src="{{ Storage::url($aboutImage) }}"
-                         alt="{{ $a('title', 'About Us') }}"
-                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                         alt="{{ $a('title', 'Tentang HNP Communications — Tim PR dan Digital Marketing Profesional') }}"
+                         class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                         loading="lazy">
                 @else
                     <svg width="380" height="280" viewBox="0 0 380 280" fill="none" class="group-hover:scale-110 transition-transform duration-500">
                         <circle cx="190" cy="140" r="120" fill="#facc15" opacity="0.15"/>
@@ -370,12 +371,14 @@
                     <div class="relative z-10 w-4/5 h-4/5 transform transition-all duration-500 group-hover:scale-105 group-hover:-rotate-3">
                         @if($s['img'])
                             <img src="{{ Storage::url($s['img']) }}"
-                                 alt="{{ $s['tab'] }}"
-                                 class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow">
+                                 alt="Layanan {{ $s['tab'] }} — HNP Communications"
+                                 class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow"
+                                 loading="lazy">
                         @else
                             <img src="{{ asset('images/' . $s['img_fallback']) }}"
-                                 alt="{{ $s['tab'] }}"
-                                 class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow">
+                                 alt="Layanan {{ $s['tab'] }} — HNP Communications"
+                                 class="w-full h-full object-cover border-4 border-black shadow-neo-lg rounded-sm animate-float-slow"
+                                 loading="lazy">
                         @endif
                     </div>
                     <div class="absolute top-4 right-4 w-12 h-12 bg-yellow-400 border-4 border-black rounded-full mix-blend-difference animate-radar"></div>
@@ -437,10 +440,11 @@
                 <div class="bg-yellow-400 aspect-square flex items-center justify-center p-8
                             hover:bg-cyan-400 transition-all duration-500 group cursor-pointer relative overflow-hidden">
                     <img src="{{ $logoPath ? Storage::url($logoPath) : asset('images/clients/' . $staticFallback) }}"
-                         alt="Client Logo"
+                         alt="Logo Klien HNP Communications"
                          class="w-full h-full object-contain opacity-50 group-hover:opacity-100
                                 scale-90 group-hover:scale-100 transition-all duration-500 ease-out
-                                transform-gpu will-change-transform filter blur-[0.5px] group-hover:blur-0">
+                                transform-gpu will-change-transform filter blur-[0.5px] group-hover:blur-0"
+                         loading="lazy">
                     <div class="absolute inset-0 border-0 group-hover:border-[6px] border-black transition-all duration-200 pointer-events-none"></div>
                     <div class="absolute inset-0 opacity-0 group-hover:opacity-10 group-hover:bg-white transition-opacity duration-300 pointer-events-none"></div>
                 </div>

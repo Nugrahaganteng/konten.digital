@@ -39,7 +39,8 @@ class SitemapController extends Controller
                 ->get();
         }
 
-        $now = now()->toAtomString();
+        // Gunakan tanggal rilis/update kode terakhir (17 Juli 2026) untuk halaman statis
+        $staticLastmod = '2026-07-17T22:30:00+07:00';
 
         $xml  = '<?xml version="1.0" encoding="UTF-8"?>' . "\n";
         $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' . "\n";
@@ -47,7 +48,7 @@ class SitemapController extends Controller
         foreach ($staticPages as $page) {
             $xml .= "  <url>\n";
             $xml .= "    <loc>{$baseUrl}{$page['url']}</loc>\n";
-            $xml .= "    <lastmod>{$now}</lastmod>\n";
+            $xml .= "    <lastmod>{$staticLastmod}</lastmod>\n";
             $xml .= "    <changefreq>{$page['freq']}</changefreq>\n";
             $xml .= "    <priority>{$page['priority']}</priority>\n";
             $xml .= "  </url>\n";
